@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title"><i class="glyphicon glyphicon-time"></i> Histórico da Proposta <?php echo (!$_GET['scp']) ? "" : " - Nº " . str_pad($_GET['scp'], 6, '0', STR_PAD_LEFT); ?></h4>
+        <p><br/>
+            <b>Cliente:</b>
+            <?php echo $this->proposal->getCustomer()->getPerson()->getName(); ?><br/>
+            <b>Data de Cadastro:</b>
+            <?php echo ($this->proposal->getDate()); ?><br/>
+            <b>Telefone:</b>
+            <?php echo $this->phone($this->proposal->getCustomer()->getPerson()->getContact()->getPhone()); ?><br/>
+        </p>
+    </div>
+    <?php if (count($this->proposal->getLogs()) > 0): ?>
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>DATA</th>
+                    <th>BANCO</th>
+                    <th>MENSAGEM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach (array_reverse($this->proposal->getLogs()->toArray()) as $log): ?>
+                    <tr>
+                        <td><?php echo $this->date($log->getTimestamp(), 'd/m/Y H:i:s'); ?></td>
+                        <td><?php echo $log->getBank()->getName(); ?></td>
+                        <td><?php echo $log->getMessage(); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+    <div class="panel-footer hidden-print">
+        <button type="button" onclick="javascript: window.print();" class="btn btn-default"><i class="glyphicon glyphicon-print"></i></button>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        window.print();
+    });
+</script>

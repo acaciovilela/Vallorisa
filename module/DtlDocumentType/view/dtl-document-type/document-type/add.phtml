@@ -1,0 +1,24 @@
+<?php
+$title = $this->translate('Adicionar Tipo de Documento');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtldocumenttype/add'));
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<div class="modal-header">
+    <h3 class="modal-title"><i class="fa fa-plus-circle"></i> <?php echo $this->escapeHtml($title); ?></h3>
+</div>
+<div class="modal-body">
+    <?php $documentType = $form->get('documentType'); ?>
+    <?php echo $this->formHidden($documentType->get('id')); ?>
+    <div class="form-group">
+        <?php echo $this->formLabel($documentType->get('name')); ?>
+        <?php echo $this->formText($documentType->get('name')); ?>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $this->translate('Salvar'); ?></button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> <?php echo $this->translate('Cancelar'); ?></button>
+</div>
+<?php echo $this->form()->closeTag(); ?>

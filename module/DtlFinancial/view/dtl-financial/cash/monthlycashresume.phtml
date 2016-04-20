@@ -1,0 +1,137 @@
+<?php
+$title = $this->translate('Caixa');
+$this->headTitle($title);
+?>
+<h3 class="row">
+    <div class="col-md-6">
+        <h3 class="header-title"><i class="glyphicon glyphicon-shopping-cart"></i> <?php echo $this->escapeHtml($title); ?></h3>
+    </div>
+    <div class="col-md-6">
+    </div> 
+</h3>
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="glyphicon glyphicon-usd"></i> Resumo do Caixa</h3>
+            </div>
+            <div class="panel-body">
+                <?php if ((double) $this->lastBalance >= 0): ?>
+                    <h3 class="text-info" dir="rtl">
+                        <small>Saldo Anterior</small>
+                        <?php echo $this->currency((double) $this->lastBalance); ?>
+                    </h3>
+                <?php else: ?>
+                    <h3 class="text-danger" dir="rtl">
+                        <small>Saldo Anterior</small>
+                        <?php echo $this->currency((double) $this->lastBalance); ?>
+                    </h3>
+                <?php endif; ?>
+                <hr/>
+                <?php if ((double) $this->balance >= 0): ?>
+                    <h3 class="text-info" dir="rtl">
+                        <small>Saldo Atual</small>
+                        <?php echo $this->currency((double) $this->balance); ?>
+                    </h3>
+                <?php else: ?>
+                    <h3 class="text-danger" dir="rtl">
+                        <small>Saldo Atual</small>
+                        <?php echo $this->currency((double) $this->balance); ?>
+                    </h3>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="glyphicon glyphicon-usd"></i> Resumo do Mês <b><?php echo date('m/Y'); ?></b></h3>
+            </div>
+            <div class="panel-body">
+                <h3 class="text-info" dir="rtl">
+                    <small>Entradas</small>
+                    <?php echo $this->currency((double) $this->monthRevenues); ?>
+                </h3>
+                <hr/>
+                <h3 class="text-danger" dir="rtl">
+                    <small>Saídas</small>
+                    <?php echo $this->currency((double) $this->monthExpenses); ?>
+                </h3>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-gear"></i> Opções de Visualização</h3>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="input-group">
+                        <input type="text" id="dt" name="dt" value="<?php echo date('d/m/Y'); ?>" class="form-control datepicker" />
+                        <span class="input-group-btn">
+                            <input type="submit" id="submit" name="submit" value="Ok" class="btn btn-default" />
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <?php $this->cash; ?>
+
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="glyphicon glyphicon-usd"></i> Caixa do Dia - <?php echo date('d/m/Y'); ?>
+                    <a class="btn btn-default btn-normal pull-right app-tooltip" href="<?php echo $this->url('dtladmin/dtlfinancial/expense/add'); ?>" title="Nova Despesa"> <i class="fa fa-upload"></i></a>
+                    <a class="btn btn-default btn-normal pull-right app-tooltip" href="<?php echo $this->url('dtladmin/dtlfinancial/revenue/add'); ?>" title="Nova Receita"> <i class="fa fa-download"></i></a>
+                    <div>&nbsp;</div>
+                </h3>
+            </div>
+            <table class="table table-striped ">
+                <tr>
+                    <th class="col-md-2"><?php echo $this->translate('DATA'); ?></th>
+                    <th><?php echo $this->translate('DESCRIÇÃO'); ?></th>
+                    <th><?php echo $this->translate('DÉBITO'); ?></th>
+                    <th><?php echo $this->translate('CRÉDITO'); ?></th>
+                    <th><?php echo $this->translate('SALDO'); ?></th>
+                </tr>
+                <tr>
+                    <td colspan="4" dir="rtl">SALDO ANTERIOR</td>
+                    <td><b><?php echo $this->currency($this->lastBalance); ?></b></td>
+                </tr>
+                <?php if (0 == count($this->cash)): ?>
+                    <tr>
+                        <td colspan="10" class="text-center alert alert-info"><?php echo ($this->translate('Não há lançamentos no dia até o momento.')) ?></td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($this->cash as $launch) : ?>
+                        <?php $cashLaunch = $this->launch($launch->getId()); ?>
+                        <?php if ($cashLaunch instanceof \DtlFinancial\Entity\Revenue): ?>
+                            <tr class="text-info">
+                                <td><?php echo $this->date($launch->getDate()); ?></td>
+                                <td><?php echo $this->escapeHtml($launch->getDescription()); ?></td>
+                                <td>-</td>
+                                <td><?php echo $this->currency($launch->getValue()); ?></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        <?php elseif ($cashLaunch instanceof \DtlFinancial\Entity\Expense): ?>
+                            <tr class="text-danger">
+                                <td><?php echo $this->date($launch->getDate()); ?></td>
+                                <td><?php echo $this->escapeHtml($launch->getDescription()); ?></td>
+                                <td><?php echo $this->currency($launch->getValue()); ?></td>
+                                <td>-</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <tr style="font-weight: bold; background: #fafafa;">
+                    <td colspan="2" dir="rtl"><b>TOTAL</b></td>
+                    <td class="text-danger"><?php echo $this->currency($this->expense); ?></td>
+                    <td class="text-info"><?php echo $this->currency($this->revenue); ?></td>
+                    <td><?php echo $this->currency($this->balance); ?></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

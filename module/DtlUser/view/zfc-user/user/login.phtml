@@ -1,0 +1,59 @@
+<?php
+$form = $this->loginForm;
+$form->prepare();
+$form->setAttribute('action', $this->url('zfcuser/login'));
+$form->setAttribute('method', 'post');
+?>
+<div class="login-container animated fadeInDown">
+    <div class="loginbox bg-white">
+        <div class="loginbox-title"><?php echo $this->translate('LOGIN DE USUÁRIO'); ?></div>
+<!--        <div class="loginbox-social">
+            <div class="social-title ">Conecte-se através de sua Conta Social</div>
+            <div class="social-buttons">
+                <a href="#" class="button-facebook">
+                    <i class="social-icon fa fa-facebook"></i>
+                </a>
+                <a href="#" class="button-twitter">
+                    <i class="social-icon fa fa-twitter"></i>
+                </a>
+                <a href="#" class="button-google">
+                    <i class="social-icon fa fa-google-plus"></i>
+                </a>
+            </div>
+        </div>-->
+        <div class="loginbox-or">
+            <div class="or-line"></div>
+            <div class="orou">OU</div>
+        </div>
+        <?php echo $this->form()->openTag($form) ?>
+        <div class="loginbox-textbox">
+            <?php echo $this->formInput($form->get('identity')->setAttributes(array('class' => 'form-control', 'placeholder' => 'Email'))) ?>
+        </div>
+
+        <div class="loginbox-textbox">
+            <?php echo $this->formInput($form->get('credential')->setAttributes(array('class' => 'form-control', 'placeholder' => 'Senha'))) ?>
+        </div>
+        <?php if ($this->redirect): ?>
+            <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
+        <?php endif ?>
+        <div class="loginbox-forgot">
+            <a href="#">Esqueceu sua senha?</a>
+        </div>
+        <div class="loginbox-submit">
+            <?php
+            echo $this->formButton($form->get('submit')
+                            ->setAttributes(array('class' => 'btn btn-primary btn-block'))
+                            ->setLabel('Entrar'));
+            ?>
+        </div>
+        <div class="loginbox-signup">
+            <a href="<?php echo $this->url('zfcuser/register'); ?>">
+                <?php echo $this->translate('Registrar'); ?>
+            </a>
+        </div>
+        <?php echo $this->form()->closeTag() ?>
+    </div>
+    <div class="logobox">
+        <?php echo $this->formElementErrors($form->get('identity')) ?>
+    </div>
+</div>

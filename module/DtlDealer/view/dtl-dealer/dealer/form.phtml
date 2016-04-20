@@ -1,0 +1,15 @@
+<?php $dealers = $this->dealers; ?>
+<?php $array = array(2 => 1, 1 => 2); ?>
+<?php foreach ($dealers as $key => $dealer): ?>
+<legend><h3>Vendedor <?php // echo $array[$key + 1]; ?></h3></legend>
+    <?php $person = $dealer->get('person'); ?>
+    <?php echo $this->personForm($person); ?>
+
+    <?php if ($this->params['type'] == base64_encode(1)): ?>
+        <?php $legal = $person->get('legal'); ?>
+        <?php echo $this->legalForm($legal); ?>
+    <?php elseif ($this->params['type'] == base64_encode(0)): ?>
+        <?php $individual = $person->get('individual'); ?>
+        <?php echo $this->individualForm($individual); ?>
+    <?php endif; ?>
+<?php endforeach; ?>

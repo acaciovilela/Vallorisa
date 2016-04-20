@@ -1,0 +1,65 @@
+<?php
+$title = $this->translate('Relatório - Produtos por Data');
+$form = $this->form;
+$form->prepare();
+?>
+<h3 class="header-title">
+    <i class="glyphicon glyphicon-list"></i>
+    <?php echo $title; ?>
+</h3>
+<br/>
+
+<div class="row">
+    <div class="col-sm-3 hidden-print">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <i class="glyphicon glyphicon-filter"></i>
+                    <?php echo $this->translate('Defina os parâmetros'); ?>
+                </div>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+                <div class="form-group">
+                    <?php echo $this->formText($form->get('reportDateFrom')); ?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo $this->formText($form->get('reportDateTo')); ?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo $this->formRow($form->get('submit')); ?>
+                    <?php echo $this->formRow($form->get('cancel')); ?>
+                </div>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <?php if (!count($this->result)): ?>
+            <div class="alert alert-info text-center">
+                Nenhum registro encontrado com os parâmetros atuais.
+            </div>
+        <?php else: ?>
+            <div class="panel panel-default">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>DATA</th>
+                            <th>PRODUTO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->result as $line): ?>
+                            <tr>
+                                <td><?php echo Zend\Debug\Debug::dump(count($line->getProducts())); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

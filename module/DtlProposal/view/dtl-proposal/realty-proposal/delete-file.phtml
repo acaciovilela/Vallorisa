@@ -1,0 +1,28 @@
+<?php
+$title = $this->translate('Apagar Arquivo');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtlproposal/realty-proposal/deleteFile', array('id' => $this->fileId, 'proposalId' => $this->proposalId));
+?>
+<div class="modal-header">
+    <h2 class="modal-title">
+        <i class="fa fa-trash-o"></i>
+        <?php echo $this->escapeHtml($title); ?>
+    </h2>
+</div>
+<div class="modal-body">
+    <blockquote>
+        <?php echo $this->translate('Você tem certeza de que deseja apagar ') ?>
+        '<?php echo $this->escapeHtml($this->file->getName()); ?>'?
+    </blockquote>
+</div>
+<div class="modal-footer">
+    <form action="<?php echo $url; ?>" method="post">
+        <div>
+            <input type="hidden" name="id" value="<?php echo $this->file->getId(); ?>" />
+            <div class="">
+                <button  type="submit" name="del" value="Sim" class="btn btn-success"><i class="fa fa-check"></i> Sim</button>
+                <button type="submit" class="btn btn-danger" value="Não" name="del"><i class="fa fa-times"></i> Não</button>
+            </div>
+        </div>
+    </form>
+</div>

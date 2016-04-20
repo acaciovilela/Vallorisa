@@ -1,0 +1,97 @@
+<?php
+$title = $this->translate('Novo Interessado');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlpretender/add', array('type' => $this->personType)));
+$form->prepare();
+?>
+<h1 class="container-header"><i class="fa fa-user"></i> <?php echo $this->escapeHtml($title); ?></h1>
+
+<?php echo $this->form()->openTag($form); ?>
+<?php $pretender = $form->get('pretender'); ?>
+<fieldset class="center-block">
+    <?php $person = $pretender->get('person'); ?>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <?php echo $this->formLabel($pretender->get('realtyType')); ?>
+                <?php echo $this->formSelect($pretender->get('realtyType')); ?>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <?php echo $this->formLabel($pretender->get('realtyValue')); ?>
+                <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <?php echo $this->formText($pretender->get('realtyValue')); ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <?php echo $this->formLabel($pretender->get('value')); ?>
+                <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <?php echo $this->formText($pretender->get('value')); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <?php echo $this->formLabel($person->get('name')); ?>
+                <?php echo $this->formText($person->get('name')); ?>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <?php echo $this->formLabel($person->get('contact')->get('email')); ?>
+                <?php echo $this->formText($person->get('contact')->get('email')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <?php echo $this->formLabel($person->get('address')->get('quarter')); ?>
+                <?php echo $this->formText($person->get('address')->get('quarter')); ?>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <?php echo $this->formLabel($person->get('address')->get('city')); ?>
+                <?php echo $this->formSelect($person->get('address')->get('city')->removeAttribute('readonly')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <?php echo $this->formLabel($person->get('contact')->get('phone')); ?>
+                <?php echo $this->formText($person->get('contact')->get('phone')); ?>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <?php echo $this->formLabel($person->get('contact')->get('cell')); ?>
+                <?php echo $this->formText($person->get('contact')->get('cell')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <?php echo $this->formLabel($pretender->get('notes')); ?>
+                <?php echo $this->formTextarea($pretender->get('notes')); ?>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<div class="form-group">
+    <?php echo $this->formElement($form->get('security')); ?>
+    <?php echo $this->formSubmit($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

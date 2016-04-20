@@ -1,0 +1,64 @@
+<?php
+$title = $this->translate('Empresas');
+$this->headTitle($title);
+$this->placeholder('title')->set($title);
+$this->placeholder('title-icon')->set('<i class="fa fa-barcode"></i>');
+?>
+<div class="page-body">
+    <div class="widget-box">
+        <div class="widget-header">
+            <div class="widget-caption">
+                <div class="widget-icon"><i class="fa fa-bars"></i></div>
+                <?php echo $title; ?>
+            </div>
+            <div class="widget-toolbar">
+                <div class="btn-group">
+                    <a class="btn btn-normal btn-success" href="<?php echo $this->url('dtladmin/dtlcompany/add'); ?>"><i class="fa fa-plus-circle"></i>&nbsp;<?php echo $this->translate('Novo'); ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <table class="table table-striped table-hover table-bordered ">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1"><?php echo $this->translate('CÓD'); ?></th>
+                            <th class=""><?php echo $this->translate('CNPJ'); ?></th>
+                            <th class=""><?php echo $this->translate('NOME FANTASIA'); ?></th>
+                            <th class=""><?php echo $this->translate('TIPO'); ?></th>
+                            <th class=""></th>
+                        </tr>
+                    </thead>
+                    <?php if (!count($this->company)): ?>
+                        <tbody>
+                            <tr>
+                                <td colspan="10" class="alert alert-info text-center"><?php echo $this->translate('Nenhum registro encontrado no banco de dados.') ?></td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($this->company as $company) : ?>
+                                <tr>
+                                    <td><?php echo str_pad($company->getId(), 8, '0', STR_PAD_LEFT); ?></td>
+                                    <td><?php echo $this->escapeHtml($this->cnpj($company->getCnpj())); ?></td>
+                                    <td><?php echo $this->escapeHtml($company->getFancyName()); ?></td>
+                                    <td><?php echo ($company->getIsMaster()) ? "<span class=\"label label-default\">MATRIZ</span>" : "<span class=\"label label-default\">FILIAL</span>"; ?></td>
+                                    <td>
+                                        <div class="btn-group btn-group-xs pull-right">
+                                            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlcompany/view', array('action' => 'view', 'id' => $company->getId()))
+                                ?>"><i class="glyphicon glyphicon-folder-open"></i></a>
+                                            <a class="btn btn-default" href="<?php
+                                            echo $this->url('dtladmin/dtlcompany/edit', array('action' => 'edit',
+                                                'id' => $company->getId()))
+                                            ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                                            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlcompany/delete', array('id' => $company->getId()))
+                                            ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

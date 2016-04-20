@@ -1,0 +1,36 @@
+<?php
+$paginationInfo = $this->placeholder('pagination');
+$baseUrl = $this->url($paginationInfo->route, $paginationInfo->params);
+?>
+
+<?php if ($this->pageCount): ?>
+    <ul class="pagination pagination-sm">
+        <!-- Previous page link -->
+        <?php if (isset($this->previous)): ?>
+            <li><a href="<?php echo $baseUrl; ?>/<?php echo $this->first ?>">&lsaquo;</a></li>
+            <li><a href="<?php echo $baseUrl; ?>/<?php echo $this->previous ?>">&laquo;</a></li>
+        <?php else: ?>
+            <li class="disabled"><a href="#">&lsaquo;</a></li>
+            <li class="disabled"><a href="#">&laquo;</a></li>
+        <?php endif; ?>
+
+        <!-- Numbered page links -->
+        <?php foreach ($this->pagesInRange as $page): ?>
+            <?php if ($page != $this->current): ?>
+                <li><a href="<?php echo $baseUrl ?>/<?php echo $page ?>"><?php echo $page; ?></a></li>
+            <?php else: ?>
+                <li class="active"><a href="#"><?php echo $page; ?><span class="sr-only">(current)</span></a></li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <!-- Next page link -->
+        <?php if (isset($this->next)): ?>
+            <li><a href="<?php echo $baseUrl; ?>/<?php echo $this->next ?>">&raquo;</a></li>
+            <li><a href="<?php echo $baseUrl; ?>/<?php echo $this->last ?>">&rsaquo;</a></li>
+        <?php else: ?>
+            <li class="disabled"><a href="#">&raquo;</a></li>
+            <li class="disabled"><a href="#">&rsaquo;</a></li>
+        <?php endif; ?>
+    </ul>
+    <span class="pagination-items pull-right">Mostrando <?php echo $this->firstItemNumber; ?> - <?php echo $this->lastItemNumber; ?> de <?php echo $this->totalItemCount; ?></span>
+<?php endif; ?>

@@ -1,0 +1,14 @@
+<h1 class="container-header">403 Acesso Negado</h1>
+<p>
+    <?php if ($error == 'error-unauthorized-controller') : ?>
+        Você não está autorizado a acessar <?php echo($controller);?>
+        <?php if ($action) : ?>
+        ::<?php echo($action);?>Action()
+        <?php endif;?>
+        .
+    <?php elseif ($error == 'error-unauthorized-route') : ?>
+        Você não está autorizado a acessar <?php echo $route;?>.
+    <?php else : ?>
+    Um erro ocorreu.
+    <?php endif;?>
+</p>

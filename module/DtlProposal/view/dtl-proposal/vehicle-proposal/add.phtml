@@ -1,0 +1,167 @@
+<?php
+$title = $this->translate('Nova Proposta de Veículo');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlproposal/vehicle-proposal/add'));
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="container-header">
+            <i class="fa fa-truck"></i> <?php echo $this->escapeHtml($title); ?>
+        </h2>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group pull-right">
+            <input type="submit" class="btn btn-primary" value="Salvar Proposta" />
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div><br/>
+<?php $vehicleProposal = $form->get('vehicleProposal'); ?>
+<?php $proposal = $vehicleProposal->get('proposal'); ?>
+<fieldset>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Dados Básicos'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($proposal->get('company')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php if ($this->employee()): ?>
+                                <?php echo $this->formSelect($proposal->get('employee')->setValue($this->employee()->getId())->setAttribute('class', 'hide')); ?>
+                            <?php else: ?>
+                                <?php echo $this->formLabel($proposal->get('employee')); ?>
+                                <?php echo $this->formSelect($proposal->get('employee')); ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($proposal->get('bank')); ?>
+                            <?php echo $this->formSelect($proposal->get('bank')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($vehicleProposal->get('shopman')); ?>
+                            <?php echo $this->formSelect($vehicleProposal->get('shopman')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($vehicleProposal->get('product')); ?>
+                            <?php echo $this->formSelect($vehicleProposal->get('product')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($vehicleProposal->get('seller')); ?>
+                            <?php echo $this->formSelect($vehicleProposal->get('seller')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Veículos'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $vehicle = new DtlVehicle\Form\Fieldset\Vehicle($this->entityManager, $this->companyId); ?>
+                <?php echo $this->vehicleProposalForm($vehicle); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Cliente'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $customer = $proposal->get('customer'); ?>
+                <?php echo $this->customerForm($customer, $this->post); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Contas do Cliente'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $customerBankAccount = new DtlCustomer\Form\Fieldset\CustomerBankAccount($this->entityManager, 0); ?>
+                <?php $customerBankAccount->remove('customerId'); ?>
+                <?php echo $this->customerBankAccountForm($customerBankAccount); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Referências do Cliente'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $customerReference = new DtlCustomer\Form\Fieldset\CustomerReference($this->entityManager, 0); ?>
+                <?php $customerReference->remove('customerId'); ?>
+                <?php echo $this->customerReferenceForm($customerReference); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Patrimônio'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $customerPatrimony = new DtlCustomer\Form\Fieldset\CustomerPatrimony($this->entityManager, 0); ?>
+                <?php $customerPatrimony->remove('customerId'); ?>
+                <?php echo $this->customerPatrimonyForm($customerPatrimony); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Veículos do Cliente'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $customerVehicle = new DtlCustomer\Form\Fieldset\CustomerVehicle($this->entityManager, 0); ?>
+                <?php $customerVehicle->remove('customerId'); ?>
+                <?php echo $this->customerVehicleForm($customerVehicle); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Resumo da Proposta'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <legend>Resumo da Proposta</legend>
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($vehicleProposal->get('value')); ?>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <?php echo $this->formText($vehicleProposal->get('value')); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($vehicleProposal->get('inValue')); ?>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <?php echo $this->formText($vehicleProposal->get('inValue')); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php echo $this->proposalForm($proposal); ?>
+            </div>
+        </div>
+    </div>
+    <br><input type="submit" class="btn btn-primary" value="Salvar Proposta" />
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>

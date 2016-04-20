@@ -1,0 +1,57 @@
+<?php
+$title = $this->translate('Nova Versão de Veículo');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+?>
+<h2 class="container-header"><?php echo $this->escapeHtml($title); ?></h2>
+<div class="row">
+    <div class="col-md-4">
+        <?php echo $this->form()->openTag($form); ?>
+        <fieldset>
+            <legend><?php echo $title; ?></legend>
+            <?php $vehicleVersion = $form->get('vehicleVersion'); ?>
+            <div class="form-group">
+                <?php echo $this->formHidden($vehicleVersion->get('id')); ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($vehicleVersion->get('brand')); ?>
+                        <?php echo $this->formSelect($vehicleVersion->get('brand')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($vehicleVersion->get('type')); ?>
+                        <?php echo $this->formSelect($vehicleVersion->get('type')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($vehicleVersion->get('model')); ?>
+                        <?php echo $this->formSelect($vehicleVersion->get('model')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($vehicleVersion->get('name')); ?>
+                        <?php echo $this->formText($vehicleVersion->get('name')); ?>
+                    </div>
+                </div>
+                <?php echo $this->formHidden($form->get('security')); ?>
+            </div>
+            <div class="btn-group btn-group-sm">  
+                <?php echo $this->formElement($form->get('submit')); ?>
+                <?php echo $this->formElement($form->get('cancel')); ?>
+            </div>
+        </fieldset>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+    <div class="col-md-8">
+        <legend>Lista de Versões</legend>
+        <div class="vehicle-version-list">
+            <div class="alert alert-info">
+                Selecione a Marca, Modelo e o Tipo do veículo que deseja listar suas versões.
+            </div>
+        </div>
+    </div>
+</div>

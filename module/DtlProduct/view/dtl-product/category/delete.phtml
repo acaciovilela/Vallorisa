@@ -1,0 +1,22 @@
+<?php
+$title = $this->translate('Apagar Categoria');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtlcategory/delete', array('id' => $this->id));
+?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="glyphicon glyphicon-list"></i> <?php echo $this->escapeHtml($title); ?></h2>
+    </div>
+    <div class="panel-body">
+        <blockquote><?php echo $this->translate('Você tem certeza de que deseja apagar ') ?>
+            '<?php echo $this->escapeHtml($this->category->getName()); ?>'?
+        </blockquote>
+        <form action="<?php echo $url; ?>" method="post">
+            <input type="hidden" name="id" value="<?php echo $this->category->getId(); ?>" />
+            <div class="btn-group">
+                <input type="submit" name="del" value="Sim" class="btn btn-danger" />
+                <input type="submit" name="del" value="Não" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

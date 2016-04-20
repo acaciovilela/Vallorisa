@@ -1,0 +1,319 @@
+<?php
+$caixaProposal = $this->caixaProposal;
+$proposal = $caixaProposal->getProposal();
+$customer = $proposal->getCustomer();
+$title = 'Detalhes da Proposta nº ' . $caixaProposal->getCaixaProposalId();
+$this->headTitle($title);
+?>
+<?php $class = ''; ?>
+<?php $status = ''; ?>
+<?php if ($caixaProposal->getProposal()->getIsChecking()): ?>
+    <?php $class = 'panel-info'; ?>
+    <?php $status = 'ABERTA'; ?>
+<?php elseif ($caixaProposal->getProposal()->getIsCanceled()): ?>
+    <?php $class = 'panel-canceled'; ?>
+    <?php $status = 'CANCELADA'; ?>
+<?php elseif ($caixaProposal->getProposal()->getIsRefused()): ?>
+    <?php $class = 'panel-danger'; ?>
+    <?php $status = 'RECUSADA'; ?>
+<?php elseif ($caixaProposal->getProposal()->getIsAborted()): ?>
+    <?php $class = 'panel-warning'; ?>
+    <?php $status = 'ABORTADA'; ?>
+<?php elseif ($caixaProposal->getProposal()->getIsApproved()): ?>
+    <?php $class = 'panel-muted'; ?>
+    <?php $status = 'APROVADA'; ?>
+<?php elseif ($caixaProposal->getProposal()->getIsIntegrated()): ?>
+    <?php $class = 'panel-success'; ?>
+    <?php $status = 'INTEGRADA'; ?>
+<?php elseif ($caixaProposal->getProposal()->getIsPending()): ?>
+    <?php $class = 'panel-primary'; ?>
+    <?php $status = 'PENDENTE'; ?>
+<?php endif; ?>
+<div class="panel <?php echo $class; ?>">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel-title">
+                    <i class="glyphicon glyphicon-plus-sign"></i> 
+                    Proposta Nº <?php echo str_pad($caixaProposal->getCaixaProposalId(), 8, '0', STR_PAD_LEFT); ?>
+                </div>
+            </div>
+            <div class="col-md-7 hidden-print">
+                <div class="btn-group btn-group-sm pull-right">
+                    <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
+                    echo $this->url('dtladmin/dtlproposal/caixa-proposal/delete', array('action' => 'delete',
+                        'id' => $caixaProposal->getCaixaProposalId()));
+                    ?>"><i class="glyphicon glyphicon-remove"></i> Apagar</a>
+                    <a class="btn btn-default" data-toggle="tooltip" title="Editar" href="<?php
+                    echo $this->url('dtladmin/dtlproposal/caixa-proposal/edit', array(
+                        'id' => $caixaProposal->getCaixaProposalId()));
+                    ?>"><i class="glyphicon glyphicon-edit"></i> Editar</a>
+                       <?php if (!$caixaProposal->getProposal()->getIsIntegrated()): ?>
+                        <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $caixaProposal->getCaixaProposalId(); ?>"
+                           href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/status', array('action' => 'status', 'id' => $caixaProposal->getCaixaProposalId())); ?>">
+                            <i class="glyphicon glyphicon-repeat"></i> Status</a>
+                    <?php endif; ?>
+                    <a class="btn btn-default app-tooltip" data-toggle="modal" title="Histórico" data-target="#proposalHistory<?php echo $caixaProposal->getCaixaProposalId(); ?>"
+                       href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/history', array('action' => 'history', 'id' => $caixaProposal->getCaixaProposalId())); ?>">
+                        <i class="glyphicon glyphicon-time"></i> Histórico</a>
+                    <a href="javascript: window.print();" class="btn btn-default">
+                        <i class="glyphicon glyphicon-print"></i> 
+                        <?php echo $this->translate('Imprimir'); ?>
+                    </a>
+                    <a class="btn btn-default" data-toggle="tooltip" title="Voltar" href="<?php
+                    echo $this->url('dtladmin/dtlproposal/caixa-proposal', array('action' => 'print',
+                        'id' => $caixaProposal->getCaixaProposalId()));
+                    ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+
+                    <div class="modal" id="proposalHistory<?php echo $caixaProposal->getCaixaProposalId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content"></div>
+                        </div>
+                    </div>
+                    <div class="modal" id="proposalStatus<?php echo $caixaProposal->getCaixaProposalId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="panel <?php echo $class; ?>">
+            <div class="panel-heading">
+                <div class="panel-title"><i class=""></i> Dados Básicos da Proposta</div>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dt>Número da Proposta:</dt>
+                            <dd><?php echo $caixaProposal->getCaixaProposalId(); ?></dd>
+                            <dt>Banco:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getBank()->getName(); ?></dd>
+                            <dt>Cidade:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getCompany()->getAddress()->getCity()->getName(); ?></dd>
+                            <dt>Data de Cadastro:</dt>
+                            <dd><?php echo $this->date($caixaProposal->getProposal()->getTimestamp()); ?></dd>
+                            <dt>Data Base:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getBaseDate(); ?></dd>
+                            <dt>Primeira Parc.:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getStartDate(); ?></dd>
+                            <dt>Última Parc.:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getEndDate(); ?></dd>
+                            <dt>Observações:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getNotes(); ?></dd>
+                        </div>
+                        <div class="col-md-6">
+                            <dt>Status da Proposta:</dt>
+                            <dd><?php echo $status; ?></dd>
+                            <dt>Empresa:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getCompany()->getCompanyFancyName(); ?></dd>
+                            <dt>Operador:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getEmployee()->getEmployeeName(); ?></dd>
+                            <dt>Total Financiado:</dt>
+                            <dd><?php echo $this->currency($caixaProposal->getProposal()->getValue()); ?></dd>
+                            <dt>Parcelas:</dt>
+                            <dd><?php echo $caixaProposal->getProposal()->getParcelAmount(); ?></dd>
+                            <dt>Valor da Parcela:</dt>
+                            <dd><?php echo $this->currency($caixaProposal->getProposal()->getParcelValue()); ?></dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
+        </div>
+        <div class="panel <?php echo $class; ?>">
+            <div class="panel-heading">
+                <div class="panel-title"><i class="glyphicon glyphicon-plus-sign"></i> Produtos da Proposta</div>
+            </div>
+            <?php if (0 == count($caixaProposal->getProducts())): ?>
+                <div class="panel-body">
+                    <div class="alert alert-info">
+                        <?php echo $this->translate('Nenhum registro encontrado.') ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <table class="table table-condensed table-hover">
+                    <tr>
+                        <th><?php echo $this->translate('PRODUTO'); ?></th>
+                    </tr>
+                    <?php foreach ($caixaProposal->getProducts() as $product) : ?>
+                        <tr>
+                            <td><?php echo $this->escapeHtml($product->getName()); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+        </div>
+
+        <div class="panel <?php echo $class; ?>">
+            <div class="panel-heading">
+                <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados do Cliente</div>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Nome:</dt>
+                    <dd><?php echo $customer->getPerson()->getName(); ?>&nbsp;</dd>
+                    <?php if ($customer->getPerson()->getType()): ?>
+                        <dt>CNPJ:</dt>
+                        <dd><?php echo $this->cnpj($customer->getPerson()->getlegal()->getCnpj()); ?>&nbsp;</dd>
+                        <dt>Inscrição Estadual:</dt>
+                        <dd><?php echo $customer->getPerson()->getlegal()->getSubscription(); ?>&nbsp;</dd>
+                        <dt>Representante:</dt>
+                        <dd><?php echo $customer->getPerson()->getlegal()->getRepresentativeName(); ?>&nbsp;</dd>
+                        <dt>Telefone do Rep.:</dt>
+                        <dd><?php echo $this->phone($customer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
+                    <?php else: ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dt>CPF:</dt>
+                                <dd><?php echo $this->cpf($customer->getPerson()->getIndividual()->getCpf()); ?>&nbsp;</dd>
+                                <dt>RG:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getRg(); ?>&nbsp;</dd>
+                                <dt>Sexo:</dt>
+                                <dd><?php echo $this->gender($customer->getPerson()->getIndividual()->getGender()); ?>&nbsp;</dd>
+                                <dt>Natural de:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getBirthPlace(); ?>/<?php echo $customer->getPerson()->getIndividual()->getBirthUf(); ?>&nbsp;</dd>
+                                <dt>Nome da Mãe:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getMother(); ?>&nbsp;</dd>
+                            </div>
+                            <div class="col-md-6">
+                                <dt>Data de Nascimento:</dt>
+                                <dd><?php echo $this->birthday($customer->getPerson()->getIndividual()->getBirthDay(), $customer->getPerson()->getIndividual()->getBirthMonth(), $customer->getPerson()->getIndividual()->getBirthYear()); ?></dd>
+                                <dt>Órgão Expedidor:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getRgOrgan(); ?> / <?php echo $customer->getPerson()->getIndividual()->getRgUf(); ?></dd>
+                                <dt>Data de Expedição:</dt>
+                                <dd><?php echo $this->date($customer->getPerson()->getIndividual()->getRgDate()); ?>&nbsp;</dd>
+                                <dt>Nacionalidade:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getNationality(); ?>&nbsp;</dd>
+                                <dt>Nome do Pai:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getFather(); ?>&nbsp;</dd>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dt>Endereço:</dt>
+                            <dd><?php echo $customer->getPerson()->getAddress()->getName(); ?>, nº <?php echo $customer->getPerson()->getAddress()->getNumber(); ?></dd>
+                            <dt>Complemento:</dt>
+                            <dd><?php echo $customer->getPerson()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                            <dt>Bairro:</dt>
+                            <dd><?php echo $customer->getPerson()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                            <dt>CEP:</dt>
+                            <dd><?php echo $this->cep($customer->getPerson()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                            <dt>Cidade:</dt>
+                            <dd><?php echo ($customer->getPerson()->getAddress()->getCity()) ? $customer->getPerson()->getAddress()->getCity()->getName() : ''; ?>&nbsp;</dd>
+                            <dt>Estado:</dt>
+                            <dd><?php echo ($customer->getPerson()->getAddress()->getState()) ? $customer->getPerson()->getAddress()->getState()->getName() : ''; ?>&nbsp;</dd>
+                            <dt>País:</dt>
+                            <dd><?php echo ($customer->getPerson()->getAddress()->getCountry()) ? $customer->getPerson()->getAddress()->getCountry()->getName() : '';; ?>&nbsp;</dd>
+                        </div>
+                        <div class="col-md-6">
+                            <dt>Email:</dt>
+                            <dd><?php echo $customer->getPerson()->getContact()->getEmail(); ?>&nbsp;</dd>
+                            <dt>Website:</dt>
+                            <dd><?php echo $customer->getPerson()->getContact()->getUrl(); ?>&nbsp;</dd>
+                            <dt>Telefone:</dt>
+                            <dd><?php echo $this->phone($customer->getPerson()->getContact()->getPhone()); ?>&nbsp;</dd>
+                            <dt>Celular:</dt>
+                            <dd><?php echo $this->phone($customer->getPerson()->getContact()->getCell()); ?>&nbsp;</dd>
+                            <dt>FAX:</dt>
+                            <dd><?php echo $this->phone($customer->getPerson()->getContact()->getFax()); ?>&nbsp;</dd>
+                            <dt>Tipo de Residência:</dt>
+                            <dd><?php echo $customer->getResidenceType(); ?></dd>
+                            <dt>Tempo na Residência:</dt>
+                            <dd><?php echo $customer->getResidenceTime(); ?></dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <?php if (!$customer->getPerson()->getType()): ?>
+            <div class="panel <?php echo $class; ?>">
+                <div class="panel-heading">
+                    <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados Profissionais do Cliente</div>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dt>Nome da Empresa:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getCompanyName(); ?></dd>
+                                <dt>Endereço:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getName(); ?>, nº <?php echo $customer->getPerson()->getAddress()->getNumber(); ?></dd>
+                                <dt>Complemento:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                                <dt>Bairro:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                                <dt>CEP:</dt>
+                                <dd><?php echo $this->cep($customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                                <dt>Cidade:</dt>
+                                <dd><?php echo ($customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()) ? $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()->getName() : ''; ?>&nbsp;</dd>
+                                <dt>Estado:</dt>
+                                <dd><?php echo ($customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()) ? $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()->getName() : ''; ?>&nbsp;</dd>
+                                <dt>País:</dt>
+                                <dd><?php echo ($customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()) ? $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()->getName() : ''; ?>&nbsp;</dd>
+                                <dt>Data de Admissão:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getInDate(); ?></dd>
+                                <dt>Cargo:</dt>
+                                <dd><?php echo ($customer->getPerson()->getIndividual()->getProfessional()->getOffice()) ? $customer->getPerson()->getIndividual()->getProfessional()->getOffice()->getName() : ''; ?></dd>
+                                <dt>Salário:</dt>
+                                <dd><?php echo $this->currency($customer->getPerson()->getIndividual()->getProfessional()->getSalary()); ?></dd>
+                            </div>
+                            <div class="col-md-6">
+                                <dt>CNPJ:</dt>
+                                <dd><?php echo $this->cnpj($customer->getPerson()->getIndividual()->getProfessional()->getCompanyCnpj()); ?>&nbsp;</dd>
+                                <dt>Email:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getContact()->getEmail(); ?>&nbsp;</dd>
+                                <dt>Website:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getContact()->getUrl(); ?>&nbsp;</dd>
+                                <dt>Telefone:</dt>
+                                <dd><?php echo $this->phone($customer->getPerson()->getIndividual()->getProfessional()->getContact()->getPhone()); ?>&nbsp;</dd>
+                                <dt>Celular:</dt>
+                                <dd><?php echo $this->phone($customer->getPerson()->getIndividual()->getProfessional()->getContact()->getCell()); ?>&nbsp;</dd>
+                                <dt>FAX:</dt>
+                                <dd><?php echo $this->phone($customer->getPerson()->getIndividual()->getProfessional()->getContact()->getFax()); ?>&nbsp;</dd>
+                                <dt>Outra Renda:</dt>
+                                <dd><?php echo $this->currency($customer->getPerson()->getIndividual()->getProfessional()->getOtherRevenue()); ?>&nbsp;</dd>
+                                <dt>Tipo de Residência:</dt>
+                                <dd><?php echo $customer->getResidenceType(); ?></dd>
+                                <dt>Tempo na Residência:</dt>
+                                <dd><?php echo $customer->getResidenceTime(); ?></dd>
+                                <dt>Observações:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getNotes(); ?>&nbsp;</dd>
+                            </div>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php if (count($customer->getAccounts()) > 0): ?>
+            <div class="panel <?php echo $class; ?>">
+                <div class="panel-heading">
+                    <div class="panel-title"><i class="glyphicon glyphicon-usd"></i> Contas Bancárias do Cliente</div>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <tr>
+                        <th class=""><?php echo $this->translate('TIPO DA CONTA'); ?></th>
+                        <th class=""><?php echo $this->translate('BANCO'); ?></th>
+                        <th class=""><?php echo $this->translate('AGÊNCIA'); ?></th>
+                        <th class=""><?php echo $this->translate('CONTA'); ?></th>
+                        <th class=""><?php echo $this->translate('CLIENTE DESDE'); ?></th>
+                    </tr>
+                    <?php foreach ($customer->getAccounts() as $customerBankAccount) : ?>
+                        <tr>
+                            <td><?php echo $this->escapeHtml($customerBankAccount->getType()); ?></td>
+                            <td><?php echo $this->escapeHtml($customerBankAccount->getBank()); ?></td>
+                            <td><?php echo $this->escapeHtml($customerBankAccount->getAgency()); ?></td>
+                            <td><?php echo $this->escapeHtml($customerBankAccount->getAccount()); ?></td>
+                            <td><?php echo $this->escapeHtml($customerBankAccount->getSince()); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

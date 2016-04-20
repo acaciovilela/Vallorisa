@@ -1,0 +1,17 @@
+<form action="" method="post" name="customerSearch" id="customerSearch">
+    <div class="form-group">
+        <label for="customer_cod_search">Código</label>
+        <input type="text" class="form-control input-sm" id="customer_cod_search" name="customer_cod_search" value="" placeholder="<?php echo $this->translate('Código do Cliente'); ?>" />
+    </div>
+    <div class="form-group">
+        <label for="customer_name_search">Cliente</label>
+        <input type="text" class="form-control input-sm" id="customer_name_search" name="customer_name_search" value="" placeholder="<?php echo $this->translate('Nome do Cliente'); ?>" />
+    </div>
+    <div class="form-group">
+        <label for="customer_doc_search">CPF/CNPJ</label>
+        <input type="text" class="form-control input-sm" id="customer_doc_search" name="customer_doc_search" value="" placeholder="<?php echo $this->translate('CPF/CNPJ'); ?>" />
+        <p class="help-block">Digite apenas números.</p>
+    </div>
+        <button type="submit" class="btn btn-warning btn-sm" name="submit" value="Filtrar"><?php echo $this->translate('Filtrar');?></button>
+        <button type="button" onclick="window.location.href = '/admin/customer'" class="btn btn-default btn-sm"><?php echo $this->translate('Limpar');?></button>
+</form>

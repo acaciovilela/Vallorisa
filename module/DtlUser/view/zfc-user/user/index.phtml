@@ -1,0 +1,23 @@
+<?php $user = $this->identity(); ?>
+<h3 class="header-title"><i class="glyphicon glyphicon-user"></i> <?php echo $this->translate('Perfil de Usuário'); ?></h3>
+<div class="row">
+    <div class="col-sm-3 text-right">
+        <div class="">
+            <img src="<?php echo $this->basePath('img/demo.jpg'); ?>" class="img-thumbnail" />
+        </div>
+        <div class="">
+            <h3><?php echo $user->getDisplayName() . " " . $user->getProfile()->getLastName(); ?></h3>
+            <div class="">
+                <p><?php echo $user->getEmail(); ?></p>
+            </div>
+            <hr/>
+            <p>
+                <a href="#"><i class="fa fa-edit"></i> <?php echo $this->translate('Editar Perfil'); ?></a>
+            </p>
+            <p>
+                <a href="<?php echo $this->url('zfcuser/changepassword'); ?>"><i class="fa fa-lock"></i> <?php echo $this->translate('Alterar Senha'); ?></a>
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-9"></div>
+</div>

@@ -1,0 +1,47 @@
+<div class="add-commissions">
+<!--<button  type="button" class="btn btn-default btn-sm" onclick="javascript: return addCommission();"><i class="glyphicon glyphicon-plus-sign"></i></button>-->
+    <?php $commissions = $this->commissions; ?>
+    <!--        <legend>
+    <?php echo $commissions->getLabel(); ?>
+                <button type="button" class="btn btn-default btn-sm" onclick="return addCommission();"><i class="glyphicon glyphicon-plus-sign"></i></button>
+            </legend>
+            <div class="form-gorup commission-template">
+    <?php foreach ($commissions as $commission): ?>
+                        <fieldset>
+        <?php echo $this->formHidden($commission->get('id')); ?>
+                            <div class="row">
+                                <div class="col-md-3">
+        <?php echo $this->formLabel($commission->get('product')); ?>
+        <?php echo $this->formSelect($commission->get('product')); ?>
+                                </div>
+                                <div class="col-md-2">
+        <?php echo $this->formLabel($commission->get('fixed')); ?>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">R$</span>
+        <?php echo $this->formText($commission->get('fixed')); ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+        <?php echo $this->formLabel($commission->get('variant')); ?>
+                                    <div class="input-group">
+        <?php echo $this->formText($commission->get('variant')); ?>
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+    <?php endforeach; ?>
+            </div>-->
+    <?php echo $this->formCollection($commissions); ?>
+    <div class="help-block"><?php echo $this->translate('Clique no botão <i class="glyphicon glyphicon-plus-sign"></i> para acrescentar uma nova comissão ao funcionário.');?></div>
+    <button  type="button" class="btn btn-default btn-sm" onclick="javascript: return addCommission();"><i class="glyphicon glyphicon-plus-sign"></i></button>
+    <br/><br/>
+</div>
+
+<style>
+    .add-commissions label {
+        float: left;
+        margin-right: 20px;
+        padding: 5px 0 5x 0;
+    }
+</style>

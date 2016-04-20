@@ -1,0 +1,17 @@
+<form action="" method="post" name="supplierSearch" id="supplierSearch">
+    <div class="form-group">
+        <label for="supplier_cod_search">Código</label>
+        <input type="text" class="form-control input-sm" id="supplier_cod_search" name="supplier_cod_search" value="" placeholder="<?php echo $this->translate('Código do Fornecedor'); ?>" />
+    </div>
+    <div class="form-group">
+        <label for="supplier_name_search">Fornecedor</label>
+        <input type="text" class="form-control input-sm" id="supplier_name_search" name="supplier_name_search" value="" placeholder="<?php echo $this->translate('Nome do Fornecedor'); ?>" />
+    </div>
+    <div class="form-group">
+        <label for="supplier_doc_search">CPF/CNPJ</label>
+        <input type="text" class="form-control input-sm" id="supplier_doc_search" name="supplier_doc_search" value="" placeholder="<?php echo $this->translate('CPF/CNPJ'); ?>" />
+        <p class="help-block">Digite apenas números.</p>
+    </div>
+        <button type="submit" class="btn btn-warning btn-sm" name="submit" value="Filtrar"><?php echo $this->translate('Filtrar');?></button>
+        <button type="button" onclick="window.location.href = '/admin/supplier'" class="btn btn-default btn-sm"><?php echo $this->translate('Limpar');?></button>
+</form>

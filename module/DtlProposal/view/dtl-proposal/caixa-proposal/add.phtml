@@ -1,0 +1,99 @@
+<?php
+$title = $this->translate('Nova Proposta de Produto Caixa');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlproposal/caixa-proposal/add'));
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="container-header">
+            <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->escapeHtml($title); ?>
+        </h2>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group pull-right">
+            <input type="submit" class="btn btn-primary" value="Salvar Proposta" />
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div><br/>
+<?php $caixaProposal = $form->get('caixaProposal'); ?>
+<?php $proposal = $caixaProposal->get('proposal'); ?>
+<fieldset>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Dados Básicos'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($proposal->get('company')); ?>
+                            <?php echo $this->formSelect($proposal->get('company')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php if ($this->employee()): ?>
+                                <?php echo $this->formSelect($proposal->get('employee')->setValue($this->employee()->getId())->setAttribute('class', 'hide')); ?>
+                            <?php else: ?>
+                                <?php echo $this->formLabel($proposal->get('employee')); ?>
+                                <?php echo $this->formSelect($proposal->get('employee')); ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formSelect($proposal->get('bank')->setValue(17)); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Produtos Caixa'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $product = new DtlProposal\Form\Fieldset\Product($this->entityManager); ?>
+                <?php echo $this->caixaProposalForm($product); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Cliente'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $customer = $proposal->get('customer'); ?>
+                <?php echo $this->customerForm($customer, $this->post, true); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Contas do Cliente'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $customerBankAccount = new DtlCustomer\Form\Fieldset\CustomerBankAccount($this->entityManager, 0); ?>
+                <?php $customerBankAccount->remove('customerId'); ?>
+                <?php echo $this->customerBankAccountForm($customerBankAccount); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Resumo da Proposta'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->proposalForm($proposal); ?>
+            </div>
+        </div>
+        <br><input type="submit" class="btn btn-primary" value="Salvar Proposta" />
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>

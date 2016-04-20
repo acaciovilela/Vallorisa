@@ -1,0 +1,59 @@
+<?php
+$title = $this->translate('Cargos');
+$this->placeholder('title')->set($title);
+$this->placeholder('title-icon')->set('<i class="typcn typcn-group"></i>')
+?>
+
+<div class="page-body">
+    <div class='widget-box'>
+        <div class="widget-header">
+            <div class="widget-caption">
+                <div class="widget-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <?php echo $this->translate('Gereciador de cargos e posições de trabalho.'); ?>
+            </div>
+            <div class="widget-toolbar">
+                <div class="btn-group">
+                    <a data-toggle="modal" data-target="#officeNew" class="btn btn-success" href="<?php echo $this->url('dtladmin/dtloffice/add'); ?>"><i class="fa fa-plus-circle"></i>&nbsp;<?php echo $this->translate('Novo Cargo'); ?></a>
+                </div>
+            </div>
+        </div>
+        <div class='widget-body'>
+            <div class='widget-main'>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->translate('CARGO'); ?></th>
+                            <th class="text-right btn-group-sm">
+                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->offices as $office): ?>
+                            <tr>
+                                <td><?php echo $this->escapeHtml($office->getName()); ?></td>
+                                <td>
+                                    <div class="btn-group-xs text-right">
+                                        <a data-toggle='modal' data-target='#officeEdit' href="<?php echo $this->url('dtladmin/dtloffice/edit', array('id' => $office->getId())); ?>" class="btn btn-info btn-xs icon-only"><i class="fa fa-edit"></i></a>
+                                        <a data-toggle="modal" data-target="#officeDelete" href="<?php echo $this->url('dtladmin/dtloffice/delete', array('id' => $office->getId())); ?>" class="btn btn-danger btn-xs icon-only"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-success fade" tabindex="-1" aria-hidden="true" role="modal" id="officeNew">
+    <div class="modal-dialog"><div class="modal-content"></div></div>
+</div>
+<div class="modal modal-primary fade" tabindex="-1" aria-hidden="true" role="modal" id="officeEdit">
+    <div class="modal-dialog"><div class="modal-content"></div></div>
+</div>
+<div class="modal modal-danger fade" tabindex="-1" aria-hidden="true" role="modal" id="officeDelete">
+    <div class="modal-dialog"><div class="modal-content"></div></div>
+</div>

@@ -1,0 +1,27 @@
+<?php
+$title = $this->translate('Editar Item Contábil');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlaccountingitem/edit', array('id' => $this->id)));
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<div class="modal-header">
+    <h3 class="modal-title"><i class="fa fa-edit"></i> <?php echo $this->escapeHtml($title); ?></h3>
+</div>
+<div class="modal-body">
+    <?php $accountingItem = $form->get('accountingItem'); ?>
+    <?php echo $this->formHidden($accountingItem->get('id')); ?>
+    <div class="form-group">
+        <?php echo $this->formLabel($accountingItem->get('name')); ?>
+        <?php echo $this->formText($accountingItem->get('name')); ?>
+    </div>
+    <div class="radio">
+        <?php echo $this->formRadio($accountingItem->get('type')); ?>
+    </div>
+</div>
+<div class="modal-footer">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

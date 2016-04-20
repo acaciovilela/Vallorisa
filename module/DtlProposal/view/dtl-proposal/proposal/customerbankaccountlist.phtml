@@ -1,0 +1,39 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <i class="glyphicon glyphicon-usd"></i> 
+            Lista de Contas Bancárias do Cliente
+        </div>
+    </div>
+    <?php if (0 == count($this->customerBankAccounts)): ?>
+        <div class="panel-body">
+            <div class="alert alert-info">
+                <?php echo $this->translate('Nenhum registro encontrado.') ?>
+            </div>
+        </div>
+    <?php else: ?>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th class=""><?php echo $this->translate('TIPO DA CONTA'); ?></th>
+                <th class=""><?php echo $this->translate('BANCO'); ?></th>
+                <th class=""><?php echo $this->translate('AGÊNCIA'); ?></th>
+                <th class=""><?php echo $this->translate('CONTA'); ?></th>
+                <th class="" colspan="2"><?php echo $this->translate('CLIENTE DESDE'); ?></th>
+            </tr>
+            <?php foreach ($this->customerBankAccounts as $key => $customerBankAccount) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($customerBankAccount['bankAccountType']); ?></td>
+                    <td><?php echo ($customerBankAccount['bank']) ? $this->bankName($customerBankAccount['bank']) : $customerBankAccount['bankName']; ?></td>
+                    <td><?php echo $this->escapeHtml($customerBankAccount['bankAccountAgency']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerBankAccount['bankAccountAccount']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerBankAccount['bankAccountSince']); ?></td>
+                    <td>
+                        <div class="btn-group btn-group-xs pull-right">
+                            <a class="btn btn-default" href="javascript: proposalCustomerBankAccountDelete('<?php echo $key; ?>', '<?php echo $customerBankAccount['bankAccountId']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
+</div>

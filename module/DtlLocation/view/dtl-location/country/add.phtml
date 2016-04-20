@@ -1,0 +1,32 @@
+<?php
+$title = $this->translate('Adicionar País');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+?>
+<h1 class="container-header"><i class="fa fa-flag"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<?php echo $this->form()->openTag($form); ?>
+<?php $country = $form->get('country'); ?>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <?php echo $this->formLabel($country->get('name')); ?>
+            <?php echo $this->formText($country->get('name')); ?>
+            <?php echo $this->formElementErrors($country->get('name')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1">
+        <div class="form-group">
+            <?php echo $this->formLabel($country->get('code')); ?>
+            <?php echo $this->formText($country->get('code')); ?>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="btn-group">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

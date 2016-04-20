@@ -1,0 +1,108 @@
+<form id="vehicle-proposal-form" name="vehicle-proposal-form">
+    <div class="row">
+        <div class="col-md-6">
+            <?php $vehicle = $this->vehicleProposal; ?>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($vehicle->get('brand')); ?>
+                        <?php echo $this->formSelect($vehicle->get('brand')); ?>
+
+                        <?php echo $this->formLabel($vehicle->get('type')); ?>
+                        <?php echo $this->formSelect($vehicle->get('type')); ?>
+
+                        <?php echo $this->formLabel($vehicle->get('model')); ?>
+                        <?php echo $this->formSelect($vehicle->get('model')); ?>
+
+                        <?php echo $this->formLabel($vehicle->get('version')); ?>
+                        <?php echo $this->formSelect($vehicle->get('version')); ?>
+
+                        <div class='row'>
+                            <div class="col-md-6">
+                                <?php echo $this->formLabel($vehicle->get('year')); ?>
+                                <?php echo $this->formText($vehicle->get('year')); ?>
+                            </div>
+                            <div class='col-md-6'>
+                                <?php echo $this->formLabel($vehicle->get('yearModel')); ?>
+                                <?php echo $this->formText($vehicle->get('yearModel')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <?php echo $this->formLabel($vehicle->get('plate')); ?>
+                                <?php echo $this->formText($vehicle->get('plate')); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php echo $this->formLabel($vehicle->get('plateUf')); ?>
+                                <?php echo $this->formText($vehicle->get('plateUf')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php echo $this->formLabel($vehicle->get('status')); ?>
+                                <?php echo $this->formSelect($vehicle->get('status')); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?php echo $this->formLabel($vehicle->get('fuel')); ?>
+                                <?php echo $this->formSelect($vehicle->get('fuel')); ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?php echo $this->formLabel($vehicle->get('color')); ?>
+                                <?php echo $this->formText($vehicle->get('color')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php echo $this->formLabel($vehicle->get('ownerType')); ?>
+                                <?php echo $this->formSelect($vehicle->get('ownerType')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php echo $this->formLabel($vehicle->get('frame')); ?>
+                                <?php echo $this->formText($vehicle->get('frame')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <?php echo $this->formLabel($vehicle->get('renavam')); ?>
+                                <?php echo $this->formText($vehicle->get('renavam')); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php echo $this->formLabel($vehicle->get('licenceUf')); ?>
+                                <?php echo $this->formText($vehicle->get('licenceUf')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php echo $this->formLabel($vehicle->get('notes')); ?>
+                                <?php echo $this->formTextarea($vehicle->get('notes')); ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <?php echo $this->formLabel($vehicle->get('value')); ?>
+                                <div class="input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <?php echo $this->formText($vehicle->get('value')); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Veículo</label>
+                                <input type="button" class=" form-control input-sm btn btn-info btn-sm" onclick="javascript: vehicleProposalAdd();" value="Inserir" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="vehicle-proposal-list"></div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">vehicleProposalList();</script>

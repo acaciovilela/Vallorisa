@@ -1,0 +1,66 @@
+<?php
+$title = $this->translate('Editar Despesa');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlfinancial/expense/edit', array('id' => $this->id)));
+$form->prepare();
+?>
+<h3 class="header-title"><i class="fa fa-upload"></i> <?php echo $this->escapeHtml($title); ?></h3>
+<?php echo $this->form()->openTag($form); ?>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#tab1" data-toggle="tab"><?php echo $this->translate('Dados da Despesa'); ?></a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+            <?php $expense = $form->get('expense'); ?>
+            <?php echo $this->formHidden($expense->get('id')); ?>
+            <?php $launch = $expense->get('launch'); ?>
+            <div class="form-group"> 
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($expense->get('supplier')); ?>
+                        <?php echo $this->formSelect($expense->get('supplier')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($launch->get('description')); ?>
+                        <?php echo $this->formText($launch->get('description')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <?php echo $this->formLabel($launch->get('currentAccount')); ?>
+                        <?php echo $this->formSelect($launch->get('currentAccount')); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $this->formLabel($launch->get('accountingItem')); ?>
+                        <?php echo $this->formSelect($launch->get('accountingItem')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <?php echo $this->formLabel($launch->get('date')); ?>
+                        <?php echo $this->dtlBaseFormDate($launch->get('date')); ?>
+                    </div>  
+                    <div class="col-md-3">
+                        <?php echo $this->formLabel($launch->get('value')); ?>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <?php echo $this->formText($launch->get('value')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="button-bar">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

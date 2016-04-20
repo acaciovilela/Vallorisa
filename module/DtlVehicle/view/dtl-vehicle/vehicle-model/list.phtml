@@ -1,0 +1,21 @@
+<table class="table table-condensed table-hover">
+    <tr>
+        <th colspan="10"><?php echo $this->translate('MODELO'); ?></th>
+    </tr>
+    <?php if (0 == count($this->vehicleModel)): ?>
+        <tr>
+            <td colspan="10" class="alert alert-info text-center"><?php echo $this->translate('Nenhum registro encontrado.') ?></td>
+        </tr>
+    <?php else: ?>
+        <?php foreach ($this->vehicleModel as $vehicleModel) : ?>
+            <tr>
+                <td><?php echo $this->escapeHtml($vehicleModel->getName()); ?></td>
+                <td>
+                    <div class="btn-group btn-group-xs pull-right">
+                        <a class="btn btn-default" href="javascript: vehicleModelDelete('<?php echo $vehicleModel->getId();?>','<?php echo $vehicleModel->getType()->getId();?>');"><i class="glyphicon glyphicon-remove"></i></a>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</table>

@@ -1,0 +1,25 @@
+<?php
+$title = $this->translate('Edit Cidade');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtllocation/city/edit', array('id' => $this->id)));
+$form->prepare();
+?>
+<h1 class="container-header"><i class="fa fa-flag"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<?php echo $this->form()->openTag($form); ?>
+<?php $city = $form->get('city'); ?>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <?php echo $this->formLabel($city->get('name')); ?>
+            <?php echo $this->formText($city->get('name')); ?>
+            <?php echo $this->formElementErrors($city->get('name')); ?>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="btn-group">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

@@ -1,0 +1,22 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <?php
+        echo $this->headMeta()
+                ->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+                ->appendHttpEquiv('Content-Language', 'pt-BR')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+                ->appendHttpEquiv('Cache-Control', 'max-age=31536000; public')
+                ->appendHttpEquiv('Last-Modified', gmdate('D, d M Y H:i:s') . " GMT")
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ?>
+        <?php 
+            echo $this->headScript()
+                ->appendFile($this->basePath() . '/js/application.js', 'text/javascript', array('charset' => 'UTF-8')); ?>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <?php echo $this->content; ?>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<?php
+$title = $this->translate('Apagar Conta Corrente');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtlcurrentaccount/delete', array('id' => $this->id));
+?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title"><i class="glyphicon glyphicon-random"></i> <?php echo $this->escapeHtml($title); ?></h2>
+    </div>
+    <div class="panel-body">
+        <blockquote>
+            <?php echo $this->translate('Você tem certeza de que quer apagar ') ?>
+            '<?php echo $this->escapeHtml($this->currentAccount->getName()); ?>'?
+        </blockquote>
+        <form action="<?php echo $url; ?>" method="post">
+            <div>
+                <input type="hidden" name="id" value="<?php echo $this->currentAccount->getId(); ?>" />
+                <div class="btn-group">
+                    <input  type="submit" name="del" value="Sim" class="btn btn-primary" />
+                    <input type="submit" name="del" value="Não" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

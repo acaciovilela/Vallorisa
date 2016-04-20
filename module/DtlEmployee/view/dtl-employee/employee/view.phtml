@@ -1,0 +1,107 @@
+<?php
+$employee   = $this->employee;
+$person     = $employee->getPerson();
+$address    = $person->getAddress();
+$contact    = $person->getContact();
+$individual = $person->getIndividual();
+$title = 'Detalhes de ' . $person->getName();
+$this->headTitle($title);
+?>
+<div class="row">
+    <div class="col-md-6">
+        <blockquote>
+            <p class="text-danger"><?php echo $person->getName(); ?></p>
+        </blockquote>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group pull-right">
+            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlemployee/add'); ?>"> <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo'); ?></a>
+            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlemployee/edit', array('id' => $employee->getId()));?>"><i class="glyphicon glyphicon-edit"></i> <?php echo $this->translate('Editar');?></a>
+            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlemployee/delete', array('id' => $employee->getId()));?>"><i class="glyphicon glyphicon-remove"></i> <?php echo $this->translate('Apagar');?></a>
+            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlemployee');?>"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('Voltar');?></a>
+        </div>
+    </div>
+</div>
+<dl class="dl-horizontal">
+    <legend>Dados da Pessoa Física</legend>
+    <div class="row">
+        <div class="col-md-5">
+            <dt>CPF:</dt>
+            <dd><?php echo $this->cpf($individual->getCpf()); ?>&nbsp;</dd>
+            <dt>RG:</dt>
+            <dd><?php echo $individual->getRg(); ?>&nbsp;</dd>
+            <dt>Sexo:</dt>
+            <dd><?php echo $this->gender($individual->getGender()); ?>&nbsp;</dd>
+            <dt>Natural de:</dt>
+            <dd><?php echo $individual->getBirthPlace(); ?>/<?php echo $individual->getBirthUf();?>&nbsp;</dd>
+            <dt>Nome da Mãe:</dt>
+            <dd><?php echo $individual->getMother(); ?>&nbsp;</dd>
+        </div>
+        <div class="col-md-5">
+            <dt>Data de Nascimento:</dt>
+            <dd>
+                <?php echo $individual->getBirthDay();?>/<?php echo $individual->getBirthMonth();?>/<?php echo $individual->getBirthYear(); ?>
+            </dd>
+            <dt>Órgão Expedidor:</dt>
+            <dd><?php echo $individual->getRgOrgan(); ?> / <?php echo $individual->getRgUf(); ?></dd>
+            <dt>Data de Expedição:</dt>
+            <dd><?php echo $individual->getRgDate(); ?>&nbsp;</dd>
+            <dt>Nacionalidade:</dt>
+            <dd><?php echo $individual->getNationality(); ?>&nbsp;</dd>
+            <dt>Nome do Pai:</dt>
+            <dd><?php echo $individual->getFather(); ?>&nbsp;</dd>
+        </div>
+    </div>
+
+    <legend>Endereço</legend>
+    <dt>Endereço:</dt>
+    <dd><?php echo $address->getName(); ?>, nº <?php echo $address->getNumber(); ?></dd>
+    <dt>Complemento:</dt>
+    <dd><?php echo $address->getComplement(); ?>&nbsp;</dd>
+    <dt>Bairro:</dt>
+    <dd><?php echo $address->getQuarter(); ?>&nbsp;</dd>
+    <dt>CEP:</dt>
+    <dd><?php echo $this->cep($address->getPostalCode()); ?>&nbsp;</dd>
+    <dt>Cidade:</dt>
+    <dd><?php echo ($address->getCity()) ? $address->getCity()->getName() : ''; ?>&nbsp;</dd>
+    <dt>Estado:</dt>
+    <dd><?php echo ($address->getState()) ? $address->getState()->getName() : ''; ?>&nbsp;</dd>
+    <dt>País:</dt>
+    <dd><?php echo ($address->getCountry()) ? $address->getCountry()->getName() : ''; ?>&nbsp;</dd>
+
+    <legend>Contato</legend>
+    <dt>Email:</dt>
+    <dd><?php echo $contact->getEmail(); ?>&nbsp;</dd>
+    <dt>Website:</dt>
+    <dd><?php echo $contact->getUrl(); ?>&nbsp;</dd>
+    <dt>Telefone:</dt>
+    <dd><?php echo $this->phone($contact->getPhone()); ?>&nbsp;</dd>
+    <dt>Celular:</dt>
+    <dd><?php echo $this->phone($contact->getCell()); ?>&nbsp;</dd>
+    <dt>FAX:</dt>
+    <dd><?php echo $this->phone($contact->getFax()); ?>&nbsp;</dd>
+
+    <legend>Dados do Funcionário</legend>
+    <dt>Data de Admissão:</dt>
+    <dd><?php echo $employee->getAdmissionDate(); ?>&nbsp;</dd>
+    <dt>Data de Demissão:</dt>
+    <dd><?php echo $employee->getDemissionDate(); ?>&nbsp;</dd>
+    <dt>Carga Horária:</dt>
+    <dd><?php echo $employee->getWorkTime(); ?> hs</dd>
+    <div class="row">
+        <div class="col-md-2">
+            <dt>CTPS:</dt>
+            <dd><?php echo $employee->getCtps(); ?>&nbsp;</dd>
+        </div>
+        <div class="col-md-1">
+            <dt>Série:</dt>
+            <dd><?php echo $employee->getCtpsSerie(); ?>&nbsp;</dd>
+        </div>
+    </div>
+    <dt>PIS:</dt>
+    <dd><?php echo $employee->getPis(); ?>&nbsp;</dd>
+    <dt>Salário:</dt>
+    <dd><?php echo $employee->getSalary(); ?>&nbsp;</dd>
+    <dt>Bônus:</dt>
+    <dd><?php echo $employee->getBonus(); ?>&nbsp;</dd>
+</dl>

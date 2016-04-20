@@ -1,0 +1,27 @@
+<?php
+$title = $this->translate('Apagar Corretor de Imóveis');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtlrealtor/delete', array(
+    'action' => 'delete',
+    'id' => $this->id,
+        ));
+?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h1 class="container-header"><?php echo $this->escapeHtml($title); ?></h1>
+        </div>
+    </div>
+    <div class="panel-body">
+        <blockquote><?php echo $this->translate('Você tem certeza de que deseja apagar ') ?>
+            '<?php echo $this->escapeHtml($this->realtor->getPerson()->getName()); ?>'?
+        </blockquote>
+        <form action="<?php echo $url; ?>" method="post">
+            <input type="hidden" name="id" value="<?php echo $this->realtor->getId(); ?>" />
+            <div class="btn-group">
+                <input type="submit" name="del" value="Sim" class="btn btn-default" />
+                <input type="submit" name="del" value="Não" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

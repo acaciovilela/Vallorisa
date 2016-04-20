@@ -1,0 +1,154 @@
+<?php
+$title = $this->translate('Propostas de Venda de Imóveis');
+$this->headTitle($title);
+?>
+<div class="modal" id="proposalSearch" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="AdvancedSearch">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content"></div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-title"><i class="glyphicon glyphicon-home"></i> <?php echo $this->escapeHtml($title); ?></div>
+            </div>
+            <div class="col-md-6 hidden-print">
+                <div class="pull-right">
+                    <form class="form-inline" name="proposalSearch" method="post">
+                        <div class="form-group">
+                            <a class="btn btn-default btn-sm" href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/pre', array('action' => 'pre')); ?>"><i class="glyphicon glyphicon-plus-sign"></i> Nova Proposta</a>
+                            <div class="btn-group">
+                                <a class="btn btn-default btn-sm app-tooltip" data-toggle="modal" title="Filtrar resultados" data-target="#proposalSearch" data-remote="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/search', array('action' => 'search')); ?>"><i class="glyphicon glyphicon-search"></i> Filtrar</a>
+                                <a class="btn btn-default btn-sm" data-toggle="tooltip" title="Remover todos os filtros" href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal'); ?>"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                            </div>
+                            <div class="btn-group btn-group-sm">
+                                <a href="javascript: window.print();" class="btn btn-default" data-toggle="tooltip" title="Imprir lista"><i class="glyphicon glyphicon-print"></i></a>
+                                <a href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/exportCsv');?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-condensed table-hover">
+        <tr>
+            <th class=""><?php echo $this->translate('CÓD'); ?></th>
+            <th class=""><?php echo $this->translate('CLIENTE'); ?></th>
+            <th class=""><?php echo $this->translate('DATA'); ?></th>
+            <th class=""><?php echo $this->translate('VALOR DO IMÓVEL'); ?></th>
+            <th class=""><?php echo $this->translate('VALOR FINANC.'); ?></th>
+            <th class=""><?php echo $this->translate('BANCO'); ?></th>
+            <th class=""><?php echo $this->translate('STATUS'); ?></th>
+            <th colspan="2"><?php echo $this->translate('INTEGRADA'); ?></th>
+        </tr>
+        <?php if (0 == count($this->realtyProposal)): ?>
+            <tr>
+                <td colspan="20" class="alert alert-info text-center"><?php echo $this->translate('Não há nenhum registro no banco de dados.') ?></td>
+            </tr>
+        <?php else: ?>
+            <?php foreach ($this->realtyProposal as $realtyProposal) : ?>
+                <?php $class = ''; ?>
+                <?php $status = ''; ?>
+                <?php if ($realtyProposal->getProposal()->getIsChecking()): ?>
+                    <?php $class = 'text-info'; ?>
+                    <?php $status = 'ABERTA'; ?>
+                <?php elseif ($realtyProposal->getProposal()->getIsCanceled()): ?>
+                    <?php $class = 'text-canceled'; ?>
+                    <?php $status = 'CANCELADA'; ?>
+                <?php elseif ($realtyProposal->getProposal()->getIsRefused()): ?>
+                    <?php $class = 'text-danger'; ?>
+                    <?php $status = 'RECUSADA'; ?>
+                <?php elseif ($realtyProposal->getProposal()->getIsAborted()): ?>
+                    <?php $class = 'text-warning'; ?>
+                    <?php $status = 'ABORTADA'; ?>
+                <?php elseif ($realtyProposal->getProposal()->getIsApproved()): ?>
+                    <?php $class = 'text-muted'; ?>
+                    <?php $status = 'APROVADA'; ?>
+                <?php elseif ($realtyProposal->getProposal()->getIsIntegrated()): ?>
+                    <?php $class = 'text-success'; ?>
+                    <?php $status = 'INTEGRADA'; ?>
+                <?php elseif ($realtyProposal->getProposal()->getIsPending()): ?>
+                    <?php $class = 'text-primary'; ?>
+                    <?php $status = 'PENDENTE'; ?>
+                <?php endif; ?>
+                <tr class='<?php echo $class; ?>'>
+                    <td><?php echo str_pad($realtyProposal->getId(), 8, '0', STR_PAD_LEFT); ?></td>
+                    <td><?php echo $this->escapeHtml($realtyProposal->getProposal()->getCustomer()->getPerson()->getName()); ?></td>
+                    <td><?php echo $this->date($realtyProposal->getProposal()->getTimestamp()); ?></td>
+                    <td><?php echo $this->currency($realtyProposal->getTotalValue()); ?></td>
+                    <td><?php echo $this->currency($realtyProposal->getProposal()->getValue()); ?></td>
+                    <td><?php echo $this->escapeHtml($realtyProposal->getProposal()->getBank()->getName()); ?></td>
+                    <td><?php echo $this->escapeHtml($status); ?></td>
+                    <?php if ($realtyProposal->getProposal()->getIsIntegrated()): ?>
+                        <td><?php echo $realtyProposal->getProposal()->getBaseDate(); ?></td>
+                    <?php else: ?>
+                        <td><?php echo $this->translate('NÃO'); ?></td>
+                    <?php endif; ?>
+                    <td>
+                        <div class="btn-group btn-group-xs pull-right hidden-print">
+                            <a class="btn btn-default" data-toggle="tooltip" title="Ver Detalhes" href="<?php
+                            echo $this->url('dtladmin/dtlproposal/realty-proposal/view', array('action' => 'view',
+                                'id' => $realtyProposal->getId()));
+                            ?>"><i class="glyphicon glyphicon-folder-open"></i></a>
+                            <a class="btn btn-default" data-toggle="tooltip" title="Editar Proposta" href="<?php
+                            echo $this->url('dtladmin/dtlproposal/realty-proposal/edit', array(
+                                'id' => $realtyProposal->getId()));
+                            ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                               <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
+                                <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
+                                echo $this->url('dtladmin/dtlproposal/realty-proposal/delete', array('action' => 'delete',
+                                    'id' => $realtyProposal->getId()));
+                                ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Avaliação do Imóvel" data-target="#realtyEvaluation<?php echo $realtyProposal->getId(); ?>"
+                                   href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/evaluation', array('action' => 'evaluation', 'id' => $realtyProposal->getId())); ?>">
+                                    <i class="glyphicon glyphicon-search"></i></a>
+                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Migração Bancária" data-target="#bankReport<?php echo $realtyProposal->getId(); ?>"
+                                   href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/bank', array('action' => 'bank', 'id' => $realtyProposal->getId())); ?>">
+                                    <i class="glyphicon glyphicon-lock"></i></a>
+                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $realtyProposal->getId(); ?>"
+                                   href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/status', array('action' => 'status', 'id' => $realtyProposal->getId())); ?>">
+                                    <i class="glyphicon glyphicon-repeat"></i></a>
+                            <?php // endif; ?>
+                            <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Histórico" data-target="#proposalHistory<?php echo $realtyProposal->getId(); ?>"
+                               href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/history', array('action' => 'history', 'id' => $realtyProposal->getId())); ?>">
+                                <i class="glyphicon glyphicon-time"></i></a>
+
+                        </div>
+                    </td>
+                </tr>
+                <div class="modal" id="proposalHistory<?php echo $realtyProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
+                <div class="modal" id="proposalStatus<?php echo $realtyProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
+                <div class="modal" id="bankReport<?php echo $realtyProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
+                <div class="modal" id="realtyEvaluation<?php echo $realtyProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </table>
+    <div class="panel-footer hidden-print">
+        <?php
+        $paginationInfo = $this->placeholder('pagination');
+        if (!isset($paginationInfo->route)) {
+            $paginationInfo->route = 'dtladmin/dtlproposal/realty-proposal';
+            $paginationInfo->params = array();
+        }
+        ?>
+        <?php echo $this->paginationControl($this->realtyProposal, 'Sliding', 'layout/pagination'); ?>
+    </div>
+</div>

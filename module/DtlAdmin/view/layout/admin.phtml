@@ -1,0 +1,96 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <?php
+        echo $this->headMeta()
+                ->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+                ->appendHttpEquiv('Content-Language', 'pt-BR')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+                ->appendHttpEquiv('Cache-Control', 'max-age=31536000; public')
+                ->appendHttpEquiv('Last-Modified', gmdate('D, d M Y H:i:s') . " GMT")
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ?>
+
+        <?php echo $this->headTitle('Valoriza ' . $this->translate('2.0'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <!-- Le styles -->
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+                ->prependStylesheet($this->basePath() . '/css/application.css', array('media' => 'screen, print'))
+                ->prependStylesheet($this->basePath() . '/backend/css/app.css', 'screen', null, array('id' => 'beyond-link'))
+                ->prependStylesheet($this->basePath() . '/backend/css/dataTables.bootstrap.css')
+                ->prependStylesheet($this->basePath() . '/css/application-print.css', array('media' => 'print'))
+                ->prependStylesheet($this->basePath() . '/file-upload/css/jquery.fileupload.css')
+                ->prependStylesheet($this->basePath() . '/uploader/demos/css/demo.css')
+                ->prependStylesheet($this->basePath() . '/uploader/demos/css/uploader.css')
+                ->prependStylesheet($this->basePath() . '/css/jquery-ui/smoothness/jquery-ui-1.10.3.custom.min.css', array('media' => 'screen, print'))
+                ->prependStylesheet($this->basePath() . '/font-awesome/css/font-awesome.min.css', array('media' => 'screen, print'))
+                ->prependStylesheet($this->basePath() . '/bootstrap/dist/css/bootstrap-theme.css', array('media' => 'screen, print'))
+                ->prependStylesheet($this->basePath() . '/bootstrap/dist/css/bootstrap.min.css', array('media' => 'screen, print'))
+        ?>
+        <!--[if IE 7]>
+            <link rel="stylesheet" href="/font-awesome/css/font-awesome-ie7.min.css">
+        <![endif]-->
+        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="/js/excanvas.min.js"></script><![endif]-->
+        <?php
+        echo $this->headScript()
+                ->prependFile($this->basePath() . '/js/application.js', 'text/javascript', array('charset' => 'UTF-8'))
+                ->prependFile($this->basePath() . '/js/app-datatables.js')
+                ->prependFile($this->basePath() . '/data-tables/media/js/dataTables.bootstrap.js')
+                ->prependFile($this->basePath() . '/data-tables/media/js/jquery.dataTables.min.js')
+                ->prependFile($this->basePath() . '/js/jquery.mask.min.js')
+                ->prependFile($this->basePath() . '/bootstrap/dist/js/bootstrap.min.js')
+                ->prependFile($this->basePath() . '/js/jquery.ui.datepicker-pt-BR.js')
+                ->prependFile($this->basePath() . '/js/jquery-ui.min.js', 'text/javascript', array('async' => 'async'))
+                ->prependFile($this->basePath() . '/js/jquery.min.js', 'text/javascript', array('async' => 'async'))
+                ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+        ?>
+    </head>
+    <body>
+        <?= $this->partial('layout/menu'); ?>
+        <?php
+        echo $this->navigation('admin_navigation')
+                ->breadcrumbs()
+                ->setSeparator(' / ')
+                ->setMinDepth(0)
+                ->setLinkLast(false)
+                ->setPartial('layout/breadcrumbs');
+        ?>
+        <?php if ($this->zfcUserIdentity() !== false): ?>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php
+                        echo $this->flashMessenger()->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                        echo $this->flashMessenger()->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                        echo $this->flashMessenger()->render('info', array('alert', 'alert-dismissable', 'alert-info'));
+                        echo $this->flashMessenger()->render('error', array('alert', 'alert-dismissable', 'alert-danger'));
+                        ?>
+                        <?php echo $this->content; ?>
+                        <?php echo $this->inlineScript()
+                                ->prependFile($this->basePath() . '/js/dtl-messages.js', 'text/javascript', array('charset' => 'UTF-8')); ?>                
+                    </div>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="container-fluid">
+                <?php echo $this->content; ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="modal" role="dialog" aria-hidden="true" aria-labelledby="Pre Loading" id="pre-loading">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-spin fa-cog fa-lg"></i>&nbsp;
+                            <?php echo $this->translate('Pro favor aguarde...'); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php echo $this->partial('layout/footer'); ?>
+    </body>
+</html>

@@ -1,0 +1,87 @@
+<?php if ($this->refused): ?>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-repeat"></i> Status da Proposta Nº <?php echo $this->caixaProposal->getCaixaProposalId(); ?></h4>
+    </div>
+    <div class="modal-body">
+        <?php
+        echo $this->error('<br>A proposta de número <strong>' .
+                $this->caixaProposal->getCaixaProposalId() .
+                '</strong>, precisa ser direcionada a outro banco.<br>' .
+                'A proposta já foi recusada pelo banco atual: <strong>' .
+                $this->caixaProposal->getProposal()->getBank()->getName() .
+                '</strong>!');
+        ?>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+    </div>
+<?php else: ?>
+    <?php
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('dtladmin/dtlproposal/caixa-proposal/status', array('action' => 'status',
+                'id' => $this->caixaProposal->getCaixaProposalId())));
+    $form->prepare();
+    $proposalStatus = $form->get('proposalStatus');
+    ?>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-repeat"></i> Status da Proposta Nº <?php echo $this->caixaProposal->getCaixaProposalId(); ?></h4>
+    </div>
+    <?php echo $this->form()->openTag($form); ?>
+    <div class="modal-body">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <?php echo $this->formLabel($proposalStatus->get('proposalStatusId')); ?>
+                    <?php echo $this->formSelect($proposalStatus->get('proposalStatusId')); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php echo $this->formLabel($proposalStatus->get('proposalStatusNotes')); ?>
+                    <?php echo $this->formTextarea($proposalStatus->get('proposalStatusNotes')); ?>
+                </div>
+            </div>
+            <div id="show-on-integrating" class="hidden">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($proposalStatus->get('proposalStatusBaseDate')); ?>
+                        <?php echo $this->formText($proposalStatus->get('proposalStatusBaseDate')); ?>
+                    </div>
+                </div>
+            </div>
+            <div id="show-on-aproving" class="hidden">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($proposalStatus->get('proposalStatusValue')); ?>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <?php echo $this->formText($proposalStatus->get('proposalStatusValue')); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($proposalStatus->get('proposalStatusParcelAmount')); ?>
+                        <?php echo $this->formText($proposalStatus->get('proposalStatusParcelAmount')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($proposalStatus->get('proposalStatusParcelValue')); ?>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <?php echo $this->formText($proposalStatus->get('proposalStatusParcelValue')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <?php echo $this->formRow($form->get('submit')); ?>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+    </div>
+    <?php echo $this->form()->closeTag(); ?>
+<?php endif; ?>

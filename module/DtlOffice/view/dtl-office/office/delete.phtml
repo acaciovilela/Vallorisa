@@ -1,0 +1,21 @@
+<?php
+$title = $this->translate('Apagar Serviço');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtloffice/delete', array('id' => $this->office->getId()));
+?>
+<div class="modal-header">
+    <h3 class="modal-title txt-color-teal"><i class='fa fa-trash-o'></i>&nbsp;<?php echo $this->escapeHtml($title); ?></h3>
+</div>
+<div class="modal-body">
+    <blockquote>
+        <?php echo $this->translate('Deseja excluir ') ?>
+        '<?php echo $this->escapeHtml($this->office->getName()); ?>'?
+    </blockquote>
+</div>
+<div class="modal-footer">
+    <form action="<?php echo $url; ?>" method="post">
+        <input type="hidden" name="id" value="<?php echo $this->office->getId(); ?>" />
+        <button type="submit" name="del" value="Sim" class="btn btn-danger"><i class="fa fa-eraser"></i>&nbsp;<?php echo $this->translate('Sim'); ?></button>
+        <button class="btn btn-default" type="button" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;<?php echo $this->translate('Não'); ?></button>
+    </form>
+</div>

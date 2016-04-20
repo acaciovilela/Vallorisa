@@ -1,0 +1,31 @@
+<?php
+$title = $this->translate('Novo Fornecedor');
+$this->headTitle($title);
+?>
+<h1 class="container-header"><i class="fa fa-truck"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlsupplier/add', array('type' => $this->personType)));
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<?php $employee = $form->get('supplier'); ?>
+<fieldset>
+    <?php $person = $employee->get('person'); ?>
+    <?php echo $this->personForm($person); ?>
+
+    <?php if ($this->personType == base64_encode(1)): ?>
+        <?php $legal = $person->get('legal'); ?>
+        <?php echo $this->legalForm($legal); ?>
+    <?php elseif ($this->personType == base64_encode(0)): ?>
+        <?php $individual = $person->get('individual'); ?>
+        <?php echo $this->individualForm($individual); ?>
+    <?php endif; ?>
+    <div class="form-actions">
+        <?php echo $this->formRow($form->get('security')); ?>
+        <?php echo $this->formSubmit($form->get('submit')); ?>
+        <?php echo $this->formRow($form->get('cancel')); ?>
+    </div>
+</div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>

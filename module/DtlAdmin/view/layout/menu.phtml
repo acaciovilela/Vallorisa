@@ -1,0 +1,153 @@
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-bar"></span>
+            <span class="glyphicon glyphicon-bar"></span>
+            <span class="glyphicon glyphicon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="<?php echo $this->url('dtladmin'); ?>">
+            <img src="<?php echo $this->basePath(); ?>/img/logo.png" width="94px" height="25px" class="img-rounded" />
+        </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-shopping-cart"></i> <?php echo $this->translate('Propostas'); ?> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">VEÍCULOS</li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal'); ?>"><i class="glyphicon glyphicon-list"></i> <?php echo $this->translate('Esteira de Veículos') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal/pre'); ?>"><i class="fa fa-truck"></i> <?php echo $this->translate('Nova Proposta') ?></a></li>
+                    <li class="dropdown-header">EMPRÉSTIMOS</li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlproposal/loan'); ?>"><i class="glyphicon glyphicon-list"></i> <?php echo $this->translate('Esteira de Consignados') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlproposal/loan/pre'); ?>"><i class="fa fa-money"></i> <?php echo $this->translate('Novo Consignado') ?></a></li>
+                    <li class="dropdown-header">IMÓVEIS</li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal'); ?>"><i class="glyphicon glyphicon-list"></i> <?php echo $this->translate('Esteira de Imóveis') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/pre'); ?>"><i class="fa fa-building-o"></i> <?php echo $this->translate('Nova Proposta') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlpretender'); ?>"><i class="fa fa-user"></i> <?php echo $this->translate('Clientes Interessados') ?></a></li>
+                    <li class="dropdown-header">CAIXA</li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal'); ?>"><i class="glyphicon glyphicon-list"></i> <?php echo $this->translate('Esteira de Caixa') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/pre'); ?>"><i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Nova Proposta') ?></a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php echo $this->translate('Cadastros'); ?> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo $this->url('dtladmin/dtlcustomer'); ?>"><i class="glyphicon glyphicon-user"></i> <?php echo $this->translate('Clientes') ?></a></li>
+                    <?php // if ($this->isAllowed('menu', 'all')):?>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlemployee'); ?>"><i class="glyphicon glyphicon-wrench"></i> <?php echo $this->translate('Funcionários') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlshopman'); ?>"><i class="glyphicon glyphicon-shopping-cart"></i> <?php echo $this->translate('Lojistas') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlrealtor'); ?>"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Corretores de Imóveis') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlsupplier'); ?>"><i class="fa fa-truck"></i> <?php echo $this->translate('Fornecedores') ?></a></li>
+                    <?php // endif; ?>
+                </ul>
+            </li>
+            <?php // if ($this->isAllowed('menu', 'all')):?>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-usd"></i> <?php echo $this->translate('Financeiro'); ?> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo $this->url('dtladmin/dtlfinancial/receivable'); ?>"><i class="glyphicon glyphicon-arrow-down"></i> <?php echo $this->translate('Contas a Receber') ?></a></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlfinancial/payable'); ?>"><i class="glyphicon glyphicon-arrow-up"></i> <?php echo $this->translate('Contas a Pagar') ?></a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?php echo $this->url('dtladmin/dtlfinancial/cash'); ?>"><i class="glyphicon glyphicon-usd"></i> <?php echo $this->translate('Caixa') ?></a></li>
+                </ul>
+            </li>
+            <!--            <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> <?php echo $this->translate('Relatórios'); ?> <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu">
+                                    <a href="#"><i class="glyphicon glyphicon-usd"></i> <?php echo $this->translate('Módulo Caixa') ?></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?php echo $this->url('dtladmin/dtlreport/caixa/productsByDate'); ?>"><?php echo $this->translate('Produtos Negociados'); ?></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>-->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <?php echo $this->translate('Configurações'); ?> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo $this->url('dtladmin/dtlcompany'); ?>"><i class="glyphicon glyphicon-barcode"></i> <?php echo $this->translate('Empresas'); ?></a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-submenu">
+                        <a href="#"><i class="glyphicon glyphicon-list"></i> <?php echo $this->translate('Comercial') ?></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('dtladmin/dtlcategory'); ?>"><?php echo $this->translate('Categorias'); ?></a></li>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlproduct'); ?>"><?php echo $this->translate('Produtos'); ?></a></li>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlbusiness'); ?>"><?php echo $this->translate('Ramos de Atividade'); ?></a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a href="#"><i class="glyphicon glyphicon-usd"></i> <?php echo $this->translate('Financeiro') ?></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('dtladmin/dtlbank'); ?>"><?php echo $this->translate('Bancos'); ?></a>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlcurrency'); ?>"><?php echo $this->translate('Moedas'); ?></a>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlcurrentaccount'); ?>"><?php echo $this->translate('Contas Corrente'); ?></a>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlpaymenttype'); ?>"><?php echo $this->translate('Formas de Pagamentos'); ?></a>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlaccountingitem'); ?>"><?php echo $this->translate('Itens Contábeis'); ?></a>
+                            <li><a href="<?php echo $this->url('dtladmin/dtldocumenttype'); ?>"><?php echo $this->translate('Tipos de Documentos'); ?></a>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $this->translate('Pessoal') ?></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('dtladmin/dtlemployeestatus'); ?>"><i class="glyphicon glyphicon-compass"></i> <?php echo $this->translate('Situações do Funcionário'); ?></a>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo $this->url('dtladmin/dtloccupation'); ?>"><i class="glyphicon glyphicon-nameplate"></i> <?php echo $this->translate('Profissões'); ?></a>
+                            <li><a href="<?php echo $this->url('dtladmin/dtloffice'); ?>"><i class="glyphicon glyphicon-nameplate"></i> <?php echo $this->translate('Cargos'); ?></a>
+                            <li><a href="<?php echo $this->url('dtladmin/dtldepartment'); ?>"><i class="glyphicon glyphicon-suitcase"></i> <?php echo $this->translate('Departamentos'); ?></a>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a href="#"><i class="glyphicon glyphicon-plane"></i> <?php echo $this->translate('Módulo Veículos') ?></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('dtladmin/dtlvehicle/vehicle-brand'); ?>"><i class="glyphicon glyphicon-compass"></i> <?php echo $this->translate('Marcas'); ?></a>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlvehicle/vehicle-type'); ?>"><i class="glyphicon glyphicon-nameplate"></i> <?php echo $this->translate('Tipos'); ?></a>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlvehicle/vehicle-model'); ?>"><i class="glyphicon glyphicon-nameplate"></i> <?php echo $this->translate('Modelos'); ?></a>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlvehicle/vehicle-version'); ?>"><i class="glyphicon glyphicon-suitcase"></i> <?php echo $this->translate('Versões'); ?></a>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a href="#"><i class="glyphicon glyphicon-home"></i> <?php echo $this->translate('Módulo Imóveis') ?></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal-commission'); ?>"><?php echo $this->translate('Comissões Valoriza'); ?></a>
+                            <li class="divider"></li>
+                            <li><a href="<?php echo $this->url('dtladmin/dtlrealtytype'); ?>"><?php echo $this->translate('Tipos de Imóvel'); ?></a>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a href="#"><i class="fa fa-cogs"></i> <?php echo $this->translate('Mais Configs.') ?></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('dtladmin/dtllocation/city'); ?>"><i class="glyphicon glyphicon-compass"></i> <?php echo $this->translate('Cidades'); ?></a>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a href="#"><i class="fa fa-lock"></i> <?php echo $this->translate('Segurança') ?></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->url('dtladmin/dtluser'); ?>"><i class="fa fa-users"></i> <?php echo $this->translate('Usuários'); ?></a>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <?php // endif; ?>
+        </ul>
+        <div class="navbar-right">
+            <?php if ($this->zfcUserIdentity() !== false): ?>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <?php echo $this->zfcUserIdentity()->getDisplayName(); ?> <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="<?php echo $this->basePath() . '/user/change-password'; ?>"><i class="fa fa-key"></i> <?php echo $this->translate('Alterar Senha'); ?></a></li>
+                            <li><a href="<?php echo $this->basePath() . '/user/logout'; ?>"><i class="glyphicon glyphicon-off"></i> <?php echo $this->translate('Sair'); ?></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

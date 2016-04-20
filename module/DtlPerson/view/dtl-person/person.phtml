@@ -1,0 +1,13 @@
+<?php $person = $this->person; ?>
+
+<?php echo $this->formHidden($person->get('id')); ?>
+<div class="form-group">
+    <?php echo $this->formLabel($person->get('name')); ?>
+    <?php echo $this->formText($person->get('name')); ?>
+</div>
+
+<?php $address = $person->get('address') ?>
+<?php echo $this->addressForm($address); ?>
+
+<?php $contact = $person->get('contact') ?>
+<?php echo $this->contactForm($contact); ?>

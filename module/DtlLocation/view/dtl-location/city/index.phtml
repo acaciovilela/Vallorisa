@@ -1,0 +1,53 @@
+<?php
+$title = $this->translate('Cidades');
+$this->headTitle($title);
+?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="panel-title"><i class="fa fa-flag"></i> <?php echo $this->escapeHtml($title); ?></h2>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group btn-group-sm pull-right">
+                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtllocation/city/add'); ?>"> <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo'); ?></a>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <table class="table table-condensed table-hover">
+        <tr>
+            <th><?php echo $this->translate('CIDADE'); ?></th>
+        </tr>
+        <?php if (0 == count($this->cities)): ?>
+            <tr>
+                <td colspan="10" class="alert alert-info text-center"><?php echo $this->translate('Não há registros no banco de dados.') ?></td>
+            </tr>
+        <?php else: ?>
+            <?php foreach ($this->cities as $city) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($city->getName()); ?></td>
+                    <td>
+                        <div class="btn-group btn-group-xs pull-right">
+                            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtllocation/city/edit', array('id' => $city->getId()))
+                ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtllocation/city/delete', array('id' => $city->getId()))
+                ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+    <div class="panel-footer">
+        <?php
+        $paginationInfo = $this->placeholder('pagination');
+        if (!isset($paginationInfo->route)) {
+            $paginationInfo->route = 'dtladmin/dtllocation/city';
+            $paginationInfo->params = array();
+        }
+        ?>
+        <?php echo $this->paginationControl($this->cities, 'Sliding', 'layout/pagination'); ?>
+    </div>
+</div>

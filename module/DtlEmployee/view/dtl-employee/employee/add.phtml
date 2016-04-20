@@ -1,0 +1,95 @@
+<?php
+$title = $this->translate('Novo Funcionário');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlemployee/add'));
+$form->prepare();
+?>
+<h2 class="container-header"><i class="glyphicon glyphicon-briefcase"></i> <?php echo $this->escapeHtml($title); ?></h2>
+<?php echo $this->form()->openTag($form); ?>
+<?php $employee = $form->get('employee'); ?>
+<fieldset>
+    <?php $person = $employee->get('person'); ?>
+    <?php echo $this->personForm($person); ?>
+
+    <?php echo $this->individualForm($person->get('individual')); ?>
+
+    <legend><?php echo $this->translate('Dados do Funcionário') ?></legend>
+    <?php echo $this->formHidden($employee->get('id')); ?>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('admissionDate')); ?>
+                <?php echo $this->formText($employee->get('admissionDate')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('demissionDate')); ?>
+                <?php echo $this->formDate($employee->get('demissionDate')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <?php echo $this->formLabel($employee->get('status')); ?>
+                <?php echo $this->formSelect($employee->get('status')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('workTime')); ?>
+                <div class="input-group">
+                    <?php echo $this->formText($employee->get('workTime')); ?>
+                    <div class="input-group-addon input-sm">hs</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('ctps')); ?>
+                <?php echo $this->formText($employee->get('ctps')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('ctpsSerie')); ?>
+                <?php echo $this->formText($employee->get('ctpsSerie')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('pis')); ?>
+                <?php echo $this->formText($employee->get('pis')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('salary')); ?>
+                <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <?php echo $this->formText($employee->get('salary')); ?>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('mark')); ?>
+                <div class="input-group">
+                    <?php echo $this->formText($employee->get('mark')); ?>
+                    <span class="input-group-addon">contratos</span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($employee->get('bonus')); ?>
+                <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <?php echo $this->formText($employee->get('bonus')); ?>
+                </div>
+            </div>
+        </div>
+        <?php echo $this->formRow($employee->get('picture')); ?>
+    </div>
+    <?php $commissions = $employee->get('commissions'); ?>
+    <div class="add-commissions">
+        <?php echo $this->formCollection($commissions); ?>
+    </div>
+    <div class="help-block"><?php echo $this->translate('Clique no botão <i class="glyphicon glyphicon-plus-sign"></i> abaixo para acrescentar uma nova comissão ao funcionário.'); ?></div>
+    <button  type="button" class="btn btn-default btn-sm" onclick="javascript: return addCommission();"><i class="glyphicon glyphicon-plus-sign"></i></button>
+    <br/><br/>
+    <?php echo $this->formRow($form->get('security')); ?>
+    <div class="btn-group">
+        <?php echo $this->formSubmit($form->get('submit')); ?>
+        <?php echo $this->formRow($form->get('cancel')); ?>
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>

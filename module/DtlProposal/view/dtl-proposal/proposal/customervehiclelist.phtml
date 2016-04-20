@@ -1,0 +1,44 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <i class="fa fa-truck"></i> 
+            Lista de Veículos do Cliente
+        </div>
+    </div>
+    <?php if (0 == count($this->customerVehicles)): ?>
+        <div class="panel-body">
+            <div class="alert alert-info">
+                <?php echo $this->translate('Nenhum registro encontrado.') ?>
+            </div>
+        </div>
+    <?php else: ?>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th class=""><?php echo $this->translate('MARCA'); ?></th>
+                <th class=""><?php echo $this->translate('MODELO'); ?></th>
+                <th class=""><?php echo $this->translate('VERSÃO'); ?></th>
+                <th class=""><?php echo $this->translate('ANO/MODELO'); ?></th>
+                <th class=""><?php echo $this->translate('PLACA'); ?></th>
+                <th class="" colspan="2"><?php echo $this->translate('VALOR'); ?></th>
+            </tr>
+            <?php foreach ($this->customerVehicles as $key => $vehicle) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($vehicle['vehicleBrandName']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['vehicleModelName']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['vehicleVersionName']); ?></td>
+                    <td>
+                        <?php echo $vehicle['vehicleYear']; ?>
+                        <?php echo ($vehicle['vehicleYearModel']) ? " / " . $vehicle['vehicleYearModel'] : ""; ?>
+                    </td>
+                    <td><?php echo $this->escapeHtml($vehicle['vehiclePlate']); ?></td>
+                    <td><?php echo $this->currency($vehicle['vehicleValue']); ?></td>
+                    <td>
+                        <div class="btn-group btn-group-xs pull-right">
+                            <a class="btn btn-default btn-xs" href="javascript: proposalCustomerVehicleDelete('<?php echo $key ?>', '<?php echo $vehicle['vehicleId']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
+</div>

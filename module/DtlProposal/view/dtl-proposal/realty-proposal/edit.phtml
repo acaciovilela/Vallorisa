@@ -1,0 +1,192 @@
+<?php
+$title = $this->translate('Editar Proposta de Venda de Imóvel');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlproposal/realty-proposal/edit', array('id' => $this->realtyProposal->getId())));
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="container-header">
+            <i class="glyphicon glyphicon-home"></i> <?php echo $this->escapeHtml($title); ?>
+        </h2>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group pull-right">
+            <input type="submit" class="btn btn-primary" value="Salvar Proposta" />
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div><br/>
+<?php $realtyProposal = $form->get('realtyProposal'); ?>
+<?php $proposal = $realtyProposal->get('proposal'); ?>
+<fieldset>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Dados Básicos'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($proposal->get('company')); ?>
+                            <?php echo $this->formSelect($proposal->get('company')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php if ($this->employee()): ?>
+                                <?php echo $this->formSelect($proposal->get('employee')->setValue($this->employee()->getId())->setAttribute('class', 'hide')); ?>
+                            <?php else: ?>
+                                <?php echo $this->formLabel($proposal->get('employee')); ?>
+                                <?php echo $this->formSelect($proposal->get('employee')); ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($proposal->get('bank')); ?>
+                            <?php echo $this->formSelect($proposal->get('bank')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($realtyProposal->get('realtor')); ?>
+                            <?php echo $this->formSelect($realtyProposal->get('realtor')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($realtyProposal->get('product')); ?>
+                            <?php echo $this->formSelect($realtyProposal->get('product')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Dados do Imóvel'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $realty = $realtyProposal->get('realty') ?>
+                <?php echo $this->realtyProposalForm($realty); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Vendedores'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $dealers = $realtyProposal->get('dealers'); ?>
+                <?php echo $this->dealerForm($dealers, $this->post); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Compradores'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <legend><h3>Comprador</h3></legend>
+                <?php $customer = $proposal->get('customer'); ?>
+                <?php echo $this->customerForm($customer, $this->post, true, $this->realtyProposal->getProposal()->getCustomer()); ?>
+                <?php
+                echo $this->partial('dtlproposal/proposal/customercollectionform', array(
+                    'customers' => $realtyProposal->get('customers'),
+                    'params' => $this->post['preProposal'],
+                    'isLoan' => true,
+                    'entity' => $this->realtyProposal->getProposal()->getCustomer()
+                ));
+                ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Contas do Cliente'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $customerBankAccount = new DtlCustomer\Form\Fieldset\CustomerBankAccount($this->entityManager, 0); ?>
+                <?php $customerBankAccount->remove('customerId'); ?>
+                <?php echo $this->customerBankAccountForm($customerBankAccount); ?>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Resumo da Proposta'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <legend>Resumo da Proposta</legend>
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($proposal->get('number')); ?>
+                        <?php echo $this->formText($proposal->get('number')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="<?php echo $realtyProposal->get('realtyProposalTotalValue')->getAttribute('id') ?>">
+                            <?php echo $this->translate('Valor do Imóvel'); ?>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <?php echo $this->formText($realtyProposal->get('realtyProposalTotalValue')); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($realtyProposal->get('realtyProposalInValue')); ?>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <?php echo $this->formText($realtyProposal->get('realtyProposalInValue')); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($proposal->get('proposalValue')); ?>
+                        <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <?php echo $this->formText($proposal->get('proposalValue')); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($proposal->get('proposalDate')); ?>
+                        <?php echo $this->formText($proposal->get('proposalDate')); ?>
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($proposal->get('proposalBaseDate')); ?>
+                        <?php echo $this->formText($proposal->get('proposalBaseDate')); ?>
+                    </div>
+                    <div class="col-lg-2">
+                        <?php echo $this->formLabel($realtyProposal->get('commission')); ?>
+                        <?php echo $this->formSelect($realtyProposal->get('commission')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="checkbox">
+                            <label>
+                                <?php echo $this->formCheckbox($realtyProposal->get('realtyProposalFgts')); ?>
+                                <?php echo $realtyProposal->get('realtyProposalFgts')->getLabel(); ?>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><input type="submit" class="btn btn-primary" value="Salvar Proposta" />
+    </div>
+</div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>
+<script type="text/javascript">
+    function setRealtyProposalTotalValue(value) {
+        $('#realtyProposalTotalValue').val(value);
+    }
+</script>

@@ -1,0 +1,159 @@
+<?php
+$title = $this->translate('Adicionar Conta a Receber');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+?>
+<h3 class="header-title"><i class="glyphicon glyphicon-arrow-down"></i> <?php echo $this->escapeHtml($title); ?></h3>
+<?php echo $this->form()->openTag($form); ?>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab" role="tab"><?php echo $this->translate('Dados da Conta'); ?></a></li>
+    <li><a href="#tab2" data-toggle="tab" role="tab"><?php echo $this->translate('Dados Adicionais'); ?></a></li>
+    <li><a href="#tab3" data-toggle="tab" role="tab"><?php echo $this->translate('Recorrência'); ?></a></li>
+</ul>
+<br/>
+<div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+        <legend>Dados da Conta</legend>
+        <div class="row">
+            <div class="col-md-6">
+                <?php $receivable = $form->get('receivable'); ?>
+                <?php echo $this->formHidden($receivable->get('id')); ?>
+                <?php $account = $receivable->get('account'); ?>
+                <div class="form-group"> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php echo $this->formLabel($receivable->get('customer')); ?>
+                            <?php echo $this->formSelect($receivable->get('customer')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php echo $this->formLabel($account->get('description')); ?>
+                            <?php echo $this->formText($account->get('description')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($account->get('currentAccount')); ?>
+                            <?php echo $this->formSelect($account->get('currentAccount')); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($account->get('paymentType')); ?>
+                            <?php echo $this->formSelect($account->get('paymentType')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($account->get('accountingItem')); ?>
+                            <?php echo $this->formSelect($account->get('accountingItem')); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($account->get('emissionDate')); ?>
+                            <?php echo $this->dtlBaseFormDate($account->get('emissionDate')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($account->get('documentType')); ?>
+                            <?php echo $this->formSelect($account->get('documentType')); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($account->get('expirationDate')); ?>
+                            <?php echo $this->dtlBaseFormDate($account->get('expirationDate')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($account->get('autoLaunch')); ?>
+                            <?php echo $this->formSelect($account->get('autoLaunch')); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?php echo $this->formLabel($account->get('value')); ?>
+                            <div class="input-group">
+                                <span class="input-group-addon">R$</span>
+                                <?php echo $this->formText($account->get('value')); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane" id="tab2">
+        <legend>Dados Adicionais</legend>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php echo $this->formLabel($account->get('barcode')); ?>
+                            <?php echo $this->formText($account->get('barcode')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($account->get('fine')); ?>
+                            <div class="input-group">
+                                <?php echo $this->formText($account->get('fine')); ?>
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($account->get('interest')); ?>
+                            <div class="input-group">
+                                <?php echo $this->formText($account->get('interest')); ?>
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                         <div class="col-md-4">
+                            <?php echo $this->formLabel($account->get('interestInterval')); ?>
+                            <?php echo $this->formSelect($account->get('interestInterval')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php echo $this->formLabel($account->get('notes')); ?>
+                            <?php echo $this->formTextarea($account->get('notes')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane" id="tab3">
+        <legend>Recorrência da Conta</legend>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($account->get('isRecurrent')); ?>
+                            <?php echo $this->formSelect($account->get('isRecurrent')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($account->get('parcels')); ?>
+                            <?php echo $this->formNumber($account->get('parcels')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($account->get('recurrenceInterval')); ?>
+                            <?php echo $this->formSelect($account->get('recurrenceInterval')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="button-bar">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

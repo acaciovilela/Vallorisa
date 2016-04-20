@@ -1,0 +1,25 @@
+<?php
+$title = $this->translate('Editar Departamento');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtldepartment/edit', array('id' => $this->id)));
+$form->prepare();
+?>
+<h1 class="container-header"><i class="glyphicon glyphicon-folder-close"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<?php echo $this->form()->openTag($form); ?>
+<div class="form-group">
+    <?php $department = $form->get('department'); ?>
+    <?php echo $this->formHidden($department->get('id')); ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo $this->formLabel($department->get('name')); ?>
+            <?php echo $this->formText($department->get('name')); ?>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="btn-group">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

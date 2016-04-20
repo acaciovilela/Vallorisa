@@ -1,0 +1,22 @@
+<?php
+$title = $this->translate('Apagar Cliente');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtlcustomer/delete', array('id' => $this->id));
+?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title"><?php echo $this->escapeHtml($title); ?></h2>
+    </div>
+    <div class="panel-body">
+        <blockquote><?php echo $this->translate('Você tem certeza de que deseja apagar ') ?>
+            '<?php echo $this->escapeHtml($this->customer->getPerson()->getName()); ?>'?
+        </blockquote>
+        <form action="<?php echo $url; ?>" method="post">
+            <input type="hidden" name="id" value="<?php echo $this->customer->getId(); ?>" />
+            <div class="btn-group">
+                <input type="submit" name="del" value="Sim" class="btn btn-default" />
+                <input type="submit" name="del" value="Não" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

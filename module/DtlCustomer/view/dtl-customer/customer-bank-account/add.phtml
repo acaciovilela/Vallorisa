@@ -1,0 +1,51 @@
+<?php
+$title = $this->translate('Conta do Cliente');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+?>
+<legend><h2><i class="fa fa-building-o"></i> <?php echo $this->escapeHtml($title); ?></h2></legend>
+
+<div class="row">
+    <div class="col-md-4">
+        <?php echo $this->form()->openTag($form); ?>
+        <?php $customerBankAccount = $form->get('customerBankAccount'); ?>
+        <div class="form-group">
+            <?php echo $this->formLabel($customerBankAccount->get('customer')); ?>
+            <?php echo $this->formSelect($customerBankAccount->get('customer')); ?>
+
+            <?php $bankAccount = $customerBankAccount->get('bankAccount'); ?>
+            
+            <?php echo $this->formLabel($bankAccount->get('bank')); ?>
+            <?php echo $this->formSelect($bankAccount->get('bank')); ?>
+
+            <?php echo $this->formLabel($bankAccount->get('type')); ?>
+            <?php echo $this->formSelect($bankAccount->get('type')); ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?php echo $this->formLabel($bankAccount->get('agency')); ?>
+                    <?php echo $this->formText($bankAccount->get('agency')); ?>
+                </div>
+                <div class="col-md-6">
+                    <?php echo $this->formLabel($bankAccount->get('account')); ?>
+                    <?php echo $this->formText($bankAccount->get('account')); ?>
+                </div>
+            </div>
+
+            <?php echo $this->formLabel($bankAccount->get('since')); ?>
+            <?php echo $this->formText($bankAccount->get('since')); ?>
+        </div>
+        <?php echo $this->formHidden($form->get('security')); ?>
+        <div class="btn-group">
+            <?php echo $this->formElement($form->get('submit')); ?>
+            <?php echo $this->formElement($form->get('cancel')); ?>
+        </div>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+    <div class="col-md-8">
+        <div class="customer-bank-account-list"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    customerBankAccountList('<?php echo $this->customerId ?>');
+</script>

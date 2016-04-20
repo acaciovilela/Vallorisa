@@ -1,0 +1,51 @@
+<?php
+$title = $this->translate('Novo Lojista');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlshopman/add', array('type' => $this->personType)));
+$form->prepare();
+?>
+<h2 class="container-header"><i class="glyphicon glyphicon-shopping-cart"></i> <?php echo $this->escapeHtml($title); ?></h2>
+<?php echo $this->form()->openTag($form); ?>
+<?php $shopman = $form->get('shopman'); ?>
+<fieldset>
+    <?php $person = $shopman->get('person'); ?>
+    <?php echo $this->personForm($person); ?>
+
+    <?php if ($this->personType == base64_encode(1)): ?>
+        <?php $legal = $person->get('legal'); ?>
+        <?php echo $this->legalForm($legal); ?>
+    <?php elseif ($this->personType == base64_encode(0)): ?>
+        <?php $individual = $person->get('individual'); ?>
+        <?php echo $this->individualForm($individual); ?>
+    <?php endif; ?>
+
+    <legend>Dados Financeiros do Lojista</legend>
+    <div class="form-gorup">
+        <div class="row">
+            <div class="col-md-3">
+                <?php echo $this->formLabel($shopman->get('fixedComission')); ?>
+                <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <?php echo $this->formText($shopman->get('fixedComission')); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <?php echo $this->formLabel($shopman->get('variantComission')); ?>
+                <div class="input-group">
+                    <?php echo $this->formText($shopman->get('variantComission')); ?>
+                    <span class="input-group-addon">%</span>
+                </div>
+            </div>
+        </div>
+        <br/>
+    </div>
+    <?php echo $this->formRow($form->get('security')); ?>
+    <div class="btn-group">
+        <?php echo $this->formSubmit($form->get('submit')); ?>
+        <?php echo $this->formRow($form->get('cancel')); ?>
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>

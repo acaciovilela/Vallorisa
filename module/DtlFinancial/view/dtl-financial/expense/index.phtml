@@ -1,0 +1,60 @@
+<?php
+$title = $this->translate('Despesas');
+$this->headTitle($title);
+?>
+<h3 class="header-title"><i class="fa fa-upload"></i> <?php echo $this->escapeHtml($title); ?></h3>
+<br/>
+<div class="panel panel-default">
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <th class="col-md-2"><?php echo $this->translate('DATA'); ?></th>
+                <th><?php echo $this->translate('NÚMERO'); ?></th>
+                <th><?php echo $this->translate('DESCRIÇÃO'); ?></th>
+                <th><?php echo $this->translate('FAVORECIDO'); ?></th>
+                <th class="col-md-2"><?php echo $this->translate('VALOR'); ?></th>
+                <th class="text-right">
+                    <a class="btn btn-success" href="<?php echo $this->url('dtladmin/dtlfinancial/expense/add'); ?>"> <i class="fa fa-plus-circle"></i> <?php echo $this->translate('Nova Despesa'); ?></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!count($this->expense)): ?>
+                <tr>
+                    <td colspan="10" class="alert alert-info text-center"><?php echo $this->translate('Não há receitas até o momento.') ?></td>
+                </tr>
+            <?php else: ?>
+                <?php foreach ($this->expense as $expense) : ?>
+                    <tr>
+                        <td><?php echo $this->date($expense->getLaunch()->getDate()); ?></td>
+                        <td><?php echo $this->escapeHtml($expense->getLaunch()->getNumber()); ?></td>
+                        <td><?php echo $this->escapeHtml($expense->getLaunch()->getDescription()); ?></td>
+                        <td><?php echo $this->escapeHtml($expense->getSupplier()->getPerson()->getName()); ?></td>
+                        <td><?php echo $this->currency($expense->getLaunch()->getValue()); ?></td>
+                        <td>
+                            <div class="btn-group-xs text-right">
+                                <a class="btn btn-info" href="<?php echo $this->url('dtladmin/dtlfinancial/expense/edit', array('id' => $expense->getId()))
+                    ?>"><i class="fa fa-edit"></i></a>
+                                <a data-toggle="modal" data-target="#dtlExpenseDelete<?php echo $expense->getId(); ?>" class="btn btn-danger" href="<?php echo $this->url('dtladmin/dtlfinancial/expense/delete', array('id' => $expense->getId()))
+                    ?>"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                <div class="modal" role="modal" tabindex="-1" id="dtlExpenseDelete<?php echo $expense->getId(); ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<?php
+$paginationInfo = $this->placeholder('pagination');
+if (!isset($paginationInfo->route)) {
+    $paginationInfo->route = 'dtladmin/dtlfinancial/expense';
+    $paginationInfo->params = array();
+}
+?>
+<?php echo $this->paginationControl($this->expense, 'Sliding', 'layout/pagination'); ?>

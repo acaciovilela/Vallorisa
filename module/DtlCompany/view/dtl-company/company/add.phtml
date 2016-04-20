@@ -1,0 +1,132 @@
+<?php
+$title = $this->translate('Nova Empresa');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+?>
+<h1 class="container-header"><i class="glyphicon glyphicon-barcode"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<?php echo $this->form()->openTag($form); ?>
+<fieldset>
+    <legend>Nova Empresa</legend>
+    <?php $company = $form->get('company'); ?>
+    <?php echo $this->formElementErrors($company->get('cnpj'), array('class' => 'error')); ?>
+    <?php echo $this->formHidden($company->get('id')); ?>
+    <?php echo $this->formHidden($company->get('isActive')); ?>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <?php echo $this->formLabel($company->get('name')); ?>
+                <?php echo $this->formText($company->get('name')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($company->get('isMaster')); ?>
+                <?php echo $this->formSelect($company->get('isMaster')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?php echo $this->formLabel($company->get('fancyName')); ?>
+                <?php echo $this->formText($company->get('fancyName')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <?php echo $this->formLabel($company->get('cnpj')); ?>
+                <?php echo $this->formText($company->get('cnpj')); ?>
+            </div>
+            <div class="col-md-3">
+                <?php echo $this->formLabel($company->get('subscription')); ?>
+                <?php echo $this->formText($company->get('subscription')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <?php echo $this->formLabel($company->get('representativeName')); ?>
+                <?php echo $this->formText($company->get('representativeName')); ?>
+            </div>
+            <div class="col-md-3">
+                <?php echo $this->formLabel($company->get('representativePhone')); ?>
+                <?php echo $this->formText($company->get('representativePhone')); ?>
+            </div>
+        </div>
+
+    </div>
+    <legend>Dados de Contato</legend>
+    <div class="form-group">
+        <?php $address = $company->get('address') ?>
+        <?php echo $this->formHidden($address->get('id')); ?>
+        <div class="row">
+            <div class="col-md-4">
+                <?php echo $this->formLabel($address->get('name')); ?>
+                <?php echo $this->formText($address->get('name')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($address->get('number')); ?>
+                <?php echo $this->formText($address->get('number')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <?php echo $this->formLabel($address->get('complement')); ?>
+                <?php echo $this->formText($address->get('complement')); ?>
+            </div>
+            <div class="col-md-4">
+                <?php echo $this->formLabel($address->get('quarter')); ?>
+                <?php echo $this->formText($address->get('quarter')); ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1">
+                <?php echo $this->formLabel($address->get('postalCode')); ?>
+                <?php echo $this->formText($address->get('postalCode')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($address->get('city')); ?>
+                <?php echo $this->formSelect($address->get('city')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($address->get('state')); ?>
+                <?php echo $this->formSelect($address->get('state')); ?>
+            </div>
+            <div class="col-md-1">
+                <?php echo $this->formLabel($address->get('country')); ?>
+                <?php echo $this->formSelect($address->get('country')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php $contact = $company->get('contact') ?>
+        <?php echo $this->formHidden($contact->get('id')); ?>
+        <div class="row">
+            <div class="col-md-3">
+                <?php echo $this->formLabel($contact->get('email')); ?>
+                <?php echo $this->formEmail($contact->get('email')); ?>
+            </div>
+            <div class="col-md-3">
+                <?php echo $this->formLabel($contact->get('url')); ?>
+                <?php echo $this->formUrl($contact->get('url')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <?php echo $this->formLabel($contact->get('phone')); ?>
+                <?php echo $this->formText($contact->get('phone')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($contact->get('cell')); ?>
+                <?php echo $this->formText($contact->get('cell')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($contact->get('fax')); ?>
+                <?php echo $this->formText($contact->get('fax')); ?>
+            </div>
+        </div>
+    </div>
+    <?php echo $this->formHidden($form->get('csrf')); ?>
+    <div class="btn-group">
+        <?php echo $this->formElement($form->get('submit')); ?>
+        <?php echo $this->formElement($form->get('cancel')); ?>
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>

@@ -1,0 +1,30 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <div class="panel-title"><i class="glyphicon glyphicon-thumbs-up"></i> <?php echo $this->escapeHtml('Lista do Patrimônio do Cliente'); ?></div>
+    </div>
+    <?php if (0 == count($this->customerPatrimonies)): ?>
+        <div class="panel-body">
+            <div class="alert alert-info">
+                <?php echo $this->translate('Nenhum registro encontrado.') ?>
+            </div>
+        </div>
+    <?php else: ?>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th class=""><?php echo $this->translate('PATRIMÔNIO'); ?></th>
+                <th class="col-md-2" colspan="2"><?php echo $this->translate('VALOR'); ?></th>
+            </tr>
+            <?php foreach ($this->customerPatrimonies as $key => $customerPatrimony) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($customerPatrimony['patrimonyName']); ?></td>
+                    <td><?php echo $this->currency($customerPatrimony['patrimonyValue']); ?></td>
+                    <td>
+                        <div class="btn-group btn-group-xs pull-right">
+                            <a class="btn btn-default" href="javascript: proposalCustomerPatrimonyDelete('<?php echo $key; ?>', '<?php echo $customerPatrimony['patrimonyId']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </table>
+</div>

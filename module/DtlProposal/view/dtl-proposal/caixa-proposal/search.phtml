@@ -1,0 +1,49 @@
+<?php
+$form = $this->form;
+$form->prepare();
+$search = $form->get('search');
+?>
+<?php echo $this->form()->openTag($form); ?>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4><i class="glyphicon glyphicon-search"></i> Filtrando resultados</h4>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3">
+                <?php echo $this->formLabel($search->get('proposalStatus')); ?>
+                <?php echo $this->formSelect($search->get('proposalStatus')); ?>
+            </div>
+            <div class="col-md-9">
+                <?php echo $this->formLabel($search->get('customerName')); ?>
+                <?php echo $this->formText($search->get('customerName')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <?php echo $this->formLabel($search->get('proposalId')); ?>
+                <?php echo $this->formText($search->get('proposalId')); ?>
+            </div>
+            <div class="col-md-9">
+                <?php echo $this->formLabel($search->get('company')); ?>
+                <?php echo $this->formSelect($search->get('company')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <?php echo $this->formLabel($search->get('proposalDateFrom')); ?>
+                <?php echo $this->formText($search->get('proposalDateFrom')); ?>
+            </div>
+            <div class="col-md-3">
+                <?php echo $this->formLabel($search->get('proposalDateTo')); ?>
+                <?php echo $this->formText($search->get('proposalDateTo')); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <?php echo $this->formRow($form->get('submit')); ?>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+</div>
+<?php echo $this->form()->closeTag(); ?>

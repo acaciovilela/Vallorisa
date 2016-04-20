@@ -1,0 +1,33 @@
+<?php $legal = $this->legal; ?>
+<?php echo $this->formHidden($legal->get('id')); ?>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($legal->get('cnpj')); ?>
+            <?php echo $this->formText($legal->get('cnpj')); ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($legal->get('subscription')); ?>
+            <?php echo $this->formText($legal->get('subscription')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="form-group">
+            <?php echo $this->formLabel($legal->get('representativeName')); ?>
+            <?php echo $this->formText($legal->get('representativeName')); ?>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <?php echo $this->formLabel($legal->get('representativePhone')); ?>
+            <div class="input-group">
+                <span class="input-group-addon">+55</span>
+                <?php echo $this->formText($legal->get('representativePhone')); ?>
+            </div>
+        </div>
+    </div>
+</div>

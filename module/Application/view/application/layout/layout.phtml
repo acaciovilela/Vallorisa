@@ -1,0 +1,40 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+
+        <?php echo $this->headTitle('Valoriza ' . $this->translate('2.0'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php
+        echo $this->headMeta()
+                ->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+                ->appendHttpEquiv('Content-Language', 'pt-BR')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+                ->appendHttpEquiv('Cache-Control', 'max-age=31536000; public')
+                ->appendHttpEquiv('Last-Modified', gmdate('D, d M Y H:i:s') . " GMT")
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ;
+        ?>
+
+        <!-- Le styles -->
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+                ->prependStylesheet($this->basePath() . '/bootstrap/css/bootstrap.min.css')
+                ->appendStylesheet($this->basePath() . '/css/application.login.css');
+        ?>
+        <!-- Scripts -->
+        <?php
+        echo $this->headScript()->setAllowArbitraryAttributes(true)
+                ->appendFile($this->basePath() . '/bootstrap/js/bootstrap.min.js', 'text/javascript', array('async' => 'async'))
+                ->prependFile($this->basePath() . '/js/jquery.min.js', 'text/javascript', array('async' => 'async'))
+                ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+        ?>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <?php echo $this->content; ?>
+            </div>
+        </div>
+    </body>
+</html>

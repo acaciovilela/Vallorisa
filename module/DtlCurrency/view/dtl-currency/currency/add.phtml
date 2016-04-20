@@ -1,0 +1,25 @@
+<?php
+$title = $this->translate('Adicionar Moeda');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+?>
+<h1 class="container-header"><i class="glyphicon glyphicon-flag"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<?php echo $this->form()->openTag($form); ?>
+<div class="form-group">
+    <?php $currency = $form->get('currency'); ?>
+    <?php echo $this->formHidden($currency->get('id')); ?>
+
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo $this->formLabel($currency->get('name')); ?>
+            <?php echo $this->formText($currency->get('name')); ?>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="btn-group">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

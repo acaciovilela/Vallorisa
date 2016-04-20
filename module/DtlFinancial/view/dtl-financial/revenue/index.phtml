@@ -1,0 +1,60 @@
+<?php
+$title = $this->translate('Receitas');
+$this->headTitle($title);
+?>
+<h3 class="header-title"><i class="fa fa-download"></i> <?php echo $this->escapeHtml($title); ?></h3>
+<br/>
+<div class="panel panel-default">
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <th class="col-md-2"><?php echo $this->translate('DATA'); ?></th>
+                <th><?php echo $this->translate('NÚMERO'); ?></th>
+                <th><?php echo $this->translate('DESCRIÇÃO'); ?></th>
+                <th><?php echo $this->translate('FAVORECIDO'); ?></th>
+                <th class="col-md-2"><?php echo $this->translate('VALOR'); ?></th>
+                <th class="text-right">
+                    <a class="btn btn-success" href="<?php echo $this->url('dtladmin/dtlfinancial/revenue/add'); ?>"> <i class="fa fa-plus-circle"></i> <?php echo $this->translate('Nova Receita'); ?></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!count($this->revenue)): ?>
+                <tr>
+                    <td colspan="10" class="alert alert-info text-center"><?php echo $this->translate('Não há receitas até o momento.') ?></td>
+                </tr>
+            <?php else: ?>
+                <?php foreach ($this->revenue as $revenue) : ?>
+                    <tr>
+                        <td><?php echo $this->date($revenue->getLaunch()->getDate()); ?></td>
+                        <td><?php echo $this->escapeHtml($revenue->getLaunch()->getNumber()); ?></td>
+                        <td><?php echo $this->escapeHtml($revenue->getLaunch()->getDescription()); ?></td>
+                        <td><?php echo $this->escapeHtml($revenue->getCustomer()->getPerson()->getName()); ?></td>
+                        <td><?php echo $this->currency($revenue->getLaunch()->getValue()); ?></td>
+                        <td>
+                            <div class="btn-group-xs text-right">
+                                <a class="btn btn-info" href="<?php echo $this->url('dtladmin/dtlfinancial/revenue/edit', array('id' => $revenue->getId()))
+                    ?>"><i class="fa fa-edit"></i></a>
+                                <a data-toggle="modal" data-target="#dtlRevenueDelete<?php echo $revenue->getId(); ?>" class="btn btn-danger" href="<?php echo $this->url('dtladmin/dtlfinancial/revenue/delete', array('id' => $revenue->getId()))
+                    ?>"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                <div class="modal" role="modal" tabindex="-1" id="dtlRevenueDelete<?php echo $revenue->getId(); ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<?php
+$paginationInfo = $this->placeholder('pagination');
+if (!isset($paginationInfo->route)) {
+    $paginationInfo->route = 'dtladmin/dtlfinancial/revenue';
+    $paginationInfo->params = array();
+}
+?>
+<?php echo $this->paginationControl($this->revenue, 'Sliding', 'layout/pagination'); ?>

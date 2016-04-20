@@ -1,0 +1,26 @@
+<?php
+$title = $this->translate('Apagar Usuário');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtluser/delete', array('id' => $this->user->getId()));
+?>
+<div class="modal-header">
+    <h3 class="header-title"><i class="fa fa-users"></i> <?php echo $this->escapeHtml($title); ?></h3>
+</div>
+<div class="modal-body">
+    <blockquote>
+        <p><?php echo $this->translate('Você tem certeza de que deseja apagar ') ?>
+            '<?php echo $this->escapeHtml($this->user->getDisplayName()); ?>'?
+        </p>
+    </blockquote>
+</div>
+<div class="modal-footer">
+    <form action="<?php echo $url; ?>" method="post">
+        <div>
+            <input type="hidden" name="id" value="<?php echo $this->user->getId(); ?>" />
+            <div class="btn-group">
+                <button type="submit" name="del" value="Sim" class="btn btn-danger"><i class="fa fa-eraser"></i>&nbsp;<?php echo $this->translate('Sim'); ?></button>
+                <button class="btn btn-default" type="button" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;<?php echo $this->translate('Não'); ?></button>
+            </div>
+        </div>
+    </form>
+</div>

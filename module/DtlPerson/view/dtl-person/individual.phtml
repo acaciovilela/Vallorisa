@@ -1,0 +1,81 @@
+<?php $individual = $this->individual; ?>
+<?php echo $this->formHidden($individual->get('id')); ?>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('cpf')); ?>
+            <?php echo $this->formText($individual->get('cpf')); ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('rg')); ?>
+            <?php echo $this->formText($individual->get('rg')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Data de Nascimento</label>
+            <?php echo $this->formText($individual->get('birthDay')); ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>&nbsp;</label>
+            <?php echo $this->formSelect($individual->get('birthMonth')); ?>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>&nbsp;</label>
+            <?php echo $this->formText($individual->get('birthYear')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('gender')); ?>
+            <?php echo $this->formSelect($individual->get('gender')); ?>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('birthPlace')); ?>
+            <?php echo $this->formText($individual->get('birthPlace')); ?>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('birthUf')); ?>
+            <?php echo $this->formSelect($individual->get('birthUf')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('mother')); ?>
+            <?php echo $this->formText($individual->get('mother')); ?>
+        </div>
+    </div>
+</div>
+<div class='row'>
+    <div class="col-md-12">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('father')); ?>
+            <?php echo $this->formText($individual->get('father')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('nationality')); ?>
+            <?php echo $this->formText($individual->get('nationality')); ?>
+        </div>
+    </div>
+</div>

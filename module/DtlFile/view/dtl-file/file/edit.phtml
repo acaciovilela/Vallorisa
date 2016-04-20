@@ -1,0 +1,37 @@
+<?php
+$title = $this->translate('Editar Arquivo');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/file/edit', array('id' => $this->id)));
+$form->prepare();
+?>
+<?php echo $this->form()->openTag($form); ?>
+<?php $file = $form->get('file'); ?>
+<legend><i class="glyphicon glyphicon-usd"></i> <?php echo $this->escapeHtml($title); ?></legend>
+<div class="form-group">
+    <?php echo $this->formHidden($file->get('fileId')); ?>
+    <div class="row">
+        <div class="col-md-1">
+            <?php echo $this->formLabel($file->get('fileCode')); ?>
+            <?php echo $this->formText($file->get('fileCode')); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo $this->formLabel($file->get('fileName')); ?>
+            <?php echo $this->formText($file->get('fileName')); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <?php echo $this->formLabel($file->get('fileWebsite')); ?>
+            <?php echo $this->formText($file->get('fileWebsite')); ?>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="btn-group">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

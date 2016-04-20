@@ -1,0 +1,12 @@
+<form action="" method="post" name="productSearch" id="productSearch">
+    <div class="form-group">
+        <label for="product_cod_search">Código</label>
+        <input type="text" class="form-control input-sm" id="product_cod_search" name="product_cod_search" value="" placeholder="<?php echo $this->translate('Código do Produto'); ?>" />
+    </div>
+    <div class="form-group">
+        <label for="product_name_search">Produto</label>
+        <input type="text" class="form-control input-sm" id="product_name_search" name="product_name_search" value="" placeholder="<?php echo $this->translate('Nome do Produto'); ?>" />
+    </div>
+    <button type="submit" class="btn btn-warning btn-sm" name="submit" value="Filtrar"><?php echo $this->translate('Filtrar'); ?></button>
+    <button type="button" onclick="window.location.href = '/admin/product'" class="btn btn-default btn-sm"><?php echo $this->translate('Limpar'); ?></button>
+</form>

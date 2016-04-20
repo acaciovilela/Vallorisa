@@ -1,0 +1,51 @@
+<?php $contact = $this->contact ?>
+<?php echo $this->formHidden($contact->get('id')); ?>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($contact->get('email')); ?>
+            <div class="input-group">
+                <span class="input-group-addon">@</span>
+                <?php echo $this->formEmail($contact->get('email')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($contact->get('url')); ?>
+            <div class="input-group">
+                <span class="input-group-addon">www</span>
+                <?php echo $this->formText($contact->get('url')); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <?php echo $this->formLabel($contact->get('phone')); ?>
+            <div class="input-group">
+                <span class="input-group-addon">+55</span>
+                <?php echo $this->formText($contact->get('phone')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <?php echo $this->formLabel($contact->get('cell')); ?>
+            <div class="input-group">
+                <span class="input-group-addon">+55</span>
+                <?php echo $this->formText($contact->get('cell')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <?php echo $this->formLabel($contact->get('fax')); ?>
+            <div class="input-group">
+                <span class="input-group-addon">+55</span>
+                <?php echo $this->formText($contact->get('fax')); ?>
+            </div>
+        </div>
+    </div>
+</div>

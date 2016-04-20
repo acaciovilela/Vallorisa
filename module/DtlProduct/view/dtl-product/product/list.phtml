@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">Lista de Produtos da Categoria Selecionada</div>
+    </div>
+    <table class="table table-condensed table-hover">
+        <tr>
+            <th><?php echo $this->translate('PRODUTO'); ?></th>
+            <th><?php echo $this->translate('COM. VAR.'); ?></th>
+            <th colspan="2"><?php echo $this->translate('COM. FIX.'); ?></th>
+        </tr>
+        <?php if (0 == count($this->products)): ?>
+            <tr>
+                <td colspan="10" class="alert alert-info text-center">
+                    <?php echo $this->translate('Não há registros no banco de dados.') ?>
+                </td>
+            </tr>
+        <?php else: ?>
+            <?php foreach ($this->products as $product) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($product->getName()); ?></td>
+                    <td><?php echo $this->porcent($product->getVariantCommission()); ?></td>
+                    <td><?php echo $this->currency($product->getFixedCommission()); ?></td>
+                    <td>
+                        <div class="btn-group btn-group-xs pull-right">
+                            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlproduct/edit', array('id' => $product->getId()))?>"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlproduct/delete', array('id' => $product->getId()))?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>

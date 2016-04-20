@@ -1,0 +1,28 @@
+<?php
+$title = $this->translate('Editar Tipo de Imóvel');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlrealtytype/edit', array('id' => $this->id)));
+$form->prepare();
+?>
+<h1 class="container-header"><i class="fa fa-building-o"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<?php echo $this->form()->openTag($form); ?>
+<?php $realtyType = $form->get('type'); ?>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <?php echo $this->formLabel($realtyType->get('name')); ?>
+                    <?php echo $this->formText($realtyType->get('name')); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="btn-group">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

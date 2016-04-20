@@ -1,0 +1,54 @@
+<?php
+$pretender = $this->pretender;
+$person = $pretender->getPerson();
+$address = $person->getAddress();
+$contact = $person->getContact();
+$individual = $person->getIndividual();
+$legal = $person->getLegal();
+$title = 'Detalhes de ' . $person->getName();
+$this->headTitle($title);
+?>
+<div class="container-fluid">
+    <legend>
+        <h1 class="container-header"><i class="fa fa-user"></i> Interessado</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <small><?php echo $person->getName(); ?></small>
+            </div>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"> <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo'); ?> &nbsp; <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php echo $this->url('dtladmin/dtlpretender/add', array('type' => base64_encode(0))); ?>"><i class="glyphicon glyphicon-parents"></i> Pessoa Física</a></li>
+                        <li><a href="<?php echo $this->url('dtladmin/dtlpretender/add', array('type' => base64_encode(1))); ?>"><i class="fa fa-legal"></i> Pessoa Jurídica</a></li>
+                    </ul>
+                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlpretender/edit', array('id' => $pretender->getId(), 'type' => base64_encode($pretender->getPerson()->getType()))); ?>"><i class="glyphicon glyphicon-edit"></i> <?php echo $this->translate('Editar'); ?></a>
+                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlpretender/delete', array('id' => $pretender->getId())); ?>"><i class="glyphicon glyphicon-remove"></i> <?php echo $this->translate('Apagar'); ?></a>
+                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlpretender'); ?>"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('Voltar'); ?></a>
+                </div>
+            </div>
+        </div>
+    </legend>
+    <fieldset>
+        <dl class="dl-horizontal">
+            <dt>Tipo do Imóvel:</dt>
+            <dd><?php echo $pretender->getRealtyType()->getName(); ?>&nbsp;</dd>
+            <dt>Valor do Imóvel:</dt>
+            <dd><?php echo $this->currency($pretender->getValue()); ?>&nbsp;</dd>
+            <dt>Valor Solicitado:</dt>
+            <dd><?php echo $this->currency($pretender->getValue()); ?>&nbsp;</dd>
+
+            <legend>Contato</legend>
+            <dt>Bairro:</dt>
+            <dd><?php echo $address->getQuarter(); ?>&nbsp;</dd>
+            <dt>Cidade:</dt>
+            <dd><?php echo $address->getCityName(); ?>&nbsp;</dd>
+            <dt>Email:</dt>
+            <dd><?php echo $contact->getEmail(); ?>&nbsp;</dd>
+            <dt>Telefone:</dt>
+            <dd><?php echo $this->phone($contact->getPhone()); ?>&nbsp;</dd>
+            <dt>Celular:</dt>
+            <dd><?php echo $this->phone($contact->getCell()); ?>&nbsp;</dd>
+        </dl>
+    </fieldset>
+</div>

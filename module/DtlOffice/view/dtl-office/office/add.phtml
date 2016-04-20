@@ -1,0 +1,24 @@
+<?php
+$title = $this->translate('Novo Cargo');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtloffice/add'));
+$form->prepare();
+?>
+<div class="modal-header">
+    <h3 class="modal-title"><i class="fa fa-plus-circle"></i> <?php echo $this->escapeHtml($title); ?></h3>
+</div>
+<?php echo $this->form()->openTag($form); ?>
+<div class="modal-body">
+    <?php $office = $form->get('office'); ?>
+    <?php echo $this->formRow($office->get('id')); ?>
+    <div class="form-group">
+        <?php echo $this->formLabel($office->get('name')); ?>
+        <?php echo $this->formText($office->get('name')); ?>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> <?php echo $this->translate('Salvar'); ?></button>
+    <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-times"></i> <?php echo $this->translate('Cancelar'); ?></button>
+</div>
+<?php echo $this->form()->closeTag(); ?>

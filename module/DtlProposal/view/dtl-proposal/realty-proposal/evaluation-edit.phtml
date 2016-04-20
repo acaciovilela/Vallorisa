@@ -1,0 +1,82 @@
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlproposal/realty-proposal/evaluationEdit', 
+        array('id' => $this->realtyProposal->getId(),
+            'evalId' => $this->evalId)));
+$form->prepare();
+$realtyEvaluation = $form->get('realtyEvaluation');
+?>
+<h4>
+    <i class="glyphicon glyphicon-search"></i> 
+    Editar Avaliação do Imóvel da Proposta Nº <?php echo $this->realtyProposal->getId(); ?>
+</h4>
+
+<br/>
+
+<?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formHidden($realtyEvaluation->get('realtyEvaluationId'));   ?>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('bank')); ?>
+            <?php echo $this->formSelect($realtyEvaluation->get('bank')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationRequestDate')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationRequestDate'));   ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationCompletionDate')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationCompletionDate'));   ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationEngineering')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationEngineering')); ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationEngineeringPhone')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationEngineeringPhone')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationEngineer')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationEngineer')); ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationEngineerPhone')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationEngineerPhone')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationValue')); ?>
+            <div class="input-group">
+                <span class="input-group-addon">R$</span>
+                <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationValue')); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->formRow($form->get('security')); ?>
+<?php echo $this->formRow($form->get('submit')); ?>
+<button type="button" class="btn btn-default" onclick="javascript: window.history.back();">Voltar</button>
+<?php echo $this->form()->closeTag(); ?>

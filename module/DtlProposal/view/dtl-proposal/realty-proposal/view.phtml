@@ -1,0 +1,747 @@
+<?php
+$realtyProposal = $this->realtyProposal;
+$proposal = $realtyProposal->getProposal();
+$customer = $proposal->getCustomer();
+$title = 'Detalhes da Proposta nº ' . $realtyProposal->getId();
+$this->headTitle($title);
+?>
+<?php $class = ''; ?>
+<?php $status = ''; ?>
+<?php if ($realtyProposal->getProposal()->getIsChecking()): ?>
+    <?php $class = 'panel-info'; ?>
+    <?php $status = 'ABERTA'; ?>
+<?php elseif ($realtyProposal->getProposal()->getIsCanceled()): ?>
+    <?php $class = 'panel-canceled'; ?>
+    <?php $status = 'CANCELADA'; ?>
+<?php elseif ($realtyProposal->getProposal()->getIsRefused()): ?>
+    <?php $class = 'panel-danger'; ?>
+    <?php $status = 'RECUSADA'; ?>
+<?php elseif ($realtyProposal->getProposal()->getIsAborted()): ?>
+    <?php $class = 'panel-warning'; ?>
+    <?php $status = 'ABORTADA'; ?>
+<?php elseif ($realtyProposal->getProposal()->getIsApproved()): ?>
+    <?php $class = 'panel-muted'; ?>
+    <?php $status = 'APROVADA'; ?>
+<?php elseif ($realtyProposal->getProposal()->getIsIntegrated()): ?>
+    <?php $class = 'panel-success'; ?>
+    <?php $status = 'INTEGRADA'; ?>
+<?php elseif ($realtyProposal->getProposal()->getIsPending()): ?>
+    <?php $class = 'panel-primary'; ?>
+    <?php $status = 'PENDENTE'; ?>
+<?php endif; ?>
+<div class="panel panel-group <?php echo $class; ?>">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel-title">
+                    <i class="glyphicon glyphicon-home"></i> 
+                    Proposta Nº <?php echo str_pad($realtyProposal->getId(), 8, '0', STR_PAD_LEFT); ?>
+                </div>
+            </div>
+            <div class="col-md-7 hidden-print">
+                <div class="btn-group btn-group-sm pull-right">
+                    <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
+                    echo $this->url('dtladmin/dtlproposal/realty-proposal/delete', array('action' => 'delete',
+                        'id' => $realtyProposal->getId()));
+                    ?>"><i class="glyphicon glyphicon-remove"></i> Apagar</a>
+                    <a class="btn btn-default" data-toggle="tooltip" title="Editar" href="<?php
+                    echo $this->url('dtladmin/dtlproposal/realty-proposal/edit', array(
+                        'id' => $realtyProposal->getId()));
+                    ?>"><i class="glyphicon glyphicon-edit"></i> Editar</a>
+                    <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Avaliação do Imóvel" data-target="#realtyEvaluation<?php echo $realtyProposal->getId(); ?>"
+                       href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/evaluation', array('action' => 'evaluation', 'id' => $realtyProposal->getId())); ?>">
+                        <i class="glyphicon glyphicon-search"></i> Avaliação</a>
+                    <a class="btn btn-default app-tooltip" data-toggle="modal" title="Migração Bancária" data-target="#bankReport<?php echo $realtyProposal->getId(); ?>"
+                       href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/bank', array('action' => 'bank', 'id' => $realtyProposal->getId())); ?>">
+                        <i class="glyphicon glyphicon-lock"></i> Migrar Banco</a>
+                    <?php if (!$realtyProposal->getProposal()->getIsIntegrated()): ?>
+                        <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $realtyProposal->getId(); ?>"
+                           href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/status', array('action' => 'status', 'id' => $realtyProposal->getId())); ?>">
+                            <i class="glyphicon glyphicon-repeat"></i> Status</a>
+                    <?php endif; ?>
+                    <a class="btn btn-default app-tooltip" data-toggle="modal" title="Histórico" data-target="#proposalHistory<?php echo $realtyProposal->getId(); ?>"
+                       href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/history', array('action' => 'history', 'id' => $realtyProposal->getId())); ?>">
+                        <i class="glyphicon glyphicon-time"></i> Histórico</a>
+                    <a href="javascript: window.print();" class="btn btn-default">
+                        <i class="glyphicon glyphicon-print"></i> 
+                        <?php echo $this->translate('Imprimir'); ?>
+                    </a>
+
+                    <a class="btn btn-default" data-toggle="tooltip" title="Voltar" href="<?php
+                    echo $this->url('dtladmin/dtlproposal/realty-proposal', array('action' => 'print',
+                        'id' => $realtyProposal->getId()));
+                    ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+
+                    <div class="modal" id="proposalHistory<?php echo $realtyProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content"></div>
+                        </div>
+                    </div>
+                    <div class="modal" id="proposalStatus<?php echo $realtyProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content"></div>
+                        </div>
+                    </div>
+                    <div class="modal" id="bankReport<?php echo $realtyProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content"></div>
+                        </div>
+                    </div>
+                    <div class="modal" id="realtyEvaluation<?php echo $realtyProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="panel <?php echo $class; ?>">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <i class=""></i> Arquivos da Proposta
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="pull-right btn-group-sm">
+                                <a class="btn btn-default" data-toggle="modal" data-target="#modalUploader" title="Upload de arquivos..." href="<?php
+                                echo $this->url('dtladmin/dtlproposal/proposal/upload', array('action' => 'upload'));
+                                ?>?id=<?php echo $proposal->getId(); ?>"><i class="glyphicon glyphicon-upload"></i> Upload</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->partial($this->basePath() . 'dtl-proposal/proposal/fileslist', array('proposal' => $proposal)); ?>
+            </div>
+        </div>
+
+        <div class="panel <?php echo $class; ?>">
+            <div class="panel-heading">
+                <div class="panel-title"><i class=""></i> Dados Básicos da Proposta</div>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dt>Número da Proposta:</dt>
+                            <dd><?php echo $realtyProposal->getId(); ?></dd>
+                            <dt>Banco:</dt>
+                            <dd><?php echo $realtyProposal->getProposal()->getBank()->getName(); ?></dd>
+                            <dt>Cidade:</dt>
+                            <dd><?php echo $realtyProposal->getProposal()->getCompany()->getAddress()->getCity()->getName(); ?></dd>
+                            <dt>Corretor de Imóveis:</dt>
+                            <dd><?php echo $realtyProposal->getRealtor()->getPerson()->getName(); ?></dd>
+                            <dt>Produto:</dt>
+                            <dd><?php echo $realtyProposal->getProduct()->getName(); ?></dd>
+                            <dt>Data de Cadastro:</dt>
+                            <dd><?php echo $this->date($realtyProposal->getProposal()->getTimestamp()); ?></dd>
+                            <dt>Data Base:</dt>
+                            <dd><?php echo $realtyProposal->getProposal()->getBaseDate(); ?></dd>
+                            <dt>Matrícula do Imóvel:</dt>
+                            <dd><?php echo $realtyProposal->getRealty()->getCode(); ?></dd>
+                            <dt>Observações:</dt>
+                            <dd><?php echo $realtyProposal->getProposal()->getNotes(); ?></dd>
+                        </div>
+                        <div class="col-md-6">
+                            <dt>Status da Proposta:</dt>
+                            <dd><?php echo $status; ?></dd>
+                            <dt>Empresa:</dt>
+                            <dd><?php echo $realtyProposal->getProposal()->getCompany()->getFancyName(); ?></dd>
+                            <dt>Operador:</dt>
+                            <dd><?php echo $realtyProposal->getProposal()->getEmployee()->getPerson()->getName(); ?></dd>
+                            <dt>Telefone do Corretor:</dt>
+                            <dd><?php echo $this->phone($realtyProposal->getRealtor()->getPerson()->getContact()->getPhone()); ?></dd>
+                            <dt>Total da Venda:</dt>
+                            <dd><?php echo $this->currency($realtyProposal->getTotalValue()); ?></dd>
+                            <dt>Entrada:</dt>
+                            <dd><?php echo $this->currency($realtyProposal->getInValue()); ?></dd>
+                            <dt>Valor Financiado:</dt>
+                            <dd><?php echo $this->currency($proposal->getValue()); ?></dd>
+                            <dt>Usar FGTS:</dt>
+                            <dd><?php echo ($proposal->getValue()) ? "SIM" : "NÃO"; ?></dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <div class="panel <?php echo $class; ?>">
+            <div class="panel-heading">
+                <div class="panel-title"><i class="glyphicon glyphicon-home"></i> Dados do Imóvel</div>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <?php $realty = $realtyProposal->getRealty(); ?>
+                    <?php
+                    switch ($realty->getType()->getName()) {
+                        case 'READY_TO_LIVE':
+                            $realtyTypeName = 'PRONTO PRA MORAR';
+                            break;
+                        case 'COMERCIAL':
+                            $realtyTypeName = 'COMERCIAL';
+                            break;
+                        case 'UNDER_CONSTRUCTION':
+                            $realtyTypeName = 'EM OBRAS';
+                            break;
+                        case 'UNDER_FINISHING':
+                            $realtyTypeName = 'EM ACABAMENTO';
+                            break;
+                        case 'ENTERPRISE':
+                            $realtyTypeName = 'EMPREENDIMENTO';
+                            break;
+                        case 'NEW':
+                            $realtyTypeName = 'LANÇAMENTO';
+                            break;
+                        case 'UNDER_PLANNING':
+                            $realtyTypeName = 'NA PLANTA';
+                            break;
+                        case 'RURAL':
+                            $realtyTypeName = 'RURAL';
+                            break;
+                        default :
+                            $realtyTypeName = null;
+                            break;
+                    }
+                    ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dt>Tipo do Imóvel:</dt>
+                            <dd><?php echo $realty->getType()->getName(); ?></dd>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <dt>Área Construída:</dt>
+                                    <dd><?php echo $realty->getFeature()->getBuiltArea(); ?> m²</dd>
+                                    <dt>Área Útil:</dt>
+                                    <dd><?php echo $realty->getFeature()->getUsefulArea(); ?> m²</dd>
+                                    <dt>Área do Terreno:</dt>
+                                    <dd><?php echo $realty->getFeature()->getGroundArea(); ?> m²</dd>
+                                    <dt>Largura do Terreno:</dt>
+                                    <dd><?php echo $realty->getFeature()->getGroundWidth(); ?> m²</dd>
+                                    <br/>
+                                    <dt>Dormitórios:</dt>
+                                    <dd><?php echo $realty->getFeature()->getBedroomAmount(); ?></dd>
+                                    <dt>Suítes:</dt>
+                                    <dd><?php echo $realty->getFeature()->getBedroomAmount(); ?></dd>
+                                    <dt>Banheiros:</dt>
+                                    <dd><?php echo $realty->getFeature()->getBedroomAmount(); ?></dd>
+                                </div>
+                                <div class="col-md-6">
+                                    <dt>Edícula:</dt>
+                                    <dd><?php echo $realty->getFeature()->getBalconyArea(); ?> m²</dd>
+                                    <dt>Área Total:</dt>
+                                    <dd><?php echo $realty->getFeature()->getTotalArea(); ?> m²</dd>
+                                    <dt>&nbsp;</dt>
+                                    <dd>&nbsp;</dd>
+                                    <dt>Comp. do Terreno:</dt>
+                                    <dd><?php echo $realty->getFeature()->getGroundLength(); ?> m²</dd>
+                                    <br/>
+                                    <dt>Quartos:</dt>
+                                    <dd><?php echo $realty->getFeature()->getRoomAmount(); ?></dd>
+                                    <dt>Hidromassagens:</dt>
+                                    <dd><?php echo $realty->getFeature()->getRoomAmount(); ?></dd>
+                                    <dt>Salas:</dt>
+                                    <dd><?php echo $realty->getFeature()->getRoomAmount(); ?></dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <dt>Valor do Imóvel:</dt>
+                            <dd><?php echo $this->currency($realty->getValue()); ?></dd>
+                            <?php $realtyFeature = $realty->getFeature(); ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <dt>Box no WC:</dt>
+                                    <dd><?php echo ($realtyFeature->getBathroomStall()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Armário no WC:</dt>
+                                    <dd><?php echo ($realtyFeature->getBathroomCabinet()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Armário no Quarto:</dt>
+                                    <dd><?php echo ($realtyFeature->getRoomCabinet()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Lavabo:</dt>
+                                    <dd><?php echo ($realtyFeature->getRestroom()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Sala de Estar:</dt>
+                                    <dd><?php echo ($realtyFeature->getLivingRoom()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Sala 2 Ambientes:</dt>
+                                    <dd><?php echo ($realtyFeature->getDoubleLiving()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Sala de Jantar:</dt>
+                                    <dd><?php echo ($realtyFeature->getDiningRoom()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Sala de TV:</dt>
+                                    <dd><?php echo ($realtyFeature->getTvRoom()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Escritório:</dt>
+                                    <dd><?php echo ($realtyFeature->getTvRoom()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Cozinha:</dt>
+                                    <dd><?php echo ($realtyFeature->getKitchen()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                </div>
+                                <div class="col-md-6">
+                                    <dt>Cozinha Planejada:</dt>
+                                    <dd><?php echo ($realtyFeature->getPlannedKitchen()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Despensa:</dt>
+                                    <dd><?php echo ($realtyFeature->getStoreRoom()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Area de Serviço:</dt>
+                                    <dd><?php echo ($realtyFeature->getServiceArea()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Quarto de Serviço:</dt>
+                                    <dd><?php echo ($realtyFeature->getStoreHouse()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Forro de Laje:</dt>
+                                    <dd><?php echo ($realtyFeature->getLiningSlab()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Forro de PVC:</dt>
+                                    <dd><?php echo ($realtyFeature->getPvcLiner()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Forro de Madeira:</dt>
+                                    <dd><?php echo ($realtyFeature->getPlanking()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Acabamento em Gesso:</dt>
+                                    <dd><?php echo ($realtyFeature->getFinishPlaster()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Aquecedor a Gás:</dt>
+                                    <dd><?php echo ($realtyFeature->getGasHeater()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                    <dt>Aquecedor Solar:</dt>
+                                    <dd><?php echo ($realtyFeature->getSolarHeater()) ? "<label class='label label-success'><i class='glyphicon glyphicon-ok'></i></label>" : "<label class='label label-danger'><i class='glyphicon glyphicon-remove'></i></label>"; ?></dd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <div class="panel <?php echo $class; ?>">
+            <div class="panel-heading">
+                <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados do Comprador</div>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Nome:</dt>
+                    <dd><?php echo $customer->getPerson()->getName(); ?>&nbsp;</dd>
+                    <?php if ($customer->getPerson()->getType()): ?>
+                        <dt>CNPJ:</dt>
+                        <dd><?php echo $this->cnpj($customer->getPerson()->getlegal()->getCnpj()); ?>&nbsp;</dd>
+                        <dt>Inscrição Estadual:</dt>
+                        <dd><?php echo $customer->getPerson()->getlegal()->getSubscription(); ?>&nbsp;</dd>
+                        <dt>Representante:</dt>
+                        <dd><?php echo $customer->getPerson()->getlegal()->getRepresentativeName(); ?>&nbsp;</dd>
+                        <dt>Telefone do Rep.:</dt>
+                        <dd><?php echo $this->phone($customer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
+                    <?php else: ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dt>CPF:</dt>
+                                <dd><?php echo $this->cpf($customer->getPerson()->getIndividual()->getCpf()); ?>&nbsp;</dd>
+                                <dt>RG:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getRg(); ?>&nbsp;</dd>
+                                <dt>Sexo:</dt>
+                                <dd><?php echo $this->gender($customer->getPerson()->getIndividual()->getGender()); ?>&nbsp;</dd>
+                                <dt>Natural de:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getBirthPlace(); ?>/<?php echo $customer->getPerson()->getIndividual()->getBirthUf(); ?>&nbsp;</dd>
+                                <dt>Nome da Mãe:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getMother(); ?>&nbsp;</dd>
+                            </div>
+                            <div class="col-md-6">
+                                <dt>Data de Nascimento:</dt>
+                                <dd><?php echo $this->birthday($customer->getPerson()->getIndividual()->getBirthDay(), $customer->getPerson()->getIndividual()->getBirthMonth(), $customer->getPerson()->getIndividual()->getBirthYear()); ?></dd>
+                                <dt>Órgão Expedidor:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getRgOrgan(); ?> / <?php echo $customer->getPerson()->getIndividual()->getRgUf(); ?></dd>
+                                <dt>Data de Expedição:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getRgDate(); ?>&nbsp;</dd>
+                                <dt>Nacionalidade:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getNationality(); ?>&nbsp;</dd>
+                                <dt>Nome do Pai:</dt>
+                                <dd><?php echo $customer->getPerson()->getIndividual()->getFather(); ?>&nbsp;</dd>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dt>Endereço:</dt>
+                            <dd><?php echo $customer->getPerson()->getAddress()->getName(); ?>, nº <?php echo $customer->getPerson()->getAddress()->getNumber(); ?></dd>
+                            <dt>Complemento:</dt>
+                            <dd><?php echo $customer->getPerson()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                            <dt>Bairro:</dt>
+                            <dd><?php echo $customer->getPerson()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                            <dt>CEP:</dt>
+                            <dd><?php echo $this->cep($customer->getPerson()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                            <dt>Cidade:</dt>
+                            <dd><?php echo ($customer->getPerson()->getAddress()->getCity()) ? $customer->getPerson()->getAddress()->getCity()->getName() : ''; ?>&nbsp;</dd>
+                            <dt>Estado:</dt>
+                            <dd><?php echo ($customer->getPerson()->getAddress()->getState()) ? $customer->getPerson()->getAddress()->getState()->getName() : ''; ?>&nbsp;</dd>
+                            <dt>País:</dt>
+                            <dd><?php echo ($customer->getPerson()->getAddress()->getCountry()) ? $customer->getPerson()->getAddress()->getCountry()->getName() : '';; ?>&nbsp;</dd>
+                        </div>
+                        <div class="col-md-6">
+                            <dt>Email:</dt>
+                            <dd><?php echo $customer->getPerson()->getContact()->getEmail(); ?>&nbsp;</dd>
+                            <dt>Website:</dt>
+                            <dd><?php echo $customer->getPerson()->getContact()->getUrl(); ?>&nbsp;</dd>
+                            <dt>Telefone:</dt>
+                            <dd><?php echo $this->phone($customer->getPerson()->getContact()->getPhone()); ?>&nbsp;</dd>
+                            <dt>Celular:</dt>
+                            <dd><?php echo $this->phone($customer->getPerson()->getContact()->getCell()); ?>&nbsp;</dd>
+                            <dt>FAX:</dt>
+                            <dd><?php echo $this->phone($customer->getPerson()->getContact()->getFax()); ?>&nbsp;</dd>
+                            <dt>Tipo de Residência:</dt>
+                            <dd><?php echo $customer->getResidenceType(); ?></dd>
+                            <dt>Tempo na Residência:</dt>
+                            <dd><?php echo $customer->getResidenceTime(); ?></dd>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <?php if (!$customer->getPerson()->getType()): ?>
+                        <div class="panel <?php echo $class; ?>">
+                            <div class="panel-heading">
+                                <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados Profissionais</div>
+                            </div>
+                            <div class="panel-body">
+                                <dl class="dl-horizontal">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <dt>Nome da Empresa:</dt>
+                                            <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getCompanyName(); ?></dd>
+                                            <dt>Endereço:</dt>
+                                            <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getName(); ?>, nº <?php echo $customer->getPerson()->getAddress()->getNumber(); ?></dd>
+                                            <dt>Complemento:</dt>
+                                            <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                                            <dt>Bairro:</dt>
+                                            <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                                            <dt>CEP:</dt>
+                                            <dd><?php echo $this->cep($customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                                            <dt>Cidade:</dt>
+                                            <dd><?php echo ($customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()) ? $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()->getName() : ''; ?>&nbsp;</dd>
+                                            <dt>Estado:</dt>
+                                            <dd><?php echo ($customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()) ? $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()->getName() : ''; ?>&nbsp;</dd>
+                                            <dt>País:</dt>
+                                            <dd><?php echo ($customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()) ? $customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()->getName() : ''; ?>&nbsp;</dd>
+                                            <dt>Data de Admissão:</dt>
+                                            <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getInDate(); ?></dd>
+                                            <dt>Cargo:</dt>
+                                            <dd><?php echo ($customer->getPerson()->getIndividual()->getProfessional()->getOffice()) ? $customer->getPerson()->getIndividual()->getProfessional()->getOffice()->getName() : ''; ?></dd>
+                                            <dt>Salário:</dt>
+                                            <dd><?php echo $this->currency($customer->getPerson()->getIndividual()->getProfessional()->getSalary()); ?></dd>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <dt>CNPJ:</dt>
+                                            <dd><?php echo $this->cnpj($customer->getPerson()->getIndividual()->getProfessional()->getCompanyCnpj()); ?>&nbsp;</dd>
+                                            <dt>Email:</dt>
+                                            <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getContact()->getEmail(); ?>&nbsp;</dd>
+                                            <dt>Website:</dt>
+                                            <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getContact()->getUrl(); ?>&nbsp;</dd>
+                                            <dt>Telefone:</dt>
+                                            <dd><?php echo $this->phone($customer->getPerson()->getIndividual()->getProfessional()->getContact()->getPhone()); ?>&nbsp;</dd>
+                                            <dt>Celular:</dt>
+                                            <dd><?php echo $this->phone($customer->getPerson()->getIndividual()->getProfessional()->getContact()->getCell()); ?>&nbsp;</dd>
+                                            <dt>FAX:</dt>
+                                            <dd><?php echo $this->phone($customer->getPerson()->getIndividual()->getProfessional()->getContact()->getFax()); ?>&nbsp;</dd>
+                                            <dt>Outra Renda:</dt>
+                                            <dd><?php echo $this->currency($customer->getPerson()->getIndividual()->getProfessional()->getOtherRevenue()); ?>&nbsp;</dd>
+                                            <dt>Tipo de Residência:</dt>
+                                            <dd><?php echo $customer->getResidenceType(); ?></dd>
+                                            <dt>Tempo na Residência:</dt>
+                                            <dd><?php echo $customer->getResidenceTime(); ?></dd>
+                                            <dt>Observações:</dt>
+                                            <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getNotes(); ?>&nbsp;</dd>
+                                        </div>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </dl>
+            </div>
+        </div>
+
+        <?php $proposalCustomers = $realtyProposal->getCustomers(); ?>
+        <?php if (count($proposalCustomers) > 0): ?>
+            <div class="panel <?php echo $class; ?>">
+                <div class="panel-heading">
+                    <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados do Comprador</div>
+                </div>
+                <div class="panel-body">
+                    <?php foreach ($proposalCustomers as $proposalCustomer): ?>
+                        <legend>Comprador</legend>
+                        <dl class="dl-horizontal">
+                            <dt>Nome:</dt>
+                            <dd><?php echo $proposalCustomer->getPerson()->getName(); ?>&nbsp;</dd>
+                            <?php if ($proposalCustomer->getPerson()->getType()): ?>
+                                <dt>CNPJ:</dt>
+                                <dd><?php echo $this->cnpj($proposalCustomer->getPerson()->getlegal()->getCnpj()); ?>&nbsp;</dd>
+                                <dt>Inscrição Estadual:</dt>
+                                <dd><?php echo $proposalCustomer->getPerson()->getlegal()->getSubscription(); ?>&nbsp;</dd>
+                                <dt>Representante:</dt>
+                                <dd><?php echo $proposalCustomer->getPerson()->getlegal()->getRepresentativeName(); ?>&nbsp;</dd>
+                                <dt>Telefone do Rep.:</dt>
+                                <dd><?php echo $this->phone($proposalCustomer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
+                            <?php else: ?>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <dt>CPF:</dt>
+                                        <dd><?php echo ($proposalCustomer->getPerson()->getIndividual()->getCpf()); ?>&nbsp;</dd>
+                                        <dt>RG:</dt>
+                                        <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getRg(); ?>&nbsp;</dd>
+                                        <dt>Sexo:</dt>
+                                        <dd><?php echo $this->gender($proposalCustomer->getPerson()->getIndividual()->getGender()); ?>&nbsp;</dd>
+                                        <dt>Natural de:</dt>
+                                        <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getBirthPlace(); ?>/<?php echo $proposalCustomer->getPerson()->getIndividual()->getBirthUf(); ?>&nbsp;</dd>
+                                        <dt>Nome da Mãe:</dt>
+                                        <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getMother(); ?>&nbsp;</dd>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dt>Data de Nascimento:</dt>
+                                        <dd><?php echo $this->birthday($proposalCustomer->getPerson()->getIndividual()->getBirthDay(), $proposalCustomer->getPerson()->getIndividual()->getBirthMonth(), $proposalCustomer->getPerson()->getIndividual()->getBirthYear()); ?></dd>
+                                        <dt>Órgão Expedidor:</dt>
+                                        <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getRgOrgan(); ?> / <?php echo $proposalCustomer->getPerson()->getIndividual()->getRgUf(); ?></dd>
+                                        <dt>Data de Expedição:</dt>
+                                        <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getRgDate(); ?>&nbsp;</dd>
+                                        <dt>Nacionalidade:</dt>
+                                        <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getNationality(); ?>&nbsp;</dd>
+                                        <dt>Nome do Pai:</dt>
+                                        <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getFather(); ?>&nbsp;</dd>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <dt>Endereço:</dt>
+                                    <dd><?php echo $proposalCustomer->getPerson()->getAddress()->getName(); ?>, nº <?php echo $proposalCustomer->getPerson()->getAddress()->getNumber(); ?></dd>
+                                    <dt>Complemento:</dt>
+                                    <dd><?php echo $proposalCustomer->getPerson()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                                    <dt>Bairro:</dt>
+                                    <dd><?php echo $proposalCustomer->getPerson()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                                    <dt>CEP:</dt>
+                                    <dd><?php echo $this->cep($proposalCustomer->getPerson()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                                    <dt>Cidade:</dt>
+                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getCity()->getName();  ?>&nbsp;</dd>
+                                    <dt>Estado:</dt>
+                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getState()->getName();  ?>&nbsp;</dd>
+                                    <dt>País:</dt>
+                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getCountry()->getName();  ?>&nbsp;</dd>
+                                </div>
+                                <div class="col-md-6">
+                                    <dt>Email:</dt>
+                                    <dd><?php echo $proposalCustomer->getPerson()->getContact()->getEmail(); ?>&nbsp;</dd>
+                                    <dt>Website:</dt>
+                                    <dd><?php echo $proposalCustomer->getPerson()->getContact()->getUrl(); ?>&nbsp;</dd>
+                                    <dt>Telefone:</dt>
+                                    <dd><?php echo $this->phone($proposalCustomer->getPerson()->getContact()->getPhone()); ?>&nbsp;</dd>
+                                    <dt>Celular:</dt>
+                                    <dd><?php echo $this->phone($proposalCustomer->getPerson()->getContact()->getCell()); ?>&nbsp;</dd>
+                                    <dt>FAX:</dt>
+                                    <dd><?php echo $this->phone($proposalCustomer->getPerson()->getContact()->getFax()); ?>&nbsp;</dd>
+                                </div>
+                            </div>
+                        </dl>
+                        <br/>
+                        <?php if (!$proposalCustomer->getPerson()->getType()): ?>
+                            <div class="panel <?php echo $class; ?>">
+                                <div class="panel-heading">
+                                    <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados Profissionais</div>
+                                </div>
+                                <div class="panel-body">
+                                    <dl class="dl-horizontal">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <dt>Nome da Empresa:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getCompanyName(); ?></dd>
+                                                <dt>Endereço:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getName(); ?>, nº <?php echo $proposalCustomer->getPerson()->getAddress()->getNumber(); ?></dd>
+                                                <dt>Complemento:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                                                <dt>Bairro:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                                                <dt>CEP:</dt>
+                                                <dd><?php echo $this->cep($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                                                <dt>Cidade:</dt>
+                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()->getName();  ?>&nbsp;</dd>
+                                                <dt>Estado:</dt>
+                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()->getName();  ?>&nbsp;</dd>
+                                                <dt>País:</dt>
+                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()->getName();  ?>&nbsp;</dd>
+                                                <dt>Data de Admissão:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getInDate(); ?></dd>
+                                                <dt>Cargo:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getOffice(); ?></dd>
+                                                <dt>Salário:</dt>
+                                                <dd><?php echo $this->currency($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getSalary()); ?></dd>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <dt>CNPJ:</dt>
+                                                <dd><?php echo $this->cnpj($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getCompanyCnpj()); ?>&nbsp;</dd>
+                                                <dt>Email:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getContact()->getEmail(); ?>&nbsp;</dd>
+                                                <dt>Website:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getContact()->getUrl(); ?>&nbsp;</dd>
+                                                <dt>Telefone:</dt>
+                                                <dd><?php echo $this->phone($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getContact()->getPhone()); ?>&nbsp;</dd>
+                                                <dt>Celular:</dt>
+                                                <dd><?php echo $this->phone($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getContact()->getCell()); ?>&nbsp;</dd>
+                                                <dt>FAX:</dt>
+                                                <dd><?php echo $this->phone($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getContact()->getFax()); ?>&nbsp;</dd>
+                                                <dt>Outra Renda:</dt>
+                                                <dd><?php echo $this->currency($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getOtherRevenue()); ?>&nbsp;</dd>
+                                                <dt>Tipo de Residência:</dt>
+                                                <dd><?php echo $proposalCustomer->getResidenceType(); ?></dd>
+                                                <dt>Tempo na Residência:</dt>
+                                                <dd><?php echo $proposalCustomer->getResidenceTime(); ?></dd>
+                                                <dt>Observações:</dt>
+                                                <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getNotes(); ?>&nbsp;</dd>
+                                            </div>
+                                        </div>
+                                    </dl>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php if (count($customer->getAccounts()) > 0): ?>
+            <div class="panel <?php echo $class; ?>">
+                <div class="panel-heading">
+                    <div class="panel-title"><i class="glyphicon glyphicon-usd"></i> Contas Bancárias do Cliente</div>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <tr>
+                        <th class=""><?php echo $this->translate('TIPO DA CONTA'); ?></th>
+                        <th class=""><?php echo $this->translate('BANCO'); ?></th>
+                        <th class=""><?php echo $this->translate('AGÊNCIA'); ?></th>
+                        <th class=""><?php echo $this->translate('CONTA'); ?></th>
+                        <th class=""><?php echo $this->translate('CLIENTE DESDE'); ?></th>
+                    </tr>
+                    <?php foreach ($customer->getAccounts() as $customerBankAccount) : ?>
+                        <tr>
+                            <td><?php echo $this->escapeHtml($customerBankAccount->getType()); ?></td>
+                            <td><?php echo $this->escapeHtml($customer->getBank()); ?></td>
+                            <td><?php echo $this->escapeHtml($customer->getAgency()); ?></td>
+                            <td><?php echo $this->escapeHtml($customer->getAccount()); ?></td>
+                            <td><?php echo $this->escapeHtml($customer->getSince()); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>'
+        <?php endif; ?>
+
+        <?php $dealers = $realtyProposal->getDealers(); ?>
+        <?php if (count($dealers) > 0): ?>
+            <div class="panel <?php echo $class; ?>">
+                <div class="panel-heading">
+                    <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados dos Vendedores</div>
+                </div>
+                <div class="panel-body">
+                    <?php foreach ($dealers as $dealer): ?>
+                        <legend>Vendedor</legend>
+                        <dl class="dl-horizontal">
+                            <dt>Nome:</dt>
+                            <dd><?php echo $dealer->getPerson()->getName(); ?>&nbsp;</dd>
+                            <?php if ($dealer->getPerson()->getType()): ?>
+                                <dt>CNPJ:</dt>
+                                <dd><?php echo $this->cnpj($dealer->getPerson()->getlegal()->getCnpj()); ?>&nbsp;</dd>
+                                <dt>Inscrição Estadual:</dt>
+                                <dd><?php echo $dealer->getPerson()->getlegal()->getSubscription(); ?>&nbsp;</dd>
+                                <dt>Representante:</dt>
+                                <dd><?php echo $dealer->getPerson()->getlegal()->getRepresentativeName(); ?>&nbsp;</dd>
+                                <dt>Telefone do Rep.:</dt>
+                                <dd><?php echo $this->phone($dealer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
+                            <?php else: ?>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <dt>CPF:</dt>
+                                        <dd><?php echo ($dealer->getPerson()->getIndividual()->getCpf()); ?>&nbsp;</dd>
+                                        <dt>RG:</dt>
+                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getRg(); ?>&nbsp;</dd>
+                                        <dt>Sexo:</dt>
+                                        <dd><?php echo $this->gender($dealer->getPerson()->getIndividual()->getGender()); ?>&nbsp;</dd>
+                                        <dt>Natural de:</dt>
+                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getBirthPlace(); ?>/<?php echo $dealer->getPerson()->getIndividual()->getBirthUf(); ?>&nbsp;</dd>
+                                        <dt>Nome da Mãe:</dt>
+                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getMother(); ?>&nbsp;</dd>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dt>Data de Nascimento:</dt>
+                                        <dd><?php echo $this->birthday($dealer->getPerson()->getIndividual()->getBirthDay(), $dealer->getPerson()->getIndividual()->getBirthMonth(), $dealer->getPerson()->getIndividual()->getBirthYear()); ?></dd>
+                                        <dt>Órgão Expedidor:</dt>
+                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getRgOrgan(); ?> / <?php echo $dealer->getPerson()->getIndividual()->getRgUf(); ?></dd>
+                                        <dt>Data de Expedição:</dt>
+                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getRgDate(); ?>&nbsp;</dd>
+                                        <dt>Nacionalidade:</dt>
+                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getNationality(); ?>&nbsp;</dd>
+                                        <dt>Nome do Pai:</dt>
+                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getFather(); ?>&nbsp;</dd>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <dt>Endereço:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getAddress()->getName(); ?>, nº <?php echo $dealer->getPerson()->getAddress()->getNumber(); ?></dd>
+                                    <dt>Complemento:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                                    <dt>Bairro:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                                    <dt>CEP:</dt>
+                                    <dd><?php echo $this->cep($dealer->getPerson()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                                    <dt>Cidade:</dt>
+                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getCity()->getName();  ?>&nbsp;</dd>
+                                    <dt>Estado:</dt>
+                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getState()->getName();  ?>&nbsp;</dd>
+                                    <dt>País:</dt>
+                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getCountry()->getName();  ?>&nbsp;</dd>
+                                </div>
+                                <div class="col-md-6">
+                                    <dt>Email:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getContact()->getEmail(); ?>&nbsp;</dd>
+                                    <dt>Website:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getContact()->getUrl(); ?>&nbsp;</dd>
+                                    <dt>Telefone:</dt>
+                                    <dd><?php echo $this->phone($dealer->getPerson()->getContact()->getPhone()); ?>&nbsp;</dd>
+                                    <dt>Celular:</dt>
+                                    <dd><?php echo $this->phone($dealer->getPerson()->getContact()->getCell()); ?>&nbsp;</dd>
+                                    <dt>FAX:</dt>
+                                    <dd><?php echo $this->phone($dealer->getPerson()->getContact()->getFax()); ?>&nbsp;</dd>
+                                </div>
+                            </div>
+                        </dl>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($realtyProposal->getEvaluations()): ?>
+            <div class="panel <?php echo $class; ?>">
+                <div class="panel-heading">
+                    <div class="panel-title"><i class=""></i> Avaliações do Imóvel</div>
+                </div>
+                <div class="panel-body">
+                    <?php foreach ($realtyProposal->getEvaluations() as $key => $evaluation): ?>
+                        <legend>Avaliação <?php echo $key + 1; ?></legend>
+                        <dl class="dl-horizontal">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <dt>Banco:</dt>
+                                    <dd><?php echo $evaluation->getBank()->getName(); ?></dd>
+                                    <dt>Data da Solicitação:</dt>
+                                    <dd><?php echo $evaluation->getRequestDate(); ?></dd>
+                                    <dt>Engenharia:</dt>
+                                    <dd><?php echo $evaluation->getEngineering(); ?></dd>
+                                    <dt>Egenheiro:</dt>
+                                    <dd><?php echo $evaluation->getEngineer(); ?></dd>
+                                </div>
+                                <div class="col-md-6">
+                                    <dt>Data da Avaliação:</dt>
+                                    <dd><?php echo $evaluation->getCompletionDate(); ?></dd>
+                                    <dt>Tel. da Engenharia:</dt>
+                                    <dd><?php echo $this->phone($evaluation->getEngineeringPhone()); ?></dd>
+                                    <dt>Tel. do Engenheiro:</dt>
+                                    <dd><?php echo $this->phone($evaluation->getEngineerPhone()); ?></dd>
+                                    <dt>Valor de Avaliação:</dt>
+                                    <dd><?php echo $this->currency($evaluation->getValue()); ?></dd>
+                                </div>
+                            </div>
+                        </dl>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+<div class="modal fade" id="modalUploader" role="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content"></div></div>
+</div>

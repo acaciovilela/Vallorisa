@@ -1,0 +1,41 @@
+<?php
+$proposal = $this->proposal;
+$files = $proposal->getFiles();
+?>
+<div class="container">
+    <div class="row">
+        <?php if (count($files)): ?>
+            <?php foreach ($files as $file): ?>
+                <div class="col-sm-2 text-center">
+                    <div class="files-container">
+                        <img class="img-thumbnail file-preview" src="/uploads/<?php echo $file->getName(); ?>" />
+                        <div class="file-title"></div>
+                        <div class="file-actions">
+                            <div class="btn-group btn-group-xs btn-group-justified">
+                                <a download href="/uploads/<?php echo $file->getName(); ?>" target="_blank" class="btn btn-success"><i class="fa fa-download"></i></a>
+                                <a data-toggle="modal" data-target="#fileDelete" href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/deleteFile', array('id' => $file->getId(), 'proposalId' => $proposal->getId())); ?>" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="fileDelete" aria-hidden="true" role="modal">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<style type="text/css">
+    .files-container > .file-preview {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .file-title {
+        background-color: #efefef;
+    }
+</style>

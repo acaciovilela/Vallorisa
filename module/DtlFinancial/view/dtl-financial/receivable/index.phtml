@@ -1,0 +1,61 @@
+<?php
+$title = $this->translate('Contas a Receber');
+$this->headTitle($title);
+$filter = new DtlBase\Filter\Date();
+$class = '';
+?>
+<h3 class="header-title"><i class="glyphicon glyphicon-arrow-down"></i><?php echo $this->escapeHtml($title); ?></h3>
+<br/>
+<table class="table table-striped table-bordered " id="receivable-table">
+    <thead>
+        <tr>
+            <th><?php echo $this->translate('DESCRIÇÃO'); ?></th>
+            <th><?php echo $this->translate('RECEBER DE'); ?></th>
+            <th><?php echo $this->translate('VENCIMENTO'); ?></th>
+            <th><?php echo $this->translate('PARCELA'); ?></th>
+            <th><?php echo $this->translate('VALOR'); ?></th>
+            <th class="text-right"><a class="btn btn-normal btn-success" href="<?php echo $this->url('dtladmin/dtlfinancial/receivable/add'); ?>"><i class="fa fa-plus-circle"></i> <?php echo $this->translate('Nova Conta'); ?></a></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->receivable as $receivable) : ?>
+            <?php $expirationDate = $filter->filter($receivable->getAccount()->getExpirationDate()); ?>
+            <?php $today = strtotime(date('Y-m-d')); ?>
+            <?php
+            if ($today > strtotime($expirationDate)) {
+                $class = 'text-danger';
+            } elseif ($today == strtotime($expirationDate)) {
+                $class = 'text-warning';
+            } else {
+                $class = 'text-success';
+            }
+            ?>
+            <tr class="<?php echo $class; ?>">
+                <td><?php echo $this->escapeHtml($receivable->getAccount()->getDescription()); ?></td>
+                <td><?php echo $this->escapeHtml($receivable->getCustomer()->getPerson()->getName()); ?></td>
+                <td><?php echo $this->escapeHtml($receivable->getAccount()->getExpirationDate()); ?></td>
+                <td><?php echo $this->escapeHtml($receivable->getAccount()->getCurrentParcel()); ?></td>
+                <td><?php echo $this->currency($receivable->getAccount()->getValue()); ?></td>
+                <td>
+                    <div class="btn-group-xs text-right">
+                        <a class="btn btn-success app-tooltip" title="Baixar Conta" data-toggle="modal" data-target="#dischargeModal<?php echo $receivable->getAccount()->getId(); ?>"><i class="glyphicon glyphicon-download"></i></a>
+                        <a class="btn btn-warning app-tooltip" title="Detalhes da Conta" href="<?php echo $this->url('dtladmin/dtlfinancial/receivable/view', array('id' => $receivable->getId())); ?>"><i class="glyphicon glyphicon-folder-open"></i></a>
+                        <a class="btn btn-info app-tooltip" title="Editar Conta" href="<?php echo $this->url('dtladmin/dtlfinancial/receivable/edit', array('id' => $receivable->getId())); ?>"><i class="fa fa-edit"></i></a>
+                        <a data-toggle="modal" data-target="#dltReceivableDelete<?php echo $receivable->getId(); ?>" class="btn btn-danger app-tooltip" title="Apagar Conta" href="<?php echo $this->url('dtladmin/dtlfinancial/receivable/delete', array('id' => $receivable->getId())); ?>"><i class="fa fa-times"></i></a>
+                    </div>
+                </td>
+            </tr>
+            <?php echo $this->partial('dtl-financial/account/discharge', array('account' => $receivable, 'form' => $this->form)); ?>
+        <div class="modal" role="modal" tabindex="-1" id="dltReceivableDelete<?php echo $receivable->getId(); ?>" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#receivable-table').DataTable();
+    });
+</script>

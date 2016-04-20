@@ -1,0 +1,31 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <i class="glyphicon glyphicon-plus-sign"></i> 
+            Listagem de Produtos Caixa
+        </div>
+    </div>
+    <?php if (0 == count($this->products)): ?>
+        <div class="panel-body">
+            <div class="alert alert-info">
+                <?php echo $this->translate('Nenhum registro encontrado.') ?>
+            </div>
+        </div>
+    <?php else: ?>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th colspan="2"><?php echo $this->translate('PRODUTO'); ?></th>
+            </tr>
+            <?php foreach ($this->products as $key => $product) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($product['productName']); ?></td>
+                    <td>
+                        <div class="btn-group btn-group-xs pull-right">
+                            <a class="btn btn-default btn-xs" href="javascript: caixaProposalDelete('<?php echo $key ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
+</div>

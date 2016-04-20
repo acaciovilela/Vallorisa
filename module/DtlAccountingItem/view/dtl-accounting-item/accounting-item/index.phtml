@@ -1,0 +1,65 @@
+<?php
+$title = $this->translate('Item Contábil');
+$this->headTitle($title);
+$this->placeholder('title')->set($title);
+$this->placeholder('title-icon')->set('<i class="fa fa-gift"></i>');
+?>
+<div class="page-body">
+    <div class="widget-box">
+        <div class="widget-header">
+            <div class="widget-caption">
+                <div class="widget-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <?php echo $this->escapeHtml($title); ?>
+            </div>
+            <div class="widget-toolbar">
+                <div class="btn-group">
+                    <a data-toggle="modal" data-target="#accountingItemNew" class="btn btn-normal btn-success" href="<?php echo $this->url('dtladmin/dtlaccountingitem/add'); ?>"> <i class="fa fa-plus-circle"></i> <?php echo $this->translate('Novo Item'); ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->translate('ÍTEM CONTÁBIL'); ?></th>
+                            <th><?php echo $this->translate('TIPO'); ?></th>
+                            <th class="text-right"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->accountingItem as $accountingItem) : ?>
+                            <tr>
+                                <td><?php echo $this->escapeHtml($accountingItem->getName()); ?></td>
+                                <?php if ($accountingItem->getType()): ?>
+                                    <td><span class="label label-success"><?php echo $this->translate('Ítem de Entrada'); ?></span></td>
+                                <?php else: ?>
+                                    <td><span class="label label-danger"><?php echo $this->translate('Ítem de Saída'); ?></span></td>
+                                <?php endif; ?>
+                                <td>
+                                    <div class="btn-group-xs text-right">
+                                        <a data-toggle="modal" data-target="#accountingItemEdit" class="btn btn-info icon-only btn-xs" href="<?php echo $this->url('dtladmin/dtlaccountingitem/edit', array('id' => $accountingItem->getId()))
+                                ?>"><i class="fa fa-edit"></i></a>
+                                        <a data-toggle="modal" data-target="#accountingItemDelete" class="btn btn-danger btn-xs icon-only" href="<?php echo $this->url('dtladmin/dtlaccountingitem/delete', array('id' => $accountingItem->getId()))
+                                ?>"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-danger fade" role="modal" tabindex="-1" aria-hidden="true" id="accountingItemDelete">
+    <div class="modal-dialog"><div class="modal-content"></div></div>
+</div>
+<div class="modal modal-primary fade" role="modal" tabindex="-1" aria-hidden="true" id="accountingItemEdit">
+    <div class="modal-dialog"><div class="modal-content"></div></div>
+</div>
+<div class="modal modal-success fade" role="modal" tabindex="-1" aria-hidden="true" id="accountingItemNew">
+    <div class="modal-dialog"><div class="modal-content"></div></div>
+</div>

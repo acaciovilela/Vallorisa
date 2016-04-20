@@ -1,0 +1,33 @@
+<fieldset>
+    <legend><?php echo $this->translate('Dados Bancários') ?></legend>
+    <?php $bankAccount = $this->bankAccount; ?>
+    <?php echo $this->formRow($bankAccount->get('id')); ?>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <?php echo $this->formLabel($bankAccount->get('type')); ?>
+                <?php echo $this->formSelect($bankAccount->get('type')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <?php echo $this->formLabel($bankAccount->get('bank')); ?>
+                <?php echo $this->formSelect($bankAccount->get('bank')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <?php echo $this->formLabel($bankAccount->get('agency')); ?>
+                <?php echo $this->formText($bankAccount->get('agency')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($bankAccount->get('account')); ?>
+                <?php echo $this->formText($bankAccount->get('account')); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo $this->formLabel($bankAccount->get('since')); ?>
+                <?php echo $this->formText($bankAccount->get('since')); ?>
+            </div>
+        </div>
+    </div>
+</fieldset>

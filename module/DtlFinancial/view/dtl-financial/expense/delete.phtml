@@ -1,0 +1,27 @@
+<?php
+$title = $this->translate('Apagar Despesa');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtlfinancial/expense/delete', array('id' => $this->id));
+?>
+<div class="modal-header">
+    <h3 class="header-title"><i class="glyphicon glyphicon-trash"></i> <?php echo $this->escapeHtml($title); ?></h3>
+</div>
+<div class="modal-body">
+    <blockquote>
+        <p><?php echo $this->translate('Você tem certeza de que deseja apagar ') ?>
+            '<?php echo $this->escapeHtml($this->expense->getLaunch()->getDescription()); ?>'?
+        </p>
+    </blockquote>
+</div>
+<div class="modal-footer">
+    <form action="<?php echo $url; ?>" method="post">
+        <div>
+            <input type="hidden" name="id" value="<?php echo $this->expense->getId(); ?>" />
+            <div class="form-group">
+                <button type="submit" name="del" value="Sim" class="btn btn-danger"><i class="fa fa-eraser"></i>&nbsp;<?php echo $this->translate('Sim'); ?></button>
+                <button class="btn btn-default" type="button" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;<?php echo $this->translate('Não'); ?></button>
+            </div>
+        </div>
+    </form>
+</div>
+

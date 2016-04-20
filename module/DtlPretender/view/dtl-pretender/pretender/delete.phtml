@@ -1,0 +1,16 @@
+<?php
+$title = $this->translate('Apagar Interessado');
+$this->headTitle($title);
+$url = $this->url('dtladmin/dtlpretender/delete', array('id' => $this->id));
+?>
+<h1 class="container-header"><i class="fa fa-trash-o"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<p><?php echo $this->translate('Você tem certeza de que deseja apagar ') ?>
+    '<?php echo $this->escapeHtml($this->pretender->getPerson()->getName()); ?>'?
+</p>
+<form action="<?php echo $url; ?>" method="post">
+    <input type="hidden" name="id" value="<?php echo $this->pretender->getId(); ?>" />
+    <div class="form-actions">
+        <input type="submit" name="del" value="Sim" class="btn btn-primary" />
+        <input type="submit" name="del" value="Não" class="btn btn-default" />
+    </div>
+</form>

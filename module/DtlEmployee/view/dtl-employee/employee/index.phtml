@@ -1,0 +1,104 @@
+<?php
+$title = $this->translate('Funcionários');
+$this->headTitle($title);
+?>
+<div class="row">
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-title"><i class="glyphicon glyphicon-search"></i> <?php echo $this->escapeHtml('Filtrar'); ?></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->partial('dtl-employee/employee/search'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="panel-title"><i class="glyphicon glyphicon-briefcase"></i> <?php echo $this->escapeHtml($title); ?> </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="btn-group btn-group-sm pull-right">
+                            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlemployee/add'); ?>"> <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo'); ?></a>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <table class="table table-condensed table-hover no-datatables">
+                <thead>
+                    <tr>
+                        <th class=""><?php echo $this->translate('CÓD'); ?></th>
+                        <th class=""><?php echo $this->translate('FUNCIONÁRIO'); ?></th>
+                        <th class=""><?php echo $this->translate('TELEFONE'); ?></th>
+                        <th class="col-md-2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (0 == count($this->employee)): ?>
+                        <tr>
+                            <td colspan="10" class="alert alert-info text-center"><?php echo $this->translate('Não há nenhum dado no banco de dados.') ?></td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($this->employee as $employee): ?>
+                            <?php $checkedSalary = $this->checkLaunchedSalary($employee->getId()); ?>
+                            <tr>
+                                <td><?php echo str_pad($employee->getId(), 8, '0', STR_PAD_LEFT); ?></td>
+                                <td><?php echo $this->escapeHtml($employee->getPerson()->getName()); ?></td>
+                                <td><?php echo $this->phone($employee->getPerson()->getContact()->getPhone()); ?></td>
+                                <td>
+                                    <div class="btn-group btn-group-xs pull-right">
+                                        <?php if (!$checkedSalary): ?>
+                                            <button id="launchSalary" data-toggle="tooltip" title="Fechamento de salário." class="btn btn-success btn-xs" type="button" onclick="javascript: launchSalary(this, '<?php echo $employee->getId(); ?>');"><i class="glyphicon glyphicon-usd"></i></button>
+                                        <?php else: ?>
+                                            <button data-toggle="tooltip" title="Fechamento de salário." class="btn btn-success btn-xs disabled" type="button"><i class="glyphicon glyphicon-usd"></i></button>
+                                        <?php endif; ?>
+                                        <a class="btn btn-default btn-xs" href="<?php
+                                        echo $this->url('dtladmin/dtlemployee/view', array('action' => 'view',
+                                            'id' => $employee->getId()));
+                                        ?>"><i class="glyphicon glyphicon-folder-open"></i></a>
+                                        <a class="btn btn-default btn-xs" href="<?php
+                                        echo $this->url('dtladmin/dtlemployee/edit', array('action' => 'edit',
+                                            'id' => $employee->getId()));
+                                        ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                                        <a class="btn btn-default btn-xs" href="<?php
+                                        echo $this->url('dtladmin/dtlemployee/delete', array('action' => 'delete',
+                                            'id' => $employee->getId()));
+                                        ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+            <div class="panel-footer">
+                <?php
+                $paginationInfo = $this->placeholder('pagination');
+                if (!isset($paginationInfo->route)) {
+                    $paginationInfo->route = 'dtladmin/dtlemployee';
+                    $paginationInfo->params = array();
+                }
+                ?>
+                <?php echo $this->paginationControl($this->employee, 'Sliding', 'layout/pagination'); ?>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function launchSalary(object, value) {
+                $.ajax({
+                    url: "/admin/employee/1/launchsalary",
+                    type: "POST",
+                    data: {employeeId: value}
+                }).done(function(data) {
+                    $(object).addClass('disabled');
+                });
+            }
+        </script>
+    </div>
+</div>

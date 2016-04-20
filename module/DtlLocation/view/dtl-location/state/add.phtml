@@ -1,0 +1,32 @@
+<?php
+$title = $this->translate('Adicionar Estado');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+?>
+<h1 class="container-header"><i class="fa fa-flag"></i> <?php echo $this->escapeHtml($title); ?></h1>
+<?php echo $this->form()->openTag($form); ?>
+<?php $state = $form->get('state'); ?>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <?php echo $this->formLabel($state->get('name')); ?>
+            <?php echo $this->formText($state->get('name')); ?>
+            <?php echo $this->formElementErrors($state->get('name')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1">
+        <div class="form-group">
+            <?php echo $this->formLabel($state->get('code')); ?>
+            <?php echo $this->formText($state->get('code')); ?>
+        </div>
+    </div>
+</div>
+<?php echo $this->formHidden($form->get('security')); ?>
+<div class="btn-group">
+    <?php echo $this->formElement($form->get('submit')); ?>
+    <?php echo $this->formElement($form->get('cancel')); ?>
+</div>
+<?php echo $this->form()->closeTag(); ?>

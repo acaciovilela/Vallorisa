@@ -1,0 +1,55 @@
+<?php
+if ($this->entity) {
+    $personType = base64_encode($this->entity->getPerson()->getType());
+} else {
+    $personType = $this->params['type'];
+}
+?>
+
+<?php $customer = $this->customer; ?>
+
+<?php echo $this->formHidden($customer->get('id')); ?>
+<?php $person = $customer->get('person'); ?>
+<?php echo $this->personForm($person); ?>
+
+<?php if ($personType == base64_encode(1)): ?>
+    <?php $legal = $person->get('legal'); ?>
+    <?php echo $this->legalForm($legal); ?>
+<?php elseif ($personType == base64_encode(0)): ?>
+    <?php $individual = $person->get('individual'); ?>
+    <?php echo $this->individualForm($individual); ?>
+
+    <?php $professional = $individual->get('professional'); ?>
+    <?php echo $this->professionalForm($professional); ?>
+
+    <?php if (!$this->isLoan): ?>
+        <legend>Dados Adicionais</legend>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    <?php echo $this->formLabel($customer->get('residenceType')); ?>
+                    <?php echo $this->formSelect($customer->get('residenceType')); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <?php echo $this->formLabel($customer->get('residenceTime')); ?>
+                    <?php echo $this->formText($customer->get('residenceTime')); ?>
+                </div>
+                <div class="col-md-2">
+                    <?php echo $this->formLabel($customer->get('residenceRentValue')); ?>
+                    <div class="input-group">
+                        <span class="input-group-addon">R$</span>
+                        <?php echo $this->formText($customer->get('residenceRentValue')); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <?php echo $this->formLabel($customer->get('notes')); ?>
+                    <?php echo $this->formTextarea($customer->get('notes')); ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,78 @@
+<?php
+$title = $this->translate('Produtos');
+$this->headTitle($title);
+?>
+<div class="row">
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-title"><i class="glyphicon glyphicon-search"></i> <?php echo $this->escapeHtml('Filtrar'); ?></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->partial('dtl-product/product/search'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="panel-title">
+                            <i class="glyphicon glyphicon-th-large"></i> <?php echo $this->escapeHtml($title); ?>
+                        </h3>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group btn-group-sm pull-right">
+                            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlproduct/add'); ?>"> <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo'); ?></a>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <table class="table table-condensed table-hover">
+                <tr>
+                    <th><?php echo $this->translate('PRODUTO'); ?></th>
+                    <th><?php echo $this->translate('COM. VAR.'); ?></th>
+                    <th><?php echo $this->translate('COM. FIX.'); ?></th>
+                    <th colspan="2"><?php echo $this->translate('CATEGORIA'); ?></th>
+                </tr>
+                <?php if (0 == count($this->product)): ?>
+                    <tr>
+                        <td colspan="10" class="alert alert-info text-center"><?php echo $this->translate('Não há registros no banco de dados.') ?></td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($this->product as $product) : ?>
+                        <tr>
+                            <td><?php echo $this->escapeHtml($product->getName()); ?></td>
+                            <td><?php echo $this->porcent($product->getVariantCommission()); ?></td>
+                            <td><?php echo $this->currency($product->getFixedCommission()); ?></td>
+                            <td><?php echo $this->escapeHtml($product->getCategory()->getName()); ?></td>
+                            <td>
+                                <div class="btn-group btn-group-xs pull-right">
+                                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlproduct/edit', array('id' => $product->getId())) ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlproduct/delete', array('id' => $product->getId()))
+                        ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                </tbody>
+            </table>
+            <div class="panel-footer">
+                <?php
+                $paginationInfo = $this->placeholder('pagination');
+                if (!isset($paginationInfo->route)) {
+                    $paginationInfo->route = 'dtladmin/dtlproduct';
+                    $paginationInfo->params = array();
+                }
+                ?>
+                <?php echo $this->paginationControl($this->product, 'Sliding', 'layout/pagination'); ?>
+            </div>
+        </div>
+    </div>
+</div>

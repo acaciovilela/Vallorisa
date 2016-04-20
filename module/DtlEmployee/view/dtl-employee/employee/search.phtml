@@ -1,0 +1,17 @@
+<form action="" method="post" name="employeeSearch" id="employeeSearch">
+    <div class="form-group">
+        <label for="employee_cod_search">Código</label>
+        <input type="text" class="form-control input-sm" id="employee_cod_search" name="employee_cod_search" value="" placeholder="<?php echo $this->translate('Código do Funcionário'); ?>" />
+    </div>
+    <div class="form-group">
+        <label for="employee_name_search">Funcionário</label>
+        <input type="text" class="form-control input-sm" id="employee_name_search" name="employee_name_search" value="" placeholder="<?php echo $this->translate('Nome do Funcionário'); ?>" />
+    </div>
+    <div class="form-group">
+        <label for="employee_doc_search">CPF/CNPJ</label>
+        <input type="text" class="form-control input-sm" id="employee_doc_search" name="employee_doc_search" value="" placeholder="<?php echo $this->translate('CPF/CNPJ'); ?>" />
+        <p class="help-block">Digite apenas números.</p>
+    </div>
+        <button type="submit" class="btn btn-warning btn-sm" name="submit" value="Filtrar"><?php echo $this->translate('Filtrar');?></button>
+        <button type="button" onclick="window.location.href = '/admin/employee'" class="btn btn-default btn-sm"><?php echo $this->translate('Limpar');?></button>
+</form>

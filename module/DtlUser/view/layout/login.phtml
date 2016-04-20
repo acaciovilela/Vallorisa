@@ -1,0 +1,39 @@
+<?php echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+            <?php echo $this->headTitle('LOGIN DE USUÁRIO ' . $this->translate('VALLORISA'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+            <?php
+            echo $this->headMeta()
+                    ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                    ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+            ?>
+
+            <!-- Le styles -->
+            <?php
+            echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+                    ->appendStylesheet($this->basePath() . '/bootstrap/dist/css/bootstrap.min.css')
+                    ->appendStylesheet($this->basePath() . '/font-awesome/css/font-awesome.min.css')
+                    ->appendStylesheet('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300')
+                    ->appendStylesheet('/backend/css/app.css', 'screen', null, array('id' => 'beyond-link'))
+                    ->appendStylesheet($this->basePath() . '/backend/css/demo.min.css')
+                    ->appendStylesheet($this->basePath() . '/backend/css/animate.min.css')
+                    ->appendStylesheet($this->basePath() . '/backend/css/skins/gray.css')
+            ;
+            ?>
+
+            <!-- Scripts -->
+    </head>
+    <body>
+        <?php echo $this->content; ?>
+        <?php
+        echo $this->inlineScript()
+                ->appendFile($this->basePath() . '/js/html5shiv.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->appendFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->appendFile($this->basePath() . '/backend/js/jquery-2.0.3.min.js')
+                ->appendFile($this->basePath() . '/bootstrap/dist/js/bootstrap.min.js')
+                ->appendFile($this->basePath() . '/backend/js/beyond.min.js')
+        ?>
+    </body>
+</html>

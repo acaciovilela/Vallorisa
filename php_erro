@@ -1,0 +1,45 @@
+[05-Apr-2016 16:43:27 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to a member function getAddress() on null in /home/vallorisa/www/module/DtlProposal/view/dtl-proposal/loan/view.phtml:104
+Stack trace:
+#0 /home/vallorisa/www/vendor/zendframework/zend-view/src/Renderer/PhpRenderer.php(501): include()
+#1 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(205): Zend\View\Renderer\PhpRenderer->render()
+#2 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(233): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#3 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(198): Zend\View\View->renderChildren(Object(Zend\View\Model\ViewModel))
+#4 /home/vallorisa/www/vendor/zendframework/zend-mvc/src/View/Http/DefaultRenderingStrategy.php(103): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#5 [internal function]: Zend\Mvc\View\Http\DefaultRenderingStrategy->render(Object(Zend\Mvc\MvcEvent))
+#6 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(490): call_user_func(Array, Object(Zend in /home/vallorisa/www/module/DtlProposal/view/dtl-proposal/loan/view.phtml on line 104
+[05-Apr-2016 16:43:29 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to a member function getAddress() on null in /home/vallorisa/www/module/DtlProposal/view/dtl-proposal/loan/view.phtml:104
+Stack trace:
+#0 /home/vallorisa/www/vendor/zendframework/zend-view/src/Renderer/PhpRenderer.php(501): include()
+#1 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(205): Zend\View\Renderer\PhpRenderer->render()
+#2 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(233): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#3 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(198): Zend\View\View->renderChildren(Object(Zend\View\Model\ViewModel))
+#4 /home/vallorisa/www/vendor/zendframework/zend-mvc/src/View/Http/DefaultRenderingStrategy.php(103): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#5 [internal function]: Zend\Mvc\View\Http\DefaultRenderingStrategy->render(Object(Zend\Mvc\MvcEvent))
+#6 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(490): call_user_func(Array, Object(Zend in /home/vallorisa/www/module/DtlProposal/view/dtl-proposal/loan/view.phtml on line 104
+[05-Apr-2016 16:47:07 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to a member function getLastName() on null in /home/vallorisa/www/module/DtlUser/view/zfc-user/user/index.phtml:9
+Stack trace:
+#0 /home/vallorisa/www/vendor/zendframework/zend-view/src/Renderer/PhpRenderer.php(501): include()
+#1 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(205): Zend\View\Renderer\PhpRenderer->render()
+#2 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(233): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#3 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(198): Zend\View\View->renderChildren(Object(Zend\View\Model\ViewModel))
+#4 /home/vallorisa/www/vendor/zendframework/zend-mvc/src/View/Http/DefaultRenderingStrategy.php(103): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#5 [internal function]: Zend\Mvc\View\Http\DefaultRenderingStrategy->render(Object(Zend\Mvc\MvcEvent))
+#6 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(490): call_user_func(Array, Object(Zend\Mvc\Mvc in /home/vallorisa/www/module/DtlUser/view/zfc-user/user/index.phtml on line 9
+[05-Apr-2016 16:47:17 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to a member function getLastName() on null in /home/vallorisa/www/module/DtlUser/view/dtl-user/user/index.phtml:36
+Stack trace:
+#0 /home/vallorisa/www/vendor/zendframework/zend-view/src/Renderer/PhpRenderer.php(501): include()
+#1 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(205): Zend\View\Renderer\PhpRenderer->render()
+#2 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(233): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#3 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(198): Zend\View\View->renderChildren(Object(Zend\View\Model\ViewModel))
+#4 /home/vallorisa/www/vendor/zendframework/zend-mvc/src/View/Http/DefaultRenderingStrategy.php(103): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#5 [internal function]: Zend\Mvc\View\Http\DefaultRenderingStrategy->render(Object(Zend\Mvc\MvcEvent))
+#6 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(490): call_user_func(Array, Object(Zend\Mvc\Mv in /home/vallorisa/www/module/DtlUser/view/dtl-user/user/index.phtml on line 36
+[05-Apr-2016 16:47:36 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to a member function getLastName() on null in /home/vallorisa/www/module/DtlUser/view/dtl-user/user/index.phtml:36
+Stack trace:
+#0 /home/vallorisa/www/vendor/zendframework/zend-view/src/Renderer/PhpRenderer.php(501): include()
+#1 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(205): Zend\View\Renderer\PhpRenderer->render()
+#2 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(233): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#3 /home/vallorisa/www/vendor/zendframework/zend-view/src/View.php(198): Zend\View\View->renderChildren(Object(Zend\View\Model\ViewModel))
+#4 /home/vallorisa/www/vendor/zendframework/zend-mvc/src/View/Http/DefaultRenderingStrategy.php(103): Zend\View\View->render(Object(Zend\View\Model\ViewModel))
+#5 [internal function]: Zend\Mvc\View\Http\DefaultRenderingStrategy->render(Object(Zend\Mvc\MvcEvent))
+#6 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(490): call_user_func(Array, Object(Zend\Mvc\Mv in /home/vallorisa/www/module/DtlUser/view/dtl-user/user/index.phtml on line 36

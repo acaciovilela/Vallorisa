@@ -1,0 +1,68 @@
+<?php
+$title = $this->translate('Contas a Pagar');
+$this->headTitle($title);
+$filter = new DtlBase\Filter\Date();
+$class = '';
+?>
+<h3 class="header-title"><i class="glyphicon glyphicon-arrow-down"></i><?php echo $this->escapeHtml($title); ?></h3>
+<br/>
+<table class="table table-striped  table-bordered" id="payable-table">
+    <thead>
+        <tr>
+            <th><?php echo $this->translate('DESCRIÇÃO'); ?></th>
+            <th><?php echo $this->translate('RECEBER DE'); ?></th>
+            <th><?php echo $this->translate('VENCIMENTO'); ?></th>
+            <th><?php echo $this->translate('PARCELA'); ?></th>
+            <th><?php echo $this->translate('VALOR'); ?></th>
+            <th class="text-right">
+                <a class="btn btn-normal btn-success" href="<?php echo $this->url('dtladmin/dtlfinancial/payable/add'); ?>"><i class="fa fa-plus-circle"></i> <?php echo $this->translate('Nova Conta'); ?></a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->payable as $payable) : ?>
+            <?php $expirationDate = $filter->filter($payable->getAccount()->getExpirationDate()); ?>
+            <?php $today = strtotime(date('Y-m-d')); ?>
+            <?php
+            if ($today > strtotime($expirationDate)) {
+                $class = 'text-danger';
+            } elseif ($today == strtotime($expirationDate)) {
+                $class = 'text-warning';
+            } else {
+                $class = 'text-success';
+            }
+            ?>
+            <tr class="<?php echo $class; ?>">
+                <td><?php echo $this->escapeHtml($payable->getAccount()->getDescription()); ?></td>
+                <td><?php echo $this->escapeHtml($payable->getSupplier()->getPerson()->getName()); ?></td>
+                <td><?php echo $this->escapeHtml($payable->getAccount()->getExpirationDate()); ?></td>
+                <td><?php echo $this->escapeHtml($payable->getAccount()->getCurrentParcel()); ?></td>
+                <td><?php echo $this->currency($payable->getAccount()->getValue()); ?></td>
+                <td>
+                    <div class="btn-group-xs text-right">
+                        <a class="btn btn-success app-tooltip" title="Baixar Conta" data-toggle="modal" data-target="#dischargeModal<?php echo $payable->getAccount()->getId(); ?>"><i class="glyphicon glyphicon-download"></i></a>
+                        <a class="btn btn-warning app-tooltip" title="Detalhes da Conta" href="<?php
+                        echo $this->url('dtladmin/dtlfinancial/payable/view', array(
+                            'id' => $payable->getId()));
+                        ?>"><i class="glyphicon glyphicon-folder-open"></i></a>
+                        <a class="btn btn-info app-tooltip" title="Editar Conta" href="<?php echo $this->url('dtladmin/dtlfinancial/payable/edit', array('id' => $payable->getId()))
+                        ?>"><i class="fa fa-edit"></i></a>
+                        <a data-toggle="modal" data-target="#dtlPayableDelete<?php echo $payable->getId(); ?>" class="btn btn-danger app-tooltip" title="Apagar Conta" href="<?php echo $this->url('dtladmin/dtlfinancial/payable/delete', array('id' => $payable->getId()))
+                        ?>"><i class="fa fa-times"></i></a>
+                    </div>
+                </td>
+            </tr>
+            <?php echo $this->partial('dtl-financial/account/discharge', array('account' => $payable, 'form' => $this->form)); ?>
+        <div class="modal" role="modal" tabindex="-1" id="dtlPayableDelete<?php echo $payable->getId(); ?>" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#payable-table').DataTable();
+    });
+</script>

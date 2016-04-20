@@ -1,0 +1,60 @@
+<?php
+$title = $this->translate('Novo Cliente');
+$this->headTitle($title);
+$form = $this->form;
+$form->setAttribute('action', $this->url('dtladmin/dtlcustomer/add', array('type' => $this->personType)));
+$form->prepare();
+?>
+<h2 class="container-header"><i class="glyphicon glyphicon-user"></i> <?php echo $this->escapeHtml($title); ?></h2>
+<?php echo $this->form()->openTag($form); ?>
+<?php $customer = $form->get('customer'); ?>
+<fieldset>
+    <?php $person = $customer->get('person'); ?>
+    <?php echo $this->personForm($person); ?>
+
+    <?php if ($this->personType == base64_encode(1)): ?>
+        <?php $legal = $person->get('legal'); ?>
+        <?php echo $this->legalForm($legal); ?>
+    <?php elseif ($this->personType == base64_encode(0)): ?>
+        <?php $individual = $person->get('individual'); ?>
+        <?php echo $this->individualForm($individual); ?>
+
+        <?php $professional = $individual->get('professional'); ?>
+        <?php echo $this->professionalForm($professional); ?>
+
+        <legend><?php echo $this->translate('Dados Adicionais'); ?></legend>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    <?php echo $this->formLabel($customer->get('residenceType')); ?>
+                    <?php echo $this->formSelect($customer->get('residenceType')); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <?php echo $this->formLabel($customer->get('residenceTime')); ?>
+                    <?php echo $this->formText($customer->get('residenceTime')); ?>
+                </div>
+                <div class="col-md-2">
+                    <?php echo $this->formLabel($customer->get('residenceRentValue')); ?>
+                    <div class="input-group">
+                        <span class="input-group-addon">R$</span>
+                        <?php echo $this->formText($customer->get('residenceRentValue')); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <?php echo $this->formLabel($customer->get('notes')); ?>
+                    <?php echo $this->formTextarea($customer->get('notes')); ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php echo $this->formRow($form->get('security')); ?>
+    <div class="btn-group">
+        <?php echo $this->formSubmit($form->get('submit')); ?>
+        <?php echo $this->formRow($form->get('cancel')); ?>
+    </div>
+</fieldset>
+<?php echo $this->form()->closeTag(); ?>

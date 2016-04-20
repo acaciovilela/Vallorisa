@@ -1,0 +1,87 @@
+<?php
+    $proposalId = $this->id;
+?>
+<div class="modal-header">
+    <h3 class="modal-title">
+        <?php echo $this->translate('Upload de Arquivos'); ?>
+    </h3>
+</div>
+<div class="modal-body">
+    <div id="drag-and-drop-zone" class="uploader">
+        Arraste ou clique aqui para adicionar arquivos<br /><br />
+        <div class="browser">
+            <button type="button" class="btn btn-success">Adicionar arquivos</button>
+            <input type="file" name="files[]" multiple="multiple">
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Arquivos</h3>
+        </div>
+        <div class="panel-body demo-panel-files" id='demo-files'>
+            <span class="demo-note">Nenhum arquivo selecionado ainda...</span>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="/uploader/demos/js/demo-preview.js"></script>
+    <script type="text/javascript" src="/uploader/src/dmuploader.min.js"></script>
+</div>
+<div class="modal-footer">
+    <button onclick="javascript: window.location.reload();" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-power-off"></i> Fechar</button>
+</div>
+<script type="text/javascript">
+    $('#drag-and-drop-zone').dmUploader({
+        url: '/dtladmin/dtlproposal/realty-proposal/1/upload',
+        dataType: 'json',
+        allowedTypes: '*',
+        extraData: {
+            proposalId: <?php echo $proposalId;?>
+        },
+        onInit: function () {
+            $.danidemo.addLog('#demo-debug', 'default', 'Plugin initialized correctly');
+        },
+        onBeforeUpload: function (id) {
+            $.danidemo.addLog('#demo-debug', 'default', 'Starting the upload of #' + id);
+            $.danidemo.updateFileStatus(id, 'default', 'Uploading...');
+        },
+        onNewFile: function (id, file) {
+            $.danidemo.addFile('#demo-files', id, file);
+            if (typeof FileReader !== "undefined") {
+                var reader = new FileReader();
+                var img = $('#demo-files').find('.demo-image-preview').eq(0);
+                reader.onload = function (e) {
+                    img.attr('src', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#demo-files').find('.demo-image-preview').remove();
+            }
+        },
+        onComplete: function () {
+            $.danidemo.addLog('#demo-debug', 'default', 'All pending tranfers completed');
+        },
+        onUploadProgress: function (id, percent) {
+            var percentStr = percent + '%';
+            $.danidemo.updateFileProgress(id, percentStr);
+        },
+        onUploadSuccess: function (id, data) {
+            $.danidemo.addLog('#demo-debug', 'success', 'Upload of file #' + id + ' completed');
+            $.danidemo.addLog('#demo-debug', 'info', 'Server Response for file #' + id + ': ' + JSON.stringify(data));
+            $.danidemo.updateFileStatus(id, 'success', 'Transferência Concluída!');
+            $.danidemo.updateFileProgress(id, '100%');
+        },
+        onUploadError: function (id, message) {
+            $.danidemo.updateFileStatus(id, 'error', message);
+            $.danidemo.addLog('#demo-debug', 'error', 'Failed to Upload file #' + id + ': ' + message);
+        },
+        onFileTypeError: function (file) {
+            $.danidemo.addLog('#demo-debug', 'error', 'File \'' + file.name + '\' cannot be added: must be an image');
+        },
+        onFileSizeError: function (file) {
+            $.danidemo.addLog('#demo-debug', 'error', 'File \'' + file.name + '\' cannot be added: size excess limit');
+        },
+        onFallbackMode: function (message) {
+            $.danidemo.addLog('#demo-debug', 'info', 'Browser not supported(do something else here!): ' + message);
+        }
+    });
+</script>

@@ -1,0 +1,41 @@
+<?php $proposal = $this->proposal; ?>
+<div class="row">
+    <div class="col-md-2">
+        <?php echo $this->formLabel($proposal->get('date')); ?>
+        <?php echo $this->formText($proposal->get('date')); ?>
+    </div>
+    <div class="col-md-2">
+        <?php echo $this->formLabel($proposal->get('baseDate')); ?>
+        <?php echo $this->formText($proposal->get('baseDate')); ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <?php echo $this->formLabel($proposal->get('startDate')); ?>
+        <?php echo $this->formText($proposal->get('startDate')); ?>
+    </div>
+    <div class="col-md-2">
+        <?php echo $this->formLabel($proposal->get('endDate')); ?>
+        <?php echo $this->formText($proposal->get('endDate')); ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <?php echo $this->formLabel($proposal->get('value')); ?>
+        <div class="input-group">
+            <span class="input-group-addon">R$</span>
+            <?php echo $this->formText($proposal->get('value')); ?>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <?php echo $this->formLabel($proposal->get('parcelAmount')); ?>
+        <?php echo $this->formText($proposal->get('parcelAmount')); ?>
+    </div>
+    <div class="col-md-2">
+        <?php echo $this->formLabel($proposal->get('parcelValue')); ?>
+        <div class="input-group">
+            <span class="input-group-addon">R$</span>
+            <?php echo $this->formText($proposal->get('parcelValue')); ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<?php
+$payable = $this->payable;
+$account = $payable->getAccount();
+$title = 'Detalhes da Conta a Pagar';
+$this->headTitle($title);
+?>
+<div>
+    <legend>
+        <h3 class="header-title"><i class="glyphicon glyphicon-arrow-down"></i> Conta a Pagar</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <blockquote><strong>Pagar a: </strong><?php echo $payable->getSupplier()->getName(); ?></blockquote>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group btn-group-sm pull-right">
+                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlfinancial/payable/add'); ?>"><i class="fa fa-plus-circle"></i> Novo</a></li>
+                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlfinancial/payable/edit', array('id' => $payable->getId()));?>"><i class="fa fa-edit"></i> <?php echo $this->translate('Editar'); ?></a>
+                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlfinancial/payable/delete', array('id' => $payable->getId()));?>"><i class="fa fa-times"></i> <?php echo $this->translate('Apagar'); ?></a>
+                    <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlfinancial/payable'); ?>"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('Voltar'); ?></a>
+                </div>
+            </div>
+        </div>
+    </legend>
+    <dl class="dl-horizontal">
+        <div class="row">
+            <div class="col-md-6">
+                <dt>Cód.:</dt>
+                <dd><?php echo $payable->getId(); ?>&nbsp;</dd>
+                <dt>Cliente:</dt>
+                <dd><?php echo $payable->getSupplier()->getName(); ?>&nbsp;</dd>
+                <dt>Referente a:</dt>
+                <dd><?php echo $account->getDescription(); ?>&nbsp;</dd>
+                <dt>Data de Emissão:</dt>
+                <dd><?php echo $account->getEmissionDate(); ?>&nbsp;</dd>
+                <dt>Data de Vencimento:</dt>
+                <dd><?php echo $account->getExpirationDate(); ?>&nbsp;</dd>
+                <dt>Valor:</dt>
+                <dd><?php echo $this->currency($account->getValue()); ?>&nbsp;</dd>
+                <dt>Ocorrência:</dt>
+                <dd><?php echo $account->getCurrentParcel(); ?></dd>
+                <dt>Lançamento Automático:</dt>
+                <dd><?php echo ($account->getAutoLaunch()) ? "SIM" : "NÃO"; ?>&nbsp;</dd>
+                <?php if ($account->getCurrentAccount()): ?>
+                    <dt>Conta:</dt>
+                    <dd><?php echo $account->getCurrentAccount()->getName(); ?>&nbsp;</dd>
+                <?php endif; ?>
+                <?php if ($account->getPaymentType()): ?>
+                    <dt>Forma de Pagamento:</dt>
+                    <dd><?php echo $account->getPaymentType()->getName(); ?>&nbsp;</dd>
+                <?php endif; ?>
+                <?php if ($account->getAccountingItem()): ?>
+                    <dt>Ítem Contábil:</dt>
+                    <dd><?php echo $account->getAccountingItem()->getName(); ?>&nbsp;</dd>
+                <?php endif; ?>
+                <?php if ($account->getDocumentType()): ?>
+                    <dt>Tipo de Documento:</dt>
+                    <dd><?php echo $account->getDocumentType()->getName(); ?>&nbsp;</dd>
+                <?php endif; ?>
+            </div>
+            <div class="col-md-6">
+                <dt>Código de Barras:</dt>
+                <dd><?php echo $account->getBarcode(); ?>&nbsp;</dd>
+                <dt>Multa:</dt>
+                <dd><?php echo $this->porcent($account->getFine()); ?>&nbsp;</dd>
+                <dt>Juros:</dt>
+                <dd><?php echo $this->porcent($account->getInterest()); ?>&nbsp;</dd>
+            </div>
+        </div>
+    </dl>
+</div>

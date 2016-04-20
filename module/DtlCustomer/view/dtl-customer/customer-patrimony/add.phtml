@@ -1,0 +1,38 @@
+<?php
+$title = $this->translate('Patrimônio');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+?>
+<legend><h2><i class="fa fa-building-o"></i> <?php echo $this->escapeHtml($title); ?></h2></legend>
+
+<div class="row">
+    <div class="col-md-4">
+        <?php echo $this->form()->openTag($form); ?>
+        <?php $customerPatrimony = $form->get('customerPatrimony'); ?>
+        <div class="form-group">
+            <?php echo $this->formLabel($customerPatrimony->get('customer')); ?>
+            <?php echo $this->formSelect($customerPatrimony->get('customer')); ?>
+
+            <?php $patrimony = $customerPatrimony->get('patrimony'); ?>
+            
+            <?php echo $this->formLabel($patrimony->get('name')); ?>
+            <?php echo $this->formText($patrimony->get('name')); ?>
+
+            <?php echo $this->formLabel($patrimony->get('value')); ?>
+            <?php echo $this->formText($patrimony->get('value')); ?>
+        </div>
+        <?php echo $this->formHidden($form->get('security')); ?>
+        <div class="btn-group">
+            <?php echo $this->formElement($form->get('submit')); ?>
+            <?php echo $this->formElement($form->get('cancel')); ?>
+        </div>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+    <div class="col-md-8">
+        <div class="customer-patrimony-list"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    customerPatrimonyList('<?php echo $this->customerId?>');
+</script>

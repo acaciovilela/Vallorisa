@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-md-4">
+        <?php $customerBankAccount = $this->customerBankAccount; ?>
+        <div class="form-group">
+            <?php $bankAccount = $customerBankAccount->get('bankAccount'); ?>
+            
+            <?php echo $this->formLabel($bankAccount->get('bank')); ?>
+            <?php echo $this->formSelect($bankAccount->get('bank')); ?>
+
+            <?php echo $this->formLabel($bankAccount->get('type')); ?>
+            <?php echo $this->formSelect($bankAccount->get('type')); ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?php echo $this->formLabel($bankAccount->get('agency')); ?>
+                    <?php echo $this->formText($bankAccount->get('agency')); ?>
+                </div>
+                <div class="col-md-6">
+                    <?php echo $this->formLabel($bankAccount->get('account')); ?>
+                    <?php echo $this->formText($bankAccount->get('account')); ?>
+                </div>
+            </div>
+
+            <?php echo $this->formLabel($bankAccount->get('since')); ?>
+            <?php echo $this->formText($bankAccount->get('since')); ?>
+            <br>
+            <input type="button" class="btn btn-info" value="Inserir" onclick="javascript: proposalCustomerBankAccountAdd();" />
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="proposal-customer-bank-account-list"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    proposalCustomerBankAccountList();
+</script>

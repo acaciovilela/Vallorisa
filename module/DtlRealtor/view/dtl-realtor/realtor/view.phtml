@@ -1,0 +1,120 @@
+<?php
+$realtor = $this->realtor;
+$person = $realtor->getPerson();
+$address = $person->getAddress();
+$contact = $person->getContact();
+$individual = $person->getIndividual();
+$legal = $person->getLegal();
+$title = 'Detalhes de ' . $person->getName();
+$this->headTitle($title);
+?>
+<h4>Corretor de Imóveis</h4>
+<div class="row">
+    <div class="col-md-6">
+        
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group pull-right">
+            <div class="btn-group">
+                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"> <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo'); ?> &nbsp; <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php
+                        echo $this->url('dtladmin/dtlrealtor/add', array('action' => 'add',
+                            'type' => base64_encode(0)));
+                        ?>"><i class="glyphicon glyphicon-user"></i> Pessoa Física</a></li>
+                    <li><a href="<?php
+                        echo $this->url('dtladmin/dtlrealtor/add', array('action' => 'add',
+                            'type' => base64_encode(1)));
+                        ?>"><i class="glyphicon glyphicon-tower"></i> Pessoa Jurídica</a></li>
+                </ul>
+            </div>
+            <a class="btn btn-default" href="<?php
+            echo $this->url('dtladmin/dtlrealtor/edit', array('action' => 'edit',
+                'id' => $realtor->getId(), 'type' => base64_encode($realtor->getPerson()->getType())));
+            ?>"><i class="glyphicon glyphicon-edit"></i> <?php echo $this->translate('Editar'); ?></a>
+            <a class="btn btn-default" href="<?php
+            echo $this->url('dtladmin/dtlrealtor/delete', array('action' => 'delete',
+                'id' => $realtor->getId()));
+            ?>"><i class="glyphicon glyphicon-remove"></i> <?php echo $this->translate('Apagar'); ?></a>
+            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtlrealtor'); ?>"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('Voltar'); ?></a>
+        </div>
+    </div>
+</div>
+<dl class="dl-horizontal">
+    <legend>Dados Gerais</legend>
+    <dt>Nome:</dt>
+    <dd><?php echo $person->getName(); ?>&nbsp;</dd>
+    <?php if ($person->getType()): ?>
+        <dt>CNPJ:</dt>
+        <dd><?php echo $this->cnpj($legal->getCnpj()); ?>&nbsp;</dd>
+        <dt>Inscrição Estadual:</dt>
+        <dd><?php echo $legal->getSubscription(); ?>&nbsp;</dd>
+        <dt>Representante:</dt>
+        <dd><?php echo $legal->getRepresentativeName(); ?>&nbsp;</dd>
+        <dt>Telefone do Rep.:</dt>
+        <dd><?php echo $this->phone($legal->getRepresentativePhone()); ?>&nbsp;</dd>
+    <?php else: ?>
+        <div class="row">
+            <div class="col-md-5">
+                <dt>CPF:</dt>
+                <dd><?php echo $this->cpf($individual->getCpf()); ?>&nbsp;</dd>
+                <dt>RG:</dt>
+                <dd><?php echo $individual->getRg(); ?>&nbsp;</dd>
+                <dt>Sexo:</dt>
+                <dd><?php echo $this->gender($individual->getGender()); ?>&nbsp;</dd>
+                <dt>Natural de:</dt>
+                <dd><?php echo $individual->getBirthPlace(); ?>/<?php echo $individual->getBirthUf(); ?>&nbsp;</dd>
+                <dt>Nome da Mãe:</dt>
+                <dd><?php echo $individual->getMother(); ?>&nbsp;</dd>
+            </div>
+            <div class="col-md-5">
+                <dt>Data de Nascimento:</dt>
+                <dd><?php echo $individual->getBirthDay(); ?>/<?php echo $individual->getBirthMonth(); ?>/<?php echo $individual->getBirthYear(); ?></dd>
+                <dt>Órgão Expedidor:</dt>
+                <dd><?php echo $individual->getRgOrgan(); ?> / <?php echo $individual->getRgUf(); ?></dd>
+                <dt>Data de Expedição:</dt>
+                <dd><?php echo $individual->getRgDate(); ?>&nbsp;</dd>
+                <dt>Nacionalidade:</dt>
+                <dd><?php echo $individual->getNationality(); ?>&nbsp;</dd>
+                <dt>Nome do Pai:</dt>
+                <dd><?php echo $individual->getFather(); ?>&nbsp;</dd>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <legend>Endereço</legend>
+    <dt>Endereço:</dt>
+    <dd><?php echo $address->getName(); ?>, nº <?php echo $address->getNumber(); ?></dd>
+    <dt>Complemento:</dt>
+    <dd><?php echo $address->getComplement(); ?>&nbsp;</dd>
+    <dt>Bairro:</dt>
+    <dd><?php echo $address->getQuarter(); ?>&nbsp;</dd>
+    <dt>CEP:</dt>
+    <dd><?php echo $this->cep($address->getPostalCode()); ?>&nbsp;</dd>
+    <dt>Cidade:</dt>
+    <dd><?php echo ($address->getCity()) ? $address->getCity()->getName() : ''; ?>&nbsp;</dd>
+    <dt>Estado:</dt>
+    <dd><?php echo ($address->getState()) ? $address->getState()->getName() : ''; ?>&nbsp;</dd>
+    <dt>País:</dt>
+    <dd><?php echo ($address->getCountry()) ? $address->getCountry()->getName() : ''; ?>&nbsp;</dd>
+
+    <legend>Contato</legend>
+    <dt>Email:</dt>
+    <dd><?php echo $contact->getEmail(); ?>&nbsp;</dd>
+    <dt>Website:</dt>
+    <dd><?php echo $contact->getUrl(); ?>&nbsp;</dd>
+    <dt>Telefone:</dt>
+    <dd><?php echo $this->phone($contact->getPhone()); ?>&nbsp;</dd>
+    <dt>Celular:</dt>
+    <dd><?php echo $this->phone($contact->getCell()); ?>&nbsp;</dd>
+    <dt>FAX:</dt>
+    <dd><?php echo $this->phone($contact->getFax()); ?>&nbsp;</dd>
+
+    <legend>Comissionamento</legend>
+    <dt>Comissão Variável:</dt>
+    <dd><?php echo $realtor->getCommission() . " %"; ?>&nbsp;</dd>
+    <dt>Comissão Fixa:</dt>
+    <dd><?php echo $this->currency($realtor->getFixedCommission()); ?>&nbsp;</dd>
+    <dt>Bônus:</dt>
+    <dd><?php echo $this->currency($realtor->getBonus()); ?>&nbsp;</dd>
+</dl>

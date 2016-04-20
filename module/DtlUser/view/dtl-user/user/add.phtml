@@ -1,0 +1,68 @@
+<?php
+$title = $this->translate('Novo Usuário');
+$this->headTitle($title);
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('action', $this->url('dtladmin/dtluser/add'));
+$form->setAttribute('method', 'post');
+$user = $form->get('user');
+$userProfile = $user->get('profile');
+$this->placeholder('title')->set($title);
+$this->placeholder('title-icon')->set('<i class="fa fa-lock"></i>')
+?>
+<div class="page-body">
+    <div class="well">
+        <?php echo $this->form()->openTag($form) ?>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <?php echo $this->formLabel($user->get('displayName')); ?>
+                            <?php echo $this->formText($user->get('displayName')); ?>
+                            <?php echo $this->formElementErrors($user->get('displayName')); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <?php echo $this->formLabel($userProfile->get('lastName')); ?>
+                            <?php echo $this->formText($userProfile->get('lastName')); ?>
+                            <?php echo $this->formElementErrors($userProfile->get('lastName')); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <?php echo $this->formLabel($user->get('email')); ?>
+                    <?php echo $this->formEmail($user->get('email')); ?>
+                    <?php echo $this->formElementErrors($user->get('email')); ?>
+                </div>
+                <div class="form-group">
+                    <?php echo $this->formLabel($user->get('username')); ?>
+                    <?php echo $this->formText($user->get('username')); ?>
+                    <?php echo $this->formElementErrors($user->get('username')); ?>
+                </div>
+                <div class="form-group">
+                    <?php echo $this->formLabel($user->get('password')); ?>
+                    <?php echo $this->formPassword($user->get('password')); ?>
+                    <?php echo $this->formElementErrors($user->get('password')); ?>
+                </div>
+                <div class="form-group">
+                    <?php echo $this->formLabel($user->get('passwordVerify')); ?>
+                    <?php echo $this->formPassword($user->get('passwordVerify')); ?>
+                    <?php echo $this->formElementErrors($user->get('passwordVerify')); ?>
+                </div>
+                <div class="form-group">
+                    <?php echo $this->formLabel($userProfile->get('about')); ?>
+                    <?php echo $this->formTextarea($userProfile->get('about')); ?>
+                    <?php echo $this->formElementErrors($userProfile->get('about')); ?>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <?php echo $this->formRow($form->get('security')); ?>
+            <?php echo $this->formElement($form->get('submit')->setLabel('Salvar')); ?>
+            <a class="btn btn-default" href="<?php echo $this->url('dtladmin/dtluser'); ?>"><?php echo $this->translate('Cancelar'); ?></a>
+        </div>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<?php
+$title = $this->translate('Lojistas');
+$this->headTitle($title);
+?>
+<div class="row">
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-title"><i class="glyphicon glyphicon-search"></i> <?php echo $this->escapeHtml('Filtrar'); ?></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->partial('dtl-shopman/shopman/search'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel-title"><i class="glyphicon glyphicon-user"></i> <?php echo $this->escapeHtml($title); ?></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group pull-right">
+                            <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" href="#"> <i class="glyphicon glyphicon-plus-sign"></i> <?php echo $this->translate('Novo'); ?> &nbsp; <span class="caret"></span></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="<?php echo $this->url('dtladmin/dtlshopman/add', array('type' => base64_encode(0)));
+                ?>"><i class="glyphicon glyphicon-user"></i> Pessoa Física</a></li>
+                                <li><a href="<?php echo $this->url('dtladmin/dtlshopman/add', array('type' => base64_encode(1)));
+                ?>"><i class="glyphicon glyphicon-tower"></i> Pessoa Jurídica</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-condensed table-hover">
+                <tr>
+                    <th class="col-md-1"><?php echo $this->translate('CÓD'); ?></th>
+                    <th class=""><?php echo $this->translate('LOJISTA'); ?></th>
+                    <th class=""><?php echo $this->translate('CIDADE'); ?></th>
+                    <th class="col-md-2"><?php echo $this->translate('TELEFONE'); ?></th>
+                    <th class="col-md-2"><?php echo $this->translate('CELULAR'); ?></th>
+                    <th class="col-md-2"><?php echo $this->translate(''); ?></th>
+                </tr>
+                <?php if (0 == count($this->shopman)): ?>
+                    <tr>
+                        <td colspan="10" class="alert alert-info text-center"><?php echo $this->translate('Não há nenhum registro no banco de dados.') ?></td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($this->shopman as $shopman) : ?>
+                        <tr>
+                            <td><?php echo str_pad($shopman->getId(), 8, '0', STR_PAD_LEFT); ?></td>
+                            <td><?php echo $this->escapeHtml($shopman->getPerson()->getName()); ?></td>
+                            <td><?php echo $this->escapeHtml($shopman->getPerson()->getAddress()->getName()); ?></td>
+                            <td><?php echo $this->escapeHtml($this->phone($shopman->getPerson()->getContact()->getPhone())); ?></td>
+                            <td><?php echo $this->escapeHtml($this->phone($shopman->getPerson()->getContact()->getCell())); ?></td>
+                            <td>
+                                <div class="btn-group btn-group-xs pull-right">
+                                    <a class="btn btn-default" data-toggle="tooltip" title="Ver Detalhes" href="<?php
+                                    echo $this->url('dtladmin/dtlshopman/view', array('action' => 'view',
+                                        'id' => $shopman->getId()));
+                                    ?>"><i class="glyphicon glyphicon-folder-open"></i></a>
+                                    <a class="btn btn-default" data-toggle="tooltip" title="Editar" href="<?php
+                                    echo $this->url('dtladmin/dtlshopman/edit', array('action' => 'edit',
+                                        'id' => $shopman->getId(), 'type' => base64_encode($shopman->getPerson()->getType())));
+                                    ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
+                                    echo $this->url('dtladmin/dtlshopman/delete', array('action' => 'delete',
+                                        'id' => $shopman->getId()));
+                                    ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                                    <a href="<?php echo $this->url('dtladmin/dtlshopman/shopman-product'); ?>?shopmanId=<?php echo $shopman->getId(); ?>" class="btn btn-default app-tooltip" data-target="#product_modal_<?php echo $shopman->getId(); ?>" data-toggle="modal" title="Produtos"><i class="glyphicon glyphicon-th-large"></i></a>
+
+                                    <a class="dropdown-toggle btn btn-default app-tooltip" data-toggle="dropdown" title="Vendedores" href="#"> <i class="glyphicon glyphicon-briefcase"></i></a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="#seller_modal_<?php echo $shopman->getId(); ?>" data-toggle="modal"><i class="glyphicon glyphicon-briefcase"></i> Lista de Vendedores</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="<?php echo $this->url('dtladmin/dtlseller/add', array('id' => $shopman->getId(), 'type' => base64_encode(0)));
+                                    ?>"><i class="glyphicon glyphicon-user"></i> Pessoa Física</a></li>
+                                        <li><a href="<?php echo $this->url('dtladmin/dtlseller/add', array('id' => $shopman->getId(), 'type' => base64_encode(1)));
+                                    ?>"><i class="glyphicon glyphicon-tower"></i> Pessoa Jurídica</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <div class="modal fade" id="product_modal_<?php echo $shopman->getId(); ?>" tabindex="-1" role="dialog" aria-labelledby="product_modal_label" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content"></div>
+                            </div>
+                        </div>
+
+                        <?php echo $this->partial('dtl-shopman/shopman/shopmanseller', array('shopman' => $shopman)); ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </table>
+            <div class="panel-footer">
+                <?php
+                $paginationInfo = $this->placeholder('pagination');
+                if (!isset($paginationInfo->route)) {
+                    $paginationInfo->route = 'dtladmin/dtlshopman';
+                    $paginationInfo->params = array();
+                }
+                ?>
+                <?php echo $this->paginationControl($this->shopman, 'Sliding', 'layout/pagination'); ?>
+            </div>
+        </div>
+    </div>
+</div>

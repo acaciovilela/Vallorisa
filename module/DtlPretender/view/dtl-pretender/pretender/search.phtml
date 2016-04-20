@@ -1,0 +1,12 @@
+<form action="" method="post" name="pretenderSearch" id="pretenderSearch">
+    <div class="form-group">
+        <label for="pretender_cod_search">Código</label>
+        <input type="text" class="form-control input-sm" id="pretender_cod_search" name="pretender_cod_search" value="" placeholder="<?php echo $this->translate('Código do Interessado'); ?>" />
+    </div>
+    <div class="form-group">
+        <label for="pretender_name_search">Interessado</label>
+        <input type="text" class="form-control input-sm" id="pretender_name_search" name="pretender_name_search" value="" placeholder="<?php echo $this->translate('Nome do Interessado'); ?>" />
+    </div>
+    <button type="submit" class="btn btn-warning btn-sm" name="submit" value="Filtrar"><?php echo $this->translate('Filtrar'); ?></button>
+    <button type="button" onclick="window.location.href = '/admin/pretender'" class="btn btn-default btn-sm"><?php echo $this->translate('Limpar'); ?></button>
+</form>
