@@ -234,7 +234,7 @@ class LoanController extends AbstractActionController {
 
         $userId = $this->identity()->getId();
 
-        $form = new LoanForm($this->getEntityManager(), $userId);
+        $form = new LoanForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
 
         $em = $this->getEntityManager();
 
