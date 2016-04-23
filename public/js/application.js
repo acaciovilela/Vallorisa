@@ -1,6 +1,6 @@
 var BASE_PATH = "";
 
-$(document).ready(function() {
+$(document).ready(function () {
     $(':input').attr('placeholder', '');
 });
 
@@ -13,8 +13,8 @@ function fetchAddressByCep(e) {
         var s = $(".city");
         var o = $(".state");
         var u = $(".country");
-        $.ajax({url: i, dataType: "JSONP", data: {country: "BR", username: "acaciovilela", postalcode: r}, success: function(e) {
-                $.map(e.postalcodes, function(e) {
+        $.ajax({url: i, dataType: "JSONP", data: {country: "BR", username: "acaciovilela", postalcode: r}, success: function (e) {
+                $.map(e.postalcodes, function (e) {
                     s.val(e.placeName.toUpperCase());
                     o.val(e.adminName1.toUpperCase());
                     u.val(e.countryCode);
@@ -32,7 +32,7 @@ function disableOff(e) {
         $("#show-on-integrating").attr('class', 'hidden');
     } else {
         $("#show-on-integrating").attr('class', 'hidden');
-        $("#show-on-aproving").attr('class', 'hidden'); 
+        $("#show-on-aproving").attr('class', 'hidden');
     }
 }
 
@@ -47,7 +47,7 @@ function calculateProposalValue(inValue) {
                 inValue: inValue,
                 totalValue: $('#vehicleProposalTotalValue').val()
             },
-            success: function(data) {
+            success: function (data) {
                 $('#proposalValue').val(data.value);
             }
         });
@@ -65,7 +65,7 @@ function calculateRealtyProposalValue(inValue) {
                 inValue: inValue,
                 totalValue: $('#realtyProposalTotalValue').val()
             },
-            success: function(data) {
+            success: function (data) {
                 $('#proposalValue').val(data.value);
             }
         });
@@ -81,7 +81,7 @@ function calculateProposal(e, t) {
                 parcelAmount: e,
                 proposalValue: $("#proposalValue").val(),
                 proposalTotalValue: $("#realtyProposalTotalValue").val()},
-            success: function(e) {
+            success: function (e) {
                 $("#proposalEndDate").val(e.result.endDate);
                 $("#proposalStartDate").val(e.result.startDate);
                 $("#realtyProposalInValue").val(e.result.inValue);
@@ -127,20 +127,20 @@ function calculatePrice(e, t, n) {
     var f = a.replace(".", "");
     var l = f.replace(",", ".");
     var c = BASE_PATH + "/admin/avr/price";
-    $.ajax({url: c, dataType: "JSON", data: {cost: u, markup: l}, success: function(e) {
+    $.ajax({url: c, dataType: "JSON", data: {cost: u, markup: l}, success: function (e) {
             n.val(e.price);
         }});
 }
 
 function addProduct(e) {
     var t = $("#quantity").val();
-    $.ajax({url: BASE_PATH + "/admin/business/sale/addproduct", dataType: "JSON", data: {product: e, quantity: t}, success: function(e) {
+    $.ajax({url: BASE_PATH + "/admin/business/sale/addproduct", dataType: "JSON", data: {product: e, quantity: t}, success: function (e) {
             if (e.result === true) {
                 $("#productList").load(BASE_PATH + "/admin/business/sale/listproducts");
                 $("#quantity").val(1);
                 calculateSale();
             }
-        }, error: function(e) {
+        }, error: function (e) {
             console.log(e);
         }});
 }
@@ -149,21 +149,21 @@ function calculateSale() {
     var e = $("#orderAddition");
     var t = $("#orderDiscount");
     var n = $("#orderTotal");
-    $.ajax({url: BASE_PATH + "/admin/business/sale/calculate", dataType: "JSON", data: {addition: e.val(), discount: t.val()}, success: function(e) {
+    $.ajax({url: BASE_PATH + "/admin/business/sale/calculate", dataType: "JSON", data: {addition: e.val(), discount: t.val()}, success: function (e) {
             n.val(e.result);
-        }, error: function(e) {
+        }, error: function (e) {
             console.log(e);
         }});
 }
 
 function updateProduct(e) {
     var t = $("#productQuantity" + e).val();
-    $.ajax({url: BASE_PATH + "/admin/business/sale/updateproduct", dataType: "JSON", data: {quantity: t, item: e}, success: function(e) {
+    $.ajax({url: BASE_PATH + "/admin/business/sale/updateproduct", dataType: "JSON", data: {quantity: t, item: e}, success: function (e) {
             if (e.result) {
                 $("#productList").load(BASE_PATH + "/admin/business/sale/listproducts");
                 calculateSale();
             }
-        }, error: function(e) {
+        }, error: function (e) {
             console.log(e);
         }});
 }
@@ -171,10 +171,10 @@ function updateProduct(e) {
 function fillSelect(e, t, n) {
     var r = t;
     var i = $("#" + n);
-    $.ajax({url: r, dataType: "JSON", data: {itemId: e}, beforeSend: function() {
+    $.ajax({url: r, dataType: "JSON", data: {itemId: e}, beforeSend: function () {
             i.empty();
             i.append('<option value="">Carregando...</option>');
-        }, success: function(e) {
+        }, success: function (e) {
             i.empty();
             i.append('<option value="">Selecione</option>');
             i.append(e.options);
@@ -194,7 +194,7 @@ function vehicleTypeList(e) {
 
 function vehicleTypePost() {
     var e = BASE_PATH + "/admin/vehicle/vehicle-type/post";
-    $.ajax({url: e, dataType: "JSON", data: {vehicle_brand_id: $("#vehicle_brand_id").val(), vehicle_type_name: $("#vehicle_type_name").val()}, success: function(e) {
+    $.ajax({url: e, dataType: "JSON", data: {vehicle_brand_id: $("#vehicle_brand_id").val(), vehicle_type_name: $("#vehicle_type_name").val()}, success: function (e) {
             vehicleTypeList($("#vehicle_brand_id").val());
         }});
 }
@@ -203,7 +203,7 @@ function vehicleTypeDelete(e, t) {
     var n = BASE_PATH + "/admin/vehicle/vehicle-type/delete";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, data: {vehicle_type_id: e}, dataType: "JSON", success: function(e) {
+        $.ajax({url: n, data: {vehicle_type_id: e}, dataType: "JSON", success: function (e) {
                 if (e.result === true) {
                     vehicleTypeList(t);
                 }
@@ -225,7 +225,7 @@ function vehicleModelList(e) {
 
 function vehicleModelPost() {
     var e = BASE_PATH + "/admin/vehicle/vehicle-model/post";
-    $.ajax({url: e, dataType: "JSON", data: {vehicle_type_id: $("#vehicle_type_id").val(), vehicle_model_name: $("#vehicle_model_name").val()}, success: function(e) {
+    $.ajax({url: e, dataType: "JSON", data: {vehicle_type_id: $("#vehicle_type_id").val(), vehicle_model_name: $("#vehicle_model_name").val()}, success: function (e) {
             vehicleModelList($("#vehicle_type_id").val());
         }});
 }
@@ -234,7 +234,7 @@ function vehicleModelDelete(e, t) {
     var n = BASE_PATH + "/admin/vehicle/vehicle-model/delete";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, data: {vehicle_model_id: e}, dataType: "JSON", success: function(e) {
+        $.ajax({url: n, data: {vehicle_model_id: e}, dataType: "JSON", success: function (e) {
                 if (e.result === true) {
                     vehicleModelList(t);
                 }
@@ -256,7 +256,7 @@ function vehicleVersionList(e) {
 
 function vehicleVersionPost() {
     var e = BASE_PATH + "/admin/vehicle/vehicle-version/post";
-    $.ajax({url: e, dataType: "JSON", data: {vehicle_model_id: $("#vehicle_model_id").val(), vehicle_version_name: $("#vehicle_version_name").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {vehicle_model_id: $("#vehicle_model_id").val(), vehicle_version_name: $("#vehicle_version_name").val()}, success: function () {
             vehicleVersionList($("#vehicle_model_id").val());
         }});
 }
@@ -264,7 +264,7 @@ function vehicleVersionDelete(e, t) {
     var n = BASE_PATH + "/admin/vehicle/vehicle-version/delete";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, data: {vehicle_version_id: e}, dataType: "JSON", success: function(e) {
+        $.ajax({url: n, data: {vehicle_version_id: e}, dataType: "JSON", success: function (e) {
                 if (e.result === true) {
                     vehicleVersionList(t);
                 }
@@ -278,7 +278,7 @@ function customerPatrimonyList(e) {
 }
 function customerPatrimonyPost() {
     var e = BASE_PATH + "/admin/customer/1/customer-patrimony/post";
-    $.ajax({url: e, dataType: "JSON", data: {customer_id: $("#customer_id").val(), patrimony_name: $("#patrimony_name").val(), patrimony_value: $("#patrimony_value").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {customer_id: $("#customer_id").val(), patrimony_name: $("#patrimony_name").val(), patrimony_value: $("#patrimony_value").val()}, success: function () {
             customerPatrimonyList($("#customer_id").val());
         }});
 }
@@ -287,7 +287,7 @@ function customerPatrimonyDelete(e, t) {
     var n = BASE_PATH + "/admin/customer/1/customer-patrimony/delete";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {patrimony_id: e}, success: function(e) {
+        $.ajax({url: n, dataType: "JSON", data: {patrimony_id: e}, success: function (e) {
                 if (e.result === true) {
                     customerPatrimonyList(t);
                 }
@@ -303,7 +303,7 @@ function customerVehicleList(e) {
 
 function customerVehiclePost() {
     var e = BASE_PATH + "/admin/customer/1/customer-vehicle/post";
-    $.ajax({url: e, dataType: "JSON", data: {customerId: $("#customer_id").val(), vehicleYear: $("#customerVehicleYear").val(), vehicleYearModel: $("#customerVehicleYearModel").val(), vehiclePlate: $("#customerVehiclePlate").val(), vehicleValue: $("#customerVehicleValue").val(), vehicleColor: $("#customerVehicleColor").val(), vehicleBrandId: $("#customerVehicleBrandId").val(), vehicleTypeId: $("#customerVehicleTypeId").val(), vehicleModelId: $("#customerVehicleModelId").val(), vehicleVersionId: $("#customerVehicleVersionId").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {customerId: $("#customer_id").val(), vehicleYear: $("#customerVehicleYear").val(), vehicleYearModel: $("#customerVehicleYearModel").val(), vehiclePlate: $("#customerVehiclePlate").val(), vehicleValue: $("#customerVehicleValue").val(), vehicleColor: $("#customerVehicleColor").val(), vehicleBrandId: $("#customerVehicleBrandId").val(), vehicleTypeId: $("#customerVehicleTypeId").val(), vehicleModelId: $("#customerVehicleModelId").val(), vehicleVersionId: $("#customerVehicleVersionId").val()}, success: function () {
             customerVehicleList($("#customer_id").val());
         }});
 }
@@ -312,7 +312,7 @@ function customerVehicleDelete(e, t) {
     var n = BASE_PATH + "/admin/customer/1/customer-vehicle/delete";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {vehicleId: e}, success: function(e) {
+        $.ajax({url: n, dataType: "JSON", data: {vehicleId: e}, success: function (e) {
                 if (e.result === true) {
                     customerVehicleList(t);
                 }
@@ -328,7 +328,7 @@ function customerBankAccountList(e) {
 
 function customerBankAccountPost() {
     var e = BASE_PATH + "/admin/customer/1/customer-bank-account/post";
-    $.ajax({url: e, dataType: "JSON", data: {customer_id: $("#customer_id").val(), bank_account_id: null, bank_account_type: $("#bank_account_type").val(), bank_account_bank: $("#bank_account_bank").val(), bank_account_agency: $("#bank_account_agency").val(), bank_account_account: $("#bank_account_account").val(), bank_account_since: $("#bank_account_since").val(), bank: $("#bank").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {customer_id: $("#customer_id").val(), bank_account_id: null, bank_account_type: $("#bank_account_type").val(), bank_account_bank: $("#bank_account_bank").val(), bank_account_agency: $("#bank_account_agency").val(), bank_account_account: $("#bank_account_account").val(), bank_account_since: $("#bank_account_since").val(), bank: $("#bank").val()}, success: function () {
             customerBankAccountList($("#customer_id").val());
         }});
 }
@@ -337,7 +337,7 @@ function customerBankAccountDelete(e, t) {
     var n = BASE_PATH + "/admin/customer/1/customer-bank-account/delete";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {bank_account_id: e}, success: function(e) {
+        $.ajax({url: n, dataType: "JSON", data: {bank_account_id: e}, success: function (e) {
                 if (e.result === true) {
                     customerBankAccountList(t);
                 }
@@ -353,7 +353,7 @@ function customerReferenceList(e) {
 
 function customerReferencePost() {
     var e = BASE_PATH + "/admin/customer/1/customer-reference/post";
-    $.ajax({url: e, dataType: "JSON", data: {customer_id: $("#customer_id").val(), reference_type: $("#reference_type").val(), reference_name: $("#reference_name").val(), reference_phone: $("#reference_phone").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {customer_id: $("#customer_id").val(), reference_type: $("#reference_type").val(), reference_name: $("#reference_name").val(), reference_phone: $("#reference_phone").val()}, success: function () {
             customerReferenceList($("#customer_id").val());
         }});
 }
@@ -362,7 +362,7 @@ function customerReferenceDelete(e, t) {
     var n = BASE_PATH + "/admin/customer/1/customer-reference/delete";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {reference_id: e}, success: function(e) {
+        $.ajax({url: n, dataType: "JSON", data: {reference_id: e}, success: function (e) {
                 if (e.result === true) {
                     customerReferenceList(t);
                 }
@@ -378,7 +378,7 @@ function vehicleProposalList() {
 
 function vehicleProposalAdd() {
     var e = BASE_PATH + "/admin/proposal/vehicle-proposal/1/addvehicle";
-    $.ajax({url: e, dataType: "JSON", data: {vehicleId: null, vehicleBrandId: $("#vehicleBrandId").val(), vehicleTypeId: $("#vehicleTypeId").val(), vehicleModelId: $("#vehicleModelId").val(), vehicleVersionId: $("#vehicleVersionId").val(), vehicleYear: $("#vehicleYear").val(), vehicleYearModel: $("#vehicleYearModel").val(), vehiclePlate: $("#vehiclePlate").val(), vehiclePlateUf: $("#vehiclePlateUf").val(), vehicleColor: $("#vehicleColor").val(), vehicleStatus: $("#vehicleStatus").val(), vehicleValue: $("#vehicleValue").val(), vehicleFuel: $("#vehicleFuel").val(), vehicleOwnerType: $("#vehicleOwnerType").val(), vehicleFrame: $("#vehicleFrame").val(), vehicleRenavam: $("#vehicleRenavam").val(), vehicleLicenceUf: $("#vehicleLicenceUf").val(), vehicleNotes: $("#vehicleNotes").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {vehicleId: null, vehicleBrandId: $("#vehicleBrandId").val(), vehicleTypeId: $("#vehicleTypeId").val(), vehicleModelId: $("#vehicleModelId").val(), vehicleVersionId: $("#vehicleVersionId").val(), vehicleYear: $("#vehicleYear").val(), vehicleYearModel: $("#vehicleYearModel").val(), vehiclePlate: $("#vehiclePlate").val(), vehiclePlateUf: $("#vehiclePlateUf").val(), vehicleColor: $("#vehicleColor").val(), vehicleStatus: $("#vehicleStatus").val(), vehicleValue: $("#vehicleValue").val(), vehicleFuel: $("#vehicleFuel").val(), vehicleOwnerType: $("#vehicleOwnerType").val(), vehicleFrame: $("#vehicleFrame").val(), vehicleRenavam: $("#vehicleRenavam").val(), vehicleLicenceUf: $("#vehicleLicenceUf").val(), vehicleNotes: $("#vehicleNotes").val()}, success: function () {
             vehicleProposalList();
         }});
 }
@@ -387,7 +387,7 @@ function vehicleProposalDelete(e) {
     var t = BASE_PATH + "/admin/proposal/vehicle-proposal/1/deletevehicle";
     var n = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (n) {
-        $.ajax({url: t, dataType: "JSON", data: {itemId: e}, success: function(t) {
+        $.ajax({url: t, dataType: "JSON", data: {itemId: e}, success: function (t) {
                 if (t.result === true) {
                     vehicleProposalList(e);
                 }
@@ -407,14 +407,14 @@ function proposalCustomerBankAccountAdd() {
         url: e,
         dataType: "JSON",
         data: {
-            bankAccountId: null,
-            bankAccountBank: $("#bank_account_bank").val(),
-            bankAccountType: $("#bank_account_type").val(),
-            bankAccountAgency: $("#bank_account_agency").val(),
-            bankAccountAccount: $("#bank_account_account").val(),
-            bankAccountSince: $("#bank_account_since").val(),
+            id: null,
+            bankName: $("#bank_account_bank").val(),
+            type: $("#bank_account_type").val(),
+            agency: $("#bank_account_agency").val(),
+            account: $("#bank_account_account").val(),
+            since: $("#bank_account_since").val(),
             bank: $("#bank").val()
-        }, success: function() {
+        }, success: function () {
             proposalCustomerBankAccountList();
         }});
 }
@@ -423,7 +423,7 @@ function proposalCustomerBankAccountDelete(e, t) {
     var n = BASE_PATH + "/admin/proposal/proposal/deletecustomerbankaccount";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {itemId: e, dataId: t}, success: function(t) {
+        $.ajax({url: n, dataType: "JSON", data: {itemId: e, dataId: t}, success: function (t) {
                 if (t.result === true) {
                     proposalCustomerBankAccountList(e);
                 }
@@ -439,7 +439,7 @@ function proposalCustomerReferenceList() {
 
 function proposalCustomerReferenceAdd() {
     var e = BASE_PATH + "/admin/proposal/proposal/addcustomerreference";
-    $.ajax({url: e, dataType: "JSON", data: {referenceId: null, referenceType: $("#reference_type").val(), referenceName: $("#reference_name").val(), referencePhone: $("#reference_phone").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {id: null, type: $("#reference_type").val(), name: $("#reference_name").val(), phone: $("#reference_phone").val()}, success: function () {
             proposalCustomerReferenceList();
         }});
 }
@@ -448,7 +448,7 @@ function proposalCustomerReferenceDelete(e, t) {
     var n = BASE_PATH + "/admin/proposal/proposal/deletecustomerreference";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {itemId: e, dataId: t}, success: function(t) {
+        $.ajax({url: n, dataType: "JSON", data: {itemId: e, dataId: t}, success: function (t) {
                 if (t.result === true) {
                     proposalCustomerReferenceList(e);
                 }
@@ -464,7 +464,7 @@ function proposalCustomerPatrimonyList() {
 
 function proposalCustomerPatrimonyAdd() {
     var e = BASE_PATH + "/admin/proposal/proposal/addcustomerpatrimony";
-    $.ajax({url: e, dataType: "JSON", data: {patrimonyId: null, patrimonyName: $("#patrimony_name").val(), patrimonyValue: $("#patrimony_value").val(), patrimonyDebit: $("#patrimony_debit").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {id: null, name: $("#patrimony_name").val(), value: $("#patrimony_value").val(), debit: $("#patrimony_debit").val()}, success: function () {
             proposalCustomerPatrimonyList();
         }});
 }
@@ -473,7 +473,7 @@ function proposalCustomerPatrimonyDelete(e, t) {
     var n = BASE_PATH + "/admin/proposal/proposal/deletecustomerpatrimony";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {itemId: e, dataId: t}, success: function(t) {
+        $.ajax({url: n, dataType: "JSON", data: {itemId: e, dataId: t}, success: function (t) {
                 if (t.result === true) {
                     proposalCustomerPatrimonyList(e);
                 }
@@ -488,7 +488,7 @@ function proposalCustomerVehicleList() {
 }
 function proposalCustomerVehicleAdd() {
     var e = BASE_PATH + "/admin/proposal/proposal/addcustomervehicle";
-    $.ajax({url: e, dataType: "JSON", data: {vehicleId: null, vehicleBrandId: $("#customerVehicleBrandId").val(), vehicleTypeId: $("#customerVehicleTypeId").val(), vehicleModelId: $("#customerVehicleModelId").val(), vehicleVersionId: $("#customerVehicleVersionId").val(), vehicleYear: $("#customerVehicleYear").val(), vehicleYearModel: $("#customerVehicleYearModel").val(), vehiclePlate: $("#customerVehiclePlate").val(), vehicleColor: $("#customerVehicleColor").val(), vehicleValue: $("#customerVehicleValue").val()}, success: function() {
+    $.ajax({url: e, dataType: "JSON", data: {id: null, brand: $("#customerVehicleBrandId").val(), type: $("#customerVehicleTypeId").val(), model: $("#customerVehicleModelId").val(), version: $("#customerVehicleVersionId").val(), year: $("#customerVehicleYear").val(), yearModel: $("#customerVehicleYearModel").val(), plate: $("#customerVehiclePlate").val(), color: $("#customerVehicleColor").val(), value: $("#customerVehicleValue").val()}, success: function () {
             proposalCustomerVehicleList();
         }});
 }
@@ -497,7 +497,7 @@ function proposalCustomerVehicleDelete(e, t) {
     var n = BASE_PATH + "/admin/proposal/proposal/deletecustomervehicle";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {itemId: e, dataId: t}, success: function(t) {
+        $.ajax({url: n, dataType: "JSON", data: {itemId: e, dataId: t}, success: function (t) {
                 if (t.result === true) {
                     proposalCustomerVehicleList(e);
                 }
@@ -513,7 +513,7 @@ function realtyProposalList() {
 
 function realtyProposalAdd() {
     var e = BASE_PATH + "/admin/proposal/realty-proposal/1/addrealty";
-    $.ajax({type: "POST", url: e, dataType: "JSON", data: {realtyType: $("#realtyType").val(), realtyValue: $("#realtyValue").val(), addressName: $("#realtyAddressName").val(), addressNumber: $("#realtyAddressNumber").val(), addressComplement: $("#realtyAddressComplement").val(), addressQuarter: $("#realtyAddressQuarter").val(), addressCep: $("#realtyAddressCep").val(), addressCity: $("#realtyAddressCity").val(), addressState: $("#realtyAddressState").val(), addressCountry: $("#realtyAddressCountry").val(), realtyFeatureBuiltArea: $(".realtyFeatureBuiltArea").val(), realtyFeatureBalconyArea: $(".realtyFeatureBalconyArea").val(), realtyFeatureTotalArea: $(".realtyFeatureTotalArea").val(), realtyFeatureUsefulArea: $(".realtyFeatureUsefulArea").val(), realtyFeatureGroundArea: $(".realtyFeatureGroundArea").val(), realtyFeatureGroundWidth: $(".realtyFeatureGroundWidth").val(), realtyFeatureGroundLength: $(".realtyFeatureGroundLength").val(), realtyFeatureBedroomAmount: $(".realtyFeatureBedroomAmount").val(), realtyFeatureRoomAmount: $(".realtyFeatureRoomAmount").val(), realtyFeatureSuiteAmount: $(".realtyFeatureSuiteAmount").val(), realtyFeatureBathtubAmount: $(".realtyFeatureBathtubAmount").val(), realtyFeatureBathroomAmount: $(".realtyFeatureBathroomAmount").val(), realtyFeatureHallAmount: $(".realtyFeatureHallAmount").val(), realtyFeatureBathroomStall: $(".realtyFeatureBathroomStall").val(), realtyFeatureBathroomCabinet: $(".realtyFeatureBathroomCabinet").val(), realtyFeatureRoomCabinet: $(".realtyFeatureRoomCabinet").val(), realtyFeatureRestroom: $(".realtyFeatureRestroom").val(), realtyFeatureDoubleLiving: $(".realtyFeatureDoubleLiving").val(), realtyFeatureDiningRoom: $(".realtyFeatureDiningRoom").val(), realtyFeatureTvRoom: $(".realtyFeatureTvRoom").val(), realtyFeatureOffice: $(".realtyFeatureOffice").val(), realtyFeatureKitchen: $(".realtyFeatureKitchen").val(), realtyFeaturePlannedKitchen: $(".realtyFeaturePlannedKitchen").val(), realtyFeatureStoreRoom: $(".realtyFeatureStoreRoom").val(), realtyFeatureServiceArea: $(".realtyFeatureServiceArea").val(), realtyFeatureStoreHouse: $(".realtyFeatureStoreHouse").val(), realtyFeatureLiningSlab: $(".realtyFeatureLiningSlab").val(), realtyFeaturePvcLiner: $(".realtyFeaturePvcLiner").val(), realtyFeaturePlanking: $(".realtyFeaturePlanking").val(), realtyFeatureFinishPlaster: $(".realtyFeatureFinishPlaster").val(), realtyFeatureGasHeater: $(".realtyFeatureGasHeater").val(), realtyFeatureSolarHeater: $(".realtyFeatureSolarHeater").val()}, success: function() {
+    $.ajax({type: "POST", url: e, dataType: "JSON", data: {realtyType: $("#realtyType").val(), realtyValue: $("#realtyValue").val(), addressName: $("#realtyAddressName").val(), addressNumber: $("#realtyAddressNumber").val(), addressComplement: $("#realtyAddressComplement").val(), addressQuarter: $("#realtyAddressQuarter").val(), addressCep: $("#realtyAddressCep").val(), addressCity: $("#realtyAddressCity").val(), addressState: $("#realtyAddressState").val(), addressCountry: $("#realtyAddressCountry").val(), realtyFeatureBuiltArea: $(".realtyFeatureBuiltArea").val(), realtyFeatureBalconyArea: $(".realtyFeatureBalconyArea").val(), realtyFeatureTotalArea: $(".realtyFeatureTotalArea").val(), realtyFeatureUsefulArea: $(".realtyFeatureUsefulArea").val(), realtyFeatureGroundArea: $(".realtyFeatureGroundArea").val(), realtyFeatureGroundWidth: $(".realtyFeatureGroundWidth").val(), realtyFeatureGroundLength: $(".realtyFeatureGroundLength").val(), realtyFeatureBedroomAmount: $(".realtyFeatureBedroomAmount").val(), realtyFeatureRoomAmount: $(".realtyFeatureRoomAmount").val(), realtyFeatureSuiteAmount: $(".realtyFeatureSuiteAmount").val(), realtyFeatureBathtubAmount: $(".realtyFeatureBathtubAmount").val(), realtyFeatureBathroomAmount: $(".realtyFeatureBathroomAmount").val(), realtyFeatureHallAmount: $(".realtyFeatureHallAmount").val(), realtyFeatureBathroomStall: $(".realtyFeatureBathroomStall").val(), realtyFeatureBathroomCabinet: $(".realtyFeatureBathroomCabinet").val(), realtyFeatureRoomCabinet: $(".realtyFeatureRoomCabinet").val(), realtyFeatureRestroom: $(".realtyFeatureRestroom").val(), realtyFeatureDoubleLiving: $(".realtyFeatureDoubleLiving").val(), realtyFeatureDiningRoom: $(".realtyFeatureDiningRoom").val(), realtyFeatureTvRoom: $(".realtyFeatureTvRoom").val(), realtyFeatureOffice: $(".realtyFeatureOffice").val(), realtyFeatureKitchen: $(".realtyFeatureKitchen").val(), realtyFeaturePlannedKitchen: $(".realtyFeaturePlannedKitchen").val(), realtyFeatureStoreRoom: $(".realtyFeatureStoreRoom").val(), realtyFeatureServiceArea: $(".realtyFeatureServiceArea").val(), realtyFeatureStoreHouse: $(".realtyFeatureStoreHouse").val(), realtyFeatureLiningSlab: $(".realtyFeatureLiningSlab").val(), realtyFeaturePvcLiner: $(".realtyFeaturePvcLiner").val(), realtyFeaturePlanking: $(".realtyFeaturePlanking").val(), realtyFeatureFinishPlaster: $(".realtyFeatureFinishPlaster").val(), realtyFeatureGasHeater: $(".realtyFeatureGasHeater").val(), realtyFeatureSolarHeater: $(".realtyFeatureSolarHeater").val()}, success: function () {
             realtyProposalList();
         }});
 }
@@ -522,7 +522,7 @@ function realtyProposalDelete(e) {
     var t = BASE_PATH + "/admin/proposal/realty-proposal/1/deleterealty";
     var n = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (n) {
-        $.ajax({url: t, dataType: "JSON", data: {itemId: e}, success: function(t) {
+        $.ajax({url: t, dataType: "JSON", data: {itemId: e}, success: function (t) {
                 if (t.result === true) {
                     realtyProposalList(e);
                 }
@@ -538,7 +538,7 @@ function caixaProposalList() {
 
 function caixaProposalAdd() {
     var e = BASE_PATH + "/admin/proposal/caixa-proposal/1/addproduct";
-    $.ajax({type: "GET", url: e, dataType: "JSON", data: {product: $("#productId").val()}, success: function() {
+    $.ajax({type: "GET", url: e, dataType: "JSON", data: {product: $("#productId").val()}, success: function () {
             caixaProposalList();
         }});
 }
@@ -547,7 +547,7 @@ function caixaProposalDelete(e) {
     var t = BASE_PATH + "/admin/proposal/caixa-proposal/1/deleteproduct";
     var n = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (n) {
-        $.ajax({url: t, dataType: "JSON", data: {itemId: e}, success: function(t) {
+        $.ajax({url: t, dataType: "JSON", data: {itemId: e}, success: function (t) {
                 if (t.result === true) {
                     caixaProposalList(e);
                 }
@@ -563,7 +563,7 @@ function productList(e) {
 
 function shopmanProductAdd() {
     var e = BASE_PATH + "/admin/shopman/1/shopman-product/1/add";
-    $.ajax({type: "GET", url: e, dataType: "JSON", data: {product: $("#productId").val(), shopman: $("#shopmanId").val()}, success: function() {
+    $.ajax({type: "GET", url: e, dataType: "JSON", data: {product: $("#productId").val(), shopman: $("#shopmanId").val()}, success: function () {
             shopmanProductList($("#shopmanId").val());
         }});
 }
@@ -576,7 +576,7 @@ function shopmanProductDelete(e, t) {
     var n = BASE_PATH + "/admin/shopman/1/shopman-product/1/delete";
     var r = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (r) {
-        $.ajax({url: n, dataType: "JSON", data: {productId: t, shopmanId: e}, success: function(e) {
+        $.ajax({url: n, dataType: "JSON", data: {productId: t, shopmanId: e}, success: function (e) {
                 if (e.result === true) {
                     shopmanProductList(e.shopmanId);
                 }
@@ -589,7 +589,7 @@ function shopmanProductDelete(e, t) {
 function calculateArea() {
     var e = $("#realtyFeatureBuiltArea").val();
     var t = $("#realtyFeatureBalconyArea").val();
-    $.ajax({type: "GET", url: BASE_PATH + "/admin/realty-feature/calculatearea", dataType: "JSON", data: {built: e, balcony: t}, success: function(e) {
+    $.ajax({type: "GET", url: BASE_PATH + "/admin/realty-feature/calculatearea", dataType: "JSON", data: {built: e, balcony: t}, success: function (e) {
             $("#realtyFeatureTotalArea").empty();
             $("#realtyFeatureTotalArea").val(e.total);
         }});
@@ -599,7 +599,7 @@ function calculateArea() {
 function calculateGround() {
     var e = $("#realtyFeatureGroundWidth").val();
     var t = $("#realtyFeatureGroundLength").val();
-    $.ajax({type: "GET", url: BASE_PATH + "/admin/realty-feature/calculateground", dataType: "JSON", data: {width: e, length: t}, success: function(e) {
+    $.ajax({type: "GET", url: BASE_PATH + "/admin/realty-feature/calculateground", dataType: "JSON", data: {width: e, length: t}, success: function (e) {
             $("#realtyFeatureGroundArea").empty();
             $("#realtyFeatureGroundArea").val(e.total);
         }});
@@ -640,20 +640,20 @@ function removeCommission() {
     return false;
 }
 
-!function(e) {
-    e(function() {
+!function (e) {
+    e(function () {
         e(".btn-group").tooltip({selector: "[data-toggle=tooltip]", container: "body"});
         e(".app-tooltip").tooltip({container: "body"});
         e(".datepicker").datepicker({
-            changeMonth: true, 
+            changeMonth: true,
             changeYear: true,
             yearRange: "c-50:c+10"
         });
     });
 }(window.jQuery);
 
-$(document).ready(function() {
-    $(':text, textarea').on('keyup', function() {
+$(document).ready(function () {
+    $(':text, textarea').on('keyup', function () {
         $(this).val($(this).val().toUpperCase());
     });
     $(".datepicker").datepicker({changeMonth: true, changeYear: true});

@@ -16,11 +16,11 @@
             </tr>
             <?php foreach ($this->customerPatrimonies as $key => $customerPatrimony) : ?>
                 <tr>
-                    <td><?php echo $this->escapeHtml($customerPatrimony['patrimonyName']); ?></td>
-                    <td><?php echo $this->currency($customerPatrimony['patrimonyValue']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerPatrimony['name']); ?></td>
+                    <td><?php echo $this->currency($customerPatrimony['value']); ?></td>
                     <td>
                         <div class="btn-group btn-group-xs pull-right">
-                            <a class="btn btn-default" href="javascript: proposalCustomerPatrimonyDelete('<?php echo $key; ?>', '<?php echo $customerPatrimony['patrimonyId']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a class="btn btn-default" href="javascript: proposalCustomerPatrimonyDelete('<?php echo $key; ?>', '<?php echo $customerPatrimony['id']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </td>
                 </tr>

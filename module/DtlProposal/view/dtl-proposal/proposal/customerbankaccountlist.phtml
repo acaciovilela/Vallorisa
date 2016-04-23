@@ -22,14 +22,14 @@
             </tr>
             <?php foreach ($this->customerBankAccounts as $key => $customerBankAccount) : ?>
                 <tr>
-                    <td><?php echo $this->escapeHtml($customerBankAccount['bankAccountType']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerBankAccount['type']); ?></td>
                     <td><?php echo ($customerBankAccount['bank']) ? $this->bankName($customerBankAccount['bank']) : $customerBankAccount['bankName']; ?></td>
-                    <td><?php echo $this->escapeHtml($customerBankAccount['bankAccountAgency']); ?></td>
-                    <td><?php echo $this->escapeHtml($customerBankAccount['bankAccountAccount']); ?></td>
-                    <td><?php echo $this->escapeHtml($customerBankAccount['bankAccountSince']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerBankAccount['agency']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerBankAccount['account']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerBankAccount['since']); ?></td>
                     <td>
                         <div class="btn-group btn-group-xs pull-right">
-                            <a class="btn btn-default" href="javascript: proposalCustomerBankAccountDelete('<?php echo $key; ?>', '<?php echo $customerBankAccount['bankAccountId']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a class="btn btn-default" href="javascript: proposalCustomerBankAccountDelete('<?php echo $key; ?>', '<?php echo $customerBankAccount['id']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </td>
                 </tr>

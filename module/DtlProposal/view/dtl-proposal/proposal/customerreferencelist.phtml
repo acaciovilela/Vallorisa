@@ -17,12 +17,12 @@
             </tr>
             <?php foreach ($this->customerReferences as $key => $customerReference) : ?>
                 <tr>
-                    <td><?php echo $this->escapeHtml($customerReference['referenceType']); ?></td>
-                    <td><?php echo $this->escapeHtml($customerReference['referenceName']); ?></td>
-                    <td><?php echo $this->phone($customerReference['referencePhone']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerReference['type']); ?></td>
+                    <td><?php echo $this->escapeHtml($customerReference['name']); ?></td>
+                    <td><?php echo $this->phone($customerReference['phone']); ?></td>
                     <td>
                         <div class="btn-group btn-group-xs pull-right">
-                            <a class="btn btn-default" href="javascript: proposalCustomerReferenceDelete('<?php echo $key; ?>', '<?php echo $customerReference['referenceId']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a class="btn btn-default" href="javascript: proposalCustomerReferenceDelete('<?php echo $key; ?>', '<?php echo $customerReference['id']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </td>
                 </tr>

@@ -15,11 +15,11 @@ $isDevMode = true;
 $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . '/module'), $isDevMode, null, null, false);
 
 $dbparams = array(
-    'hostname' => 'mysql.vallorisa.com.br',
+//    'hostname' => 'mysql.vallorisa.com.br',
 //    'hostname' => 'localhost',
     'port' => '3306',
-    'username' => 'vallorisa',
-//    'username' => 'root',
+//    'username' => 'vallorisa',
+    'username' => 'root',
     'password' => 'r2d2x3po',
 //    'database' => 'vallorisa1',
     'database' => 'vallorisa',

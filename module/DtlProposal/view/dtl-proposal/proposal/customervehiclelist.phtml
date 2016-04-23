@@ -23,18 +23,18 @@
             </tr>
             <?php foreach ($this->customerVehicles as $key => $vehicle) : ?>
                 <tr>
-                    <td><?php echo $this->escapeHtml($vehicle['vehicleBrandName']); ?></td>
-                    <td><?php echo $this->escapeHtml($vehicle['vehicleModelName']); ?></td>
-                    <td><?php echo $this->escapeHtml($vehicle['vehicleVersionName']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['brand']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['vehilce']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['version']); ?></td>
                     <td>
-                        <?php echo $vehicle['vehicleYear']; ?>
-                        <?php echo ($vehicle['vehicleYearModel']) ? " / " . $vehicle['vehicleYearModel'] : ""; ?>
+                        <?php echo $vehicle['year']; ?>
+                        <?php echo ($vehicle['yearModel']) ? " / " . $vehicle['yearModel'] : ""; ?>
                     </td>
-                    <td><?php echo $this->escapeHtml($vehicle['vehiclePlate']); ?></td>
-                    <td><?php echo $this->currency($vehicle['vehicleValue']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['plate']); ?></td>
+                    <td><?php echo $this->currency($vehicle['value']); ?></td>
                     <td>
                         <div class="btn-group btn-group-xs pull-right">
-                            <a class="btn btn-default btn-xs" href="javascript: proposalCustomerVehicleDelete('<?php echo $key ?>', '<?php echo $vehicle['vehicleId']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a class="btn btn-default btn-xs" href="javascript: proposalCustomerVehicleDelete('<?php echo $key ?>', '<?php echo $vehicle['id']; ?>')"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </td>
                 </tr>

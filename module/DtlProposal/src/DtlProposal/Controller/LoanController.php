@@ -756,12 +756,12 @@ class LoanController extends AbstractActionController {
         if (count($customerBankAccounts) > 0) {
             $customerBankAccount = array();
             foreach ($customerBankAccounts->toArray() as $bankAccount) {
-                $customerBankAccount['bankAccountId'] = $bankAccount->getId();
-                $customerBankAccount['bankAccountType'] = $bankAccount->getType();
-                $customerBankAccount['bankAccountBank'] = $bankAccount->getBank();
-                $customerBankAccount['bankAccountAgency'] = $bankAccount->getAgency();
-                $customerBankAccount['bankAccountAccount'] = $bankAccount->getAccount();
-                $customerBankAccount['bankAccountSince'] = $bankAccount->getSince();
+                $customerBankAccount['id'] = $bankAccount->getId();
+                $customerBankAccount['type'] = $bankAccount->getType();
+                $customerBankAccount['bankName'] = $bankAccount->getBank();
+                $customerBankAccount['agency'] = $bankAccount->getAgency();
+                $customerBankAccount['account'] = $bankAccount->getAccount();
+                $customerBankAccount['since'] = $bankAccount->getSince();
                 $this->getProposalSession()->customerBankAccounts[] = $customerBankAccount;
             }
         }
@@ -885,9 +885,9 @@ class LoanController extends AbstractActionController {
             $this->getProposalSession()->customerBankAccounts = array();
         }
         $customerBankAccount = $this->params()->fromQuery();
-        if (empty($customerBankAccount['bankAccountBank']) ||
-                empty($customerBankAccount['bankAccountAgency']) ||
-                empty($customerBankAccount['bankAccountAccount'])) {
+        if (empty($customerBankAccount['bank']) ||
+                empty($customerBankAccount['agency']) ||
+                empty($customerBankAccount['account'])) {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         } else {
             $this->getProposalSession()->customerBankAccounts[] = $customerBankAccount;

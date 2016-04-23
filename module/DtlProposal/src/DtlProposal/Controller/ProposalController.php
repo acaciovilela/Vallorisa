@@ -123,13 +123,13 @@ class ProposalController extends AbstractActionController {
             $this->getProposalSession()->customerBankAccounts = array();
         }
         $customerBankAccount = $this->params()->fromQuery();
+//        \Zend\Debug\Debug::dump($customerBankAccount);exit;
         if (empty($customerBankAccount['bank']) ||
-                empty($customerBankAccount['bankAccountAgency']) ||
-                empty($customerBankAccount['bankAccountAccount'])) {
+                empty($customerBankAccount['agency']) ||
+                empty($customerBankAccount['account'])) {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         }
         $this->getProposalSession()->customerBankAccounts[] = $customerBankAccount;
-        \Zend\Debug\Debug::dump($customerBankAccount);exit;
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
     }
 
@@ -142,7 +142,7 @@ class ProposalController extends AbstractActionController {
             $this->getProposalSession()->customerBankAccounts = $customerBankAccounts;
             if (!empty($dataId)) {
                 $em = $this->getEntityManager();
-                $bankAccount = $em->find('BankAccount\Entity\BankAccount', $dataId);
+                $bankAccount = $em->find('DtlBankAccount\Entity\BankAccount', $dataId);
                 $em->remove($bankAccount);
                 $em->flush();
             }
@@ -186,7 +186,7 @@ class ProposalController extends AbstractActionController {
             $this->getProposalSession()->customerReferences = $customerReferences;
             if (!empty($dataId)) {
                 $em = $this->getEntityManager();
-                $reference = $em->find('Reference\Entity\Reference', $dataId);
+                $reference = $em->find('DtlReference\Entity\Reference', $dataId);
                 $em->remove($reference);
                 $em->flush();
             }
@@ -230,7 +230,7 @@ class ProposalController extends AbstractActionController {
             $this->getProposalSession()->customerPatrimonies = $customerPatrimonies;
             if (!empty($dataId)) {
                 $em = $this->getEntityManager();
-                $patrimony = $em->find('Patrimony\Entity\Patrimony', $dataId);
+                $patrimony = $em->find('DtlPatrimony\Entity\Patrimony', $dataId);
                 $em->remove($patrimony);
                 $em->flush();
             }
