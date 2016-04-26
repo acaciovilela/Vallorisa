@@ -224,7 +224,7 @@ class VehicleProposalController extends AbstractActionController {
                 $bankReport->setIsActive(true);
                 $bankReport->setBank($bank);
                 $em->persist($bankReport);
-                $vehicleProposal->getProposal()->addBankReport($bankReport);
+                $vehicleProposal->getProposal()->addReport($bankReport);
 
                 $log = new \DtlProposal\Entity\Log();
                 $log->setBank($bank);

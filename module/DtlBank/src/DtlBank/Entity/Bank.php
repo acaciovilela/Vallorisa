@@ -37,13 +37,13 @@ class Bank {
     protected $url;
 
     /**
-     * @ORM\Column(type="decimal", precision=11, scale=2)
+     * @ORM\Column(type="decimal", precision=11, scale=2, nullable=true)
      * @var float
      */
     protected $tax;
 
     /**
-     * @ORM\Column(name="return_value", type="decimal", precision=11, scale=2)
+     * @ORM\Column(name="return_value", type="decimal", precision=11, scale=2, nullable=true)
      * @var float
      */
     protected $returnValue;
