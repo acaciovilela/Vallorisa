@@ -213,7 +213,7 @@ class Loan extends ZendFielset implements InputFilterProviderInterface {
                     new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'))
                 ),
             ),
-            'marginValue' => array(
+            'margin' => array(
                 'required' => false,
                 'filters' => array(
                     new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'))

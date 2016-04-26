@@ -306,7 +306,7 @@ $this->headTitle($title);
                     <?php foreach ($customer->getAccounts() as $customerBankAccount) : ?>
                         <tr>
                             <td><?php echo $this->escapeHtml($customerBankAccount->getType()); ?></td>
-                            <td><?php echo $this->escapeHtml($customerBankAccount->getBank()); ?></td>
+                            <td><?php echo $customerBankAccount->getBank()->getName(); ?></td>
                             <td><?php echo $this->escapeHtml($customerBankAccount->getAgency()); ?></td>
                             <td><?php echo $this->escapeHtml($customerBankAccount->getAccount()); ?></td>
                             <td><?php echo $this->escapeHtml($customerBankAccount->getSince()); ?></td>

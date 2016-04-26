@@ -161,7 +161,7 @@ class RealtyProposalController extends AbstractActionController {
 
                 $customer = $realtyProposal->getProposal()->getCustomer();
 
-                $customer->setCompanyId($userId);
+                $customer->setUser($userId);
 
                 $this->getProposalService()->addCustomerBankAccount($customer);
 
@@ -177,7 +177,7 @@ class RealtyProposalController extends AbstractActionController {
                 $bankReport->setBank($bank);
                 $em->persist($bankReport);
 
-                $realtyProposal->getProposal()->addBankReport($bankReport);
+                $realtyProposal->getProposal()->addReport($bankReport);
                 $log = new \DtlProposal\Entity\Log();
                 $log->setBank($bank);
                 $log->setMessage('ABERTA: PROPOSTA EM ANÁLISE');
@@ -613,8 +613,8 @@ class RealtyProposalController extends AbstractActionController {
         }
 
         $form = new \DtlProposal\Form\BankReport($em);
-        $form->get('bankReport')->get('bankReportParcelAmount')->setValue($realtyProposal->getProposal()->getParcelAmount());
-        $form->get('bankReport')->get('bankReportParcelValue')->setValue($vehicleProposal->getProposal()->getParcelValue());
+        $form->get('bankReport')->get('parcelAmount')->setValue($realtyProposal->getProposal()->getParcelAmount());
+        $form->get('bankReport')->get('parcelValue')->setValue($vehicleProposal->getProposal()->getParcelValue());
 
         if ($this->request->isPost()) {
 
@@ -634,12 +634,12 @@ class RealtyProposalController extends AbstractActionController {
 
                 $timestamp = $baseDate->getTimestamp();
 
-                $endDate = $baseDate->setDate(date('Y', $timestamp), date('m', $timestamp) + $post['bankReportParcelAmount'] + 1, date('d', $timestamp));
+                $endDate = $baseDate->setDate(date('Y', $timestamp), date('m', $timestamp) + $post['parcelAmount'] + 1, date('d', $timestamp));
 
                 $dataProposal = array(
                     'bank' => $bank,
-                    'proposalParcelAmount' => $post['bankReportParcelAmount'],
-                    'proposalParcelValue' => $post['bankReportParcelValue'],
+                    'proposalParcelAmount' => $post['parcelAmount'],
+                    'proposalParcelValue' => $post['parcelValue'],
                     'proposalLastExpiration' => date('Y-m-d', $endDate->getTimestamp()),
                     'isChecking' => true,
                     'isApproved' => false,
@@ -664,7 +664,7 @@ class RealtyProposalController extends AbstractActionController {
                 $proposal->addLog($log);
 
 
-                $activeBankReport = $realtyProposal->getProposal()->getBankReport();
+                $activeBankReport = $realtyProposal->getProposal()->getReports();
                 if (count($activeBankReport) > 0) {
                     foreach ($activeBankReport as $bankReportData) {
                         $bankReportData->setIsActive(false);
@@ -678,7 +678,7 @@ class RealtyProposalController extends AbstractActionController {
                 );
                 $bankReport = new \DtlProposal\Entity\BankReport();
                 $hydrator->hydrate($dataBankReport, $bankReport);
-                $proposal->addBankReport($bankReport);
+                $proposal->addReport($bankReport);
 
                 $em->persist($proposal);
                 $em->persist($realtyProposal);
@@ -725,7 +725,7 @@ class RealtyProposalController extends AbstractActionController {
                 $em->persist($log);
                 $proposal->addLog($log);
 
-                $activeBankReport = $realtyProposal->getProposal()->getBankReport();
+                $activeBankReport = $realtyProposal->getProposal()->getReports();
                 if (count($activeBankReport) > 0) {
                     foreach ($activeBankReport as $bankReportData) {
                         $bankReportData->setIsActive(false);
@@ -739,7 +739,7 @@ class RealtyProposalController extends AbstractActionController {
                 );
                 $bankReport = new \DtlProposal\Entity\BankReport();
                 $hydrator->hydrate($dataBankReport, $bankReport);
-                $proposal->addBankReport($bankReport);
+                $proposal->addReport($bankReport);
 
                 $em->persist($proposal);
 
@@ -791,7 +791,7 @@ class RealtyProposalController extends AbstractActionController {
                 $em->persist($log);
                 $proposal->addLog($log);
 
-                $activeBankReport = $realtyProposal->getProposal()->getBankReport();
+                $activeBankReport = $realtyProposal->getProposal()->getReports();
                 if (count($activeBankReport) > 0) {
                     foreach ($activeBankReport as $bankReportData) {
                         $bankReportData->setIsActive(false);
@@ -805,7 +805,7 @@ class RealtyProposalController extends AbstractActionController {
                 );
                 $bankReport = new \DtlProposal\Entity\BankReport();
                 $hydrator->hydrate($dataBankReport, $bankReport);
-                $proposal->addBankReport($bankReport);
+                $proposal->addReport($bankReport);
 
                 $em->persist($proposal);
                 $em->persist($evaluation);

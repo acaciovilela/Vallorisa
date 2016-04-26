@@ -651,12 +651,12 @@ class LoanController extends AbstractActionController {
 
                 $timestamp = $baseDate->getTimestamp();
 
-                $endDate = $baseDate->setDate(date('Y', $timestamp), date('m', $timestamp) + $post['bankReportParcelAmount'] + 1, date('d', $timestamp));
+                $endDate = $baseDate->setDate(date('Y', $timestamp), date('m', $timestamp) + $post['parcelAmount'] + 1, date('d', $timestamp));
 
                 $dataProposal = array(
                     'bank' => $bank,
-                    'parcelAmount' => $post['bankReportParcelAmount'],
-                    'parcelValue' => $post['bankReportParcelValue'],
+                    'parcelAmount' => $post['parcelAmount'],
+                    'parcelValue' => $post['parcelValue'],
                     'lastExpiration' => date('Y-m-d', $endDate->getTimestamp()),
                     'isChecking' => true,
                     'isApproved' => false,
@@ -681,7 +681,7 @@ class LoanController extends AbstractActionController {
                 $proposal->addLog($log);
 
 
-                $activeBankReport = $loan->getProposal()->getBankReport();
+                $activeBankReport = $loan->getProposal()->getReports();
                 if (count($activeBankReport) > 0) {
                     foreach ($activeBankReport as $bankReportData) {
                         $bankReportData->setIsActive(false);
@@ -695,7 +695,7 @@ class LoanController extends AbstractActionController {
                 );
                 $bankReport = new \DtlProposal\Entity\BankReport();
                 $hydrator->hydrate($dataBankReport, $bankReport);
-                $proposal->addBankReport($bankReport);
+                $proposal->addReport($bankReport);
 
                 $em->persist($proposal);
                 $em->persist($loan);

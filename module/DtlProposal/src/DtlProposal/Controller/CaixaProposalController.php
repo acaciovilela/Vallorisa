@@ -197,7 +197,7 @@ class CaixaProposalController extends AbstractActionController {
 
                 $customer = $caixaProposal->getProposal()->getCustomer();
 
-                $customer->setCompanyId($userId);
+                $customer->setUser($userId);
 
                 $this->getProposalService()->addCustomerBankAccount($customer);
 
@@ -271,8 +271,8 @@ class CaixaProposalController extends AbstractActionController {
 
                 if (count($products) > 0) {
                     foreach ($products as $productData) {
-                        if (!$productData['productId']) {
-                            $product = $em->find('Product\Entity\Product', $productData['product']);
+                        if (!$productData['id']) {
+                            $product = $em->find('DtlProduct\Entity\Product', $productData['product']);
                             $caixaProposal->addProduct($product);
                         }
                     }
