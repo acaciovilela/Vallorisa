@@ -29,6 +29,7 @@ class ProductController extends AbstractActionController {
                 ->getRepository($this->getRepository())
                 ->createQueryBuilder('p')
                 ->where('p.user = ' . $this->dtlUserMasterIdentity()->getId())
+                ->where('p.isActive = ' . true)
                 ->orderBy('p.name', 'ASC');
 
         if ($this->request->isPost()) {
@@ -68,6 +69,7 @@ class ProductController extends AbstractActionController {
             $form->setData($post);
             if ($form->isValid()) {
                 $em = $this->getEntityManager();
+                $product->setUser($this->identity());
                 $em->persist($product);
                 $em->flush();
                 return $this->redirect()->toRoute('dtladmin/dtlproduct');
@@ -112,7 +114,7 @@ class ProductController extends AbstractActionController {
             if ($del == 'Sim') {
                 $id = $request->getPost('id');
                 $product = $em->find($this->getRepository(), $id);
-                $product->setProductActive(false);
+                $product->setIsActive(false);
                 $em->persist($product);
                 $em->flush();
             }
@@ -128,8 +130,8 @@ class ProductController extends AbstractActionController {
         $id = $this->params()->fromQuery('id');
         $em = $this->getEntityManager();
         $products = $em->getRepository('DtlProduct\Entity\Product')->findBy(array(
-            'categoryId' => $id,
-            'productActive' => '1'
+            'id' => $id,
+            'isActive' => '1'
         ));
         return array(
             'products' => $products
