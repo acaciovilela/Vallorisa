@@ -703,7 +703,7 @@ class LoanController extends AbstractActionController {
                 $em->flush();
 
                 $this->flashMessenger()->addSuccessMessage('Migração bancária efetuada com sucesso na proposta nº ' . $loan->getId() . ' com sucesso!');
-                return $this->redirect()->toRoute("admin/proposal/loan");
+                return $this->redirect()->toRoute("dtladmin/dtlproposal/loan");
             }
         }
 

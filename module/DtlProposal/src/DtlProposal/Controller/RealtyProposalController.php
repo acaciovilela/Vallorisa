@@ -686,7 +686,7 @@ class RealtyProposalController extends AbstractActionController {
                 $em->flush();
 
                 $this->flashMessenger()->addSuccessMessage('Migração bancária efetuada com sucesso!');
-                return $this->redirect()->toRoute("admin/proposal/realty-proposal");
+                return $this->redirect()->toRoute("dtladmin/dtlproposal/realty-proposal");
             }
         }
 
@@ -754,7 +754,7 @@ class RealtyProposalController extends AbstractActionController {
                 $em->flush();
 
                 $this->flashMessenger()->addSuccessMessage('Avaliação do imóvel efetuada com sucesso!');
-                return $this->redirect()->toRoute("admin/proposal/realty-proposal");
+                return $this->redirect()->toRoute("dtladmin/dtlproposal/realty-proposal");
             }
         }
 
@@ -819,7 +819,7 @@ class RealtyProposalController extends AbstractActionController {
                 $em->flush();
 
                 $this->flashMessenger()->addSuccessMessage('Avaliação do imóvel atualizada com sucesso!');
-                return $this->redirect()->toRoute("admin/proposal/realty-proposal");
+                return $this->redirect()->toRoute("dtladmin/dtlproposal/realty-proposal");
             }
         }
 
