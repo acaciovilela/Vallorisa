@@ -459,7 +459,7 @@ class RealtyProposalController extends AbstractActionController {
                         $variantCommission = $product->getVariantCommission();
                         $commission = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
                         $commission = number_format($commission, 2);
-                        $receivable = $this->getServiceLocator()->get('financial_create_receivable');
+                        $receivable = $this->getServiceLocator()->get('dtlfinancial_create_receivable');
                         $receivable->setCompany($realtyProposal->getProposal()->getCompany());
                         $receivable->setCustomer($realtyProposal->getProposal()->getCustomer());
                         $receivable->setDescription("COM. REF. A PROPOSTA DE IMÓVEL Nº {$realtyProposal->getId()}");
@@ -481,7 +481,7 @@ class RealtyProposalController extends AbstractActionController {
                                         $empCommission = (($companyCommission * $empVarCom) / 100) + $empFixCom;
                                         $employeeCommission = number_format($empCommission, 2);
                                         $supplier = $employee->getSupplier();
-                                        $payable = $this->getServiceLocator()->get('financial_create_payable');
+                                        $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
                                         $payable->setCompany($realtyProposal->getProposal()->getCompany());
                                         $payable->setSupplier($supplier);
                                         $payable->setDescription("COM. REF. A PROPOSTA DE IMÓVEL Nº {$realtyProposal->getId()}.");
@@ -503,7 +503,7 @@ class RealtyProposalController extends AbstractActionController {
                             $relatorCommission = ((($companyCommission * $rltVarCom) / 100) + $rltFixCom) + $bonus;
                             $realtorCommission = number_format($relatorCommission, 2);
                             $supplier = $realtor->getSupplier();
-                            $payable = $this->getServiceLocator()->get('financial_create_payable');
+                            $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
                             $payable->setCompany($realtyProposal->getProposal()->getCompany());
                             $payable->setSupplier($supplier);
                             $payable->setDescription("COM. DE CORRETOR REF. A PROPOSTA DE IMÓVEL Nº {$realtyProposal->getId()}.");

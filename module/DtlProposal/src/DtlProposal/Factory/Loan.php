@@ -19,6 +19,8 @@ class Loan implements FactoryInterface {
         $controller->setEntityManager($entitymanager);
         $controller->setSearchQuery($services->get('proposal_search_query'));
         $controller->setRepository('DtlProposal\Entity\Loan');
+        $controller->setReceivableService($services->get('dtlfinancial_create_receivable'));
+        $controller->setPayableService($services->get('dtlfinancial_create_payable'));
         return $controller;
     }
 }

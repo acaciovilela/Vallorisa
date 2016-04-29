@@ -29,7 +29,7 @@ class CreateReceivable implements CreateAccountInterface {
         if (!$this->getCustomer()) {
             throw new Exception('Nenhum fornecedor foi definido para esta conta.');
         }
-        
+
         $account = new Account();
         $account->setParcels(1);
         $account->setCurrentParcel(1);
@@ -37,7 +37,7 @@ class CreateReceivable implements CreateAccountInterface {
         $account->setValue($this->getValue());
         
         $receivable = new Receivable();
-        $receivable->setUser($this->getUser()->getId())
+        $receivable->setUser($this->getUser())
                 ->setCustomer($this->getCustomer())
                 ->setAccount($account);
         

@@ -36,7 +36,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'name', 'type', 'parent', 'user');
+            return ['__isInitialized__', 'id', 'name', 'type', 'parent', 'user'];
         }
 
-        return array('__isInitialized__', 'id', 'name', 'type', 'parent', 'user');
+        return ['__isInitialized__', 'id', 'name', 'type', 'parent', 'user'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }
@@ -205,7 +205,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function getType()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getType', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getType', []);
 
         return parent::getType();
     }
@@ -216,7 +216,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function getParent()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParent', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParent', []);
 
         return parent::getParent();
     }
@@ -227,7 +227,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function getUser()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
 
         return parent::getUser();
     }
@@ -238,7 +238,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -249,7 +249,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function setName($name)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
         return parent::setName($name);
     }
@@ -260,7 +260,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function setType($type)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setType', array($type));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setType', [$type]);
 
         return parent::setType($type);
     }
@@ -271,7 +271,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function setParent(\DtlProduct\Entity\Category $parent)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParent', array($parent));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParent', [$parent]);
 
         return parent::setParent($parent);
     }
@@ -282,7 +282,7 @@ class Category extends \DtlProduct\Entity\Category implements \Doctrine\ORM\Prox
     public function setUser(\DtlUser\Entity\User $user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', array($user));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
         return parent::setUser($user);
     }

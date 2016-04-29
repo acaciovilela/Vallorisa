@@ -38,6 +38,8 @@ class LoanController extends AbstractActionController {
      * @var \DtlProposal\Service\ProposalSearchQuery
      */
     protected $searchQuery;
+    protected $receivableService;
+    protected $payableService;
 
     public function indexAction() {
 
@@ -95,7 +97,7 @@ class LoanController extends AbstractActionController {
     public function addAction() {
 
         $user = $this->identity();
-        
+
         $form = new LoanForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
 
         $loan = new \DtlProposal\Entity\Loan();
@@ -239,7 +241,7 @@ class LoanController extends AbstractActionController {
         $em = $this->getEntityManager();
 
         $loan = $em->find($this->getRepository(), $proposalId);
-        
+
 //        \Zend\Debug\Debug::dump($loan->getBenefitNumber());exit;
 
         if (!$this->request->isPost()) {
@@ -365,6 +367,8 @@ class LoanController extends AbstractActionController {
             if ($form->isValid()) {
 
                 $post = $this->request->getPost()->proposalStatus;
+
+//                \Zend\Debug\Debug::dump($post['proposalStatusId']);exit;
 
                 switch ($post['proposalStatusId']) {
                     case 'APPROVED':
@@ -498,7 +502,8 @@ class LoanController extends AbstractActionController {
                         $variantCommission = $product->getVariantCommission();
                         $comm = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
                         $commission = number_format($comm, 2);
-                        $receivable = $this->getServiceLocator()->get('financial_create_receivable');
+                        $receivable = $this->getReceivableService();
+//                        \Zend\Debug\Debug::dump($post['proposalStatusId']);exit;
                         $receivable->setUser($loan->getProposal()->getUser());
                         $receivable->setCustomer($loan->getProposal()->getCustomer());
                         $receivable->setDescription("COM. REF. A CONSIGNADO Nº {$loan->getId()}");
@@ -520,7 +525,7 @@ class LoanController extends AbstractActionController {
                                         $empCommission = (($companyCommission * $empVarCom) / 100) + $empFixCom;
                                         $employeeCommission = number_format($empCommission, 2);
                                         $supplier = $employee->getSupplier();
-                                        $payable = $this->getServiceLocator()->get('financial_create_payable');
+                                        $payable = $this->getPayableService();
                                         $payable->setUser($loan->getProposal()->getUser());
                                         $payable->setSupplier($supplier);
                                         $payable->setDescription("COM. REF. A CONSIGNADO Nº {$loan->getId()}.");
@@ -632,7 +637,7 @@ class LoanController extends AbstractActionController {
         $form = new \DtlProposal\Form\BankReport($em);
         $form->get('bankReport')->get('parcelAmount')->setValue($loan->getProposal()->getParcelAmount());
         $form->get('bankReport')->get('parcelValue')->setValue($loan->getProposal()->getParcelValue());
-        
+
         if ($this->request->isPost()) {
 
             $form->setData($this->request->getPost());
@@ -1199,6 +1204,22 @@ class LoanController extends AbstractActionController {
     public function setSearchQuery(\DtlProposal\Service\ProposalSearchQuery $searchQuery) {
         $this->searchQuery = $searchQuery;
         return $this;
+    }
+
+    function getReceivableService() {
+        return $this->receivableService;
+    }
+
+    function getPayableService() {
+        return $this->payableService;
+    }
+
+    function setReceivableService($receivableService) {
+        $this->receivableService = $receivableService;
+    }
+
+    function setPayableService($payableService) {
+        $this->payableService = $payableService;
     }
 
 }

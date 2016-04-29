@@ -547,7 +547,7 @@ class CaixaProposalController extends AbstractActionController {
                          * Company commissions
                          */
                         $commission = number_format($comm, 2);
-                        $receivable = $this->getServiceLocator()->get('financial_create_receivable');
+                        $receivable = $this->getServiceLocator()->get('dtlfinancial_create_receivable');
                         $receivable->setCompany($caixaProposal->getProposal()->getCompany());
                         $receivable->setCustomer($caixaProposal->getProposal()->getCustomer());
                         $receivable->setDescription("COM. REF. A PROPOSTA CAIXA Nº {$caixaProposal->getCaixaProposalId()}");
@@ -559,7 +559,7 @@ class CaixaProposalController extends AbstractActionController {
                          */
                         $employeeCommission = number_format($empCommission, 2);
                         $supplier = $employee->getSupplier();
-                        $payable = $this->getServiceLocator()->get('financial_create_payable');
+                        $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
                         $payable->setCompany($caixaProposal->getProposal()->getCompany());
                         $payable->setSupplier($supplier);
                         $payable->setDescription("COM. REF. A PROPOSTA CAIXA Nº {$caixaProposal->getCaixaProposalId()}.");

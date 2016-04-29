@@ -131,7 +131,7 @@ class Product {
      * @param string $variantCommission
      */
     function setVariantCommission($variantCommission) {
-        $this->variantCommission = $variantCommission;
+        $this->variantCommission = (float) $variantCommission;
     }
 
     /**
@@ -139,7 +139,7 @@ class Product {
      * @param float $fixedCommission
      */
     function setFixedCommission($fixedCommission) {
-        $this->fixedCommission = $fixedCommission;
+        $this->fixedCommission = (float) $fixedCommission;
     }
 
     /**

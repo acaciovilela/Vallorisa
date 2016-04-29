@@ -531,7 +531,7 @@ class VehicleProposalController extends AbstractActionController {
                         $variantCommission = $product->getVariantCommission();
                         $commission = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
                         $commission = number_format($commission, 2);
-                        $receivable = $this->getServiceLocator()->get('financial_create_receivable');
+                        $receivable = $this->getServiceLocator()->get('dtlfinancial_create_receivable');
                         $receivable->setUser($vehicleProposal->getProposal()->getUser());
                         $receivable->setCustomer($vehicleProposal->getProposal()->getCustomer());
                         $receivable->setDescription("COM. REF. A PROPOSTA DE VEÍCULOS Nº {$vehicleProposal->getId()}");
@@ -547,13 +547,13 @@ class VehicleProposalController extends AbstractActionController {
                             $commissions = $employee->getCommissions();
                             if (count($commissions)) {
                                 foreach ($commissions as $commission) {
-                                    if ($commission->get() === $product) {
+                                    if ($commission->getProduct() === $product) {
                                         $empFixCom = $commission->getCommissionFixed();
                                         $empVarCom = $commission->getCommissionVariant();
                                         $empCommission = (($companyCommission * $empVarCom) / 100) + $empFixCom;
                                         $employeeCommission = number_format($empCommission, 2);
                                         $supplier = $employee->getSupplier();
-                                        $payable = $this->getServiceLocator()->get('financial_create_payable');
+                                        $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
                                         $payable->setUser($vehicleProposal->getProposal()->getUser());
                                         $payable->setSupplier($supplier);
                                         $payable->setDescription("COM. REF. A PROPOSTA DE VEÍCULOS Nº {$vehicleProposal->getId()}.");
