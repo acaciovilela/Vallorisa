@@ -36,7 +36,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'number', 'value', 'parcelAmount', 'parcelValue', 'date', 'baseDate', 'startDate', 'endDate', 'commission', 'isActive', 'isApproved', 'isIntegrated', 'isRefused', 'isCanceled', 'isChecking', 'isAborted', 'isPending', 'lastChange', 'timestamp', 'notes', 'bank', 'employee', 'customer', 'company', 'logs', 'reports', 'files', 'user');
+            return ['__isInitialized__', 'id', 'number', 'value', 'parcelAmount', 'parcelValue', 'date', 'baseDate', 'startDate', 'endDate', 'commission', 'isActive', 'isApproved', 'isIntegrated', 'isRefused', 'isCanceled', 'isChecking', 'isAborted', 'isPending', 'lastChange', 'timestamp', 'notes', 'bank', 'employee', 'customer', 'company', 'logs', 'reports', 'files', 'user'];
         }
 
-        return array('__isInitialized__', 'id', 'number', 'value', 'parcelAmount', 'parcelValue', 'date', 'baseDate', 'startDate', 'endDate', 'commission', 'isActive', 'isApproved', 'isIntegrated', 'isRefused', 'isCanceled', 'isChecking', 'isAborted', 'isPending', 'lastChange', 'timestamp', 'notes', 'bank', 'employee', 'customer', 'company', 'logs', 'reports', 'files', 'user');
+        return ['__isInitialized__', 'id', 'number', 'value', 'parcelAmount', 'parcelValue', 'date', 'baseDate', 'startDate', 'endDate', 'commission', 'isActive', 'isApproved', 'isIntegrated', 'isRefused', 'isCanceled', 'isChecking', 'isAborted', 'isPending', 'lastChange', 'timestamp', 'notes', 'bank', 'employee', 'customer', 'company', 'logs', 'reports', 'files', 'user'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getNumber()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNumber', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNumber', []);
 
         return parent::getNumber();
     }
@@ -205,7 +205,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getValue()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getValue', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getValue', []);
 
         return parent::getValue();
     }
@@ -216,7 +216,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getParcelAmount()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParcelAmount', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParcelAmount', []);
 
         return parent::getParcelAmount();
     }
@@ -227,7 +227,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getParcelValue()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParcelValue', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParcelValue', []);
 
         return parent::getParcelValue();
     }
@@ -238,7 +238,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDate', []);
 
         return parent::getDate();
     }
@@ -249,7 +249,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getBaseDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBaseDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBaseDate', []);
 
         return parent::getBaseDate();
     }
@@ -260,7 +260,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getStartDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStartDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStartDate', []);
 
         return parent::getStartDate();
     }
@@ -271,7 +271,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getEndDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEndDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEndDate', []);
 
         return parent::getEndDate();
     }
@@ -282,7 +282,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getCommission()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCommission', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCommission', []);
 
         return parent::getCommission();
     }
@@ -293,7 +293,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getIsActive()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
 
         return parent::getIsActive();
     }
@@ -304,7 +304,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getIsApproved()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsApproved', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsApproved', []);
 
         return parent::getIsApproved();
     }
@@ -315,7 +315,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getIsIntegrated()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsIntegrated', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsIntegrated', []);
 
         return parent::getIsIntegrated();
     }
@@ -326,7 +326,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getIsRefused()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsRefused', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsRefused', []);
 
         return parent::getIsRefused();
     }
@@ -337,7 +337,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getIsCanceled()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsCanceled', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsCanceled', []);
 
         return parent::getIsCanceled();
     }
@@ -348,7 +348,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getIsChecking()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsChecking', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsChecking', []);
 
         return parent::getIsChecking();
     }
@@ -359,7 +359,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getIsAborted()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsAborted', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsAborted', []);
 
         return parent::getIsAborted();
     }
@@ -370,7 +370,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getIsPending()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsPending', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsPending', []);
 
         return parent::getIsPending();
     }
@@ -381,7 +381,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getLastChange()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLastChange', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLastChange', []);
 
         return parent::getLastChange();
     }
@@ -392,7 +392,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getTimestamp()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', []);
 
         return parent::getTimestamp();
     }
@@ -403,7 +403,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getNotes()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNotes', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNotes', []);
 
         return parent::getNotes();
     }
@@ -414,7 +414,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getBank()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBank', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBank', []);
 
         return parent::getBank();
     }
@@ -425,7 +425,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getEmployee()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmployee', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmployee', []);
 
         return parent::getEmployee();
     }
@@ -436,7 +436,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getCustomer()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCustomer', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCustomer', []);
 
         return parent::getCustomer();
     }
@@ -447,7 +447,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getCompany()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompany', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompany', []);
 
         return parent::getCompany();
     }
@@ -458,7 +458,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getLogs()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLogs', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLogs', []);
 
         return parent::getLogs();
     }
@@ -469,7 +469,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getUser()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
 
         return parent::getUser();
     }
@@ -480,7 +480,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -491,7 +491,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setNumber($number)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNumber', array($number));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNumber', [$number]);
 
         return parent::setNumber($number);
     }
@@ -502,7 +502,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setValue($value)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setValue', array($value));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setValue', [$value]);
 
         return parent::setValue($value);
     }
@@ -513,7 +513,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setParcelAmount($parcelAmount)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParcelAmount', array($parcelAmount));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParcelAmount', [$parcelAmount]);
 
         return parent::setParcelAmount($parcelAmount);
     }
@@ -524,7 +524,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setParcelValue($parcelValue)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParcelValue', array($parcelValue));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParcelValue', [$parcelValue]);
 
         return parent::setParcelValue($parcelValue);
     }
@@ -535,7 +535,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setDate($date)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDate', array($date));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDate', [$date]);
 
         return parent::setDate($date);
     }
@@ -546,7 +546,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setBaseDate($baseDate)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBaseDate', array($baseDate));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBaseDate', [$baseDate]);
 
         return parent::setBaseDate($baseDate);
     }
@@ -557,7 +557,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setStartDate($startDate)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStartDate', array($startDate));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStartDate', [$startDate]);
 
         return parent::setStartDate($startDate);
     }
@@ -568,7 +568,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setEndDate($endDate)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEndDate', array($endDate));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEndDate', [$endDate]);
 
         return parent::setEndDate($endDate);
     }
@@ -579,7 +579,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setCommission($commission)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCommission', array($commission));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCommission', [$commission]);
 
         return parent::setCommission($commission);
     }
@@ -590,7 +590,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setIsActive($isActive)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', array($isActive));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
 
         return parent::setIsActive($isActive);
     }
@@ -601,7 +601,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setIsApproved($isApproved)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsApproved', array($isApproved));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsApproved', [$isApproved]);
 
         return parent::setIsApproved($isApproved);
     }
@@ -612,7 +612,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setIsIntegrated($isIntegrated)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsIntegrated', array($isIntegrated));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsIntegrated', [$isIntegrated]);
 
         return parent::setIsIntegrated($isIntegrated);
     }
@@ -623,7 +623,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setIsRefused($isRefused)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsRefused', array($isRefused));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsRefused', [$isRefused]);
 
         return parent::setIsRefused($isRefused);
     }
@@ -634,7 +634,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setIsCanceled($isCanceled)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsCanceled', array($isCanceled));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsCanceled', [$isCanceled]);
 
         return parent::setIsCanceled($isCanceled);
     }
@@ -645,7 +645,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setIsChecking($isChecking)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsChecking', array($isChecking));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsChecking', [$isChecking]);
 
         return parent::setIsChecking($isChecking);
     }
@@ -656,7 +656,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setIsAborted($isAborted)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsAborted', array($isAborted));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsAborted', [$isAborted]);
 
         return parent::setIsAborted($isAborted);
     }
@@ -667,7 +667,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setIsPending($isPending)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsPending', array($isPending));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsPending', [$isPending]);
 
         return parent::setIsPending($isPending);
     }
@@ -678,7 +678,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setLastChange($lastChange)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLastChange', array($lastChange));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLastChange', [$lastChange]);
 
         return parent::setLastChange($lastChange);
     }
@@ -689,7 +689,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setTimestamp($timestamp)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', array($timestamp));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', [$timestamp]);
 
         return parent::setTimestamp($timestamp);
     }
@@ -700,7 +700,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setNotes($notes)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNotes', array($notes));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNotes', [$notes]);
 
         return parent::setNotes($notes);
     }
@@ -711,7 +711,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setBank(\DtlBank\Entity\Bank $bank)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBank', array($bank));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBank', [$bank]);
 
         return parent::setBank($bank);
     }
@@ -722,7 +722,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setEmployee(\DtlEmployee\Entity\Employee $employee)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmployee', array($employee));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmployee', [$employee]);
 
         return parent::setEmployee($employee);
     }
@@ -733,7 +733,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setCustomer(\DtlCustomer\Entity\Customer $customer)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCustomer', array($customer));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCustomer', [$customer]);
 
         return parent::setCustomer($customer);
     }
@@ -744,7 +744,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setCompany(\DtlCompany\Entity\Company $company)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompany', array($company));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompany', [$company]);
 
         return parent::setCompany($company);
     }
@@ -755,7 +755,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setLogs(\Doctrine\Common\Collections\ArrayCollection $logs)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLogs', array($logs));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLogs', [$logs]);
 
         return parent::setLogs($logs);
     }
@@ -766,7 +766,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function addLog($log)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addLog', array($log));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addLog', [$log]);
 
         return parent::addLog($log);
     }
@@ -777,7 +777,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setUser(\DtlUser\Entity\User $user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', array($user));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
         return parent::setUser($user);
     }
@@ -788,7 +788,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getReports()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReports', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReports', []);
 
         return parent::getReports();
     }
@@ -799,7 +799,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function addReport($report)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addReport', array($report));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addReport', [$report]);
 
         return parent::addReport($report);
     }
@@ -810,7 +810,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setReports($reports)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setReports', array($reports));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setReports', [$reports]);
 
         return parent::setReports($reports);
     }
@@ -821,7 +821,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function getFiles()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFiles', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFiles', []);
 
         return parent::getFiles();
     }
@@ -832,7 +832,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function addFile($file)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addFile', array($file));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addFile', [$file]);
 
         return parent::addFile($file);
     }
@@ -843,7 +843,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function removeFile($file)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeFile', array($file));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeFile', [$file]);
 
         return parent::removeFile($file);
     }
@@ -854,7 +854,7 @@ class Proposal extends \DtlProposal\Entity\Proposal implements \Doctrine\ORM\Pro
     public function setFiles($files)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFiles', array($files));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFiles', [$files]);
 
         return parent::setFiles($files);
     }

@@ -36,7 +36,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'code', 'name', 'url', 'tax', 'returnValue', 'direct');
+            return ['__isInitialized__', 'id', 'code', 'name', 'url', 'tax', 'returnValue', 'direct'];
         }
 
-        return array('__isInitialized__', 'id', 'code', 'name', 'url', 'tax', 'returnValue', 'direct');
+        return ['__isInitialized__', 'id', 'code', 'name', 'url', 'tax', 'returnValue', 'direct'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function getCode()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCode', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCode', []);
 
         return parent::getCode();
     }
@@ -205,7 +205,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }
@@ -216,7 +216,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function getUrl()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUrl', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUrl', []);
 
         return parent::getUrl();
     }
@@ -227,7 +227,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function getTax()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTax', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTax', []);
 
         return parent::getTax();
     }
@@ -238,7 +238,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function getReturnValue()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReturnValue', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReturnValue', []);
 
         return parent::getReturnValue();
     }
@@ -249,7 +249,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function getDirect()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDirect', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDirect', []);
 
         return parent::getDirect();
     }
@@ -260,7 +260,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -271,7 +271,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function setCode($code)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCode', array($code));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCode', [$code]);
 
         return parent::setCode($code);
     }
@@ -282,7 +282,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function setName($name)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
         return parent::setName($name);
     }
@@ -293,7 +293,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function setUrl($url)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUrl', array($url));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUrl', [$url]);
 
         return parent::setUrl($url);
     }
@@ -304,7 +304,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function setTax($tax)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTax', array($tax));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTax', [$tax]);
 
         return parent::setTax($tax);
     }
@@ -315,7 +315,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function setReturnValue($returnValue)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setReturnValue', array($returnValue));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setReturnValue', [$returnValue]);
 
         return parent::setReturnValue($returnValue);
     }
@@ -326,7 +326,7 @@ class Bank extends \DtlBank\Entity\Bank implements \Doctrine\ORM\Proxy\Proxy
     public function setDirect($direct)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDirect', array($direct));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDirect', [$direct]);
 
         return parent::setDirect($direct);
     }

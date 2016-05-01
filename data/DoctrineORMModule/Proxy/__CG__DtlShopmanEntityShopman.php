@@ -36,7 +36,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'timestamp', 'variantComission', 'fixedComission', 'isActive', 'user', 'person', 'sellers', 'products');
+            return ['__isInitialized__', 'id', 'timestamp', 'variantComission', 'fixedComission', 'isActive', 'user', 'person', 'sellers', 'products'];
         }
 
-        return array('__isInitialized__', 'id', 'timestamp', 'variantComission', 'fixedComission', 'isActive', 'user', 'person', 'sellers', 'products');
+        return ['__isInitialized__', 'id', 'timestamp', 'variantComission', 'fixedComission', 'isActive', 'user', 'person', 'sellers', 'products'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getTimestamp()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', []);
 
         return parent::getTimestamp();
     }
@@ -205,7 +205,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getVariantComission()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVariantComission', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVariantComission', []);
 
         return parent::getVariantComission();
     }
@@ -216,7 +216,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getFixedComission()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFixedComission', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFixedComission', []);
 
         return parent::getFixedComission();
     }
@@ -227,7 +227,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getIsActive()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
 
         return parent::getIsActive();
     }
@@ -238,7 +238,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getUser()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
 
         return parent::getUser();
     }
@@ -249,7 +249,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getPerson()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPerson', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPerson', []);
 
         return parent::getPerson();
     }
@@ -260,7 +260,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getSellers()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSellers', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSellers', []);
 
         return parent::getSellers();
     }
@@ -271,7 +271,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getProducts()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProducts', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProducts', []);
 
         return parent::getProducts();
     }
@@ -282,7 +282,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -293,7 +293,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setTimestamp($timestamp)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', array($timestamp));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', [$timestamp]);
 
         return parent::setTimestamp($timestamp);
     }
@@ -304,7 +304,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setVariantComission($variantComission)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setVariantComission', array($variantComission));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setVariantComission', [$variantComission]);
 
         return parent::setVariantComission($variantComission);
     }
@@ -315,7 +315,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setFixedComission($fixedComission)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFixedComission', array($fixedComission));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFixedComission', [$fixedComission]);
 
         return parent::setFixedComission($fixedComission);
     }
@@ -326,7 +326,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setIsActive($isActive)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', array($isActive));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
 
         return parent::setIsActive($isActive);
     }
@@ -337,7 +337,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setUser(\DtlUser\Entity\User $user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', array($user));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
         return parent::setUser($user);
     }
@@ -348,7 +348,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setPerson(\DtlPerson\Entity\Person $person)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPerson', array($person));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPerson', [$person]);
 
         return parent::setPerson($person);
     }
@@ -359,7 +359,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setSellers(\Doctrine\Common\Collections\ArrayCollection $sellers)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSellers', array($sellers));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSellers', [$sellers]);
 
         return parent::setSellers($sellers);
     }
@@ -370,7 +370,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function addSeller(\DtlSeller\Entity\Seller $seller)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addSeller', array($seller));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addSeller', [$seller]);
 
         return parent::addSeller($seller);
     }
@@ -381,7 +381,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function removeSeller(\DtlSeller\Entity\Seller $seller)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeSeller', array($seller));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeSeller', [$seller]);
 
         return parent::removeSeller($seller);
     }
@@ -392,7 +392,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function setProducts(\Doctrine\Common\Collections\ArrayCollection $products)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProducts', array($products));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProducts', [$products]);
 
         return parent::setProducts($products);
     }
@@ -403,7 +403,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function addProduct(\DtlProduct\Entity\Product $product)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addProduct', array($product));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addProduct', [$product]);
 
         return parent::addProduct($product);
     }
@@ -414,7 +414,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function removeProduct(\DtlProduct\Entity\Product $product)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeProduct', array($product));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeProduct', [$product]);
 
         return parent::removeProduct($product);
     }
@@ -425,7 +425,7 @@ class Shopman extends \DtlShopman\Entity\Shopman implements \Doctrine\ORM\Proxy\
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }

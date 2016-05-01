@@ -36,7 +36,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'name', 'number', 'complement', 'quarter', 'postalCode', 'cityName', 'stateName', 'countryName', 'city', 'state', 'country');
+            return ['__isInitialized__', 'id', 'name', 'number', 'complement', 'quarter', 'postalCode', 'cityName', 'stateName', 'countryName', 'city', 'state', 'country'];
         }
 
-        return array('__isInitialized__', 'id', 'name', 'number', 'complement', 'quarter', 'postalCode', 'cityName', 'stateName', 'countryName', 'city', 'state', 'country');
+        return ['__isInitialized__', 'id', 'name', 'number', 'complement', 'quarter', 'postalCode', 'cityName', 'stateName', 'countryName', 'city', 'state', 'country'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }
@@ -205,7 +205,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getNumber()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNumber', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNumber', []);
 
         return parent::getNumber();
     }
@@ -216,7 +216,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getComplement()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getComplement', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getComplement', []);
 
         return parent::getComplement();
     }
@@ -227,7 +227,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getQuarter()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getQuarter', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getQuarter', []);
 
         return parent::getQuarter();
     }
@@ -238,7 +238,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getPostalCode()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPostalCode', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPostalCode', []);
 
         return parent::getPostalCode();
     }
@@ -249,7 +249,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getCityName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCityName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCityName', []);
 
         return parent::getCityName();
     }
@@ -260,7 +260,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getStateName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStateName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStateName', []);
 
         return parent::getStateName();
     }
@@ -271,7 +271,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getCountryName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCountryName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCountryName', []);
 
         return parent::getCountryName();
     }
@@ -282,7 +282,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getCity()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCity', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCity', []);
 
         return parent::getCity();
     }
@@ -293,7 +293,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getState()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getState', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getState', []);
 
         return parent::getState();
     }
@@ -304,7 +304,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function getCountry()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCountry', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCountry', []);
 
         return parent::getCountry();
     }
@@ -315,7 +315,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -326,7 +326,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setName($name)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
         return parent::setName($name);
     }
@@ -337,7 +337,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setNumber($number)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNumber', array($number));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNumber', [$number]);
 
         return parent::setNumber($number);
     }
@@ -348,7 +348,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setComplement($complement)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setComplement', array($complement));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setComplement', [$complement]);
 
         return parent::setComplement($complement);
     }
@@ -359,7 +359,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setQuarter($quarter)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setQuarter', array($quarter));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setQuarter', [$quarter]);
 
         return parent::setQuarter($quarter);
     }
@@ -370,7 +370,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setPostalCode($postalCode)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPostalCode', array($postalCode));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPostalCode', [$postalCode]);
 
         return parent::setPostalCode($postalCode);
     }
@@ -381,7 +381,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setCityName($cityName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCityName', array($cityName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCityName', [$cityName]);
 
         return parent::setCityName($cityName);
     }
@@ -392,7 +392,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setStateName($stateName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStateName', array($stateName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStateName', [$stateName]);
 
         return parent::setStateName($stateName);
     }
@@ -403,7 +403,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setCountryName($countryName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCountryName', array($countryName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCountryName', [$countryName]);
 
         return parent::setCountryName($countryName);
     }
@@ -414,7 +414,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setCity(\DtlLocation\Entity\City $city)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCity', array($city));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCity', [$city]);
 
         return parent::setCity($city);
     }
@@ -425,7 +425,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setState(\DtlLocation\Entity\State $state)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setState', array($state));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setState', [$state]);
 
         return parent::setState($state);
     }
@@ -436,7 +436,7 @@ class Address extends \DtlPerson\Entity\Address implements \Doctrine\ORM\Proxy\P
     public function setCountry(\DtlLocation\Entity\Country $country)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCountry', array($country));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCountry', [$country]);
 
         return parent::setCountry($country);
     }

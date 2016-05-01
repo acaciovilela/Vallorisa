@@ -36,7 +36,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'name', 'variantCommission', 'fixedCommission', 'isActive', 'category', 'user');
+            return ['__isInitialized__', 'id', 'name', 'variantCommission', 'fixedCommission', 'isActive', 'category', 'user'];
         }
 
-        return array('__isInitialized__', 'id', 'name', 'variantCommission', 'fixedCommission', 'isActive', 'category', 'user');
+        return ['__isInitialized__', 'id', 'name', 'variantCommission', 'fixedCommission', 'isActive', 'category', 'user'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }
@@ -205,7 +205,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function getVariantCommission()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVariantCommission', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVariantCommission', []);
 
         return parent::getVariantCommission();
     }
@@ -216,7 +216,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function getFixedCommission()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFixedCommission', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFixedCommission', []);
 
         return parent::getFixedCommission();
     }
@@ -227,7 +227,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function getIsActive()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
 
         return parent::getIsActive();
     }
@@ -238,7 +238,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function getCategory()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategory', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCategory', []);
 
         return parent::getCategory();
     }
@@ -249,7 +249,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -260,7 +260,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function setName($name)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
         return parent::setName($name);
     }
@@ -271,7 +271,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function setVariantCommission($variantCommission)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setVariantCommission', array($variantCommission));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setVariantCommission', [$variantCommission]);
 
         return parent::setVariantCommission($variantCommission);
     }
@@ -282,7 +282,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function setFixedCommission($fixedCommission)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFixedCommission', array($fixedCommission));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFixedCommission', [$fixedCommission]);
 
         return parent::setFixedCommission($fixedCommission);
     }
@@ -293,7 +293,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function setIsActive($isActive)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', array($isActive));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
 
         return parent::setIsActive($isActive);
     }
@@ -304,7 +304,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function setCategory(\DtlProduct\Entity\Category $category)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCategory', array($category));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCategory', [$category]);
 
         return parent::setCategory($category);
     }
@@ -315,7 +315,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function getUser()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
 
         return parent::getUser();
     }
@@ -326,7 +326,7 @@ class Product extends \DtlProduct\Entity\Product implements \Doctrine\ORM\Proxy\
     public function setUser(\DtlUser\Entity\User $user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', array($user));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
         return parent::setUser($user);
     }

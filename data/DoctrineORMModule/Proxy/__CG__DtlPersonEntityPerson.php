@@ -36,7 +36,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'name', 'type', 'date', 'isActive', 'address', 'contact', 'individual', 'legal');
+            return ['__isInitialized__', 'id', 'name', 'type', 'date', 'isActive', 'address', 'contact', 'individual', 'legal'];
         }
 
-        return array('__isInitialized__', 'id', 'name', 'type', 'date', 'isActive', 'address', 'contact', 'individual', 'legal');
+        return ['__isInitialized__', 'id', 'name', 'type', 'date', 'isActive', 'address', 'contact', 'individual', 'legal'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }
@@ -205,7 +205,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getType()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getType', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getType', []);
 
         return parent::getType();
     }
@@ -216,7 +216,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDate', []);
 
         return parent::getDate();
     }
@@ -227,7 +227,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getIsActive()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
 
         return parent::getIsActive();
     }
@@ -238,7 +238,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getAddress()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', []);
 
         return parent::getAddress();
     }
@@ -249,7 +249,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getContact()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContact', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContact', []);
 
         return parent::getContact();
     }
@@ -260,7 +260,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getIndividual()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIndividual', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIndividual', []);
 
         return parent::getIndividual();
     }
@@ -271,7 +271,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getLegal()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLegal', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLegal', []);
 
         return parent::getLegal();
     }
@@ -282,7 +282,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -293,7 +293,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setName($name)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
         return parent::setName($name);
     }
@@ -304,7 +304,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setType($type)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setType', array($type));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setType', [$type]);
 
         return parent::setType($type);
     }
@@ -315,7 +315,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setDate($date)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDate', array($date));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDate', [$date]);
 
         return parent::setDate($date);
     }
@@ -326,7 +326,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setIsActive($isActive)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', array($isActive));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
 
         return parent::setIsActive($isActive);
     }
@@ -337,7 +337,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setAddress($address)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', array($address));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', [$address]);
 
         return parent::setAddress($address);
     }
@@ -348,7 +348,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setContact($contact)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContact', array($contact));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContact', [$contact]);
 
         return parent::setContact($contact);
     }
@@ -359,7 +359,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setIndividual($individual)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIndividual', array($individual));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIndividual', [$individual]);
 
         return parent::setIndividual($individual);
     }
@@ -370,7 +370,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function setLegal($legal)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLegal', array($legal));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLegal', [$legal]);
 
         return parent::setLegal($legal);
     }

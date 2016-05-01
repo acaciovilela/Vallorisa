@@ -36,7 +36,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'cnpj', 'subscription', 'representativeName', 'representativePhone', 'representativeRg');
+            return ['__isInitialized__', 'id', 'cnpj', 'subscription', 'representativeName', 'representativePhone', 'representativeRg'];
         }
 
-        return array('__isInitialized__', 'id', 'cnpj', 'subscription', 'representativeName', 'representativePhone', 'representativeRg');
+        return ['__isInitialized__', 'id', 'cnpj', 'subscription', 'representativeName', 'representativePhone', 'representativeRg'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function getCnpj()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCnpj', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCnpj', []);
 
         return parent::getCnpj();
     }
@@ -205,7 +205,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function getSubscription()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSubscription', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSubscription', []);
 
         return parent::getSubscription();
     }
@@ -216,7 +216,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function getRepresentativeName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativeName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativeName', []);
 
         return parent::getRepresentativeName();
     }
@@ -227,7 +227,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function getRepresentativePhone()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativePhone', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativePhone', []);
 
         return parent::getRepresentativePhone();
     }
@@ -238,7 +238,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -249,7 +249,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function setCnpj($cnpj)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCnpj', array($cnpj));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCnpj', [$cnpj]);
 
         return parent::setCnpj($cnpj);
     }
@@ -260,7 +260,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function setSubscription($subscription)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSubscription', array($subscription));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSubscription', [$subscription]);
 
         return parent::setSubscription($subscription);
     }
@@ -271,7 +271,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function setRepresentativeName($representativeName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativeName', array($representativeName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativeName', [$representativeName]);
 
         return parent::setRepresentativeName($representativeName);
     }
@@ -282,7 +282,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function setRepresentativePhone($representativePhone)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativePhone', array($representativePhone));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativePhone', [$representativePhone]);
 
         return parent::setRepresentativePhone($representativePhone);
     }
@@ -293,7 +293,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function getRepresentativeRg()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativeRg', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativeRg', []);
 
         return parent::getRepresentativeRg();
     }
@@ -304,7 +304,7 @@ class Legal extends \DtlPerson\Entity\Legal implements \Doctrine\ORM\Proxy\Proxy
     public function setRepresentativeRg($representativeRg)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativeRg', array($representativeRg));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativeRg', [$representativeRg]);
 
         return parent::setRepresentativeRg($representativeRg);
     }

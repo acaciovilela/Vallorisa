@@ -36,7 +36,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'cpf', 'rg', 'rgDate', 'rgOrgan', 'rgUf', 'birthDay', 'birthMonth', 'birthYear', 'gender', 'father', 'mother', 'birthPlace', 'birthUf', 'nationality', 'status', 'professional', 'occupation');
+            return ['__isInitialized__', 'id', 'cpf', 'rg', 'rgDate', 'rgOrgan', 'rgUf', 'birthDay', 'birthMonth', 'birthYear', 'gender', 'father', 'mother', 'birthPlace', 'birthUf', 'nationality', 'status', 'professional', 'occupation'];
         }
 
-        return array('__isInitialized__', 'id', 'cpf', 'rg', 'rgDate', 'rgOrgan', 'rgUf', 'birthDay', 'birthMonth', 'birthYear', 'gender', 'father', 'mother', 'birthPlace', 'birthUf', 'nationality', 'status', 'professional', 'occupation');
+        return ['__isInitialized__', 'id', 'cpf', 'rg', 'rgDate', 'rgOrgan', 'rgUf', 'birthDay', 'birthMonth', 'birthYear', 'gender', 'father', 'mother', 'birthPlace', 'birthUf', 'nationality', 'status', 'professional', 'occupation'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getCpf()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCpf', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCpf', []);
 
         return parent::getCpf();
     }
@@ -205,7 +205,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getRg()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRg', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRg', []);
 
         return parent::getRg();
     }
@@ -216,7 +216,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getBirthDay()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthDay', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthDay', []);
 
         return parent::getBirthDay();
     }
@@ -227,7 +227,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getBirthMonth()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthMonth', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthMonth', []);
 
         return parent::getBirthMonth();
     }
@@ -238,7 +238,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getBirthYear()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthYear', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthYear', []);
 
         return parent::getBirthYear();
     }
@@ -249,7 +249,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getGender()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGender', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGender', []);
 
         return parent::getGender();
     }
@@ -260,7 +260,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getFather()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFather', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFather', []);
 
         return parent::getFather();
     }
@@ -271,7 +271,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getMother()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMother', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMother', []);
 
         return parent::getMother();
     }
@@ -282,7 +282,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getBirthPlace()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthPlace', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthPlace', []);
 
         return parent::getBirthPlace();
     }
@@ -293,7 +293,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getBirthUf()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthUf', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthUf', []);
 
         return parent::getBirthUf();
     }
@@ -304,7 +304,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getNationality()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNationality', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNationality', []);
 
         return parent::getNationality();
     }
@@ -315,7 +315,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getStatus()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatus', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatus', []);
 
         return parent::getStatus();
     }
@@ -326,7 +326,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getProfessional()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProfessional', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProfessional', []);
 
         return parent::getProfessional();
     }
@@ -337,7 +337,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -348,7 +348,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setCpf($cpf)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCpf', array($cpf));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCpf', [$cpf]);
 
         return parent::setCpf($cpf);
     }
@@ -359,7 +359,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setRg($rg)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRg', array($rg));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRg', [$rg]);
 
         return parent::setRg($rg);
     }
@@ -370,7 +370,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setBirthDay($birthDay)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthDay', array($birthDay));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthDay', [$birthDay]);
 
         return parent::setBirthDay($birthDay);
     }
@@ -381,7 +381,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setBirthMonth($birthMonth)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthMonth', array($birthMonth));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthMonth', [$birthMonth]);
 
         return parent::setBirthMonth($birthMonth);
     }
@@ -392,7 +392,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setBirthYear($birthYear)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthYear', array($birthYear));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthYear', [$birthYear]);
 
         return parent::setBirthYear($birthYear);
     }
@@ -403,7 +403,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setGender($gender)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setGender', array($gender));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setGender', [$gender]);
 
         return parent::setGender($gender);
     }
@@ -414,7 +414,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setFather($father)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFather', array($father));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFather', [$father]);
 
         return parent::setFather($father);
     }
@@ -425,7 +425,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setMother($mother)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMother', array($mother));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMother', [$mother]);
 
         return parent::setMother($mother);
     }
@@ -436,7 +436,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setBirthPlace($birthPlace)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthPlace', array($birthPlace));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthPlace', [$birthPlace]);
 
         return parent::setBirthPlace($birthPlace);
     }
@@ -447,7 +447,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setBirthUf($birthUf)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthUf', array($birthUf));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthUf', [$birthUf]);
 
         return parent::setBirthUf($birthUf);
     }
@@ -458,7 +458,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setNationality($nationality)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNationality', array($nationality));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNationality', [$nationality]);
 
         return parent::setNationality($nationality);
     }
@@ -469,7 +469,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setStatus($status)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStatus', array($status));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStatus', [$status]);
 
         return parent::setStatus($status);
     }
@@ -480,7 +480,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setProfessional($professional)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProfessional', array($professional));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProfessional', [$professional]);
 
         return parent::setProfessional($professional);
     }
@@ -491,7 +491,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getOccupation()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOccupation', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOccupation', []);
 
         return parent::getOccupation();
     }
@@ -502,7 +502,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setOccupation(\DtlOccupation\Entity\Occupation $occupation)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOccupation', array($occupation));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOccupation', [$occupation]);
 
         return parent::setOccupation($occupation);
     }
@@ -513,7 +513,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getRgDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgDate', []);
 
         return parent::getRgDate();
     }
@@ -524,7 +524,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getRgOrgan()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgOrgan', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgOrgan', []);
 
         return parent::getRgOrgan();
     }
@@ -535,7 +535,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function getRgUf()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgUf', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgUf', []);
 
         return parent::getRgUf();
     }
@@ -546,7 +546,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setRgDate($rgDate)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgDate', array($rgDate));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgDate', [$rgDate]);
 
         return parent::setRgDate($rgDate);
     }
@@ -557,7 +557,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setRgOrgan($rgOrgan)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgOrgan', array($rgOrgan));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgOrgan', [$rgOrgan]);
 
         return parent::setRgOrgan($rgOrgan);
     }
@@ -568,7 +568,7 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function setRgUf($rgUf)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgUf', array($rgUf));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgUf', [$rgUf]);
 
         return parent::setRgUf($rgUf);
     }

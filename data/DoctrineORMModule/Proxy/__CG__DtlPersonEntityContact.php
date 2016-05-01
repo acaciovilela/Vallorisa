@@ -36,7 +36,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'email', 'url', 'phone', 'cell', 'fax');
+            return ['__isInitialized__', 'id', 'email', 'url', 'phone', 'cell', 'fax'];
         }
 
-        return array('__isInitialized__', 'id', 'email', 'url', 'phone', 'cell', 'fax');
+        return ['__isInitialized__', 'id', 'email', 'url', 'phone', 'cell', 'fax'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function getEmail()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmail', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmail', []);
 
         return parent::getEmail();
     }
@@ -205,7 +205,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function getUrl()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUrl', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUrl', []);
 
         return parent::getUrl();
     }
@@ -216,7 +216,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function getPhone()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPhone', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPhone', []);
 
         return parent::getPhone();
     }
@@ -227,7 +227,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function getCell()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCell', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCell', []);
 
         return parent::getCell();
     }
@@ -238,7 +238,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function getFax()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFax', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFax', []);
 
         return parent::getFax();
     }
@@ -249,7 +249,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -260,7 +260,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function setEmail($email)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmail', array($email));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmail', [$email]);
 
         return parent::setEmail($email);
     }
@@ -271,7 +271,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function setUrl($url)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUrl', array($url));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUrl', [$url]);
 
         return parent::setUrl($url);
     }
@@ -282,7 +282,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function setPhone($phone)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPhone', array($phone));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPhone', [$phone]);
 
         return parent::setPhone($phone);
     }
@@ -293,7 +293,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function setCell($cell)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCell', array($cell));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCell', [$cell]);
 
         return parent::setCell($cell);
     }
@@ -304,7 +304,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function setFax($fax)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFax', array($fax));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFax', [$fax]);
 
         return parent::setFax($fax);
     }

@@ -36,7 +36,7 @@ class EmployeeStatus extends \DtlEmployeeStatus\Entity\EmployeeStatus implements
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class EmployeeStatus extends \DtlEmployeeStatus\Entity\EmployeeStatus implements
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'name');
+            return ['__isInitialized__', 'id', 'name'];
         }
 
-        return array('__isInitialized__', 'id', 'name');
+        return ['__isInitialized__', 'id', 'name'];
     }
 
     /**
@@ -97,7 +97,7 @@ class EmployeeStatus extends \DtlEmployeeStatus\Entity\EmployeeStatus implements
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class EmployeeStatus extends \DtlEmployeeStatus\Entity\EmployeeStatus implements
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class EmployeeStatus extends \DtlEmployeeStatus\Entity\EmployeeStatus implements
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class EmployeeStatus extends \DtlEmployeeStatus\Entity\EmployeeStatus implements
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }
@@ -205,7 +205,7 @@ class EmployeeStatus extends \DtlEmployeeStatus\Entity\EmployeeStatus implements
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -216,7 +216,7 @@ class EmployeeStatus extends \DtlEmployeeStatus\Entity\EmployeeStatus implements
     public function setName($name)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
         return parent::setName($name);
     }

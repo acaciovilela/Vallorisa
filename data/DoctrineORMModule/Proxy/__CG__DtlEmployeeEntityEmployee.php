@@ -36,7 +36,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'admissionDate', 'demissionDate', 'workTime', 'ctps', 'ctpsSerie', 'pis', 'picture', 'salary', 'bonus', 'mark', 'timestamp', 'isActive', 'status', 'office', 'person', 'user', 'supplier', 'commissions', 'payments', 'company');
+            return ['__isInitialized__', 'id', 'admissionDate', 'demissionDate', 'workTime', 'ctps', 'ctpsSerie', 'pis', 'picture', 'salary', 'bonus', 'mark', 'timestamp', 'isActive', 'status', 'office', 'person', 'user', 'supplier', 'commissions', 'payments', 'company'];
         }
 
-        return array('__isInitialized__', 'id', 'admissionDate', 'demissionDate', 'workTime', 'ctps', 'ctpsSerie', 'pis', 'picture', 'salary', 'bonus', 'mark', 'timestamp', 'isActive', 'status', 'office', 'person', 'user', 'supplier', 'commissions', 'payments', 'company');
+        return ['__isInitialized__', 'id', 'admissionDate', 'demissionDate', 'workTime', 'ctps', 'ctpsSerie', 'pis', 'picture', 'salary', 'bonus', 'mark', 'timestamp', 'isActive', 'status', 'office', 'person', 'user', 'supplier', 'commissions', 'payments', 'company'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getAdmissionDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAdmissionDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAdmissionDate', []);
 
         return parent::getAdmissionDate();
     }
@@ -205,7 +205,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getDemissionDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDemissionDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDemissionDate', []);
 
         return parent::getDemissionDate();
     }
@@ -216,7 +216,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getWorkTime()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getWorkTime', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getWorkTime', []);
 
         return parent::getWorkTime();
     }
@@ -227,7 +227,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getCtps()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCtps', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCtps', []);
 
         return parent::getCtps();
     }
@@ -238,7 +238,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getCtpsSerie()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCtpsSerie', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCtpsSerie', []);
 
         return parent::getCtpsSerie();
     }
@@ -249,7 +249,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getPis()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPis', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPis', []);
 
         return parent::getPis();
     }
@@ -260,7 +260,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getPicture()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPicture', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPicture', []);
 
         return parent::getPicture();
     }
@@ -271,7 +271,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getSalary()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSalary', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSalary', []);
 
         return parent::getSalary();
     }
@@ -282,7 +282,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getBonus()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBonus', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBonus', []);
 
         return parent::getBonus();
     }
@@ -293,7 +293,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getMark()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMark', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMark', []);
 
         return parent::getMark();
     }
@@ -304,7 +304,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getTimestamp()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', []);
 
         return parent::getTimestamp();
     }
@@ -315,7 +315,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getIsActive()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
 
         return parent::getIsActive();
     }
@@ -326,7 +326,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getCompany()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompany', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompany', []);
 
         return parent::getCompany();
     }
@@ -337,7 +337,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getStatus()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatus', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatus', []);
 
         return parent::getStatus();
     }
@@ -348,7 +348,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getOffice()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOffice', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOffice', []);
 
         return parent::getOffice();
     }
@@ -359,7 +359,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getPerson()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPerson', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPerson', []);
 
         return parent::getPerson();
     }
@@ -370,7 +370,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getUser()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
 
         return parent::getUser();
     }
@@ -381,7 +381,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getSupplier()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSupplier', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSupplier', []);
 
         return parent::getSupplier();
     }
@@ -392,7 +392,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -403,7 +403,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setAdmissionDate($admissionDate)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAdmissionDate', array($admissionDate));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAdmissionDate', [$admissionDate]);
 
         return parent::setAdmissionDate($admissionDate);
     }
@@ -414,7 +414,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setDemissionDate($demissionDate)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDemissionDate', array($demissionDate));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDemissionDate', [$demissionDate]);
 
         return parent::setDemissionDate($demissionDate);
     }
@@ -425,7 +425,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setWorkTime($workTime)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setWorkTime', array($workTime));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setWorkTime', [$workTime]);
 
         return parent::setWorkTime($workTime);
     }
@@ -436,7 +436,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setCtps($ctps)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCtps', array($ctps));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCtps', [$ctps]);
 
         return parent::setCtps($ctps);
     }
@@ -447,7 +447,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setCtpsSerie($ctpsSerie)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCtpsSerie', array($ctpsSerie));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCtpsSerie', [$ctpsSerie]);
 
         return parent::setCtpsSerie($ctpsSerie);
     }
@@ -458,7 +458,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setPis($pis)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPis', array($pis));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPis', [$pis]);
 
         return parent::setPis($pis);
     }
@@ -469,7 +469,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setPicture($picture)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPicture', array($picture));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPicture', [$picture]);
 
         return parent::setPicture($picture);
     }
@@ -480,7 +480,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setSalary($salary)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSalary', array($salary));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSalary', [$salary]);
 
         return parent::setSalary($salary);
     }
@@ -491,7 +491,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setBonus($bonus)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBonus', array($bonus));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBonus', [$bonus]);
 
         return parent::setBonus($bonus);
     }
@@ -502,7 +502,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setMark($mark)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMark', array($mark));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMark', [$mark]);
 
         return parent::setMark($mark);
     }
@@ -513,7 +513,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setTimestamp($timestamp)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', array($timestamp));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', [$timestamp]);
 
         return parent::setTimestamp($timestamp);
     }
@@ -524,7 +524,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setIsActive($isActive)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', array($isActive));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
 
         return parent::setIsActive($isActive);
     }
@@ -535,7 +535,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setCompany(\DtlCompany\Entity\Company $company)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompany', array($company));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompany', [$company]);
 
         return parent::setCompany($company);
     }
@@ -546,7 +546,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setStatus(\DtlEmployeeStatus\Entity\EmployeeStatus $status)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStatus', array($status));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStatus', [$status]);
 
         return parent::setStatus($status);
     }
@@ -557,7 +557,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setOffice(\DtlOffice\Entity\Office $office)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOffice', array($office));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOffice', [$office]);
 
         return parent::setOffice($office);
     }
@@ -568,7 +568,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setPerson(\DtlPerson\Entity\Person $person)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPerson', array($person));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPerson', [$person]);
 
         return parent::setPerson($person);
     }
@@ -579,7 +579,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setUser(\DtlUser\Entity\User $user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', array($user));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
         return parent::setUser($user);
     }
@@ -590,7 +590,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setSupplier(\DtlSupplier\Entity\Supplier $supplier)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSupplier', array($supplier));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSupplier', [$supplier]);
 
         return parent::setSupplier($supplier);
     }
@@ -601,7 +601,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getCommissions()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCommissions', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCommissions', []);
 
         return parent::getCommissions();
     }
@@ -612,7 +612,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function addCommissions(\Doctrine\Common\Collections\Collection $commissions)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addCommissions', array($commissions));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addCommissions', [$commissions]);
 
         return parent::addCommissions($commissions);
     }
@@ -623,7 +623,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function removeCommissions(\Doctrine\Common\Collections\Collection $commissions)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeCommissions', array($commissions));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeCommissions', [$commissions]);
 
         return parent::removeCommissions($commissions);
     }
@@ -634,7 +634,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setCommissions($commissions)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCommissions', array($commissions));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCommissions', [$commissions]);
 
         return parent::setCommissions($commissions);
     }
@@ -645,7 +645,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getPayments()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPayments', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPayments', []);
 
         return parent::getPayments();
     }
@@ -656,7 +656,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function setPayments($payments)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPayments', array($payments));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPayments', [$payments]);
 
         return parent::setPayments($payments);
     }
@@ -667,7 +667,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function addPayments(\Doctrine\Common\Collections\Collection $payments)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addPayments', array($payments));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addPayments', [$payments]);
 
         return parent::addPayments($payments);
     }
@@ -678,7 +678,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function removePayments(\Doctrine\Common\Collections\Collection $payments)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removePayments', array($payments));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removePayments', [$payments]);
 
         return parent::removePayments($payments);
     }
@@ -689,7 +689,7 @@ class Employee extends \DtlEmployee\Entity\Employee implements \Doctrine\ORM\Pro
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }

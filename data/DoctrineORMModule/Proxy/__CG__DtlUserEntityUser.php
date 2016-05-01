@@ -36,7 +36,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'email', 'displayName', 'username', 'password', 'state', 'profile', 'roles', 'parent');
+            return ['__isInitialized__', 'id', 'email', 'displayName', 'username', 'password', 'state', 'profile', 'roles', 'parent'];
         }
 
-        return array('__isInitialized__', 'id', 'email', 'displayName', 'username', 'password', 'state', 'profile', 'roles', 'parent');
+        return ['__isInitialized__', 'id', 'email', 'displayName', 'username', 'password', 'state', 'profile', 'roles', 'parent'];
     }
 
     /**
@@ -97,7 +97,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function getEmail()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmail', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmail', []);
 
         return parent::getEmail();
     }
@@ -205,7 +205,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function getDisplayName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDisplayName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDisplayName', []);
 
         return parent::getDisplayName();
     }
@@ -216,7 +216,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function getUsername()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUsername', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUsername', []);
 
         return parent::getUsername();
     }
@@ -227,7 +227,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function getPassword()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPassword', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPassword', []);
 
         return parent::getPassword();
     }
@@ -238,7 +238,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function getState()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getState', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getState', []);
 
         return parent::getState();
     }
@@ -249,7 +249,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function getProfile()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProfile', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getProfile', []);
 
         return parent::getProfile();
     }
@@ -260,7 +260,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -271,7 +271,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setEmail($email)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmail', array($email));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmail', [$email]);
 
         return parent::setEmail($email);
     }
@@ -282,7 +282,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setDisplayName($displayName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDisplayName', array($displayName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDisplayName', [$displayName]);
 
         return parent::setDisplayName($displayName);
     }
@@ -293,7 +293,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setUsername($username)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUsername', array($username));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUsername', [$username]);
 
         return parent::setUsername($username);
     }
@@ -304,7 +304,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setPassword($password)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPassword', array($password));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPassword', [$password]);
 
         return parent::setPassword($password);
     }
@@ -315,7 +315,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setState($state)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setState', array($state));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setState', [$state]);
 
         return parent::setState($state);
     }
@@ -326,7 +326,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setProfile(\DtlUser\Entity\UserProfile $profile)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProfile', array($profile));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProfile', [$profile]);
 
         return parent::setProfile($profile);
     }
@@ -337,7 +337,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function getRoles()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRoles', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRoles', []);
 
         return parent::getRoles();
     }
@@ -348,7 +348,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setRoles(\Doctrine\Common\Collections\Collection $roles)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRoles', array($roles));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRoles', [$roles]);
 
         return parent::setRoles($roles);
     }
@@ -359,7 +359,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function addRole(\Rbac\Role\RoleInterface $role)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addRole', array($role));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addRole', [$role]);
 
         return parent::addRole($role);
     }
@@ -370,7 +370,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function getParent()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParent', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParent', []);
 
         return parent::getParent();
     }
@@ -381,7 +381,7 @@ class User extends \DtlUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function setParent($parent)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParent', array($parent));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParent', [$parent]);
 
         return parent::setParent($parent);
     }

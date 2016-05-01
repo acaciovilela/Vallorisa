@@ -36,7 +36,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'inDate', 'companyName', 'companyCnpj', 'officeName', 'salary', 'otherRevenue', 'notes', 'contact', 'address', 'office');
+            return ['__isInitialized__', 'id', 'inDate', 'companyName', 'companyCnpj', 'officeName', 'salary', 'otherRevenue', 'notes', 'contact', 'address', 'office'];
         }
 
-        return array('__isInitialized__', 'id', 'inDate', 'companyName', 'companyCnpj', 'officeName', 'salary', 'otherRevenue', 'notes', 'contact', 'address', 'office');
+        return ['__isInitialized__', 'id', 'inDate', 'companyName', 'companyCnpj', 'officeName', 'salary', 'otherRevenue', 'notes', 'contact', 'address', 'office'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getInDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getInDate', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getInDate', []);
 
         return parent::getInDate();
     }
@@ -205,7 +205,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getCompanyName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompanyName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompanyName', []);
 
         return parent::getCompanyName();
     }
@@ -216,7 +216,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getCompanyCnpj()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompanyCnpj', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCompanyCnpj', []);
 
         return parent::getCompanyCnpj();
     }
@@ -227,7 +227,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getOfficeName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOfficeName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOfficeName', []);
 
         return parent::getOfficeName();
     }
@@ -238,7 +238,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getSalary()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSalary', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSalary', []);
 
         return parent::getSalary();
     }
@@ -249,7 +249,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getOtherRevenue()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOtherRevenue', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOtherRevenue', []);
 
         return parent::getOtherRevenue();
     }
@@ -260,7 +260,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getNotes()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNotes', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNotes', []);
 
         return parent::getNotes();
     }
@@ -271,7 +271,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getContact()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContact', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContact', []);
 
         return parent::getContact();
     }
@@ -282,7 +282,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getAddress()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', []);
 
         return parent::getAddress();
     }
@@ -293,7 +293,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function getOffice()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOffice', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOffice', []);
 
         return parent::getOffice();
     }
@@ -304,7 +304,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -315,7 +315,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setInDate($inDate)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setInDate', array($inDate));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setInDate', [$inDate]);
 
         return parent::setInDate($inDate);
     }
@@ -326,7 +326,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setCompanyName($companyName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompanyName', array($companyName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompanyName', [$companyName]);
 
         return parent::setCompanyName($companyName);
     }
@@ -337,7 +337,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setCompanyCnpj($companyCnpj)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompanyCnpj', array($companyCnpj));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCompanyCnpj', [$companyCnpj]);
 
         return parent::setCompanyCnpj($companyCnpj);
     }
@@ -348,7 +348,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setOfficeName($officeName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOfficeName', array($officeName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOfficeName', [$officeName]);
 
         return parent::setOfficeName($officeName);
     }
@@ -359,7 +359,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setSalary($salary)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSalary', array($salary));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSalary', [$salary]);
 
         return parent::setSalary($salary);
     }
@@ -370,7 +370,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setOtherRevenue($otherRevenue)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOtherRevenue', array($otherRevenue));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOtherRevenue', [$otherRevenue]);
 
         return parent::setOtherRevenue($otherRevenue);
     }
@@ -381,7 +381,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setNotes($notes)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNotes', array($notes));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNotes', [$notes]);
 
         return parent::setNotes($notes);
     }
@@ -392,7 +392,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setContact(\DtlPerson\Entity\Contact $contact)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContact', array($contact));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContact', [$contact]);
 
         return parent::setContact($contact);
     }
@@ -403,7 +403,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setAddress(\DtlPerson\Entity\Address $address)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', array($address));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', [$address]);
 
         return parent::setAddress($address);
     }
@@ -414,7 +414,7 @@ class Professional extends \DtlPerson\Entity\Professional implements \Doctrine\O
     public function setOffice(\DtlOffice\Entity\Office $office)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOffice', array($office));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOffice', [$office]);
 
         return parent::setOffice($office);
     }

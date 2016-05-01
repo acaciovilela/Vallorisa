@@ -36,7 +36,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'name', 'fancyName', 'cnpj', 'subscription', 'representativeName', 'representativePhone', 'timestamp', 'isMaster', 'isActive', 'address', 'contact', 'user');
+            return ['__isInitialized__', 'id', 'name', 'fancyName', 'cnpj', 'subscription', 'representativeName', 'representativePhone', 'timestamp', 'isMaster', 'isActive', 'address', 'contact', 'user'];
         }
 
-        return array('__isInitialized__', 'id', 'name', 'fancyName', 'cnpj', 'subscription', 'representativeName', 'representativePhone', 'timestamp', 'isMaster', 'isActive', 'address', 'contact', 'user');
+        return ['__isInitialized__', 'id', 'name', 'fancyName', 'cnpj', 'subscription', 'representativeName', 'representativePhone', 'timestamp', 'isMaster', 'isActive', 'address', 'contact', 'user'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }
@@ -205,7 +205,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getFancyName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFancyName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFancyName', []);
 
         return parent::getFancyName();
     }
@@ -216,7 +216,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getCnpj()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCnpj', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCnpj', []);
 
         return parent::getCnpj();
     }
@@ -227,7 +227,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getSubscription()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSubscription', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSubscription', []);
 
         return parent::getSubscription();
     }
@@ -238,7 +238,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getRepresentativeName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativeName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativeName', []);
 
         return parent::getRepresentativeName();
     }
@@ -249,7 +249,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getRepresentativePhone()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativePhone', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRepresentativePhone', []);
 
         return parent::getRepresentativePhone();
     }
@@ -260,7 +260,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getTimestamp()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', []);
 
         return parent::getTimestamp();
     }
@@ -271,7 +271,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getIsMaster()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsMaster', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsMaster', []);
 
         return parent::getIsMaster();
     }
@@ -282,7 +282,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getIsActive()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
 
         return parent::getIsActive();
     }
@@ -293,7 +293,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getAddress()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', []);
 
         return parent::getAddress();
     }
@@ -304,7 +304,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getContact()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContact', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContact', []);
 
         return parent::getContact();
     }
@@ -315,7 +315,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function getUser()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
 
         return parent::getUser();
     }
@@ -326,7 +326,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -337,7 +337,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setName($name)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
 
         return parent::setName($name);
     }
@@ -348,7 +348,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setFancyName($fancyName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFancyName', array($fancyName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFancyName', [$fancyName]);
 
         return parent::setFancyName($fancyName);
     }
@@ -359,7 +359,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setCnpj($cnpj)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCnpj', array($cnpj));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCnpj', [$cnpj]);
 
         return parent::setCnpj($cnpj);
     }
@@ -370,7 +370,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setSubscription($subscription)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSubscription', array($subscription));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSubscription', [$subscription]);
 
         return parent::setSubscription($subscription);
     }
@@ -381,7 +381,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setRepresentativeName($representativeName)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativeName', array($representativeName));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativeName', [$representativeName]);
 
         return parent::setRepresentativeName($representativeName);
     }
@@ -392,7 +392,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setRepresentativePhone($representativePhone)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativePhone', array($representativePhone));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRepresentativePhone', [$representativePhone]);
 
         return parent::setRepresentativePhone($representativePhone);
     }
@@ -403,7 +403,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setTimestamp($timestamp)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', array($timestamp));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', [$timestamp]);
 
         return parent::setTimestamp($timestamp);
     }
@@ -414,7 +414,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setIsMaster($isMaster)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsMaster', array($isMaster));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsMaster', [$isMaster]);
 
         return parent::setIsMaster($isMaster);
     }
@@ -425,7 +425,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setIsActive($isActive)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', array($isActive));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
 
         return parent::setIsActive($isActive);
     }
@@ -436,7 +436,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setAddress(\DtlPerson\Entity\Address $address)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', array($address));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', [$address]);
 
         return parent::setAddress($address);
     }
@@ -447,7 +447,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setContact(\DtlPerson\Entity\Contact $contact)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContact', array($contact));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContact', [$contact]);
 
         return parent::setContact($contact);
     }
@@ -458,7 +458,7 @@ class Company extends \DtlCompany\Entity\Company implements \Doctrine\ORM\Proxy\
     public function setUser(\DtlUser\Entity\User $user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', array($user));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
         return parent::setUser($user);
     }

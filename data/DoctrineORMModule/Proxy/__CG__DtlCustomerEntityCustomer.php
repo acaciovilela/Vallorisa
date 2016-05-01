@@ -36,7 +36,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'isActive', 'timestamp', 'residenceTime', 'residenceType', 'residenceRentValue', 'notes', 'user', 'person', 'references', 'patrimonies', 'accounts', 'vehicles');
+            return ['__isInitialized__', 'id', 'isActive', 'timestamp', 'residenceTime', 'residenceType', 'residenceRentValue', 'notes', 'user', 'person', 'references', 'patrimonies', 'accounts', 'vehicles'];
         }
 
-        return array('__isInitialized__', 'id', 'isActive', 'timestamp', 'residenceTime', 'residenceType', 'residenceRentValue', 'notes', 'user', 'person', 'references', 'patrimonies', 'accounts', 'vehicles');
+        return ['__isInitialized__', 'id', 'isActive', 'timestamp', 'residenceTime', 'residenceType', 'residenceRentValue', 'notes', 'user', 'person', 'references', 'patrimonies', 'accounts', 'vehicles'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getIsActive()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
 
         return parent::getIsActive();
     }
@@ -205,7 +205,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getTimestamp()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', []);
 
         return parent::getTimestamp();
     }
@@ -216,7 +216,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getResidenceTime()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResidenceTime', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResidenceTime', []);
 
         return parent::getResidenceTime();
     }
@@ -227,7 +227,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getResidenceType()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResidenceType', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResidenceType', []);
 
         return parent::getResidenceType();
     }
@@ -238,7 +238,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getResidenceRentValue()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResidenceRentValue', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResidenceRentValue', []);
 
         return parent::getResidenceRentValue();
     }
@@ -249,7 +249,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getNotes()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNotes', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNotes', []);
 
         return parent::getNotes();
     }
@@ -260,7 +260,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getUser()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
 
         return parent::getUser();
     }
@@ -271,7 +271,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getPerson()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPerson', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPerson', []);
 
         return parent::getPerson();
     }
@@ -282,7 +282,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getReferences()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReferences', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReferences', []);
 
         return parent::getReferences();
     }
@@ -293,7 +293,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getPatrimonies()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPatrimonies', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPatrimonies', []);
 
         return parent::getPatrimonies();
     }
@@ -304,7 +304,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getAccounts()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAccounts', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAccounts', []);
 
         return parent::getAccounts();
     }
@@ -315,7 +315,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getVehicles()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVehicles', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVehicles', []);
 
         return parent::getVehicles();
     }
@@ -326,7 +326,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -337,7 +337,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setIsActive($isActive)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', array($isActive));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
 
         return parent::setIsActive($isActive);
     }
@@ -348,7 +348,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setTimestamp($timestamp)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', array($timestamp));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', [$timestamp]);
 
         return parent::setTimestamp($timestamp);
     }
@@ -359,7 +359,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setResidenceTime($residenceTime)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResidenceTime', array($residenceTime));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResidenceTime', [$residenceTime]);
 
         return parent::setResidenceTime($residenceTime);
     }
@@ -370,7 +370,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setResidenceType($residenceType)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResidenceType', array($residenceType));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResidenceType', [$residenceType]);
 
         return parent::setResidenceType($residenceType);
     }
@@ -381,7 +381,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setResidenceRentValue($residenceRentValue)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResidenceRentValue', array($residenceRentValue));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResidenceRentValue', [$residenceRentValue]);
 
         return parent::setResidenceRentValue($residenceRentValue);
     }
@@ -392,7 +392,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setNotes($notes)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNotes', array($notes));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNotes', [$notes]);
 
         return parent::setNotes($notes);
     }
@@ -403,7 +403,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setUser(\DtlUser\Entity\User $user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', array($user));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
         return parent::setUser($user);
     }
@@ -414,7 +414,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setPerson(\DtlPerson\Entity\Person $person)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPerson', array($person));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPerson', [$person]);
 
         return parent::setPerson($person);
     }
@@ -425,7 +425,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setReferences(\Doctrine\Common\Collections\ArrayCollection $references)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setReferences', array($references));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setReferences', [$references]);
 
         return parent::setReferences($references);
     }
@@ -436,7 +436,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function addReference($reference)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addReference', array($reference));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addReference', [$reference]);
 
         return parent::addReference($reference);
     }
@@ -447,7 +447,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setPatrimonies(\Doctrine\Common\Collections\ArrayCollection $patrimonies)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPatrimonies', array($patrimonies));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPatrimonies', [$patrimonies]);
 
         return parent::setPatrimonies($patrimonies);
     }
@@ -458,7 +458,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function addPatrimony($patrimony)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addPatrimony', array($patrimony));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addPatrimony', [$patrimony]);
 
         return parent::addPatrimony($patrimony);
     }
@@ -469,7 +469,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setAccounts(\Doctrine\Common\Collections\ArrayCollection $accounts)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAccounts', array($accounts));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAccounts', [$accounts]);
 
         return parent::setAccounts($accounts);
     }
@@ -480,7 +480,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function addAccount($account)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addAccount', array($account));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addAccount', [$account]);
 
         return parent::addAccount($account);
     }
@@ -491,7 +491,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function setVehicles(\Doctrine\Common\Collections\ArrayCollection $vehicles)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setVehicles', array($vehicles));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setVehicles', [$vehicles]);
 
         return parent::setVehicles($vehicles);
     }
@@ -502,7 +502,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function addVehicle($vehicle)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addVehicle', array($vehicle));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addVehicle', [$vehicle]);
 
         return parent::addVehicle($vehicle);
     }
@@ -513,7 +513,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getName()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
 
         return parent::getName();
     }

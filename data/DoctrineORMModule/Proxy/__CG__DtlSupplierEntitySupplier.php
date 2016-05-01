@@ -36,7 +36,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array();
+    public static $lazyPropertiesDefaults = [];
 
 
 
@@ -64,10 +64,10 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'timestamp', 'isActive', 'user', 'person');
+            return ['__isInitialized__', 'id', 'timestamp', 'isActive', 'user', 'person'];
         }
 
-        return array('__isInitialized__', 'id', 'timestamp', 'isActive', 'user', 'person');
+        return ['__isInitialized__', 'id', 'timestamp', 'isActive', 'user', 'person'];
     }
 
     /**
@@ -97,7 +97,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
      */
     public function __clone()
     {
-        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', array());
+        $this->__cloner__ && $this->__cloner__->__invoke($this, '__clone', []);
     }
 
     /**
@@ -105,7 +105,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
      */
     public function __load()
     {
-        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__load', []);
     }
 
     /**
@@ -183,7 +183,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
         }
 
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
 
         return parent::getId();
     }
@@ -194,7 +194,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function getTimestamp()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTimestamp', []);
 
         return parent::getTimestamp();
     }
@@ -205,7 +205,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function getIsActive()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsActive', []);
 
         return parent::getIsActive();
     }
@@ -216,7 +216,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function getUser()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
 
         return parent::getUser();
     }
@@ -227,7 +227,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function getPerson()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPerson', array());
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPerson', []);
 
         return parent::getPerson();
     }
@@ -238,7 +238,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function setId($id)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', [$id]);
 
         return parent::setId($id);
     }
@@ -249,7 +249,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function setTimestamp($timestamp)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', array($timestamp));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTimestamp', [$timestamp]);
 
         return parent::setTimestamp($timestamp);
     }
@@ -260,7 +260,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function setIsActive($isActive)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', array($isActive));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIsActive', [$isActive]);
 
         return parent::setIsActive($isActive);
     }
@@ -271,7 +271,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function setUser(\DtlUser\Entity\User $user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', array($user));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
         return parent::setUser($user);
     }
@@ -282,7 +282,7 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
     public function setPerson(\DtlPerson\Entity\Person $person)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPerson', array($person));
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPerson', [$person]);
 
         return parent::setPerson($person);
     }
