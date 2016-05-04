@@ -23,11 +23,11 @@ class CreatePayable implements CreateAccountInterface {
     public function create() {
         
         if (!$this->getUser()) {
-            throw new Exception('Não foi definido a empresa a qual pertence a conta.');
+            throw new \Exception('Não foi definido a empresa a qual pertence a conta.');
         }
         
         if (!$this->getSupplier()) {
-            throw new Exception('Nenhum fornecedor foi definido para esta conta.');
+            throw new \Exception('Nenhum fornecedor foi definido para esta conta.');
         }
         
         $account = new Account();
@@ -44,7 +44,7 @@ class CreatePayable implements CreateAccountInterface {
         $em = $this->getEntityManager();
         
         if (!$em) {
-            throw new Exception('EntityManager não definido.');
+            throw new \Exception('EntityManager não definido.');
         }
         
         $em->persist($payable);

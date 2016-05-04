@@ -95,9 +95,9 @@ class VehicleProposalController extends AbstractActionController {
 
     public function addAction() {
 
-        $userId = $this->dtlUserMasterIdentity()->getId();
+        $user = $this->identity();
 
-        $form = new VehicleProposalForm($this->getEntityManager(), $userId);
+        $form = new VehicleProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
 
         $vehicleProposal = new \DtlProposal\Entity\VehicleProposal();
 
@@ -201,7 +201,7 @@ class VehicleProposalController extends AbstractActionController {
 
                 $customer = $vehicleProposal->getProposal()->getCustomer();
 
-                $customer->setUser($userId);
+                $customer->setUser($user);
 
                 $this->getProposalService()->addCustomerBankAccount($customer);
 
@@ -232,6 +232,7 @@ class VehicleProposalController extends AbstractActionController {
                 $em->persist($log);
                 $vehicleProposal->getProposal()->addLog($log);
 
+                $vehicleProposal->getProposal()->setUser($user);
                 $em->persist($vehicleProposal);
 
                 $em->flush();
@@ -245,7 +246,7 @@ class VehicleProposalController extends AbstractActionController {
             'form' => $form,
             'post' => $this->getProposalSession()->prePost,
             'entityManager' => $this->getEntityManager(),
-            'userId' => $userId,
+            'userId' => $user,
         );
     }
 

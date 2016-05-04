@@ -93,9 +93,9 @@ class CaixaProposalController extends AbstractActionController {
 
     public function addAction() {
 
-        $userId = $this->identity()->getId();
+        $user = $this->identity();
 
-        $form = new CaixaProposalForm($this->getEntityManager(), $userId);
+        $form = new CaixaProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
 
         $caixaProposal = new \DtlProposal\Entity\CaixaProposal();
 
@@ -197,7 +197,7 @@ class CaixaProposalController extends AbstractActionController {
 
                 $customer = $caixaProposal->getProposal()->getCustomer();
 
-                $customer->setUser($userId);
+                $customer->setUser($this->dtlUserMasterIdentity()->getId());
 
                 $this->getProposalService()->addCustomerBankAccount($customer);
 
@@ -222,6 +222,7 @@ class CaixaProposalController extends AbstractActionController {
                 $em->persist($log);
                 $caixaProposal->getProposal()->addLog($log);
 
+                $caixaProposal->getProposal()->setUser($user);
                 $em->persist($caixaProposal);
                 $em->flush();
 
@@ -234,7 +235,7 @@ class CaixaProposalController extends AbstractActionController {
             'form' => $form,
             'post' => $this->getProposalSession()->prePost,
             'entityManager' => $this->getEntityManager(),
-            'userId' => $userId,
+            'userId' => $this->dtlUserMasterIdentity()->getId(),
         );
     }
 

@@ -92,8 +92,8 @@ class RealtyProposalController extends AbstractActionController {
     }
 
     public function addAction() {
-        $userId = $this->identity()->getId();
-        $form = new RealtyProposalForm($this->getEntityManager(), $userId);
+        $user = $this->identity();
+        $form = new RealtyProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
         $realtyProposal = new \DtlProposal\Entity\RealtyProposal();
         $em = $this->getEntityManager();
         $digitsFilter = new \Zend\Filter\Digits();
@@ -137,7 +137,7 @@ class RealtyProposalController extends AbstractActionController {
                 ->get('proposal')
                 ->get('customer')
                 ->get('person')->setValue($personType);
-        if ((int)$personType) {
+        if ((int) $personType) {
             $form->get('realtyProposal')
                     ->get('proposal')
                     ->get('customer')
@@ -184,6 +184,7 @@ class RealtyProposalController extends AbstractActionController {
                 $em->persist($log);
 
                 $realtyProposal->getProposal()->addLog($log);
+                $realtyProposal->getProposal()->setUser($user);
                 $em->persist($realtyProposal);
                 $em->flush();
 
@@ -937,7 +938,7 @@ class RealtyProposalController extends AbstractActionController {
                     $tempFile = $file['tmp_name'];
                     $targetPath = $storeFolder . $ds;
                     $targetFile = $targetPath . $filename;
-                    
+
                     move_uploaded_file($tempFile, $targetFile);
 
                     $em = $this->getEntityManager();

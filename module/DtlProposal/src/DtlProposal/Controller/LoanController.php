@@ -184,20 +184,16 @@ class LoanController extends AbstractActionController {
             if ($form->isValid()) {
 
                 $customer = $loan->getProposal()->getCustomer();
-
                 $customer->setUser($user);
 
                 $this->getProposalService()->addCustomerBankAccount($customer);
-
                 $this->getProposalService()->addCustomerReference($customer);
-
                 $this->getProposalService()->addCustomerPatrimony($customer);
-
                 $this->getProposalService()->addCustomerVehicle($customer);
 
                 $em->persist($customer);
-
                 $loan->getProposal()->setCustomer($customer);
+                
                 /**
                  * Resume routines
                  */
@@ -213,7 +209,8 @@ class LoanController extends AbstractActionController {
                 $log->setMessage('ABERTA: PROPOSTA EM ANÁLISE');
                 $em->persist($log);
                 $loan->getProposal()->addLog($log);
-
+                
+                $loan->getProposal()->setUser($user);
                 $em->persist($loan);
 
                 $em->flush();
@@ -503,7 +500,7 @@ class LoanController extends AbstractActionController {
                         $comm = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
                         $commission = number_format($comm, 2);
                         $receivable = $this->getReceivableService();
-//                        \Zend\Debug\Debug::dump($post['proposalStatusId']);exit;
+//                        \Zend\Debug\Debug::dump($loan->getProposal()->getUser()->getId());exit;
                         $receivable->setUser($loan->getProposal()->getUser());
                         $receivable->setCustomer($loan->getProposal()->getCustomer());
                         $receivable->setDescription("COM. REF. A CONSIGNADO Nº {$loan->getId()}");
