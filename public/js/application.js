@@ -640,24 +640,10 @@ function removeCommission() {
     return false;
 }
 
-!function (e) {
-    e(function () {
-        e(".btn-group").tooltip({selector: "[data-toggle=tooltip]", container: "body"});
-        e(".app-tooltip").tooltip({container: "body"});
-        e(".datepicker").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "c-50:c+10"
-        });
-    });
-}(window.jQuery);
-
 $(document).ready(function () {
     $(':text, textarea').on('keyup', function () {
         $(this).val($(this).val().toUpperCase());
     });
-    $(".datepicker").datepicker({changeMonth: true, changeYear: true});
-
     setMasks();
 });
 
@@ -672,4 +658,13 @@ $(document).ready(function () {
 
 $('body').on('hidden.bs.modal', '.modal', function () {
     $(this).removeData('bs.modal');
+});
+
+
+$(function () {
+    $('.datepicker').datetimepicker({
+        locale: 'pt-br',
+        format: 'L',
+        useCurrent: false
+    });
 });

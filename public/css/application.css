@@ -1,3 +1,244 @@
+/** Bootstrap Expansions */
+.text-canceled {
+    color: #777;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+body {
+    padding-top: 55px;
+}
+.tab-pane {
+    padding-top: 10px;
+}
+.table {
+    font-family: Verdana;
+    font-size: 11px;
+}
+.table th {
+    font-size: 12px;
+    border: #670000;
+}
+.pagination {
+    margin: 0;
+}
+.pagination-items {
+    font-weight: bold;
+    color: #670000;
+}
+.container-header {
+    position: relative;
+    display: block;
+    padding: 0 15px 15px 15px;
+    margin: 0 -15px 0 -15px;
+    font-size: 18px + 6;
+    color: #777;
+}
+.btn-shortcut {
+    width: 110px;
+    padding: 10px 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #670000;
+    border-color: #4d0000;
+}
+.btn-shortcut:hover,
+.btn-shortcut:focus,
+.btn-shortcut.focus,
+.btn-shortcut:active,
+.btn-shortcut.active,
+.open > .dropdown-toggle.btn-shortcut {
+    color: #fff;
+    background-color: #340000;
+    border-color: #100000;
+}
+.btn-shortcut:active,
+.btn-shortcut.active,
+.open > .dropdown-toggle.btn-shortcut {
+    background-image: none;
+}
+.btn-shortcut.disabled,
+.btn-shortcut[disabled],
+fieldset[disabled] .btn-shortcut,
+.btn-shortcut.disabled:hover,
+.btn-shortcut[disabled]:hover,
+fieldset[disabled] .btn-shortcut:hover,
+.btn-shortcut.disabled:focus,
+.btn-shortcut[disabled]:focus,
+fieldset[disabled] .btn-shortcut:focus,
+.btn-shortcut.disabled.focus,
+.btn-shortcut[disabled].focus,
+fieldset[disabled] .btn-shortcut.focus,
+.btn-shortcut.disabled:active,
+.btn-shortcut[disabled]:active,
+fieldset[disabled] .btn-shortcut:active,
+.btn-shortcut.disabled.active,
+.btn-shortcut[disabled].active,
+fieldset[disabled] .btn-shortcut.active {
+    background-color: #670000;
+    border-color: #4d0000;
+}
+.btn-shortcut .badge {
+    color: #670000;
+    background-color: #fff;
+}
+.btn-shortcut:hover,
+.btn-shortcut:focus {
+    text-decoration: none;
+    background-image: -webkit-linear-gradient(top, #670000 0%, #800000 100%);
+    background-image:      -o-linear-gradient(top, #670000 0%, #800000 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#670000), to(#800000));
+    background-image:         linear-gradient(to bottom, #670000 0%, #800000 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff670000', endColorstr='#ff800000', GradientType=0);
+    background-repeat: repeat-x;
+}
+.btn-shortcut:active,
+.btn-shortcut.active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+.btn-shortcut span {
+    display: block;
+    font-size: 30px;
+    color: #fefefe;
+}
+.tabs-below > .nav-tabs,
+.tabs-right > .nav-tabs,
+.tabs-left > .nav-tabs {
+    border-bottom: 0;
+}
+.tabs-below > .nav-tabs {
+    border-top: 1px solid #ddd;
+}
+.tabs-below > .nav-tabs > li {
+    margin-top: -1px;
+    margin-bottom: 0;
+}
+.tabs-below > .nav-tabs > li > a {
+    border-radius: 0 0 4px 4px;
+}
+.tabs-below > .nav-tabs > li > a:hover,
+.tabs-below > .nav-tabs > li > a:focus {
+    border-top-color: #ddd;
+    border-bottom-color: transparent;
+}
+.tabs-below > .nav-tabs > .active > a,
+.tabs-below > .nav-tabs > .active > a:hover,
+.tabs-below > .nav-tabs > .active > a:focus {
+    border-color: transparent #ddd #ddd #ddd;
+}
+.tabs-left > .nav-tabs > li,
+.tabs-right > .nav-tabs > li {
+    float: none;
+}
+.tabs-left > .nav-tabs > li > a,
+.tabs-right > .nav-tabs > li > a {
+    min-width: 74px;
+    margin-right: 0;
+    margin-bottom: 3px;
+}
+.tabs-left > .nav-tabs {
+    float: left;
+    border-right: 1px solid #ddd;
+}
+.tabs-left > .nav-tabs > li > a {
+    margin-right: -1px;
+    border-radius: 4px 0 0 4px;
+}
+.tabs-left > .nav-tabs > li > a:hover,
+.tabs-left > .nav-tabs > li > a:focus {
+    border-color: #eee #ddd #eee #eee;
+}
+.tabs-left > .nav-tabs .active > a,
+.tabs-left > .nav-tabs .active > a:hover,
+.tabs-left > .nav-tabs .active > a:focus {
+    border-color: #ddd transparent #ddd #ddd;
+
+    *border-right-color: #fff;
+}
+.tabs-right > .nav-tabs {
+    float: right;
+    margin-left: 19px;
+    border-left: 1px solid #ddd;
+}
+.tabs-right > .nav-tabs > li > a {
+    margin-left: -1px;
+    border-radius: 0 4px 4px 0;
+}
+.tabs-right > .nav-tabs > li > a:hover,
+.tabs-right > .nav-tabs > li > a:focus {
+    border-color: #eee #eee #eee #ddd;
+}
+.tabs-right > .nav-tabs .active > a,
+.tabs-right > .nav-tabs .active > a:hover,
+.tabs-right > .nav-tabs .active > a:focus {
+    border-color: #ddd #ddd #ddd transparent;
+
+    *border-left-color: #fff;
+}
+.dropdown-submenu {
+    position: relative;
+}
+.dropdown-submenu:hover > a,
+.dropdown-submenu:focus > a {
+    color: #262626;
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 0 3px 3px 3px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+.dropup .dropdown-submenu > .dropdown-menu {
+    top: auto;
+    bottom: 0;
+    margin-top: 0;
+    margin-bottom: -2px;
+}
+.dropdown-submenu > a:after {
+    display: block;
+    float: right;
+    width: 0;
+    height: 0;
+    margin-top: 5px;
+    margin-right: -10px;
+    content: " ";
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+}
+.dropdown-submenu:hover > a:after {
+    border-left-color: #262626;
+}
+.dropdown-submenu.pull-left {
+    float: none;
+}
+.dropdown-submenu.pull-left > .dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+}
+/*# sourceMappingURL=../bootstrap/css/bootstrap.css.map */
+
+/* OTHER FUNCTIONS */
 input[type="text"] {
     text-transform: uppercase;
 }
@@ -56,4 +297,8 @@ dd {
 
 .add-commissions .remove-commission {
     margin-top: 20px;
+}
+
+.visible-print-block {
+    margin-bottom: 20px;
 }

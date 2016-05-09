@@ -10,7 +10,7 @@ use DtlUser\Entity\User;
  * @ORM\Table(name="accounting_item")
  */
 class AccountingItem {
-    
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -24,19 +24,29 @@ class AccountingItem {
      * @var string
      */
     protected $name;
-    
+
     /**
      * @ORM\Column(type="boolean")
      * @var bool
      */
     protected $type;
-    
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     * @var bool
+     */
+    protected $isActive;
+
     /**
      * @ORM\ManyToOne(targetEntity="DtlUser\Entity\User", cascade={"persist"})
      * @var User
      */
     protected $user;
     
+    public function __construct() {
+        $this->isActive = true;
+    }
+
     public function getId() {
         return $this->id;
     }
@@ -72,4 +82,13 @@ class AccountingItem {
         $this->user = $user;
         return $this;
     }
+
+    function getIsActive() {
+        return $this->isActive;
+    }
+
+    function setIsActive($isActive) {
+        $this->isActive = $isActive;
+    }
+
 }

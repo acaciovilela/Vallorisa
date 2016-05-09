@@ -32,13 +32,13 @@ $this->headTitle($title);
 <div class="panel <?php echo $class; ?>">
     <div class="panel-heading">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-xs-5">
                 <div class="panel-title">
                     <i class="glyphicon glyphicon-plus-sign"></i> 
                     Proposta Nº <?php echo str_pad($caixaProposal->getCaixaProposalId(), 8, '0', STR_PAD_LEFT); ?>
                 </div>
             </div>
-            <div class="col-md-7 hidden-print">
+            <div class="col-xs-7 hidden-print">
                 <div class="btn-group btn-group-sm pull-right">
                     <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
                     echo $this->url('dtladmin/dtlproposal/caixa-proposal/delete', array('action' => 'delete',
@@ -87,7 +87,7 @@ $this->headTitle($title);
             <div class="panel-body">
                 <dl class="dl-horizontal">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <dt>Número da Proposta:</dt>
                             <dd><?php echo $caixaProposal->getCaixaProposalId(); ?></dd>
                             <dt>Banco:</dt>
@@ -105,7 +105,7 @@ $this->headTitle($title);
                             <dt>Observações:</dt>
                             <dd><?php echo $caixaProposal->getProposal()->getNotes(); ?></dd>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <dt>Status da Proposta:</dt>
                             <dd><?php echo $status; ?></dd>
                             <dt>Empresa:</dt>
@@ -166,7 +166,7 @@ $this->headTitle($title);
                         <dd><?php echo $this->phone($customer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
                     <?php else: ?>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 <dt>CPF:</dt>
                                 <dd><?php echo $this->cpf($customer->getPerson()->getIndividual()->getCpf()); ?>&nbsp;</dd>
                                 <dt>RG:</dt>
@@ -178,7 +178,7 @@ $this->headTitle($title);
                                 <dt>Nome da Mãe:</dt>
                                 <dd><?php echo $customer->getPerson()->getIndividual()->getMother(); ?>&nbsp;</dd>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 <dt>Data de Nascimento:</dt>
                                 <dd><?php echo $this->birthday($customer->getPerson()->getIndividual()->getBirthDay(), $customer->getPerson()->getIndividual()->getBirthMonth(), $customer->getPerson()->getIndividual()->getBirthYear()); ?></dd>
                                 <dt>Órgão Expedidor:</dt>
@@ -193,7 +193,7 @@ $this->headTitle($title);
                         </div>
                     <?php endif; ?>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <dt>Endereço:</dt>
                             <dd><?php echo $customer->getPerson()->getAddress()->getName(); ?>, nº <?php echo $customer->getPerson()->getAddress()->getNumber(); ?></dd>
                             <dt>Complemento:</dt>
@@ -209,7 +209,7 @@ $this->headTitle($title);
                             <dt>País:</dt>
                             <dd><?php echo ($customer->getPerson()->getAddress()->getCountry()) ? $customer->getPerson()->getAddress()->getCountry()->getName() : '';; ?>&nbsp;</dd>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <dt>Email:</dt>
                             <dd><?php echo $customer->getPerson()->getContact()->getEmail(); ?>&nbsp;</dd>
                             <dt>Website:</dt>
@@ -238,7 +238,7 @@ $this->headTitle($title);
                 <div class="panel-body">
                     <dl class="dl-horizontal">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 <dt>Nome da Empresa:</dt>
                                 <dd><?php echo $customer->getPerson()->getIndividual()->getProfessional()->getCompanyName(); ?></dd>
                                 <dt>Endereço:</dt>
@@ -262,7 +262,7 @@ $this->headTitle($title);
                                 <dt>Salário:</dt>
                                 <dd><?php echo $this->currency($customer->getPerson()->getIndividual()->getProfessional()->getSalary()); ?></dd>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 <dt>CNPJ:</dt>
                                 <dd><?php echo $this->cnpj($customer->getPerson()->getIndividual()->getProfessional()->getCompanyCnpj()); ?>&nbsp;</dd>
                                 <dt>Email:</dt>

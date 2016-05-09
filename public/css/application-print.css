@@ -1,6 +1,5 @@
 @media print {
-    .container-fluid {
-        margin: 0;
-        padding: 0;
+    @page {
+        size: landscape
     }
 }

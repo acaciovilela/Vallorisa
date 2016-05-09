@@ -18,15 +18,14 @@
         echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
                 ->prependStylesheet($this->basePath() . '/css/application.css', array('media' => 'screen, print'))
                 ->prependStylesheet($this->basePath() . '/backend/css/app.css', 'screen', null, array('id' => 'beyond-link'))
+                ->prependStylesheet($this->basePath() . '/datepicker/css/bootstrap-datetimepicker.min.css', array('media' => 'screen, print'))
                 ->prependStylesheet($this->basePath() . '/backend/css/dataTables.bootstrap.css')
-                ->prependStylesheet($this->basePath() . '/css/application-print.css', array('media' => 'print'))
                 ->prependStylesheet($this->basePath() . '/file-upload/css/jquery.fileupload.css')
                 ->prependStylesheet($this->basePath() . '/uploader/demos/css/demo.css')
                 ->prependStylesheet($this->basePath() . '/uploader/demos/css/uploader.css')
-                ->prependStylesheet($this->basePath() . '/css/jquery-ui/smoothness/jquery-ui-1.10.3.custom.min.css', array('media' => 'screen, print'))
                 ->prependStylesheet($this->basePath() . '/font-awesome/css/font-awesome.min.css', array('media' => 'screen, print'))
-                ->prependStylesheet($this->basePath() . '/bootstrap/dist/css/bootstrap-theme.css', array('media' => 'screen, print'))
-                ->prependStylesheet($this->basePath() . '/bootstrap/dist/css/bootstrap.min.css', array('media' => 'screen, print'))
+                ->prependStylesheet($this->basePath() . '/bootstrap/css/bootstrap-theme.css', array('media' => 'screen, print'))
+                ->prependStylesheet($this->basePath() . '/bootstrap/css/bootstrap.min.css', array('media' => 'screen, print'))
         ?>
         <!--[if IE 7]>
             <link rel="stylesheet" href="/font-awesome/css/font-awesome-ie7.min.css">
@@ -39,15 +38,26 @@
                 ->prependFile($this->basePath() . '/data-tables/media/js/dataTables.bootstrap.js')
                 ->prependFile($this->basePath() . '/data-tables/media/js/jquery.dataTables.min.js')
                 ->prependFile($this->basePath() . '/js/jquery.mask.min.js')
-                ->prependFile($this->basePath() . '/bootstrap/dist/js/bootstrap.min.js')
-                ->prependFile($this->basePath() . '/js/jquery.ui.datepicker-pt-BR.js')
-                ->prependFile($this->basePath() . '/js/jquery-ui.min.js', 'text/javascript', array('async' => 'async'))
+                ->prependFile($this->basePath() . '/datepicker/js/bootstrap-datetimepicker.min.js')
+                ->prependFile($this->basePath() . '/bootstrap/js/bootstrap.min.js')
+                ->prependFile($this->basePath() . '/js/moment.min.js', 'text/javascript', array('async' => 'async'))
                 ->prependFile($this->basePath() . '/js/jquery.min.js', 'text/javascript', array('async' => 'async'))
                 ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
                 ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
         ?>
     </head>
     <body>
+        <style type="text/css" media="print">
+            @media print {
+                @page {size: landscape}
+            }
+        </style>
+        
+        <div class="visible-print-block">
+            <img src="<?php echo $this->basePath(); ?>/img/logo.png" width="120px" height="40px" class="img-rounded" />
+            VALORIZA IMÓVEIS
+        </div>
+        
         <?= $this->partial('layout/menu'); ?>
         <?php
         echo $this->navigation('admin_navigation')
@@ -68,8 +78,10 @@
                         echo $this->flashMessenger()->render('error', array('alert', 'alert-dismissable', 'alert-danger'));
                         ?>
                         <?php echo $this->content; ?>
-                        <?php echo $this->inlineScript()
-                                ->prependFile($this->basePath() . '/js/dtl-messages.js', 'text/javascript', array('charset' => 'UTF-8')); ?>                
+                        <?php
+                        echo $this->inlineScript()
+                                ->prependFile($this->basePath() . '/js/dtl-messages.js', 'text/javascript', array('charset' => 'UTF-8'));
+                        ?>                
                     </div>
                 </div>
             </div>

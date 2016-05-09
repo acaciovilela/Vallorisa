@@ -8,15 +8,29 @@
                 ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
                 ->appendHttpEquiv('Cache-Control', 'max-age=31536000; public')
                 ->appendHttpEquiv('Last-Modified', gmdate('D, d M Y H:i:s') . " GMT")
-                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0');
+
+        echo $this->headScript()
+                ->prependFile($this->basePath() . '/datepicker/js/bootstrap-datetimepicker.min.js')
+                ->prependFile($this->basePath() . '/js/moment.min.js', 'text/javascript', array('async' => 'async'))
+                ->prependFile($this->basePath() . '/js/jquery.min.js', 'text/javascript', array('async' => 'async'))
         ?>
-        <?php 
-            echo $this->headScript()
-                ->appendFile($this->basePath() . '/js/application.js', 'text/javascript', array('charset' => 'UTF-8')); ?>
     </head>
     <body>
         <div class="container-fluid">
             <?php echo $this->content; ?>
         </div>
+        <?php
+        echo $this->inlineScript();
+        ?>
+        <script type="text/javascript">
+            $(function () {
+                $('.datepicker').datetimepicker({
+                    locale: 'pt-br',
+                    format: 'L',
+                    useCurrent: false
+                });
+            });
+        </script>
     </body>
 </html>
