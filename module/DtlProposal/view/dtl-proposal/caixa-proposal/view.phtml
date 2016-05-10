@@ -2,7 +2,7 @@
 $caixaProposal = $this->caixaProposal;
 $proposal = $caixaProposal->getProposal();
 $customer = $proposal->getCustomer();
-$title = 'Detalhes da Proposta nº ' . $caixaProposal->getCaixaProposalId();
+$title = 'Detalhes da Proposta nº ' . $caixaProposal->getId();
 $this->headTitle($title);
 ?>
 <?php $class = ''; ?>
@@ -35,26 +35,26 @@ $this->headTitle($title);
             <div class="col-xs-5">
                 <div class="panel-title">
                     <i class="glyphicon glyphicon-plus-sign"></i> 
-                    Proposta Nº <?php echo str_pad($caixaProposal->getCaixaProposalId(), 8, '0', STR_PAD_LEFT); ?>
+                    Proposta Nº <?php echo str_pad($caixaProposal->getId(), 8, '0', STR_PAD_LEFT); ?>
                 </div>
             </div>
             <div class="col-xs-7 hidden-print">
                 <div class="btn-group btn-group-sm pull-right">
                     <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
                     echo $this->url('dtladmin/dtlproposal/caixa-proposal/delete', array('action' => 'delete',
-                        'id' => $caixaProposal->getCaixaProposalId()));
+                        'id' => $caixaProposal->getId()));
                     ?>"><i class="glyphicon glyphicon-remove"></i> Apagar</a>
                     <a class="btn btn-default" data-toggle="tooltip" title="Editar" href="<?php
                     echo $this->url('dtladmin/dtlproposal/caixa-proposal/edit', array(
-                        'id' => $caixaProposal->getCaixaProposalId()));
+                        'id' => $caixaProposal->getId()));
                     ?>"><i class="glyphicon glyphicon-edit"></i> Editar</a>
                        <?php if (!$caixaProposal->getProposal()->getIsIntegrated()): ?>
-                        <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $caixaProposal->getCaixaProposalId(); ?>"
-                           href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/status', array('action' => 'status', 'id' => $caixaProposal->getCaixaProposalId())); ?>">
+                        <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $caixaProposal->getId(); ?>"
+                           href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/status', array('action' => 'status', 'id' => $caixaProposal->getId())); ?>">
                             <i class="glyphicon glyphicon-repeat"></i> Status</a>
                     <?php endif; ?>
-                    <a class="btn btn-default app-tooltip" data-toggle="modal" title="Histórico" data-target="#proposalHistory<?php echo $caixaProposal->getCaixaProposalId(); ?>"
-                       href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/history', array('action' => 'history', 'id' => $caixaProposal->getCaixaProposalId())); ?>">
+                    <a class="btn btn-default app-tooltip" data-toggle="modal" title="Histórico" data-target="#proposalHistory<?php echo $caixaProposal->getId(); ?>"
+                       href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/history', array('action' => 'history', 'id' => $caixaProposal->getId())); ?>">
                         <i class="glyphicon glyphicon-time"></i> Histórico</a>
                     <a href="javascript: window.print();" class="btn btn-default">
                         <i class="glyphicon glyphicon-print"></i> 
@@ -62,15 +62,15 @@ $this->headTitle($title);
                     </a>
                     <a class="btn btn-default" data-toggle="tooltip" title="Voltar" href="<?php
                     echo $this->url('dtladmin/dtlproposal/caixa-proposal', array('action' => 'print',
-                        'id' => $caixaProposal->getCaixaProposalId()));
+                        'id' => $caixaProposal->getId()));
                     ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
 
-                    <div class="modal" id="proposalHistory<?php echo $caixaProposal->getCaixaProposalId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal" id="proposalHistory<?php echo $caixaProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content"></div>
                         </div>
                     </div>
-                    <div class="modal" id="proposalStatus<?php echo $caixaProposal->getCaixaProposalId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal" id="proposalStatus<?php echo $caixaProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content"></div>
                         </div>
@@ -89,7 +89,7 @@ $this->headTitle($title);
                     <div class="row">
                         <div class="col-xs-6">
                             <dt>Número da Proposta:</dt>
-                            <dd><?php echo $caixaProposal->getCaixaProposalId(); ?></dd>
+                            <dd><?php echo $caixaProposal->getId(); ?></dd>
                             <dt>Banco:</dt>
                             <dd><?php echo $caixaProposal->getProposal()->getBank()->getName(); ?></dd>
                             <dt>Cidade:</dt>
@@ -109,9 +109,9 @@ $this->headTitle($title);
                             <dt>Status da Proposta:</dt>
                             <dd><?php echo $status; ?></dd>
                             <dt>Empresa:</dt>
-                            <dd><?php echo $caixaProposal->getProposal()->getCompany()->getCompanyFancyName(); ?></dd>
+                            <dd><?php echo $caixaProposal->getProposal()->getCompany()->getFancyName(); ?></dd>
                             <dt>Operador:</dt>
-                            <dd><?php echo $caixaProposal->getProposal()->getEmployee()->getEmployeeName(); ?></dd>
+                            <dd><?php echo $caixaProposal->getProposal()->getEmployee()->getName(); ?></dd>
                             <dt>Total Financiado:</dt>
                             <dd><?php echo $this->currency($caixaProposal->getProposal()->getValue()); ?></dd>
                             <dt>Parcelas:</dt>

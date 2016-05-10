@@ -4,7 +4,7 @@ namespace DtlProposal\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Product\Entity\Product;
+use DtlProduct\Entity\Product;
 
 /**
  * @ORM\Entity(repositoryClass="DtlProposal\Entity\Repository\CaixaProposal")

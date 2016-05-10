@@ -74,7 +74,7 @@ $this->headTitle($title);
                     <?php $status = 'PENDENTE'; ?>
                 <?php endif; ?>
                 <tr class='<?php echo $class; ?>'>
-                    <td><?php echo str_pad($caixaProposal->getCaixaProposalId(), 8, '0', STR_PAD_LEFT); ?></td>
+                    <td><?php echo str_pad($caixaProposal->getId(), 8, '0', STR_PAD_LEFT); ?></td>
                     <td><?php echo $this->escapeHtml($caixaProposal->getProposal()->getCustomer()->getPerson()->getName()); ?></td>
                     <td><?php echo $this->date($caixaProposal->getProposal()->getTimestamp()); ?></td>
                     <td><?php echo $this->currency($caixaProposal->getProposal()->getValue()); ?></td>
@@ -90,34 +90,34 @@ $this->headTitle($title);
                         <div class="btn-group btn-group-xs pull-right hidden-print">
                             <a class="btn btn-default" data-toggle="tooltip" title="Ver Detalhes" href="<?php
                             echo $this->url('dtladmin/dtlproposal/caixa-proposal/view', array('action' => 'view',
-                                'id' => $caixaProposal->getCaixaProposalId()));
+                                'id' => $caixaProposal->getId()));
                             ?>"><i class="glyphicon glyphicon-folder-open"></i></a>
                             <a class="btn btn-default" data-toggle="tooltip" title="Editar" href="<?php
                             echo $this->url('dtladmin/dtlproposal/caixa-proposal/edit', array(
-                                'id' => $caixaProposal->getCaixaProposalId()));
+                                'id' => $caixaProposal->getId()));
                             ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                            <?php if ($this->isAllowed('proposal_actions', 'all')): ?>
+                            <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
                                 <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
                                 echo $this->url('dtladmin/dtlproposal/caixa-proposal/delete', array('action' => 'delete',
-                                    'id' => $caixaProposal->getCaixaProposalId()));
+                                    'id' => $caixaProposal->getId()));
                                 ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $caixaProposal->getCaixaProposalId(); ?>"
-                                   href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/status', array('action' => 'status', 'id' => $caixaProposal->getCaixaProposalId())); ?>">
+                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $caixaProposal->getId(); ?>"
+                                   href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/status', array('action' => 'status', 'id' => $caixaProposal->getId())); ?>">
                                     <i class="glyphicon glyphicon-repeat"></i></a>
-                            <?php endif; ?>
-                            <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Histórico" data-target="#proposalHistory<?php echo $caixaProposal->getCaixaProposalId(); ?>"
-                               href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/history', array('action' => 'history', 'id' => $caixaProposal->getCaixaProposalId())); ?>">
+                            <?php // endif; ?>
+                            <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Histórico" data-target="#proposalHistory<?php echo $caixaProposal->getId(); ?>"
+                               href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/history', array('action' => 'history', 'id' => $caixaProposal->getId())); ?>">
                                 <i class="glyphicon glyphicon-time"></i></a>
 
                         </div>
                     </td>
                 </tr>
-                <div class="modal" id="proposalHistory<?php echo $caixaProposal->getCaixaProposalId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal" id="proposalHistory<?php echo $caixaProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content"></div>
                     </div>
                 </div>
-                <div class="modal" id="proposalStatus<?php echo $caixaProposal->getCaixaProposalId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal" id="proposalStatus<?php echo $caixaProposal->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content"></div>
                     </div>

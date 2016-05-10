@@ -190,14 +190,14 @@ class CaixaProposalController extends AbstractActionController {
 
                 if (count($products) > 0) {
                     foreach ($products as $productData) {
-                        $product = $em->find('Product\Entity\Product', $productData['product']);
+                        $product = $em->find('DtlProduct\Entity\Product', $productData['product']);
                         $caixaProposal->addProduct($product);
                     }
                 }
 
                 $customer = $caixaProposal->getProposal()->getCustomer();
 
-                $customer->setUser($this->dtlUserMasterIdentity()->getId());
+                $customer->setUser($this->dtlUserMasterIdentity());
 
                 $this->getProposalService()->addCustomerBankAccount($customer);
 
@@ -241,13 +241,11 @@ class CaixaProposalController extends AbstractActionController {
 
     public function editAction() {
         $proposalId = $this->params()->fromRoute('id');
-
         $userId = $this->identity()->getId();
 
         $form = new CaixaProposalForm($this->getEntityManager(), $userId);
 
         $em = $this->getEntityManager();
-
         $caixaProposal = $em->find($this->getRepository(), $proposalId);
 
         if (!$this->request->isPost()) {
@@ -265,32 +263,23 @@ class CaixaProposalController extends AbstractActionController {
             if ($form->isValid()) {
                 $sessionContainer = $this->getProposalSession();
 
-                /**
-                 * Add Vehicles
-                 */
                 $products = $sessionContainer->products;
 
                 if (count($products) > 0) {
                     foreach ($products as $productData) {
-                        if (!$productData['id']) {
-                            $product = $em->find('DtlProduct\Entity\Product', $productData['product']);
+                        if (!$productData['productId']) {
+                            $product = $em->find('DtlProduct\Entity\Product', $productData['productName']);
                             $caixaProposal->addProduct($product);
                         }
                     }
                 }
 
                 $customer = $caixaProposal->getProposal()->getCustomer();
-
                 $this->getProposalService()->addCustomerBankAccount($customer);
-
                 $this->getProposalService()->addCustomerReference($customer);
-
                 $this->getProposalService()->addCustomerPatrimony($customer);
-
                 $this->getProposalService()->addCustomerVehicle($customer);
-
                 $em->persist($customer);
-
                 $caixaProposal->getProposal()->setCustomer($customer);
 
                 /**
@@ -551,7 +540,7 @@ class CaixaProposalController extends AbstractActionController {
                         $receivable = $this->getServiceLocator()->get('dtlfinancial_create_receivable');
                         $receivable->setCompany($caixaProposal->getProposal()->getCompany());
                         $receivable->setCustomer($caixaProposal->getProposal()->getCustomer());
-                        $receivable->setDescription("COM. REF. A PROPOSTA CAIXA Nº {$caixaProposal->getCaixaProposalId()}");
+                        $receivable->setDescription("COM. REF. A PROPOSTA CAIXA Nº {$caixaProposal->getId()}");
                         $receivable->setValue($commission);
                         $receivable->create();
 
@@ -563,7 +552,7 @@ class CaixaProposalController extends AbstractActionController {
                         $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
                         $payable->setCompany($caixaProposal->getProposal()->getCompany());
                         $payable->setSupplier($supplier);
-                        $payable->setDescription("COM. REF. A PROPOSTA CAIXA Nº {$caixaProposal->getCaixaProposalId()}.");
+                        $payable->setDescription("COM. REF. A PROPOSTA CAIXA Nº {$caixaProposal->getId()}.");
                         $payable->setValue($employeeCommission);
                         $payable->create();
 
@@ -677,7 +666,7 @@ class CaixaProposalController extends AbstractActionController {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         } else {
             $em = $this->getEntityManager();
-            $item = $em->find('Product\Entity\Product', $product['product']);
+            $item = $em->find('DtlProduct\Entity\Product', $product['product']);
             $product['productName'] = $item->getName();
             $this->getProposalSession()->products[] = $product;
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));

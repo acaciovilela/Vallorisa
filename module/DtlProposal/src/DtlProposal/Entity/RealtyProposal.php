@@ -189,7 +189,7 @@ class RealtyProposal {
 
     /**
      * 
-     * @return \Product\Entity\Product
+     * @return \DtlProduct\Entity\Product
      */
     public function getProduct() {
         return $this->product;
@@ -197,7 +197,7 @@ class RealtyProposal {
 
     /**
      * 
-     * @param \Product\Entity\Product $product
+     * @param \DtlProduct\Entity\Product $product
      * @return \DtlProposal\Entity\RealtyProposal
      */
     public function setProduct($product) {
