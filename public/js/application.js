@@ -90,18 +90,6 @@ function calculateProposal(e, t) {
     }
 }
 
-function setMasks() {
-//    $(".cpf").mask("999.999.999-99");
-//    $(".cnpj").mask("99.999.999/9999-99");
-//    $(".cep").mask("99.999-999");
-//    $(".phone").mask("(99) 9999-9999");
-//    $(".validity").mask("99/99");
-//    $(".creditcard").mask("9999-9999-9999-9999");
-//    $(".porcent").priceFormat({prefix: "", thousandsSeparator: "", centsSeparator: ",", limit: 5});
-//    $(".currency").priceFormat({prefix: "", thousandsSeparator: ".", centsSeparator: ","});
-}
-
-/*SET MASK TO TEXT INPUT ******************************************************/
 $(document).ready(function () {
     $('.date').mask('11/11/1111', {clearIfNotMatch: true});
     $('.time').mask('00:00:00', {clearIfNotMatch: true});
@@ -646,15 +634,6 @@ $(document).ready(function () {
     });
     setMasks();
 });
-
-//$(document).ready(function() {
-//    $(this).ajaxSend(function() {
-//        $('#pre-loading').modal();
-//    });
-//    $(this).ajaxComplete(function(){
-//        $('#pre-loading').modal('hide');
-//    });
-//});
 
 $('body').on('hidden.bs.modal', '.modal', function () {
     $(this).removeData('bs.modal');

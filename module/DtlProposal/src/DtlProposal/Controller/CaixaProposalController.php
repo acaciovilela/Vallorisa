@@ -700,7 +700,7 @@ class CaixaProposalController extends AbstractActionController {
             'VALOR FINANCIADO',
             'PARCELAS',
             'BANCO',
-            'ENDEREÇO',
+            utf8_decode('ENDEREÇO'),
             'NUMERO',
             'BAIRRO',
             'CIDADE',
@@ -712,55 +712,56 @@ class CaixaProposalController extends AbstractActionController {
 
         $em = $this->getEntityManager();
         $query = $em->getRepository($this->getRepository())
-                ->createQueryBuilder('rp')
-                ->select('rp.caixaProposalId, p.name, p.type, l.cnpj, '
+                ->createQueryBuilder('cp')
+                ->select('cp.id, p.name, p.type, l.cnpj, '
                         . 'pr.date, pr.value, pr.parcelAmount, '
-                        . 'b.bankName, '
-                        . 'i.cpf, a.name, a.number, '
-                        . 'a.quarter, a.city, a.state, '
+                        . 'b.name as bankName, '
+                        . 'i.cpf, a.name as addressName, a.number, '
+                        . 'a.quarter, cy.name as city, st.name as state, '
                         . 'ct.email, ct.phone, ct.cell')
-                ->join('rp.proposal', 'pr')
+                ->join('cp.proposal', 'pr')
                 ->join('pr.bank', 'b')
                 ->join('pr.customer', 'c')
                 ->join('c.person', 'p')
                 ->join('p.address', 'a')
+                ->join('a.city', 'cy')
+                ->join('a.state', 'st')
                 ->join('p.contact', 'ct')
                 ->leftJoin('p.legal', 'l')
                 ->leftJoin('p.individual', 'i')
-                ->where('pr.proposalIsActive = true')
+                ->where('pr.isActive = true')
                 ->orderBy('p.name', 'ASC')
                 ->getQuery();
 
         $proposals = $query->getResult();
 
         $data = array();
-
         foreach ($proposals as $proposal) {
-            if ($proposal['personType']) {
+            if ($proposal['type']) {
                 $person_doc = $proposal['cnpj'];
             } else {
                 $person_doc = $proposal['cpf'];
             }
             $data[] = array(
-                $proposal['caixaProposalId'],
-                $proposal['personName'],
+                $proposal['id'],
+                $proposal['name'],
                 $person_doc,
-                $proposal['proposalDate'],
-                $proposal['proposalValue'],
-                $proposal['proposalParcelAmount'],
+                $proposal['date'],
+                $proposal['value'],
+                $proposal['parcelAmount'],
                 $proposal['bankName'],
                 $proposal['addressName'],
-                $proposal['addressNumber'],
-                $proposal['addressQuarter'],
-                $proposal['addressCity'],
-                $proposal['addressState'],
-                $proposal['contactEmail'],
-                $proposal['contactPhone'],
-                $proposal['contactCell'],
+                $proposal['number'],
+                $proposal['quarter'],
+                $proposal['city'],
+                $proposal['state'],
+                $proposal['email'],
+                $proposal['phone'],
+                $proposal['cell'],
             );
         }
 
-        return $this->csvExport('propostas_caixa_' . date('dmYHis'), $header, $data, null, ';');
+        return $this->csvExport('propostas_caixa_' . date('dmYHis'), $header, $data);
     }
 
     public function getEntityManager() {

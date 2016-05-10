@@ -11,6 +11,7 @@ $form->prepare();
 <?php $pretender = $form->get('pretender'); ?>
 <fieldset class="center-block">
     <?php $person = $pretender->get('person'); ?>
+
     <div class="row">
         <div class="col-sm-2">
             <div class="form-group">
@@ -40,14 +41,14 @@ $form->prepare();
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
-                <?php echo $this->formLabel($person->get('personName')); ?>
-                <?php echo $this->formText($person->get('personName')); ?>
+                <?php echo $this->formLabel($person->get('name')); ?>
+                <?php echo $this->formText($person->get('name')); ?>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="form-group">
-                <?php echo $this->formLabel($person->get('contact')->get('contactEmail')); ?>
-                <?php echo $this->formText($person->get('contact')->get('contactEmail')); ?>
+                <?php echo $this->formLabel($person->get('contact')->get('email')); ?>
+                <?php echo $this->formText($person->get('contact')->get('email')); ?>
             </div>
         </div>
     </div>
@@ -61,21 +62,21 @@ $form->prepare();
         <div class="col-sm-3">
             <div class="form-group">
                 <?php echo $this->formLabel($person->get('address')->get('city')); ?>
-                <?php echo $this->formText($person->get('address')->get('city')->removeAttribute('readonly')); ?>
+                <?php echo $this->formSelect($person->get('address')->get('city')->removeAttribute('readonly')); ?>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
-                <?php echo $this->formLabel($person->get('contact')->get('contactPhone')); ?>
-                <?php echo $this->formText($person->get('contact')->get('contactPhone')); ?>
+                <?php echo $this->formLabel($person->get('contact')->get('phone')); ?>
+                <?php echo $this->formText($person->get('contact')->get('phone')); ?>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="form-group">
-                <?php echo $this->formLabel($person->get('contact')->get('contactCell')); ?>
-                <?php echo $this->formText($person->get('contact')->get('contactCell')); ?>
+                <?php echo $this->formLabel($person->get('contact')->get('cell')); ?>
+                <?php echo $this->formText($person->get('contact')->get('cell')); ?>
             </div>
         </div>
     </div>
