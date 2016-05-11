@@ -4,8 +4,10 @@ namespace DtlProposal;
 
 return array(
     'controllers' => array(
-        'factories' => array(
+        'invokables' => array(
             'DtlProposal\Controller\Index' => 'DtlProposal\Factory\Index',
+        ),
+        'factories' => array(
             'DtlProposal\Controller\Proposal' => 'DtlProposal\Factory\Proposal',
             'DtlProposal\Controller\VehicleProposal' => 'DtlProposal\Factory\VehicleProposal',
             'DtlProposal\Controller\Loan' => 'DtlProposal\Factory\Loan',

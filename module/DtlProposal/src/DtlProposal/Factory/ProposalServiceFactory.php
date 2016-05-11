@@ -12,6 +12,8 @@ class ProposalServiceFactory implements FactoryInterface {
         $service = new Proposal();
         $service->setEntityManager($sm->get('doctrine.entitymanager.orm_default'));
         $service->setProposalSession($sm->get('proposal_session_service'));
+        $service->setReceivableService($sm->get('dtlfinancial_create_receivable'));
+        $service->setPayableService($sm->get('dtlfinancial_create_payable'));
         return $service;
     }
 }

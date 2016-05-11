@@ -12,6 +12,15 @@ return array(
             'DtlCustomer\Controller\CustomerVehicle' => 'DtlCustomer\Factory\CustomerVehicle',
         )
     ),
+    'controller_plugins' => array(
+        'factories' => array(
+            'findCustomer' => function($sm) {
+                $plugin = new Controller\Plugin\FindCustomer();
+                $plugin->setEntityManager($sm->getServiceLocator()->get('doctrine.entitymanager.orm_default'));
+                return $plugin;
+            }
+        )
+    ),
     'router' => array(
         'routes' => array(
             'dtladmin' => array(

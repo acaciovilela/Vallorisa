@@ -6,12 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use DtlShopman\Entity\Shopman;
 use DtlProposal\Entity\Proposal;
 use DtlProduct\Entity\Product;
+use DtlProposal\Entity\ProposalEntityInterface;
 
 /**
  * @ORM\Entity(repositoryClass="DtlProposal\Entity\Repository\Loan")
  * @ORM\Table(name="loan")
  */
-class Loan {
+class Loan implements ProposalEntityInterface {
 
     /**
      * @ORM\Id
@@ -117,4 +118,5 @@ class Loan {
     function setProduct(Product $product) {
         $this->product = $product;
     }
+
 }

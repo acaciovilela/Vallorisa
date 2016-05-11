@@ -33,46 +33,46 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-6">
-                    <?php echo $this->formLabel($proposalStatus->get('proposalStatusId')); ?>
-                    <?php echo $this->formSelect($proposalStatus->get('proposalStatusId')); ?>
+                    <?php echo $this->formLabel($proposalStatus->get('id')); ?>
+                    <?php echo $this->formSelect($proposalStatus->get('id')); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <?php echo $this->formLabel($proposalStatus->get('proposalStatusNotes')); ?>
-                    <?php echo $this->formTextarea($proposalStatus->get('proposalStatusNotes')); ?>
+                    <?php echo $this->formLabel($proposalStatus->get('notes')); ?>
+                    <?php echo $this->formTextarea($proposalStatus->get('notes')); ?>
                 </div>
             </div>
             <div id="show-on-integrating" class="hidden">
                 <div class="row">
                     <div class="col-md-6">
-                        <?php echo $this->formLabel($proposalStatus->get('proposalStatusBaseDate')); ?>
-                        <?php echo $this->formText($proposalStatus->get('proposalStatusBaseDate')); ?>
+                        <?php echo $this->formLabel($proposalStatus->get('baseDate')); ?>
+                        <?php echo $this->formText($proposalStatus->get('baseDate')); ?>
                     </div>
                 </div>
             </div>
             <div id="show-on-aproving" class="hidden">
                 <div class="row">
                     <div class="col-md-6">
-                        <?php echo $this->formLabel($proposalStatus->get('proposalStatusValue')); ?>
+                        <?php echo $this->formLabel($proposalStatus->get('value')); ?>
                         <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <?php echo $this->formText($proposalStatus->get('proposalStatusValue')); ?>
+                            <?php echo $this->formText($proposalStatus->get('value')); ?>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <?php echo $this->formLabel($proposalStatus->get('proposalStatusParcelAmount')); ?>
-                        <?php echo $this->formText($proposalStatus->get('proposalStatusParcelAmount')); ?>
+                        <?php echo $this->formLabel($proposalStatus->get('parcelAmount')); ?>
+                        <?php echo $this->formText($proposalStatus->get('parcelAmount')); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <?php echo $this->formLabel($proposalStatus->get('proposalStatusParcelValue')); ?>
+                        <?php echo $this->formLabel($proposalStatus->get('parcelValue')); ?>
                         <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <?php echo $this->formText($proposalStatus->get('proposalStatusParcelValue')); ?>
+                            <?php echo $this->formText($proposalStatus->get('parcelValue')); ?>
                         </div>
                     </div>
                 </div>

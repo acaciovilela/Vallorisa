@@ -328,7 +328,7 @@ class RealtyProposalController extends AbstractActionController {
 
                 $post = $this->request->getPost()->proposalStatus;
 
-                switch ($post['proposalStatusId']) {
+                switch ($post['id']) {
                     case 'APPROVED':
                         $data = array(
                             'isApproved' => true,
@@ -342,7 +342,7 @@ class RealtyProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'APROVADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'APROVADA: ' . $post['notes'],
                             'bank' => $realtyProposal->getProposal()->getBank(),
                         );
                         break;
@@ -359,7 +359,7 @@ class RealtyProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABORTADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'ABORTADA: ' . $post['notes'],
                             'bank' => $realtyProposal->getProposal()->getBank(),
                         );
                         break;
@@ -376,7 +376,7 @@ class RealtyProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA: ' . $post['proposalStatusNotes'],
+                            'message' => 'ABERTA: ' . $post['notes'],
                             'bank' => $realtyProposal->getProposal()->getBank(),
                         );
                         break;
@@ -393,7 +393,7 @@ class RealtyProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA (MOVIMENTAÇÃO): ' . $post['proposalStatusNotes'],
+                            'message' => 'ABERTA (MOVIMENTAÇÃO): ' . $post['notes'],
                             'bank' => $realtyProposal->getProposal()->getBank(),
                         );
                         break;
@@ -410,7 +410,7 @@ class RealtyProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'CANCELADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'CANCELADA: ' . $post['notes'],
                             'bank' => $realtyProposal->getProposal()->getBank(),
                         );
                         break;
@@ -427,7 +427,7 @@ class RealtyProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'RECUSADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'RECUSADA: ' . $post['notes'],
                             'bank' => $realtyProposal->getProposal()->getBank(),
                         );
                         break;
@@ -444,7 +444,7 @@ class RealtyProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'INTEGRADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'INTEGRADA: ' . $post['notes'],
                             'bank' => $realtyProposal->getProposal()->getBank(),
                         );
 
@@ -525,7 +525,7 @@ class RealtyProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'PENDENTE: ' . $post['proposalStatusNotes'],
+                            'message' => 'PENDENTE: ' . $post['notes'],
                             'bank' => $realtyProposal->getProposal()->getBank(),
                         );
                         break;
@@ -536,15 +536,15 @@ class RealtyProposalController extends AbstractActionController {
                 $proposal = $realtyProposal->getProposal();
                 $hydrator->hydrate($data, $proposal);
 
-                if ($post['proposalStatusId'] == "INTEGRATED") {
-                    if ($post['proposalStatusBaseDate']) {
+                if ($post['id'] == "INTEGRATED") {
+                    if ($post['baseDate']) {
                         $dateFilter = new \DtlBase\Filter\Date();
-                        $date = new \DateTime($dateFilter->filter($post['proposalStatusBaseDate']));
+                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
                         $timestamp = $date->getTimestamp();
 
                         $startDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + 1, date('d', $timestamp));
 
-                        $date = new \DateTime($dateFilter->filter($post['proposalStatusBaseDate']));
+                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
 
                         $endDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + $proposal->getParcelAmount() + 1, date('d', $timestamp));
 
@@ -560,12 +560,12 @@ class RealtyProposalController extends AbstractActionController {
                     }
                 }
 
-                if ($post['proposalStatusId'] == 'APPROVED') {
+                if ($post['id'] == 'APPROVED') {
                     $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
                     $realtyProposalTotalValue = $realtyProposal->getTotalValue();
-                    $proposalParcelAmount = $post['proposalStatusParcelAmount'];
-                    $proposalParcelValue = $currencyFilter->filter($post['proposalStatusParcelValue']);
-                    $proposalValue = $currencyFilter->filter($post['proposalStatusValue']);
+                    $proposalParcelAmount = $post['parcelAmount'];
+                    $proposalParcelValue = $currencyFilter->filter($post['parcelValue']);
+                    $proposalValue = $currencyFilter->filter($post['value']);
                     $realtyProposalInValue = $realtyProposalTotalValue - $proposal->getValue();
 
                     if (!empty($proposalParcelAmount) && !empty($proposalParcelValue) && !empty($proposalValue)) {

@@ -42,7 +42,6 @@ class LoanController extends AbstractActionController {
     protected $payableService;
 
     public function indexAction() {
-
         $query = $this->getEntityManager()
                 ->getRepository($this->getRepository())
                 ->createQueryBuilder('l')
@@ -51,7 +50,7 @@ class LoanController extends AbstractActionController {
                 ->orderBy('p.timestamp', 'DESC');
 
         if ($this->getRequest()->isPost()) {
-            $query = $this->searchQuery->loanProposalSearch($query, $this->getRequest()->getPost());
+            $query = $this->searchQuery->loanProposalSearch($query, $this->request->getPost());
             $adapter = new DoctrineAdapter(new DoctrinePaginator($query));
             $paginator = new Paginator($adapter);
             if (count($query->getQuery()->getResult()) > 0) {
@@ -95,126 +94,40 @@ class LoanController extends AbstractActionController {
     }
 
     public function addAction() {
-
         $user = $this->identity();
-
         $form = new LoanForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
-
         $loan = new \DtlProposal\Entity\Loan();
 
-        $em = $this->getEntityManager();
-
-        $digitsFilter = new \Zend\Filter\Digits();
-
-        /**
-         * Find Customer if exists
-         */
         $prePost = $this->getProposalSession()->prePost['preProposal'];
 
-        if (!empty($prePost['cpf'])) {
-            $personDocument = $prePost['cpf'];
+        if (isset($prePost['cpf'])) {
+            $document = $prePost['cpf'];
         } else {
-            $personDocument = $prePost['cnpj'];
+            $document = $prePost['cnpj'];
         }
 
-        $personDocument = $digitsFilter->filter($personDocument);
+        $customer = $this->findCustomer($document);
 
-        $personType = base64_decode($prePost['type']);
-
-        if ($prePost['type'] == base64_encode(0)) {
-            $result = $em->getRepository('DtlCustomer\Entity\Customer')
-                    ->createQueryBuilder('c')
-                    ->Join('c.person', 'p')
-                    ->leftJoin('p.individual', 'i')
-                    ->where('i.cpf = ' . $personDocument)
-                    ->andWhere('c.isActive = true')
-                    ->getQuery()
-                    ->getOneOrNullResult();
-        } else {
-            $result = $em->getRepository('DtlCustomer\Entity\Customer')
-                    ->createQueryBuilder('c')
-                    ->Join('c.person', 'p')
-                    ->leftJoin('p.legal', 'l')
-                    ->where('l.cnpj = ' . $personDocument)
-                    ->andWhere('c.isActive = true')
-                    ->getQuery()
-                    ->getOneOrNullResult();
-        }
-
-        if ($result && (!$this->request->isPost())) {
-
-            $loan->getProposal()->setCustomer($result);
-
+        if ($customer && (!$this->request->isPost())) {
+            $customer->setUser($user);
+            $loan->getProposal()->setCustomer($customer);
             $this->getProposalService()->resetSession();
-
-            $this->getProposalService()->populate($result);
+            $this->getProposalService()->populate($customer);
         }
 
         $form->bind($loan);
-
-        $form->get('loan')
-                ->get('proposal')
-                ->get('customer')
-                ->get('person')->setValue($personType);
-
-        if ($personType) {
-            $form->get('loan')
-                    ->get('proposal')
-                    ->get('customer')
-                    ->get('person')
-                    ->get('legal')
-                    ->get('cnpj')
-                    ->setValue($personDocument);
+        $form->get('loan')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
+        if ($prePost['type']) {
+            $form->get('loan')->get('proposal')->get('customer')->get('person')->get('legal')->get('cnpj')->setValue($document);
         } else {
-            $form->get('loan')
-                    ->get('proposal')
-                    ->get('customer')
-                    ->get('person')
-                    ->get('individual')
-                    ->get('cpf')
-                    ->setValue($personDocument);
+            $form->get('loan')->get('proposal')->get('customer')->get('person')->get('individual')->get('cpf')->setValue($document);
         }
-
         if ($this->request->isPost()) {
-
             $post = $this->request->getPost();
-
             $form->setData($post);
-
             if ($form->isValid()) {
-
-                $customer = $loan->getProposal()->getCustomer();
-                $customer->setUser($user);
-
-                $this->getProposalService()->addCustomerBankAccount($customer);
-                $this->getProposalService()->addCustomerReference($customer);
-                $this->getProposalService()->addCustomerPatrimony($customer);
-                $this->getProposalService()->addCustomerVehicle($customer);
-
-                $em->persist($customer);
-                $loan->getProposal()->setCustomer($customer);
-                
-                /**
-                 * Resume routines
-                 */
-                $bank = $em->find('DtlBank\Entity\Bank', $post->loan['proposal']['bank']);
-                $bankReport = new \DtlProposal\Entity\BankReport();
-                $bankReport->setIsActive(true);
-                $bankReport->setBank($bank);
-                $em->persist($bankReport);
-                $loan->getProposal()->addReport($bankReport);
-
-                $log = new \DtlProposal\Entity\Log();
-                $log->setBank($bank);
-                $log->setMessage('ABERTA: PROPOSTA EM ANÁLISE');
-                $em->persist($log);
-                $loan->getProposal()->addLog($log);
-                
                 $loan->getProposal()->setUser($user);
-                $em->persist($loan);
-
-                $em->flush();
-
+                $this->getProposalService()->save($loan);
                 $this->flashMessenger()->addSuccessMessage('Proposta cadastrada com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/loan');
             }
@@ -229,17 +142,11 @@ class LoanController extends AbstractActionController {
     }
 
     public function editAction() {
-        $proposalId = $this->params()->fromRoute('id');
-
+        $loanId = $this->params()->fromRoute('id');
         $userId = $this->identity()->getId();
-
         $form = new LoanForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
-
         $em = $this->getEntityManager();
-
-        $loan = $em->find($this->getRepository(), $proposalId);
-
-//        \Zend\Debug\Debug::dump($loan->getBenefitNumber());exit;
+        $loan = $em->find($this->getRepository(), $loanId);
 
         if (!$this->request->isPost()) {
             $this->getProposalService()->resetSession();
@@ -247,37 +154,11 @@ class LoanController extends AbstractActionController {
         }
 
         $form->bind($loan);
-
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
             $form->setData($post);
             if ($form->isValid()) {
-                $customer = $loan->getProposal()->getCustomer();
-
-                $this->getProposalService()->addCustomerBankAccount($customer);
-
-                $this->getProposalService()->addCustomerReference($customer);
-
-                $this->getProposalService()->addCustomerPatrimony($customer);
-
-                $this->getProposalService()->addCustomerVehicle($customer);
-
-                $em->persist($customer);
-
-                /**
-                 * Resume routines
-                 */
-                $bank = $em->find('DtlBank\Entity\Bank', $post->loan['proposal']['bank']);
-                $log = new \DtlProposal\Entity\Log();
-                $log->setBank($bank);
-                $log->setMessage('ATUALIZAÇÃO: PROPOSTA ATUALIZADA!');
-                $em->persist($log);
-                $loan->getProposal()->addLog($log);
-
-                $em->persist($loan);
-
-                $em->flush();
-
+                $this->getProposalService()->update($loan);
                 $this->flashMessenger()->addSuccessMessage('Proposta atualizada com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/loan');
             }
@@ -318,11 +199,8 @@ class LoanController extends AbstractActionController {
 
     public function viewAction() {
         $loanId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
-
         return array(
             'loan' => $loan,
         );
@@ -330,282 +208,31 @@ class LoanController extends AbstractActionController {
 
     public function historyAction() {
         $loanId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
-
         return array(
             'loan' => $loan,
         );
     }
 
     public function statusAction() {
-
         $loanId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
-
+        
         if ($loan->getProposal()->getIsRefused()) {
             return array(
                 'refused' => true,
                 'loan' => $loan,
             );
         }
-
-        $form = new \DtlProposal\Form\ProposalStatus();
-
+        
+        $form = new \DtlProposal\Form\ProposalStatus($em);
+        $form->bind($loan->getProposal());
         if ($this->request->isPost()) {
-
             $form->setData($this->request->getPost());
-
             if ($form->isValid()) {
-
-                $post = $this->request->getPost()->proposalStatus;
-
-//                \Zend\Debug\Debug::dump($post['proposalStatusId']);exit;
-
-                switch ($post['proposalStatusId']) {
-                    case 'APPROVED':
-                        $data = array(
-                            'isApproved' => true,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'APROVADA: ' . $post['proposalStatusNotes'],
-                            'bank' => $loan->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'ABORTED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => true,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABORTADA: ' . $post['proposalStatusNotes'],
-                            'bank' => $loan->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CHECKING':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => true,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA: ' . $post['proposalStatusNotes'],
-                            'bank' => $loan->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CHECKING_IN':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => true,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA (MOVIMENTAÇÃO): ' . $post['proposalStatusNotes'],
-                            'bank' => $loan->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CANCELED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => true,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'CANCELADA: ' . $post['proposalStatusNotes'],
-                            'bank' => $loan->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'REFUSED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => true,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'RECUSADA: ' . $post['proposalStatusNotes'],
-                            'bank' => $loan->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'INTEGRATED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => true,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'INTEGRADA: ' . $post['proposalStatusNotes'],
-                            'bank' => $loan->getProposal()->getBank(),
-                        );
-
-                        /**
-                         * Generates commissions
-                         */
-                        $proposalValue = $loan->getProposal()->getValue();
-                        $product = $loan->getProduct();
-                        /**
-                         * Company commissions
-                         */
-                        $fixedCommission = $product->getFixedCommission();
-                        $variantCommission = $product->getVariantCommission();
-                        $comm = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
-                        $commission = number_format($comm, 2);
-                        $receivable = $this->getReceivableService();
-//                        \Zend\Debug\Debug::dump($loan->getProposal()->getUser()->getId());exit;
-                        $receivable->setUser($loan->getProposal()->getUser());
-                        $receivable->setCustomer($loan->getProposal()->getCustomer());
-                        $receivable->setDescription("COM. REF. A CONSIGNADO Nº {$loan->getId()}");
-                        $receivable->setValue($commission);
-                        $receivable->create();
-
-                        /**
-                         * Employee Commissions
-                         */
-                        $companyCommission = $commission;
-                        $employee = $loan->getProposal()->getEmployee();
-                        if ($employee) {
-                            $commissions = $employee->getCommissions();
-                            if (count($commissions)) {
-                                foreach ($commissions as $commission) {
-                                    if ($commission->getProduct() === $product) {
-                                        $empFixCom = $commission->getCommissionFixed();
-                                        $empVarCom = $commission->getCommissionVariant();
-                                        $empCommission = (($companyCommission * $empVarCom) / 100) + $empFixCom;
-                                        $employeeCommission = number_format($empCommission, 2);
-                                        $supplier = $employee->getSupplier();
-                                        $payable = $this->getPayableService();
-                                        $payable->setUser($loan->getProposal()->getUser());
-                                        $payable->setSupplier($supplier);
-                                        $payable->setDescription("COM. REF. A CONSIGNADO Nº {$loan->getId()}.");
-                                        $payable->setValue($employeeCommission);
-                                        $payable->create();
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case 'PENDING':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => true,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'PENDENTE: ' . $post['proposalStatusNotes'],
-                            'bank' => $loan->getProposal()->getBank(),
-                        );
-                        break;
-                }
-
-                $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
-
-                $proposal = $loan->getProposal();
-                $hydrator->hydrate($data, $proposal);
-
-                if ($post['proposalStatusId'] == "INTEGRATED") {
-                    if ($post['proposalStatusBaseDate']) {
-                        $dateFilter = new \DtlBase\Filter\Date();
-                        $date = new \DateTime($dateFilter->filter($post['proposalStatusBaseDate']));
-                        $timestamp = $date->getTimestamp();
-
-                        $startDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + 1, date('d', $timestamp));
-
-                        $date = new \DateTime($dateFilter->filter($post['proposalStatusBaseDate']));
-
-                        $endDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + $proposal->getParcelAmount() + 1, date('d', $timestamp));
-
-                        $baseDate = date('Y-m-d', $timestamp);
-
-                        $data = array(
-                            'baseDate' => $baseDate,
-                            'startDate' => $startDate,
-                            'endDate' => $endDate
-                        );
-
-                        $hydrator->hydrate($data, $proposal);
-                    }
-                }
-
-                if ($post['proposalStatusId'] == 'APPROVED') {
-                    $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-                    $proposalParcelAmount = $post['proposalStatusParcelAmount'];
-                    $proposalParcelValue = $currencyFilter->filter($post['proposalStatusParcelValue']);
-                    $proposalValue = $currencyFilter->filter($post['proposalStatusValue']);
-
-                    if (!empty($proposalParcelAmount) && !empty($proposalParcelValue) && !empty($proposalValue)) {
-                        $data = array(
-                            'parcelAmount' => $proposalParcelAmount,
-                            'parcelValue' => $proposalParcelValue,
-                            'value' => $proposalValue,
-                        );
-
-                        $hydrator->hydrate($data, $proposal);
-                    }
-                }
-
-                $log = new \DtlProposal\Entity\Log();
-                $hydrator->hydrate($data_log, $log);
-                $proposal->addLog($log);
-
-                $em->persist($proposal);
-                $em->persist($loan);
-                $em->flush();
-
+                $this->getProposalService()->changeStatus($loan, $this->request->getPost()->proposalStatus);
                 $this->flashMessenger()->addSuccessMessage('Status da proposta alterado com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/loan');
             }
@@ -619,9 +246,7 @@ class LoanController extends AbstractActionController {
 
     public function bankAction() {
         $loanId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
 
         if ($loan->getProposal()->getIsChecking()) {
@@ -636,74 +261,9 @@ class LoanController extends AbstractActionController {
         $form->get('bankReport')->get('parcelValue')->setValue($loan->getProposal()->getParcelValue());
 
         if ($this->request->isPost()) {
-
             $form->setData($this->request->getPost());
-
             if ($form->isValid()) {
-
-                $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
-
-                $post = $this->request->getPost()->bankReport;
-
-                $bank = $em->find('DtlBank\Entity\Bank', $post['bank']);
-
-                $dateFilter = new \DtlBase\Filter\Date();
-
-                $baseDate = new \DateTime($dateFilter->filter($loan->getProposal()->getBaseDate()));
-
-                $timestamp = $baseDate->getTimestamp();
-
-                $endDate = $baseDate->setDate(date('Y', $timestamp), date('m', $timestamp) + $post['parcelAmount'] + 1, date('d', $timestamp));
-
-                $dataProposal = array(
-                    'bank' => $bank,
-                    'parcelAmount' => $post['parcelAmount'],
-                    'parcelValue' => $post['parcelValue'],
-                    'lastExpiration' => date('Y-m-d', $endDate->getTimestamp()),
-                    'isChecking' => true,
-                    'isApproved' => false,
-                    'isCanceled' => false,
-                    'isIntegrated' => false,
-                    'isRefused' => false,
-                    'isAborted' => false,
-                    'lastChange' => date('Y-m-d H:i:s'),
-                );
-
-                $proposal = $loan->getProposal();
-                $hydrator->hydrate($dataProposal, $proposal);
-
-                $dataLog = array(
-                    'bank' => $bank,
-                    'timestamp' => date('Y-m-d H:i:s'),
-                    'message' => 'ABERTA: PROPOSTA SENDO ANALISADA PELO BANCO.'
-                );
-                $log = new \DtlProposal\Entity\Log();
-                $hydrator->hydrate($dataLog, $log);
-                $em->persist($log);
-                $proposal->addLog($log);
-
-
-                $activeBankReport = $loan->getProposal()->getReports();
-                if (count($activeBankReport) > 0) {
-                    foreach ($activeBankReport as $bankReportData) {
-                        $bankReportData->setIsActive(false);
-                        $em->persist($bankReportData);
-                    }
-                }
-
-                $dataBankReport = array(
-                    'bank' => $bank,
-                    'isActive' => true
-                );
-                $bankReport = new \DtlProposal\Entity\BankReport();
-                $hydrator->hydrate($dataBankReport, $bankReport);
-                $proposal->addReport($bankReport);
-
-                $em->persist($proposal);
-                $em->persist($loan);
-
-                $em->flush();
-
+                $this->getProposalService()->changeBank($loan, $this->request->getPost()->bankReport);
                 $this->flashMessenger()->addSuccessMessage('Migração bancária efetuada com sucesso na proposta nº ' . $loan->getId() . ' com sucesso!');
                 return $this->redirect()->toRoute("dtladmin/dtlproposal/loan");
             }

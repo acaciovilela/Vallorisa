@@ -11,6 +11,8 @@
                 ->appendName('viewport', 'width=device-width, initial-scale=1.0');
 
         echo $this->headScript()
+                ->prependFile($this->basePath() . '/js/application.js', 'text/javascript', array('charset' => 'UTF-8'))
+                ->prependFile($this->basePath() . '/js/jquery.mask.min.js')
                 ->prependFile($this->basePath() . '/datepicker/js/bootstrap-datetimepicker.min.js')
                 ->prependFile($this->basePath() . '/js/moment.min.js', 'text/javascript', array('async' => 'async'))
                 ->prependFile($this->basePath() . '/js/jquery.min.js', 'text/javascript', array('async' => 'async'))

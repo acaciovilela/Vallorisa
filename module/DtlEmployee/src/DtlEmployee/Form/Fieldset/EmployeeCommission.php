@@ -37,7 +37,10 @@ class EmployeeCommission extends ZendFielset implements InputFilterProviderInter
                 'find_method' => array(
                     'name' => 'findBy',
                     'params' => array(
-                        'criteria' => array()
+                        'criteria' => array(
+                            'isActive' => true,
+                        ),
+                        'orderBy' => array('name' => 'ASC'),
                     )
                 ),
                 'label' => 'Produto'
@@ -48,26 +51,24 @@ class EmployeeCommission extends ZendFielset implements InputFilterProviderInter
         ));
         
         $this->add(array(
-            'name' => 'fixedCommission',
+            'name' => 'fixed',
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
-                'label' => 'Comissão Fixa',
+                'label' => 'Comissão Fixa (R$)',
             ),
             'attributes' => array(
                 'class' => 'form-control input-sm currency',
-                'value' => '0,00'
             ),
         ));
         
         $this->add(array(
-            'name' => 'variantCommission',
+            'name' => 'variant',
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
-                'label' => 'Comissão Variável',
+                'label' => 'Comissão Variável (%)',
             ),
             'attributes' => array(
                 'class' => 'form-control input-sm porcent',
-                'value' => '0,00'
             ),
         ));
         
@@ -90,13 +91,13 @@ class EmployeeCommission extends ZendFielset implements InputFilterProviderInter
             'product' => array(
                 'required' => false,
             ),
-            'fixedCommission' => array(
+            'fixed' => array(
                 'required' => false,
                 'filters' => array(
                     new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR')),
                 ),
             ),
-            'variantCommission' => array(
+            'variant' => array(
                 'required' => false,
                 'filters' => array(
                     new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR')),

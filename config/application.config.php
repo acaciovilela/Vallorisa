@@ -7,6 +7,7 @@
  */
 return array(
     'modules' => array(
+        'ZF2NetteDebug',
         'RdnCsv',
         'DoctrineModule',
         'DoctrineORMModule',

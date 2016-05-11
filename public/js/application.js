@@ -105,6 +105,21 @@ $(document).ready(function () {
     $('.decimals').mask('##0,00', {reverse: true, clearIfNotMatch: true});
 });
 
+function setMasks() {
+    $('.date').mask('11/11/1111', {clearIfNotMatch: true});
+    $('.time').mask('00:00:00', {clearIfNotMatch: true});
+    $('.cep').mask('00.000-000', {clearIfNotMatch: true});
+    $('.phone').mask('(00) 0000-0000', {clearIfNotMatch: true});
+    $('.cpf').mask('000.000.000-00', {reverse: true, clearIfNotMatch: true});
+    $('.cnpj').mask('00.000.000/0000-00', {reverse: true, clearIfNotMatch: true});
+    $('.money').mask('000.000.000.000.000,00', {reverse: true, clearIfNotMatch: true});
+    $('.creditcard').mask('0000 0000 0000 0000', {reverse: true, clearIfNotMatch: true});
+    $('.validity').mask('00/00', {reverse: true, clearIfNotMatch: true});
+    $('.currency').mask("#.##0,00", {reverse: true, maxlength: false, clearIfNotMatch: true});
+    $('.porcent').mask('##0,00%', {reverse: true, clearIfNotMatch: true});
+    $('.decimals').mask('##0,00', {reverse: true, clearIfNotMatch: true});
+}
+
 function calculatePrice(e, t, n) {
     var r = e;
     var i = t;
@@ -627,6 +642,7 @@ function removeCommission() {
     e.remove();
     return false;
 }
+
 
 $(document).ready(function () {
     $(':text, textarea').on('keyup', function () {

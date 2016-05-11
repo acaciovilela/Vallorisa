@@ -3,20 +3,12 @@
 namespace DtlProposal\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController {
 
-    protected $entityManager;
-
     public function indexAction() {
-        
+        return new ViewModel();
     }
 
-    public function getEntityManager() {
-        return $this->entityManager;
-    }
-
-    public function setEntityManager($entityManager) {
-        $this->entityManager = $entityManager;
-    }
 }

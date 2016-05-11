@@ -383,7 +383,7 @@ class CaixaProposalController extends AbstractActionController {
 
                 $post = $this->request->getPost()->proposalStatus;
 
-                switch ($post['proposalStatusId']) {
+                switch ($post['id']) {
                     case 'APPROVED':
                         $data = array(
                             'isApproved' => true,
@@ -397,7 +397,7 @@ class CaixaProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'APROVADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'APROVADA: ' . $post['notes'],
                             'bank' => $caixaProposal->getProposal()->getBank(),
                         );
                         break;
@@ -414,7 +414,7 @@ class CaixaProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABORTADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'ABORTADA: ' . $post['notes'],
                             'bank' => $caixaProposal->getProposal()->getBank(),
                         );
                         break;
@@ -431,7 +431,7 @@ class CaixaProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA: ' . $post['proposalStatusNotes'],
+                            'message' => 'ABERTA: ' . $post['notes'],
                             'bank' => $caixaProposal->getProposal()->getBank(),
                         );
                         break;
@@ -448,7 +448,7 @@ class CaixaProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA (MOVIMENTAÇÃO): ' . $post['proposalStatusNotes'],
+                            'message' => 'ABERTA (MOVIMENTAÇÃO): ' . $post['notes'],
                             'bank' => $caixaProposal->getProposal()->getBank(),
                         );
                         break;
@@ -465,7 +465,7 @@ class CaixaProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'CANCELADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'CANCELADA: ' . $post['notes'],
                             'bank' => $caixaProposal->getProposal()->getBank(),
                         );
                         break;
@@ -482,7 +482,7 @@ class CaixaProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'RECUSADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'RECUSADA: ' . $post['notes'],
                             'bank' => $caixaProposal->getProposal()->getBank(),
                         );
                         break;
@@ -499,7 +499,7 @@ class CaixaProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'INTEGRADA: ' . $post['proposalStatusNotes'],
+                            'message' => 'INTEGRADA: ' . $post['notes'],
                             'bank' => $caixaProposal->getProposal()->getBank(),
                         );
 
@@ -570,7 +570,7 @@ class CaixaProposalController extends AbstractActionController {
                         );
                         $data_log = array(
                             'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'PENDENTE: ' . $post['proposalStatusNotes'],
+                            'message' => 'PENDENTE: ' . $post['notes'],
                             'bank' => $caixaProposal->getProposal()->getBank(),
                         );
                         break;
@@ -581,15 +581,15 @@ class CaixaProposalController extends AbstractActionController {
                 $proposal = $caixaProposal->getProposal();
                 $hydrator->hydrate($data, $proposal);
 
-                if ($post['proposalStatusId'] == "INTEGRATED") {
-                    if ($post['proposalStatusBaseDate']) {
+                if ($post['id'] == "INTEGRATED") {
+                    if ($post['baseDate']) {
                         $dateFilter = new \DtlBase\Filter\Date();
-                        $date = new \DateTime($dateFilter->filter($post['proposalStatusBaseDate']));
+                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
                         $timestamp = $date->getTimestamp();
 
                         $startDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + 1, date('d', $timestamp));
 
-                        $date = new \DateTime($dateFilter->filter($post['proposalStatusBaseDate']));
+                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
 
                         $endDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + $proposal->getParcelAmount() + 1, date('d', $timestamp));
 
@@ -605,12 +605,12 @@ class CaixaProposalController extends AbstractActionController {
                     }
                 }
 
-                if ($post['proposalStatusId'] == 'APPROVED') {
+                if ($post['id'] == 'APPROVED') {
                     $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
                     $caixaProposalTotalValue = $caixaProposal->getCaixaProposalTotalValue();
-                    $proposalParcelAmount = $post['proposalStatusParcelAmount'];
-                    $proposalParcelValue = $currencyFilter->filter($post['proposalStatusParcelValue']);
-                    $proposalValue = $currencyFilter->filter($post['proposalStatusValue']);
+                    $proposalParcelAmount = $post['parcelAmount'];
+                    $proposalParcelValue = $currencyFilter->filter($post['parcelValue']);
+                    $proposalValue = $currencyFilter->filter($post['value']);
                     $caixaProposalInValue = $caixaProposalTotalValue - $proposal->getValue();
 
                     if (!empty($proposalParcelAmount) && !empty($proposalParcelValue) && !empty($proposalValue)) {

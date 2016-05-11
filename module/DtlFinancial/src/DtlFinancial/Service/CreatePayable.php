@@ -23,7 +23,7 @@ class CreatePayable implements CreateAccountInterface {
     public function create() {
         
         if (!$this->getUser()) {
-            throw new \Exception('Não foi definido a empresa a qual pertence a conta.');
+            throw new \Exception('Usuário inválido.');
         }
         
         if (!$this->getSupplier()) {
@@ -37,7 +37,7 @@ class CreatePayable implements CreateAccountInterface {
         $account->setValue($this->getValue());
         
         $payable = new Payable();
-        $payable->setUser($this->getUser()->getId())
+        $payable->setUser($this->getUser())
                 ->setSupplier($this->getSupplier())
                 ->setAccount($account);
         
