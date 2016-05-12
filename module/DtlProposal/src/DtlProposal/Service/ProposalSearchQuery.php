@@ -115,8 +115,8 @@ class ProposalSearchQuery {
         if (!empty($params['proposalDateFrom']) && !empty($params['proposalDateTo'])) {
             $filter = new \DtlBase\Filter\Date();
             $query->andWhere('p.baseDate BETWEEN :datefrom AND :dateto');
-            $query->setParameter('datefrom', $filter->filter($params['dateFrom']));
-            $query->setParameter('dateto', $filter->filter($params['dateTo']));
+            $query->setParameter('datefrom', $filter->filter($params['proposalDateFrom']));
+            $query->setParameter('dateto', $filter->filter($params['proposalDateTo']));
         }
 
         if (!empty($params['company'])) {

@@ -9,6 +9,7 @@
 namespace DtlProposal\Service;
 
 use DtlProposal\Entity\ProposalEntityInterface;
+use DtlCustomer\Entity\Customer;
 
 interface ProposalServiceInterface {
 
@@ -23,17 +24,30 @@ interface ProposalServiceInterface {
      * @param ProposalEntityInterface $entity
      */
     public function update(ProposalEntityInterface $entity);
-    
+
     /**
      * 
      * @param ProposalEntityInterface $entity
      */
     public function changeStatus(ProposalEntityInterface $entity, $statusPost);
-    
+
     /**
      * 
      * @param ProposalEntityInterface $entity
      * @param type $bankPost
      */
     public function changeBank(ProposalEntityInterface $entity, $bankPost);
+
+    /**
+     * 
+     * @param objetc $params
+     */
+    public function calculate($params);
+
+    /**
+     * 
+     * @param ProposalEntityInterface $entity
+     * @param Customer $customer
+     */
+    public function populate(ProposalEntityInterface $entity, Customer $customer);
 }

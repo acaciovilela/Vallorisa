@@ -29,7 +29,7 @@ class LoanController extends AbstractActionController {
     protected $entityManager;
 
     /**
-     * @var string
+     * @var \DtlProposal\Entity\Loan
      */
     protected $repository;
 
@@ -38,8 +38,6 @@ class LoanController extends AbstractActionController {
      * @var \DtlProposal\Service\ProposalSearchQuery
      */
     protected $searchQuery;
-    protected $receivableService;
-    protected $payableService;
 
     public function indexAction() {
         $query = $this->getEntityManager()
@@ -112,7 +110,7 @@ class LoanController extends AbstractActionController {
             $customer->setUser($user);
             $loan->getProposal()->setCustomer($customer);
             $this->getProposalService()->resetSession();
-            $this->getProposalService()->populate($customer);
+            $this->getProposalService()->populate($loan, $customer);
         }
 
         $form->bind($loan);
@@ -136,21 +134,19 @@ class LoanController extends AbstractActionController {
         return array(
             'form' => $form,
             'post' => $this->getProposalSession()->prePost,
-            'entityManager' => $this->getEntityManager(),
-            'userId' => $user->getId(),
+            'entityManager' => $this->getEntityManager()
         );
     }
 
     public function editAction() {
         $loanId = $this->params()->fromRoute('id');
-        $userId = $this->identity()->getId();
         $form = new LoanForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
         $em = $this->getEntityManager();
         $loan = $em->find($this->getRepository(), $loanId);
 
         if (!$this->request->isPost()) {
             $this->getProposalService()->resetSession();
-            $this->getProposalService()->populate($loan->getProposal()->getCustomer());
+            $this->getProposalService()->populate($loan, $loan->getProposal()->getCustomer());
         }
 
         $form->bind($loan);
@@ -167,8 +163,7 @@ class LoanController extends AbstractActionController {
         return array(
             'form' => $form,
             'loan' => $loan,
-            'entityManager' => $this->getEntityManager(),
-            'companyId' => $userId,
+            'entityManager' => $this->getEntityManager()
         );
     }
 
@@ -219,14 +214,14 @@ class LoanController extends AbstractActionController {
         $loanId = $this->params()->fromRoute('id');
         $em = $this->getEntityManager();
         $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
-        
+
         if ($loan->getProposal()->getIsRefused()) {
             return array(
                 'refused' => true,
                 'loan' => $loan,
             );
         }
-        
+
         $form = new \DtlProposal\Form\ProposalStatus($em);
         $form->bind($loan->getProposal());
         if ($this->request->isPost()) {
@@ -279,345 +274,13 @@ class LoanController extends AbstractActionController {
 
         $params = $this->params()->fromQuery();
 
-        $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-
-        $totalValue = $currencyFilter->filter($params['totalValue']);
-        $parcelAmount = $params['parcelAmount'];
-        $proposalValue = $currencyFilter->filter($params['value']);
-
-        $inValue = $totalValue - $proposalValue;
-
-        $parcelValue = $proposalValue / $parcelAmount;
-
-        $date = new \DateTime('now');
-        $timestamp = $date->getTimestamp();
-        $newDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + ($parcelAmount + 1), date('d', $timestamp));
-        $endDate = date('d/m/Y', $newDate->getTimestamp());
-
-        $sDate = new \DateTime('now');
-        $sTamp = $sDate->getTimestamp();
-        $nDate = $sDate->setDate(date('Y', $sTamp), date('m', $sTamp) + 1, date('d', $sTamp));
-        $startDate = date('d/m/Y', $nDate->getTimestamp());
-
-        $result = array(
-            'parcelValue' => $this->convertToCurrency($parcelValue),
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-            'inValue' => $this->convertToCurrency($inValue)
-        );
+        $result = $this->getProposalService()->calculate($params);
 
         return $this->response->setContent(\Zend\Json\Json::encode($result));
     }
 
-    private function populate($customer) {
-
-        /**
-         * Populate Customer Bank Accounts
-         */
-        $customerBankAccounts = $customer->getAccounts();
-        if (count($customerBankAccounts) > 0) {
-            $customerBankAccount = array();
-            foreach ($customerBankAccounts->toArray() as $bankAccount) {
-                $customerBankAccount['id'] = $bankAccount->getId();
-                $customerBankAccount['type'] = $bankAccount->getType();
-                $customerBankAccount['bankName'] = $bankAccount->getBank();
-                $customerBankAccount['agency'] = $bankAccount->getAgency();
-                $customerBankAccount['account'] = $bankAccount->getAccount();
-                $customerBankAccount['since'] = $bankAccount->getSince();
-                $this->getProposalSession()->customerBankAccounts[] = $customerBankAccount;
-            }
-        }
-
-        /**
-         * Populate Customer References
-         */
-        $customerRefereces = $customer->getReferences();
-        if (count($customerRefereces) > 0) {
-            $customerReference = array();
-            foreach ($customerRefereces as $reference) {
-                $customerReference['referenceId'] = $reference->getId();
-                $customerReference['referenceType'] = $reference->getType();
-                $customerReference['referenceName'] = $reference->getName();
-                $customerReference['referencePhone'] = $reference->getPhone();
-                $this->getProposalSession()->customerReferences[] = $customerReference;
-            }
-        }
-
-        /**
-         * Populate Customer Patrimony
-         */
-        $customerPatrimonies = $customer->getPatrimonies();
-        if (count($customerPatrimonies) > 0) {
-            $customerPatriomny = array();
-            foreach ($customerPatrimonies as $patrimony) {
-                $customerPatriomny['patrimonyId'] = $patrimony->getId();
-                $customerPatriomny['patrimonyName'] = $patrimony->getName();
-                $customerPatriomny['patrimonyValue'] = $patrimony->getValue();
-                $this->getProposalSession()->customerPatrimonies[] = $customerPatriomny;
-            }
-        }
-
-        $customerVehicles = $customer->getVehicles();
-        if (count($customerVehicles) > 0) {
-            $customerVehicle = array();
-            foreach ($customerVehicles as $vehicle) {
-                $customerVehicle['vehicleId'] = $vehicle->getId();
-                $customerVehicle['vehicleBrandId'] = $vehicle->getBrand()->getId();
-                $customerVehicle['vehicleBrandName'] = $vehicle->getBrand()->getName();
-                $customerVehicle['vehicleTypeId'] = $vehicle->getType()->getId();
-                $customerVehicle['vehicleTypeName'] = $vehicle->getType()->getName();
-                $customerVehicle['vehicleModelId'] = $vehicle->getModel()->getId();
-                $customerVehicle['vehicleModelName'] = $vehicle->getModel()->getName();
-                $customerVehicle['vehicleVersionId'] = $vehicle->getVersion()->getId();
-                $customerVehicle['vehicleVersionName'] = $vehicle->getVersion()->getName();
-                $customerVehicle['vehicleYear'] = $vehicle->getYear();
-                $customerVehicle['vehicleYearModel'] = $vehicle->getYearModel();
-                $customerVehicle['vehiclePlate'] = $vehicle->getPlate();
-                $customerVehicle['vehicleColor'] = $vehicle->getColor();
-                $customerVehicle['vehicleValue'] = $vehicle->getValue();
-                $this->getProposalSession()->customerVehicles[] = $customerVehicle;
-            }
-        }
-    }
-
-    public function listvehiclesAction() {
-        $vehicles = array();
-        if (!empty($this->getProposalSession()->vehicles)) {
-            $vehicles = $this->getProposalSession()->vehicles;
-        }
-        $view = new ViewModel(array(
-            'vehicles' => $vehicles,
-        ));
-        $view->setTemplate('proposal/loan/vehicle/listvehicles');
-        return $view;
-    }
-
-    public function addvehicleAction() {
-        if (!$this->getProposalSession()->vehicles) {
-            $this->getProposalSession()->vehicles = array();
-        }
-        $vehicle = $this->params()->fromQuery();
-        if (empty($vehicle['vehicleBrandId']) ||
-                empty($vehicle['vehicleTypeId']) ||
-                empty($vehicle['vehicleModelId']) ||
-                empty($vehicle['vehicleVersionId'])) {
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-        } else {
-            $em = $this->getEntityManager();
-            $currency = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-            $vehicleBrand = $em->find('DtlVehicle\Entity\VehicleBrand', $vehicle['vehicleBrandId']);
-            $vehicleType = $em->find('DtlVehicle\Entity\VehicleType', $vehicle['vehicleTypeId']);
-            $vehicleModel = $em->find('DtlVehicle\Entity\VehicleModel', $vehicle['vehicleModelId']);
-            $vehicleVersion = $em->find('DtlVehicle\Entity\VehicleVersion', $vehicle['vehicleVersionId']);
-            $vehicle['vehicleBrandName'] = $vehicleBrand->getName();
-            $vehicle['vehicleTypeName'] = $vehicleType->getName();
-            $vehicle['vehicleModelName'] = $vehicleModel->getName();
-            $vehicle['vehicleVersionName'] = $vehicleVersion->getName();
-            $vehicle['vehicleValue'] = $currency->filter($vehicle['vehicleValue']);
-            $this->getProposalSession()->vehicles[] = $vehicle;
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-    }
-
-    public function deletevehicleAction() {
-        $item = (int) $this->params()->fromQuery('itemId');
-        $vehicles = $this->getProposalSession()->vehicles;
-        if ($item >= 0) {
-            unset($vehicles[$item]);
-            $this->getProposalSession()->vehicles = $vehicles;
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-        return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-    }
-
-    public function listcustomerbankaccountAction() {
-        $customerBankAccounts = array();
-        if (!empty($this->getProposalSession()->customerBankAccounts)) {
-            $customerBankAccounts = $this->getProposalSession()->customerBankAccounts;
-        }
-        $view = new ViewModel(array(
-            'customerBankAccounts' => $customerBankAccounts,
-        ));
-        $view->setTemplate('dtl-proposal/proposal/customerbankaccountlist');
-        return $view;
-    }
-
-    public function addcustomerbankaccountAction() {
-        if (!$this->getProposalSession()->customerBankAccounts) {
-            $this->getProposalSession()->customerBankAccounts = array();
-        }
-        $customerBankAccount = $this->params()->fromQuery();
-        if (empty($customerBankAccount['bank']) ||
-                empty($customerBankAccount['agency']) ||
-                empty($customerBankAccount['account'])) {
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-        } else {
-            $this->getProposalSession()->customerBankAccounts[] = $customerBankAccount;
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-    }
-
-    public function deletecustomerbankaccountAction() {
-        $item = (int) $this->params()->fromQuery('itemId');
-        $dataId = (int) $this->params()->fromQuery('dataId');
-        $customerBankAccounts = $this->getProposalSession()->customerBankAccounts;
-        if ($item >= 0) {
-            unset($customerBankAccounts[$item]);
-            $this->getProposalSession()->customerBankAccounts = $customerBankAccounts;
-            if (!empty($dataId)) {
-                $em = $this->getEntityManager();
-                $em->remove($em->find('DtlBankAccount\Entity\BankAccount', $dataId));
-                $em->flush();
-            }
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-        return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-    }
-
-    public function listcustomerreferenceAction() {
-        $customerReferences = array();
-        if (!empty($this->getProposalSession()->customerReferences)) {
-            $customerReferences = $this->getProposalSession()->customerReferences;
-        }
-        $view = new ViewModel(array(
-            'customerReferences' => $customerReferences,
-        ));
-        $view->setTemplate('dtl-proposal/proposal/customerreferencelist');
-        return $view;
-    }
-
-    public function addcustomerreferenceAction() {
-        if (!$this->getProposalSession()->customerReferences) {
-            $this->getProposalSession()->customerReferences = array();
-        }
-        $customerReference = $this->params()->fromQuery();
-        if (empty($customerReference['referenceName']) ||
-                empty($customerReference['referencePhone'])) {
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-        } else {
-            $filter = new \Zend\Filter\Digits();
-            $customerReference['referencePhone'] = $filter->filter($customerReference['referencePhone']);
-            $this->getProposalSession()->customerReferences[] = $customerReference;
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-    }
-
-    public function deletecustomerreferenceAction() {
-        $item = (int) $this->params()->fromQuery('itemId');
-        $dataId = (int) $this->params()->fromQuery('dataId');
-        $customerReferences = $this->getProposalSession()->customerReferences;
-        if ($item >= 0) {
-            unset($customerReferences[$item]);
-            $this->getProposalSession()->customerReferences = $customerReferences;
-            if (!empty($dataId)) {
-                $em = $this->getEntityManager();
-                $em->remove($em->find('DtlReference\Entity\Reference', $dataId));
-                $em->flush();
-            }
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-        return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-    }
-
-    public function listcustomerpatrimonyAction() {
-        $customerPatrimonies = array();
-        if (!empty($this->getProposalSession()->customerPatrimonies)) {
-            $customerPatrimonies = $this->getProposalSession()->customerPatrimonies;
-        }
-        $view = new ViewModel(array(
-            'customerPatrimonies' => $customerPatrimonies,
-        ));
-        $view->setTemplate('dtl-proposal/proposal/customerpatrimonylist');
-        return $view;
-    }
-
-    public function addcustomerpatrimonyAction() {
-        if (!$this->getProposalSession()->customerPatrimonies) {
-            $this->getProposalSession()->customerPatrimonies = array();
-        }
-        $customerPatrimony = $this->params()->fromQuery();
-        if (empty($customerPatrimony['patrimonyName']) ||
-                empty($customerPatrimony['patrimonyValue'])) {
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-        } else {
-            $filter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-            $customerPatrimony['patrimonyValue'] = $filter->filter($customerPatrimony['patrimonyValue']);
-            $this->getProposalSession()->customerPatrimonies[] = $customerPatrimony;
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-    }
-
-    public function deletecustomerpatrimonyAction() {
-        $item = (int) $this->params()->fromQuery('itemId');
-        $dataId = (int) $this->params()->fromQuery('dataId');
-        $customerPatrimonies = $this->getProposalSession()->customerPatrimonies;
-        if ($item >= 0) {
-            unset($customerPatrimonies[$item]);
-            $this->getProposalSession()->customerPatrimonies = $customerPatrimonies;
-            if (!empty($dataId)) {
-                $em = $this->getEntityManager();
-                $em->remove($em->find('DtlPatrimony\Entity\Patrimony', $dataId));
-                $em->flush();
-            }
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-        return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-    }
-
-    public function listcustomervehicleAction() {
-        $customerVehicle = array();
-        if (!empty($this->getProposalSession()->customerVehicles)) {
-            $customerVehicle = $this->getProposalSession()->customerVehicles;
-        }
-        $view = new ViewModel(array(
-            'customerVehicles' => $customerVehicle,
-        ));
-        $view->setTemplate('dtl-proposal/proposal/customervehiclelist');
-        return $view;
-    }
-
-    public function addcustomervehicleAction() {
-        if (!$this->getProposalSession()->customerVehicles) {
-            $this->getProposalSession()->customerVehicles = array();
-        }
-        $customerVehicle = $this->params()->fromQuery();
-        if (empty($customerVehicle['vehicleBrandId']) ||
-                empty($customerVehicle['vehicleTypeId']) ||
-                empty($customerVehicle['vehicleModelId']) ||
-                empty($customerVehicle['vehicleVersionId'])) {
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
-        } else {
-            $em = $this->getEntityManager();
-            $currency = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-            $vehicleBrand = $em->find('DtlVehicle\Entity\VehicleBrand', $customerVehicle['vehicleBrandId']);
-            $vehicleType = $em->find('DtlVehicle\Entity\VehicleType', $customerVehicle['vehicleTypeId']);
-            $vehicleModel = $em->find('DtlVehicle\Entity\VehicleModel', $customerVehicle['vehicleModelId']);
-            $vehicleVersion = $em->find('DtlVehicle\Entity\VehicleVersion', $customerVehicle['vehicleVersionId']);
-            $customerVehicle['vehicleBrandName'] = $vehicleBrand->getName();
-            $customerVehicle['vehicleTypeName'] = $vehicleType->getName();
-            $customerVehicle['vehicleModelName'] = $vehicleModel->getName();
-            $customerVehicle['vehicleVersionName'] = $vehicleVersion->getName();
-            $customerVehicle['vehicleValue'] = $currency->filter($customerVehicle['vehicleValue']);
-            $this->getProposalSession()->customerVehicles[] = $customerVehicle;
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-    }
-
-    public function deletecustomervehicleAction() {
-        $item = (int) $this->params()->fromQuery('itemId');
-        $dataId = (int) $this->params()->fromQuery('dataId');
-        $customerVehicles = $this->getProposalSession()->customerVehicles;
-        if ($item >= 0) {
-            unset($customerVehicles[$item]);
-            $this->getProposalSession()->customerVehicles = $customerVehicles;
-            if (!empty($dataId)) {
-                $em = $this->getEntityManager();
-                $em->remove($em->find('DtlVehicle\Entity\Vehicle', $dataId));
-                $em->flush();
-            }
-            return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
-        }
-        return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
+    private function populate($loan, $customer) {
+        $this->getProposalService()->populate($loan, $customer);
     }
 
     public function searchAction() {
@@ -625,23 +288,6 @@ class LoanController extends AbstractActionController {
         return new ViewModel(array(
             'form' => $form,
         ));
-    }
-
-    public function exportPdfAction() {
-        $query = $this->getEntityManager()
-                ->getRepository($this->getRepository())
-                ->createQueryBuilder('l')
-                ->select('l.loanId, pe.name, p.date, p.value, p.parcelAmount, p.parcelValue, b.name')
-                ->join('l.proposal', 'p')
-                ->join('p.customer', 'c')
-                ->join('p.bank', 'b')
-                ->join('c.person', 'pe')
-                ->where('p.isActive = TRUE')
-                ->orderBy('p.timestamp', 'DESC');
-
-        $header = array('ID', 'NOME', 'DATA', 'VALOR FIN.', 'PARCELAS', 'VAL. PARCELA', 'BANCO');
-
-        return $this->csvExport('foo.csv', $header, $query->getQuery()->getArrayResult());
     }
 
     public function exportCsvAction() {
@@ -761,22 +407,6 @@ class LoanController extends AbstractActionController {
     public function setSearchQuery(\DtlProposal\Service\ProposalSearchQuery $searchQuery) {
         $this->searchQuery = $searchQuery;
         return $this;
-    }
-
-    function getReceivableService() {
-        return $this->receivableService;
-    }
-
-    function getPayableService() {
-        return $this->payableService;
-    }
-
-    function setReceivableService($receivableService) {
-        $this->receivableService = $receivableService;
-    }
-
-    function setPayableService($payableService) {
-        $this->payableService = $payableService;
     }
 
 }

@@ -23,7 +23,7 @@
             <?php foreach ($this->customerBankAccounts as $key => $customerBankAccount) : ?>
                 <tr>
                     <td><?php echo $this->escapeHtml($customerBankAccount['type']); ?></td>
-                    <td><?php echo ($customerBankAccount['bank']) ? $this->bankName($customerBankAccount['bank']) : $customerBankAccount['bankName']; ?></td>
+                    <td><?php echo (array_key_exists('bankName', $customerBankAccount)) ? $customerBankAccount['bankName'] : $this->bankName($customerBankAccount['bank']); ?></td>
                     <td><?php echo $this->escapeHtml($customerBankAccount['agency']); ?></td>
                     <td><?php echo $this->escapeHtml($customerBankAccount['account']); ?></td>
                     <td><?php echo $this->escapeHtml($customerBankAccount['since']); ?></td>

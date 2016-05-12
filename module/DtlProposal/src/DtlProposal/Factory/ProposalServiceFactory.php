@@ -4,12 +4,12 @@ namespace DtlProposal\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use DtlProposal\Service\Proposal;
+use DtlProposal\Service\ProposalService;
 
 class ProposalServiceFactory implements FactoryInterface {
 
     public function createService(ServiceLocatorInterface $sm) {
-        $service = new Proposal();
+        $service = new ProposalService();
         $service->setEntityManager($sm->get('doctrine.entitymanager.orm_default'));
         $service->setProposalSession($sm->get('proposal_session_service'));
         $service->setReceivableService($sm->get('dtlfinancial_create_receivable'));

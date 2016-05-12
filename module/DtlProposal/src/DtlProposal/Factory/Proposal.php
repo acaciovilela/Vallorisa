@@ -13,6 +13,7 @@ class Proposal implements FactoryInterface {
         $entitymanager  = $services->get('doctrine.entitymanager.orm_default');
         $controller     = new ProposalController();
         $controller->setProposalSession($services->get('proposal_session_service'));
+        $controller->setProposalService($services->get('proposal_service'));
         $controller->setEntityManager($entitymanager);
         $controller->setRepository('DtlProposal\Entity\Proposal');
         return $controller;

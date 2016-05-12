@@ -11,16 +11,22 @@ class BankName extends AbstractHelper {
      */
     protected $entityManager;
 
-    public function __invoke($bankId = null) {
+    public function __invoke($bank = null) {
 
-        $em = $this->getEntityManager();
+        $bankName = null;
 
-        $bank = $em->find('\DtlBank\Entity\Bank', $bankId);
-
-        if ($bank) {
+        if (!isset($bank)) {
+            $bankName = "BANCO NÃO IDENTIFICADO.";
+        }
+        
+        if (null !== $bank && is_integer((int)$bank)) {
+            $em = $this->getEntityManager();    
+            $bankEntity = $em->find('\DtlBank\Entity\Bank', $bank);
+            $bankName = $bankEntity->getName();
+        }
+        
+        if ($bank instanceof DtlBank\Entity\Bank) {
             $bankName = $bank->getName();
-        } else {
-            $bankName = "BANCO NÃO IDENTIFICADO";
         }
 
         return htmlspecialchars($bankName, ENT_QUOTES, 'UTF-8');

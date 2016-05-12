@@ -3,17 +3,17 @@
 namespace DtlProposal\Service;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use Zend\Http\Request;
 use DtlProposal\Entity\ProposalEntityInterface;
 use DtlProposal\Entity\Loan as LoanEntity;
 use DtlProposal\Entity\CaixaProposal as CaixaEntity;
 use DtlProposal\Entity\VehicleProposal as VehicleEntity;
 use DtlProposal\Entity\RealtyProposal as RealtyEntity;
+use DtlCustomer\Entity\Customer;
 
 /**
  * Proposal Service Class
  */
-class Proposal implements ProposalServiceInterface {
+class ProposalService implements ProposalServiceInterface {
 
     /**
      *
@@ -26,7 +26,17 @@ class Proposal implements ProposalServiceInterface {
      * @var \Doctrine\ORM\EntityManager
      */
     protected $entityManager;
+
+    /**
+     *
+     * @var \DtlFinancial\Service\CreatePayable
+     */
     protected $payableService;
+
+    /**
+     *
+     * @var \DtlFinancial\Service\CreateReceivable
+     */
     protected $receivableService;
 
     /**
@@ -63,179 +73,76 @@ class Proposal implements ProposalServiceInterface {
      * 
      * @param \DtlCustomer\Entity\Customer $customer
      */
-    public function populate($customer) {
+    public function populate(ProposalEntityInterface $entity, Customer $customer) {
 
         /**
          * Populate Customer Bank Accounts
          */
         $customerBankAccounts = $customer->getAccounts();
-
         if (count($customerBankAccounts) > 0) {
             $customerBankAccount = array();
-            foreach ($customerBankAccounts as $bankAccount) {
+            foreach ($customerBankAccounts->toArray() as $bankAccount) {
                 $customerBankAccount['id'] = $bankAccount->getId();
                 $customerBankAccount['type'] = $bankAccount->getType();
-                $customerBankAccount['bankName'] = $bankAccount->getBank();
+                $customerBankAccount['bankName'] = $bankAccount->getBank()->getName();
                 $customerBankAccount['agency'] = $bankAccount->getAgency();
                 $customerBankAccount['account'] = $bankAccount->getAccount();
                 $customerBankAccount['since'] = $bankAccount->getSince();
-                $customerBankAccount['bank'] = ($bankAccount->getBank()) ? $bankAccount->getBank()->getId() : "0";
+                $customerBankAccount['bank'] = $bankAccount->getBank();
                 $this->getProposalSession()->customerBankAccounts[] = $customerBankAccount;
             }
         }
 
-        /**
-         * Populate Customer References
-         */
-        $customerRefereces = $customer->getReferences();
-        if (count($customerRefereces) > 0) {
-            $customerReference = array();
-            foreach ($customerRefereces as $reference) {
-                $customerReference['id'] = $reference->getId();
-                $customerReference['type'] = $reference->getType();
-                $customerReference['name'] = $reference->getName();
-                $customerReference['phone'] = $reference->getPhone();
-                $this->getProposalSession()->customerReferences[] = $customerReference;
-            }
-        }
-
-        /**
-         * Populate Customer Patrimony
-         */
-        $customerPatrimonies = $customer->getPatrimonies();
-        if (count($customerPatrimonies) > 0) {
-            $customerPatriomny = array();
-            foreach ($customerPatrimonies as $patrimony) {
-                $customerPatriomny['id'] = $patrimony->getId();
-                $customerPatriomny['name'] = $patrimony->getName();
-                $customerPatriomny['value'] = $patrimony->getValue();
-                $this->getProposalSession()->customerPatrimonies[] = $customerPatriomny;
-            }
-        }
-
-        $customerVehicles = $customer->getVehicles();
-        if (count($customerVehicles) > 0) {
-            $customerVehicle = array();
-            foreach ($customerVehicles as $vehicle) {
-                $customerVehicle['vehicleId'] = $vehicle->getId();
-                $customerVehicle['vehicleBrandId'] = $vehicle->getBrand()->getId();
-                $customerVehicle['vehicleBrandName'] = $vehicle->getBrand()->getName();
-                $customerVehicle['vehicleTypeId'] = $vehicle->getType()->getId();
-                $customerVehicle['vehicleTypeName'] = $vehicle->getType()->getName();
-                $customerVehicle['vehicleModelId'] = $vehicle->getModel()->getId();
-                $customerVehicle['vehicleModelName'] = $vehicle->getModel()->getName();
-                $customerVehicle['vehicleVersionId'] = $vehicle->getVersion()->getId();
-                $customerVehicle['vehicleVersionName'] = $vehicle->getVersion()->getName();
-                $customerVehicle['vehicleYear'] = $vehicle->getYear();
-                $customerVehicle['vehicleYearModel'] = $vehicle->getYearModel();
-                $customerVehicle['vehiclePlate'] = $vehicle->getPlate();
-                $customerVehicle['vehicleColor'] = $vehicle->getColor();
-                $customerVehicle['vehicleValue'] = $vehicle->getValue();
-                $this->getProposalSession()->customerVehicles[] = $customerVehicle;
-            }
-        }
-    }
-
-    /**
-     * Add Customer Bank Accounts
-     */
-    public function addCustomerBankAccount($customer) {
-        $customerBankAccounts = $this->getProposalSession()->customerBankAccounts;
-        if (count($customerBankAccounts) > 0) {
-            foreach ($customerBankAccounts as $bankAccountsData) {
-//                \Zend\Debug\Debug::dump($bankAccountsData);exit;
-                if (!$bankAccountsData['id']) {
-                    $bankAccount = new \DtlBankAccount\Entity\BankAccount();
-                    $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
-                    $doctrineHydrator->hydrate($bankAccountsData, $bankAccount);
-                    $customer->addAccount($bankAccount);
+        if ($entity instanceof \DtlVehicle\Entity\Vehicle) {
+            /**
+             * Populate Customer References
+             */
+            $customerRefereces = $customer->getReferences();
+            if (count($customerRefereces) > 0) {
+                $customerReference = array();
+                foreach ($customerRefereces as $reference) {
+                    $customerReference['id'] = $reference->getId();
+                    $customerReference['type'] = $reference->getType();
+                    $customerReference['name'] = $reference->getName();
+                    $customerReference['phone'] = $reference->getPhone();
+                    $this->getProposalSession()->customerReferences[] = $customerReference;
                 }
             }
-        }
-        return $customer;
-    }
 
-    /**
-     * Add Customer Reference
-     */
-    public function addCustomerReference($customer) {
-        $customerReferences = $this->getProposalSession()->customerReferences;
-        if (count($customerReferences) > 0) {
-            foreach ($customerReferences as $referenceData) {
-                if (!$referenceData['id']) {
-                    $reference = new \DtlReference\Entity\Reference();
-                    $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
-                    $doctrineHydrator->hydrate($referenceData, $reference);
-                    $customer->addReference($reference);
+            /**
+             * Populate Customer Patrimony
+             */
+            $customerPatrimonies = $customer->getPatrimonies();
+            if (count($customerPatrimonies) > 0) {
+                $customerPatriomny = array();
+                foreach ($customerPatrimonies as $patrimony) {
+                    $customerPatriomny['id'] = $patrimony->getId();
+                    $customerPatriomny['name'] = $patrimony->getName();
+                    $customerPatriomny['value'] = $patrimony->getValue();
+                    $this->getProposalSession()->customerPatrimonies[] = $customerPatriomny;
                 }
             }
-        }
-        return $customer;
-    }
 
-    /**
-     * Add Customer Patrimony
-     */
-    public function addCustomerPatrimony($customer) {
-        $customerPatrimonies = $this->getProposalSession()->customerPatrimonies;
-        if (count($customerPatrimonies) > 0) {
-            foreach ($customerPatrimonies as $patrimonyData) {
-                if (!$patrimonyData['id']) {
-                    $patrimony = new \DtlPatrimony\Entity\Patrimony();
-                    $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
-                    $doctrineHydrator->hydrate($patrimonyData, $patrimony);
-                    $customer->addPatrimony($patrimony);
+            $customerVehicles = $customer->getVehicles();
+            if (count($customerVehicles) > 0) {
+                $customerVehicle = array();
+                foreach ($customerVehicles as $vehicle) {
+                    $customerVehicle['id'] = $vehicle->getId();
+                    $customerVehicle['brand'] = $vehicle->getBrand()->getId();
+                    $customerVehicle['brandName'] = $vehicle->getBrand()->getName();
+                    $customerVehicle['type'] = $vehicle->getType()->getId();
+                    $customerVehicle['typeName'] = $vehicle->getType()->getName();
+                    $customerVehicle['model'] = $vehicle->getModel()->getId();
+                    $customerVehicle['modelName'] = $vehicle->getModel()->getName();
+                    $customerVehicle['version'] = $vehicle->getVersion()->getId();
+                    $customerVehicle['versionName'] = $vehicle->getVersion()->getName();
+                    $customerVehicle['year'] = $vehicle->getYear();
+                    $customerVehicle['yearModel'] = $vehicle->getYearModel();
+                    $customerVehicle['plate'] = $vehicle->getPlate();
+                    $customerVehicle['color'] = $vehicle->getColor();
+                    $customerVehicle['value'] = $vehicle->getValue();
+                    $this->getProposalSession()->customerVehicles[] = $customerVehicle;
                 }
-            }
-        }
-        return $customer;
-    }
-
-    /**
-     * Add Customer Vehicle
-     */
-    public function addCustomerVehicle($customer) {
-        $customerVehicles = $this->getProposalSession()->customerVehicles;
-        if (count($customerVehicles) > 0) {
-            foreach ($customerVehicles as $vehicleData) {
-                if (!$vehicleData['id']) {
-                    $vehicle = new \DtlVehicle\Entity\Vehicle();
-                    $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
-                    $doctrineHydrator->hydrate($vehicleData, $vehicle);
-                    $customer->addVehicle($vehicle);
-                }
-            }
-        }
-        return $customer;
-    }
-
-    public function addProposalVehicles($vehicleProposal) {
-        $vehicles = $vehicleProposal->getVehicles();
-        if (count($vehicles) > 0) {
-            $proposalVehicle = array();
-            foreach ($vehicles as $vehicle) {
-                $proposalVehicle['id'] = $vehicle->getId();
-                $proposalVehicle['brand'] = $vehicle->getBrand()->getName();
-                $proposalVehicle['type'] = $vehicle->getType()->getName();
-                $proposalVehicle['model'] = $vehicle->getModel()->getName();
-                $proposalVehicle['version'] = $vehicle->getVersion()->getName();
-                $proposalVehicle['year'] = $vehicle->getYear();
-                $proposalVehicle['yearModel'] = $vehicle->getYearModel();
-                $proposalVehicle['plate'] = $vehicle->getPlate();
-                $proposalVehicle['value'] = $vehicle->getValue();
-                $this->getProposalSession()->vehicles[] = $proposalVehicle;
-            }
-        }
-    }
-
-    public function addProposalProducts($caixaProposal) {
-        $products = $caixaProposal->getProducts();
-        if (count($products) > 0) {
-            $proposalProducts = array();
-            foreach ($products as $product) {
-                $proposalProducts['productId'] = $product->getId();
-                $proposalProducts['productName'] = $product->getName();
-                $this->getProposalSession()->products[] = $proposalProducts;
             }
         }
     }
@@ -565,18 +472,18 @@ class Proposal implements ProposalServiceInterface {
      * @return boolean
      */
     public function changeBank(ProposalEntityInterface $entity, $bankPost) {
-        
+
         $em = $this->getEntityManager();
         $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
         $bank = $em->find('DtlBank\Entity\Bank', $bankPost['bank']);
         $dateFilter = new \DtlBase\Filter\Date();
-        
+
         $baseDate = new \DateTime($dateFilter->filter($entity->getProposal()->getBaseDate()));
         $timestamp = $baseDate->getTimestamp();
         $endDate = $baseDate->setDate(date('Y', $timestamp), date('m', $timestamp) + $bankPost['parcelAmount'] + 1, date('d', $timestamp));
 
         $currencyFilter = new \DtlBase\Filter\Currency();
-        
+
         $dataProposal = array(
             'bank' => $bank,
             'parcelAmount' => $currencyFilter->filter($bankPost['parcelAmount']),
@@ -623,8 +530,155 @@ class Proposal implements ProposalServiceInterface {
         $em->persist($entity);
 
         $em->flush();
-        
+
         return true;
+    }
+
+    public function calculate($params) {
+
+        if (!isset($params)) {
+            return null;
+        }
+
+        $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
+
+        $parcelAmount = $params['parcelAmount'];
+        $proposalValue = $currencyFilter->filter($params['value']);
+
+        if (array_key_exists('totalValue', $params)) {
+            $totalValue = $currencyFilter->filter($params['totalValue']);
+            $inValue = $totalValue - $proposalValue;
+            $parcelValue = $proposalValue / $parcelAmount;
+        }
+
+        $date = new \DateTime('now');
+        $timestamp = $date->getTimestamp();
+        $newDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + ($parcelAmount + 1), date('d', $timestamp));
+        $endDate = date('d/m/Y', $newDate->getTimestamp());
+
+        $sDate = new \DateTime('now');
+        $sTamp = $sDate->getTimestamp();
+        $nDate = $sDate->setDate(date('Y', $sTamp), date('m', $sTamp) + 1, date('d', $sTamp));
+        $startDate = date('d/m/Y', $nDate->getTimestamp());
+
+        $result = array(
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+        );
+
+        if (!empty($inValue)) {
+            $result['inValue'] = $currencyFilter->filter($inValue);
+        }
+        
+        if (!empty($parcelValue)) {
+            $result['parcelValue'] = $currencyFilter->filter($parcelValue);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Add Customer Bank Accounts
+     */
+    public function addCustomerBankAccount($customer) {
+        $customerBankAccounts = $this->getProposalSession()->customerBankAccounts;
+        if (count($customerBankAccounts) > 0) {
+            foreach ($customerBankAccounts as $bankAccountsData) {
+//                \Zend\Debug\Debug::dump($bankAccountsData);exit;
+                if (!$bankAccountsData['id']) {
+                    $bankAccount = new \DtlBankAccount\Entity\BankAccount();
+                    $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
+                    $doctrineHydrator->hydrate($bankAccountsData, $bankAccount);
+                    $customer->addAccount($bankAccount);
+                }
+            }
+        }
+        return $customer;
+    }
+
+    /**
+     * Add Customer Reference
+     */
+    public function addCustomerReference($customer) {
+        $customerReferences = $this->getProposalSession()->customerReferences;
+        if (count($customerReferences) > 0) {
+            foreach ($customerReferences as $referenceData) {
+                if (!$referenceData['id']) {
+                    $reference = new \DtlReference\Entity\Reference();
+                    $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
+                    $doctrineHydrator->hydrate($referenceData, $reference);
+                    $customer->addReference($reference);
+                }
+            }
+        }
+        return $customer;
+    }
+
+    /**
+     * Add Customer Patrimony
+     */
+    public function addCustomerPatrimony($customer) {
+        $customerPatrimonies = $this->getProposalSession()->customerPatrimonies;
+        if (count($customerPatrimonies) > 0) {
+            foreach ($customerPatrimonies as $patrimonyData) {
+                if (!$patrimonyData['id']) {
+                    $patrimony = new \DtlPatrimony\Entity\Patrimony();
+                    $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
+                    $doctrineHydrator->hydrate($patrimonyData, $patrimony);
+                    $customer->addPatrimony($patrimony);
+                }
+            }
+        }
+        return $customer;
+    }
+
+    /**
+     * Add Customer Vehicle
+     */
+    public function addCustomerVehicle($customer) {
+        $customerVehicles = $this->getProposalSession()->customerVehicles;
+        if (count($customerVehicles) > 0) {
+            foreach ($customerVehicles as $vehicleData) {
+                if (!$vehicleData['id']) {
+                    $vehicle = new \DtlVehicle\Entity\Vehicle();
+                    $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
+                    $doctrineHydrator->hydrate($vehicleData, $vehicle);
+                    $customer->addVehicle($vehicle);
+                }
+            }
+        }
+        return $customer;
+    }
+
+    public function addProposalVehicles($vehicleProposal) {
+        $vehicles = $vehicleProposal->getVehicles();
+        if (count($vehicles) > 0) {
+            $proposalVehicle = array();
+            foreach ($vehicles as $vehicle) {
+                $proposalVehicle['id'] = $vehicle->getId();
+                $proposalVehicle['brand'] = $vehicle->getBrand()->getName();
+                $proposalVehicle['type'] = $vehicle->getType()->getName();
+                $proposalVehicle['model'] = $vehicle->getModel()->getName();
+                $proposalVehicle['version'] = $vehicle->getVersion()->getName();
+                $proposalVehicle['year'] = $vehicle->getYear();
+                $proposalVehicle['yearModel'] = $vehicle->getYearModel();
+                $proposalVehicle['plate'] = $vehicle->getPlate();
+                $proposalVehicle['value'] = $vehicle->getValue();
+                $this->getProposalSession()->vehicles[] = $proposalVehicle;
+            }
+        }
+    }
+
+    public function addProposalProducts($caixaProposal) {
+        $products = $caixaProposal->getProducts();
+        if (count($products) > 0) {
+            $proposalProducts = array();
+            foreach ($products as $product) {
+                $proposalProducts['productId'] = $product->getId();
+                $proposalProducts['productName'] = $product->getName();
+                $this->getProposalSession()->products[] = $proposalProducts;
+            }
+        }
     }
 
     public function getEntityManager() {

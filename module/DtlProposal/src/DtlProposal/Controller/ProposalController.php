@@ -4,23 +4,29 @@ namespace DtlProposal\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use DtlProposal\Service\ProposalService as ProposalService;
 
 class ProposalController extends AbstractActionController {
 
     /**
+     * @var \DtlProposal\Service\Proposal
+     */
+    protected $proposalService;
+
+    /**
      * @var Zend\Session\Container
      */
-    protected $proposalSession = null;
+    protected $proposalSession;
 
     /**
      * @var \Doctrine\ORM\EntityManager
      */
-    protected $entityManager = null;
+    protected $entityManager;
 
     /**
      * @var string
      */
-    protected $repository = null;
+    protected $repository;
 
     public function indexAction() {
         
@@ -31,44 +37,17 @@ class ProposalController extends AbstractActionController {
     }
 
     public function calculateAction() {
-        
         $params = $this->params()->fromQuery();
-
-        $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-
-        
-        $parcelAmount = $params['parcelAmount'];
-        $proposalValue = $currencyFilter->filter($params['proposalValue']);
-
-        if (array_key_exists('proposalTotalValue', $params)) {
-            $totalValue = $currencyFilter->filter($params['proposalTotalValue']);
-            $inValue = $totalValue - $proposalValue;
-        }
-
-        $parcelValue = $proposalValue / $parcelAmount;
-
-        $date = new \DateTime('now');
-        $timestamp = $date->getTimestamp();
-        $newDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + ($parcelAmount + 1), date('d', $timestamp));
-        $endDate = date('d/m/Y', $newDate->getTimestamp());
-
-        $sDate = new \DateTime('now');
-        $sTamp = $sDate->getTimestamp();
-        $nDate = $sDate->setDate(date('Y', $sTamp), date('m', $sTamp) + 1, date('d', $sTamp));
-        $startDate = date('d/m/Y', $nDate->getTimestamp());
-
-        $result = array(
-            'parcelValue' => $this->convertToCurrency($parcelValue),
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-        );
-
-        if (!empty($inValue)) {
-            $result['inValue'] = $this->convertToCurrency($inValue);
-        }
+        $result = $this->getProposalService()->calculate($params);
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => $result)));
     }
 
+    /**
+     * 
+     * Vehicles functions
+     * 
+     * @return ViewModel
+     */
     public function listvehiclesAction() {
         $vehicles = array();
         if (!empty($this->getProposalSession()->vehicles)) {
@@ -81,20 +60,28 @@ class ProposalController extends AbstractActionController {
         return $view;
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function addvehicleAction() {
         if (!$this->getProposalSession()->vehicles) {
             $this->getProposalSession()->vehicles = array();
         }
         $vehicle = $this->params()->fromQuery();
-        if (empty($vehicle['vehicleBrandId']) ||
-                empty($vehicle['vehicleTypeId']) ||
-                empty($vehicle['vehicleModelId']) ||
-                empty($vehicle['vehicleVersionId'])) {
+        if (empty($vehicle['brand']) ||
+                empty($vehicle['type']) ||
+                empty($vehicle['model']) ||
+                empty($vehicle['version'])) {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         }
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function deletevehicleAction() {
         $item = (int) $this->params()->fromQuery('itemId');
         $vehicles = $this->getProposalSession()->vehicles;
@@ -106,11 +93,18 @@ class ProposalController extends AbstractActionController {
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
     }
 
+    /**
+     * 
+     * Customer Bank Accounts functions
+     * 
+     * @return ViewModel
+     */
     public function listcustomerbankaccountAction() {
         $customerBankAccounts = array();
         if (!empty($this->getProposalSession()->customerBankAccounts)) {
             $customerBankAccounts = $this->getProposalSession()->customerBankAccounts;
         }
+//        \Zend\Debug\Debug::dump($customerBankAccounts);exit;
         $view = new ViewModel(array(
             'customerBankAccounts' => $customerBankAccounts,
         ));
@@ -118,12 +112,15 @@ class ProposalController extends AbstractActionController {
         return $view;
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function addcustomerbankaccountAction() {
         if (!$this->getProposalSession()->customerBankAccounts) {
             $this->getProposalSession()->customerBankAccounts = array();
         }
         $customerBankAccount = $this->params()->fromQuery();
-//        \Zend\Debug\Debug::dump($customerBankAccount);exit;
         if (empty($customerBankAccount['bank']) ||
                 empty($customerBankAccount['agency']) ||
                 empty($customerBankAccount['account'])) {
@@ -133,6 +130,10 @@ class ProposalController extends AbstractActionController {
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function deletecustomerbankaccountAction() {
         $item = (int) $this->params()->fromQuery('itemId');
         $dataId = (int) $this->params()->fromQuery('dataId');
@@ -150,6 +151,12 @@ class ProposalController extends AbstractActionController {
         }
     }
 
+    /**
+     * 
+     * Customer References functions
+     * 
+     * @return ViewModel
+     */
     public function listcustomerreferenceAction() {
         $customerReferences = array();
         if (!empty($this->getProposalSession()->customerReferences)) {
@@ -162,21 +169,29 @@ class ProposalController extends AbstractActionController {
         return $view;
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function addcustomerreferenceAction() {
         if (!$this->getProposalSession()->customerReferences) {
             $this->getProposalSession()->customerReferences = array();
         }
         $customerReference = $this->params()->fromQuery();
-        if (empty($customerReference['referenceName']) ||
-                empty($customerReference['referencePhone'])) {
+        if (empty($customerReference['name']) ||
+                empty($customerReference['phone'])) {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         }
         $filter = new \Zend\Filter\Digits();
-        $customerReference['referencePhone'] = $filter->filter($customerReference['referencePhone']);
+        $customerReference['phone'] = $filter->filter($customerReference['phone']);
         $this->getProposalSession()->customerReferences[] = $customerReference;
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function deletecustomerreferenceAction() {
         $item = (int) $this->params()->fromQuery('itemId');
         $dataId = (int) $this->params()->fromQuery('dataId');
@@ -194,6 +209,12 @@ class ProposalController extends AbstractActionController {
         }
     }
 
+    /**
+     * 
+     * Customer Patrimony functions
+     * 
+     * @return ViewModel
+     */
     public function listcustomerpatrimonyAction() {
         $customerPatrimonies = array();
         if (!empty($this->getProposalSession()->customerPatrimonies)) {
@@ -206,21 +227,29 @@ class ProposalController extends AbstractActionController {
         return $view;
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function addcustomerpatrimonyAction() {
         if (!$this->getProposalSession()->customerPatrimonies) {
             $this->getProposalSession()->customerPatrimonies = array();
         }
         $customerPatrimony = $this->params()->fromQuery();
-        if (empty($customerPatrimony['patrimonyName']) ||
-                empty($customerPatrimony['patrimonyValue'])) {
+        if (empty($customerPatrimony['name']) ||
+                empty($customerPatrimony['value'])) {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         }
         $filter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-        $customerPatrimony['patrimonyValue'] = $filter->filter($customerPatrimony['patrimonyValue']);
+        $customerPatrimony['value'] = $filter->filter($customerPatrimony['value']);
         $this->getProposalSession()->customerPatrimonies[] = $customerPatrimony;
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function deletecustomerpatrimonyAction() {
         $item = (int) $this->params()->fromQuery('itemId');
         $dataId = (int) $this->params()->fromQuery('dataId');
@@ -238,6 +267,12 @@ class ProposalController extends AbstractActionController {
         }
     }
 
+    /**
+     * 
+     * Customer Vehicles functions
+     * 
+     * @return ViewModel
+     */
     public function listcustomervehicleAction() {
         $customerVehicle = array();
         if (!empty($this->getProposalSession()->customerVehicles)) {
@@ -250,32 +285,40 @@ class ProposalController extends AbstractActionController {
         return $view;
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function addcustomervehicleAction() {
         if (!$this->getProposalSession()->customerVehicles) {
             $this->getProposalSession()->customerVehicles = array();
         }
         $customerVehicle = $this->params()->fromQuery();
-        if (empty($customerVehicle['vehicleBrandId']) ||
-                empty($customerVehicle['vehicleTypeId']) ||
-                empty($customerVehicle['vehicleModelId']) ||
-                empty($customerVehicle['vehicleVersionId'])) {
+        if (empty($customerVehicle['brand']) ||
+                empty($customerVehicle['type']) ||
+                empty($customerVehicle['model']) ||
+                empty($customerVehicle['version'])) {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         }
         $em = $this->getEntityManager();
         $currency = new \Zend\I18n\Filter\NumberFormat(array("locale" => "pt_BR"));
-        $vehicleBrand = $em->find('DtlVehicle\Entity\VehicleBrand', $customerVehicle['vehicleBrandId']);
-        $vehicleType = $em->find('DtlVehicle\Entity\VehicleType', $customerVehicle['vehicleTypeId']);
-        $vehicleModel = $em->find('DtlVehicle\Entity\VehicleModel', $customerVehicle['vehicleModelId']);
-        $vehicleVersion = $em->find('DtlVehicle\Entity\VehicleVersion', $customerVehicle['vehicleVersionId']);
-        $customerVehicle['vehicleBrandName'] = $vehicleBrand->getVehicleBrandName();
-        $customerVehicle['vehicleTypeName'] = $vehicleType->getVehicleTypeName();
-        $customerVehicle['vehicleModelName'] = $vehicleModel->getVehicleModelName();
-        $customerVehicle['vehicleVersionName'] = $vehicleVersion->getVehicleVersionName();
-        $customerVehicle['vehicleValue'] = $currency->filter($customerVehicle['vehicleValue']);
+        $vehicleBrand = $em->find('DtlVehicle\Entity\VehicleBrand', $customerVehicle['brand']);
+        $vehicleType = $em->find('DtlVehicle\Entity\VehicleType', $customerVehicle['type']);
+        $vehicleModel = $em->find('DtlVehicle\Entity\VehicleModel', $customerVehicle['model']);
+        $vehicleVersion = $em->find('DtlVehicle\Entity\VehicleVersion', $customerVehicle['version']);
+        $customerVehicle['brandName'] = $vehicleBrand->getVehicleBrandName();
+        $customerVehicle['brandName'] = $vehicleType->getVehicleTypeName();
+        $customerVehicle['modelName'] = $vehicleModel->getVehicleModelName();
+        $customerVehicle['versionName'] = $vehicleVersion->getVehicleVersionName();
+        $customerVehicle['value'] = $currency->filter($customerVehicle['value']);
         $this->getProposalSession()->customerVehicles[] = $customerVehicle;
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
     }
 
+    /**
+     * 
+     * @return json|boolean
+     */
     public function deletecustomervehicleAction() {
         $item = (int) $this->params()->fromQuery('itemId');
         $dataId = (int) $this->params()->fromQuery('dataId');
@@ -291,24 +334,6 @@ class ProposalController extends AbstractActionController {
             }
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
         }
-    }
-
-    public function printHistoryAction() {
-
-        $id = $this->params()->fromRoute('id');
-
-        $em = $this->getEntityManager();
-        $proposal = $em->find('DtlProposal\Entity\Proposal', $id);
-
-        $this->layout()->setTemplate('layout/blank');
-        return array('proposal' => $proposal);
-    }
-    
-    public function uploadAction() {
-        $id = $this->params()->fromQuery('id');
-        return array(
-            'id' => $id
-        );
     }
 
     public function getEntityManager() {
@@ -335,6 +360,15 @@ class ProposalController extends AbstractActionController {
 
     public function setProposalSession($proposalSession) {
         $this->proposalSession = $proposalSession;
+        return $this;
+    }
+
+    public function getProposalService() {
+        return $this->proposalService;
+    }
+
+    public function setProposalService(ProposalService $proposalService) {
+        $this->proposalService = $proposalService;
         return $this;
     }
 

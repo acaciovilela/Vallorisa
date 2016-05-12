@@ -99,7 +99,7 @@ $form->prepare();
             </div>
             <div class="panel-body">
                 <?php $customerBankAccount = new DtlCustomer\Form\Fieldset\CustomerBankAccount($this->entityManager, 0); ?>
-                <?php $customerBankAccount->remove('customerId'); ?>
+                <?php $customerBankAccount->remove('customer'); ?>
                 <?php echo $this->customerBankAccountForm($customerBankAccount); ?>
             </div>
         </div>
