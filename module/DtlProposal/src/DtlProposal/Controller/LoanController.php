@@ -13,13 +13,13 @@ class LoanController extends AbstractActionController {
 
     /**
      *
-     * @var \DtlProposal\Service\Proposal
+     * @var \DtlProposal\Service\ProposalService
      */
     protected $proposalService;
 
     /**
      *
-     * @var \DtlProposal\Service\Proposal
+     * @var \DtlProposal\Service\ProposalService
      */
     protected $proposalSession;
 

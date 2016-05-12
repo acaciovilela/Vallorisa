@@ -9,7 +9,7 @@ use DtlProposal\Service\ProposalService as ProposalService;
 class ProposalController extends AbstractActionController {
 
     /**
-     * @var \DtlProposal\Service\Proposal
+     * @var \DtlProposal\Service\ProposalService
      */
     protected $proposalService;
 

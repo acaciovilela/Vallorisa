@@ -13,7 +13,7 @@ class RealtyProposalController extends AbstractActionController {
 
     /**
      *
-     * @var \DtlProposal\Service\Proposal
+     * @var \DtlProposal\Service\ProposalService
      */
     protected $proposalService;
 
@@ -1018,7 +1018,7 @@ class RealtyProposalController extends AbstractActionController {
         return $this->proposalService;
     }
 
-    public function setProposalService(\DtlProposal\Service\Proposal $proposalService) {
+    public function setProposalService(\DtlProposal\Service\ProposalService $proposalService) {
         $this->proposalService = $proposalService;
         return $this;
     }
