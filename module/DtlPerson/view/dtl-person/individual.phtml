@@ -2,16 +2,34 @@
 <?php echo $this->formHidden($individual->get('id')); ?>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
         <div class="form-group">
             <?php echo $this->formLabel($individual->get('cpf')); ?>
             <?php echo $this->formText($individual->get('cpf')); ?>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3">
         <div class="form-group">
             <?php echo $this->formLabel($individual->get('rg')); ?>
             <?php echo $this->formText($individual->get('rg')); ?>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('rgOrgan')); ?>
+            <?php echo $this->formText($individual->get('rgOrgan')); ?>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('rgUf')); ?>
+            <?php echo $this->formSelect($individual->get('rgUf')); ?>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('rgDate')); ?>
+            <?php echo $this->formText($individual->get('rgDate')); ?>
         </div>
     </div>
 </div>

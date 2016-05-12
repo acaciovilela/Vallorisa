@@ -40,9 +40,8 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
         'TO' => 'TO',
     );
 
-
     public function __construct($entityManager) {
-        
+
         parent::__construct('individual');
 
         $this->setHydrator(new DoctrineHydrator($entityManager))
@@ -64,7 +63,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'CPF'
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'rg',
             'type' => 'Zend\Form\Element\Text',
@@ -74,6 +73,43 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             ),
             'options' => array(
                 'label' => 'RG'
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'rgOrgan',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'placeholder' => 'Org. Expedidor',
+                'class' => 'form-control input-sm',
+            ),
+            'options' => array(
+                'label' => 'Org. Exp.'
+            ),
+        ));
+        $this->add(array(
+            'name' => 'rgUf',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'placeholder' => 'UF',
+                'class' => 'form-control input-sm',
+            ),
+            'options' => array(
+                'label' => 'UF',
+                'empty_option' => 'UF',
+                'value_options' => $this->stateCode,
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'rgDate',
+            'type' => 'Zend\Form\Element\Date',
+            'attributes' => array(
+                'placeholder' => 'Dt. de Expedição',
+                'class' => 'form-control input-sm datepicker',
+            ),
+            'options' => array(
+                'label' => 'Data de Expedição'
             ),
         ));
 
@@ -89,7 +125,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'Dia'
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'birthMonth',
             'type' => 'Zend\Form\Element\Select',
@@ -115,38 +151,38 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'Mês'
             )
         ));
-        
+
         $this->add(array(
             'name' => 'birthYear',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder'   => 'Ano',
-                'class'         => 'form-control ',
-                'maxlength'     => 4,
+                'placeholder' => 'Ano',
+                'class' => 'form-control ',
+                'maxlength' => 4,
             ),
             'options' => array(
                 'label' => 'Ano'
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'birthPlace',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder'   => 'Naturalidade',
-                'class'         => 'form-control ',
+                'placeholder' => 'Naturalidade',
+                'class' => 'form-control ',
             ),
             'options' => array(
                 'label' => 'Naturalidade'
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'birthUf',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
-                'placeholder'   => 'UF',
-                'class'         => 'form-control ',
+                'placeholder' => 'UF',
+                'class' => 'form-control ',
             ),
             'options' => array(
                 'label' => 'UF',
@@ -154,43 +190,43 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                 'value_options' => $this->stateCode,
             ),
         ));
-       
+
         $this->add(array(
             'name' => 'mother',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder'   => 'Nome da Mãe',
-                'class'         => 'form-control ',
+                'placeholder' => 'Nome da Mãe',
+                'class' => 'form-control ',
             ),
             'options' => array(
                 'label' => 'Nome da Mãe'
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'father',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder'   => 'Nome do Pai',
-                'class'         => 'form-control ',
+                'placeholder' => 'Nome do Pai',
+                'class' => 'form-control ',
             ),
             'options' => array(
                 'label' => 'Nome do Pai'
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'nationality',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder'   => 'Nacionalidade',
-                'class'         => 'form-control ',
+                'placeholder' => 'Nacionalidade',
+                'class' => 'form-control ',
             ),
             'options' => array(
                 'label' => 'Nacionalidade'
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'gender',
             'type' => 'Zend\Form\Element\Select',
@@ -206,7 +242,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'Sexo'
             ),
         ));
-        
+
         $professional = new \DtlPerson\Form\Fieldset\Professional($entityManager);
         $professional->setName('professional')
                 ->setLabel('Dados Profissionais');
@@ -215,6 +251,18 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
 
     public function getInputFilterSpecification() {
         return array(
+            'rgOrgan' => array(
+                'required' => false,
+            ),
+            'rgUf' => array(
+                'required' => false,
+            ),
+            'rgDate' => array(
+                'required' => false,
+                'filters' => array(
+                    new \DtlBase\Filter\Date()
+                )
+            ),
             'birthDay' => array(
                 'required' => false,
                 'filters' => array(
@@ -224,9 +272,9 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                 ),
                 'validators' => array(
                     array('name' => 'Between', 'options' => array(
-                        'min' => 1,
-                        'max' => 31,
-                    )),
+                            'min' => 1,
+                            'max' => 31,
+                        )),
                 ),
             ),
             'birthMonth' => array(
@@ -241,9 +289,9 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                 ),
                 'validators' => array(
                     array('name' => 'Between', 'options' => array(
-                        'min' => 1900,
-                        'max' => date('Y') - 5,
-                    )),
+                            'min' => 1900,
+                            'max' => date('Y') - 5,
+                        )),
                 ),
             ),
             'gender' => array(
@@ -265,4 +313,5 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             ),
         );
     }
+
 }
