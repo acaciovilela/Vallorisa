@@ -25,169 +25,169 @@ class RealtyFeature {
     protected $builtArea;
 
     /**
-     * @ORM\Column(name="balcony_area", type="decimal", precision=11, scale=2)
+     * @ORM\Column(name="balcony_area", type="decimal", precision=11, scale=2, nullable=true)
      * @var float
      */
     protected $balconyArea;
 
     /**
-     * @ORM\Column(name="total_area", type="decimal", precision=11, scale=2)
+     * @ORM\Column(name="total_area", type="decimal", precision=11, scale=2, nullable=true)
      * @var float
      */
     protected $totalArea;
 
     /**
-     * @ORM\Column(name="useful_area", type="decimal", precision=11, scale=2)
+     * @ORM\Column(name="useful_area", type="decimal", precision=11, scale=2, nullable=true)
      * @var float
      */
     protected $usefulArea;
 
     /**
-     * @ORM\Column(name="ground_area", type="decimal", precision=11, scale=2)
+     * @ORM\Column(name="ground_area", type="decimal", precision=11, scale=2, nullable=true)
      * @var float
      */
     protected $groundArea;
 
     /**
-     * @ORM\Column(name="ground_length", type="decimal", precision=11, scale=2)
+     * @ORM\Column(name="ground_length", type="decimal", precision=11, scale=2, nullable=true)
      * @var float
      */
     protected $groundLength;
 
     /**
-     * @ORM\Column(name="ground_width", type="decimal", precision=11, scale=2)
+     * @ORM\Column(name="ground_width", type="decimal", precision=11, scale=2, nullable=true)
      * @var float
      */
     protected $groundWidth;
 
     /**
-     * @ORM\Column(name="bedroom_amount", type="integer")
+     * @ORM\Column(name="bedroom_amount", type="integer", nullable=true)
      * @var integer
      */
     protected $bedroomAmount;
 
     /**
-     * @ORM\Column(name="room_amount", type="integer")
+     * @ORM\Column(name="room_amount", type="integer", nullable=true)
      * @var integer
      */
     protected $roomAmount;
 
     /**
-     * @ORM\Column(name="suite_amount", type="integer")
+     * @ORM\Column(name="suite_amount", type="integer", nullable=true)
      * @var integer
      */
     protected $suiteAmount;
 
     /**
-     * @ORM\Column(name="bathtub_amount", type="integer")
+     * @ORM\Column(name="bathtub_amount", type="integer", nullable=true)
      * @var integer
      */
     protected $bathtubAmount;
 
     /**
-     * @ORM\Column(name="bathroom_amount", type="integer")
+     * @ORM\Column(name="bathroom_amount", type="integer", nullable=true)
      * @var integer
      */
     protected $bathroomAmount;
 
     /**
-     * @ORM\Column(name="hall_amount", type="integer")
+     * @ORM\Column(name="hall_amount", type="integer", nullable=true)
      * @var integer
      */
     protected $hallAmount;
 
     /**
-     * @ORM\Column(name="bathroom_stall", type="boolean")
+     * @ORM\Column(name="bathroom_stall", type="boolean", nullable=true)
      * @var boolean
      */
     protected $bathroomStall;
 
     /**
-     * @ORM\Column(name="bathroom_cabinet", type="boolean")
+     * @ORM\Column(name="bathroom_cabinet", type="boolean", nullable=true)
      * @var boolean
      */
     protected $bathroomCabinet;
 
     /**
-     * @ORM\Column(name="room_cabinet", type="boolean")
+     * @ORM\Column(name="room_cabinet", type="boolean", nullable=true)
      * @var boolean
      */
     protected $roomCabinet;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
      */
     protected $restroom;
 
     /**
-     * @ORM\Column(name="living_room", type="boolean")
+     * @ORM\Column(name="living_room", type="boolean", nullable=true)
      * @var boolean
      */
     protected $livingRoom;
 
     /**
-     * @ORM\Column(name="double_living", type="boolean")
+     * @ORM\Column(name="double_living", type="boolean", nullable=true)
      * @var boolean
      */
     protected $doubleLiving;
 
     /**
-     * @ORM\Column(name="dining_room", type="boolean")
+     * @ORM\Column(name="dining_room", type="boolean", nullable=true)
      * @var boolean
      */
     protected $diningRoom;
 
     /**
-     * @ORM\Column(name="tv_room", type="boolean")
+     * @ORM\Column(name="tv_room", type="boolean", nullable=true)
      * @var boolean
      */
     protected $tvRoom;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
      */
     protected $office;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
      */
     protected $kitchen;
 
     /**
-     * @ORM\Column(name="planned_kitchen", type="boolean")
+     * @ORM\Column(name="planned_kitchen", type="boolean", nullable=true)
      * @var boolean
      */
     protected $plannedKitchen;
 
     /**
-     * @ORM\Column(name="store_room", type="boolean")
+     * @ORM\Column(name="store_room", type="boolean", nullable=true)
      * @var boolean
      */
     protected $storeRoom;
 
     /**
-     * @ORM\Column(name="service_area", type="boolean")
+     * @ORM\Column(name="service_area", type="boolean", nullable=true)
      * @var boolean
      */
     protected $serviceArea;
 
     /**
-     * @ORM\Column(name="store_house", type="boolean")
+     * @ORM\Column(name="store_house", type="boolean", nullable=true)
      * @var boolean
      */
     protected $storeHouse;
 
     /**
-     * @ORM\Column(name="lining_slab", type="boolean")
+     * @ORM\Column(name="lining_slab", type="boolean", nullable=true)
      * @var boolean
      */
     protected $liningSlab;
 
     /**
-     * @ORM\Column(name="pvc_liner", type="boolean")
+     * @ORM\Column(name="pvc_liner", type="boolean", nullable=true)
      * @var boolean
      */
     protected $pvcLiner;
@@ -199,19 +199,19 @@ class RealtyFeature {
     protected $planking;
 
     /**
-     * @ORM\Column(name="finish_plaster", type="boolean")
+     * @ORM\Column(name="finish_plaster", type="boolean", nullable=true)
      * @var boolean
      */
     protected $finishPlaster;
 
     /**
-     * @ORM\Column(name="gas_heater", type="boolean")
+     * @ORM\Column(name="gas_heater", type="boolean", nullable=true)
      * @var boolean
      */
     protected $gasHeater;
 
     /**
-     * @ORM\Column(name="solar_heater", type="boolean")
+     * @ORM\Column(name="solar_heater", type="boolean", nullable=true)
      * @var boolean
      */
     protected $solarHeater;
@@ -224,6 +224,12 @@ class RealtyFeature {
         $this->groundLength = 0;
         $this->groundWidth = 0;
         $this->usefulArea = 0;
+        $this->bedroomAmount = 0;
+        $this->roomAmount = 0;
+        $this->suiteAmount = 0;
+        $this->bathtubAmount = 0;
+        $this->bathroomAmount = 0;
+        $this->hallAmount = 0;
         $this->bathroomStall = false;
         $this->bathroomCabinet = false;
         $this->roomCabinet = false;

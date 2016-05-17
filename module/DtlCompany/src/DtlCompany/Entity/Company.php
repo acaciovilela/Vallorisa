@@ -52,7 +52,7 @@ class Company {
     protected $representativeName;
 
     /**
-     * @ORM\Column(type="integer", name="representative_phone", nullable=true)
+     * @ORM\Column(type="string", name="representative_phone", nullable=true)
      * @var string
      */
     protected $representativePhone;

@@ -4,6 +4,7 @@ namespace DtlRealty\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use DtlPerson\Entity\Address;
+use DtlRealty\Entity\RealtyFeature;
 
 /**
  * @ORM\Entity
@@ -63,6 +64,8 @@ class Realty {
     public function __construct() {
         $this->timestamp = new \DateTime('now');
         $this->value = 0.00;
+        $this->address = new Address();
+        $this->feature = new RealtyFeature();
     }
 
     public function getId() {
@@ -127,7 +130,7 @@ class Realty {
         return $this;
     }
 
-    public function setFeature(\DtlRealty\Entity\RealtyFeature $feature) {
+    public function setFeature(RealtyFeature $feature) {
         $this->feature = $feature;
         return $this;
     }

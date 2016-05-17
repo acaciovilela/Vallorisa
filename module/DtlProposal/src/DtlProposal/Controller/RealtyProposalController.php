@@ -179,8 +179,6 @@ class RealtyProposalController extends AbstractActionController {
                 $em->remove($realtyProposal);
                 $em->flush();
                 $this->flashMessenger()->addSuccessMessage('Proposta apagada com sucesso!');
-            } else {
-                $this->flashMessenger()->addInfoMessage('Nenhuma alteração foi gravada!');
             }
             return $this->redirect()->toRoute('dtladmin/dtlproposal/realty-proposal');
         }
