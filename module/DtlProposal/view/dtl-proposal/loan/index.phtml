@@ -17,14 +17,14 @@ $this->headTitle($title);
                 <div class="pull-right">
                     <form class="form-inline" name="proposalSearch" method="post">
                         <div class="form-group">
-                            <a class="btn btn-default btn-sm" href="<?php echo $this->url('dtladmin/dtlproposal/loan/pre', array('action' => 'pre')); ?>"><i class="glyphicon glyphicon-plus-sign"></i> Nova Proposta</a>
+                            <a class="btn btn-default btn-sm" href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/pre', array('action' => 'pre')); ?>"><i class="glyphicon glyphicon-plus-sign"></i> Nova Proposta</a>
                             <div class="btn-group">
-                                <a class="btn btn-default btn-sm app-tooltip" data-toggle="modal" title="Filtrar resultados" data-target="#proposalSearch" data-remote="<?php echo $this->url('dtladmin/dtlproposal/loan/search', array('action' => 'search')); ?>"><i class="glyphicon glyphicon-search"></i> Filtrar</a>
-                                <a class="btn btn-default btn-sm" data-toggle="tooltip" title="Remover todos os filtros" href="<?php echo $this->url('dtladmin/dtlproposal/loan'); ?>"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                                <a class="btn btn-default btn-sm app-tooltip" data-toggle="modal" title="Filtrar resultados" data-target="#proposalSearch" data-remote="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/search', array('action' => 'search')); ?>"><i class="glyphicon glyphicon-search"></i> Filtrar</a>
+                                <a class="btn btn-default btn-sm" data-toggle="tooltip" title="Remover todos os filtros" href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal'); ?>"><i class="glyphicon glyphicon-remove-sign"></i></a>
                             </div>
                             <div class="btn-group btn-group-sm">
                                 <a href="javascript: window.print();" class="btn btn-default" data-toggle="tooltip" title="Imprir lista"><i class="glyphicon glyphicon-print"></i></a>
-                                <a href="<?php echo $this->url('dtladmin/dtlproposal/loan/exportCsv');?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
+                                <a href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/exportCsv');?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
                             </div>
                         </div>
                     </form>
@@ -91,27 +91,27 @@ $this->headTitle($title);
                     <td>
                         <div class="btn-group btn-group-xs pull-right hidden-print">
                             <a class="btn btn-default" data-toggle="tooltip" title="Ver Detalhes" href="<?php
-                            echo $this->url('dtladmin/dtlproposal/loan/view', array('action' => 'view',
+                            echo $this->url('dtladmin/dtlproposal/loan-proposal/view', array('action' => 'view',
                                 'id' => $loan->getId()));
                             ?>"><i class="glyphicon glyphicon-folder-open"></i></a>
                             <a class="btn btn-default" data-toggle="tooltip" title="Editar" href="<?php
-                            echo $this->url('dtladmin/dtlproposal/loan/edit', array(
+                            echo $this->url('dtladmin/dtlproposal/loan-proposal/edit', array(
                                 'id' => $loan->getId()));
                             ?>"><i class="glyphicon glyphicon-edit"></i></a>
                             <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
                             <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
-                            echo $this->url('dtladmin/dtlproposal/loan/delete', array('action' => 'delete',
+                            echo $this->url('dtladmin/dtlproposal/loan-proposal/delete', array('action' => 'delete',
                                 'id' => $loan->getId()));
                             ?>"><i class="glyphicon glyphicon-remove"></i></a>
                             <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Migração Bancária" data-target="#bankReport<?php echo $loan->getId(); ?>"
-                               href="<?php echo $this->url('dtladmin/dtlproposal/loan/bank', array('action' => 'bank', 'id' => $loan->getId())); ?>">
+                               href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/bank', array('action' => 'bank', 'id' => $loan->getId())); ?>">
                                 <i class="glyphicon glyphicon-lock"></i></a>
                                 <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $loan->getId(); ?>"
-                                   href="<?php echo $this->url('dtladmin/dtlproposal/loan/status', array('action' => 'status', 'id' => $loan->getId())); ?>">
+                                   href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/status', array('action' => 'status', 'id' => $loan->getId())); ?>">
                                     <i class="glyphicon glyphicon-repeat"></i></a>
                             <?php // endif; ?>
                             <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Histórico" data-target="#proposalHistory<?php echo $loan->getId(); ?>"
-                               href="<?php echo $this->url('dtladmin/dtlproposal/loan/history', array('action' => 'history', 'id' => $loan->getId())); ?>">
+                               href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/history', array('action' => 'history', 'id' => $loan->getId())); ?>">
                                 <i class="glyphicon glyphicon-time"></i></a>
 
                         </div>
@@ -140,7 +140,7 @@ $this->headTitle($title);
         <?php
         $paginationInfo = $this->placeholder('pagination');
         if (!isset($paginationInfo->route)) {
-            $paginationInfo->route = 'dtladmin/dtlproposal/loan';
+            $paginationInfo->route = 'dtladmin/dtlproposal/loan-proposal';
             $paginationInfo->params = array();
         }
         ?>

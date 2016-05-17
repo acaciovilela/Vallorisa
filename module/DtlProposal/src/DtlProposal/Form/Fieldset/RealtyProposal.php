@@ -10,7 +10,7 @@ use DtlProposal\Entity\RealtyProposal as RealtyProposalEntity;
 class RealtyProposal extends ZendFielset implements InputFilterProviderInterface {
 
     public function __construct($entityManager, $userId) {
-        
+
         parent::__construct('realtyProposal');
 
         $this->setHydrator(new DoctrineHydrator($entityManager))
@@ -33,7 +33,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                 'label' => 'Total dos Produtos',
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'inValue',
             'type' => 'Zend\Form\Element\Text',
@@ -46,7 +46,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                 'label' => 'Valor de Entrada',
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'fgts',
             'type' => 'Zend\Form\Element\Checkbox',
@@ -60,7 +60,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                 ),
             ),
         ));
-        
+
         $this->add(array(
             'name' => 'commission',
             'type' => 'DoctrineORMModule\Form\Element\EntitySelect',
@@ -120,10 +120,9 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                 'property' => 'name',
                 'is_method' => true,
                 'find_method' => array(
-                    'name' => 'productList',
+                    'name' => 'findByCategoryType',
                     'params' => array(
                         'category' => 'REALTY_CATEGORY',
-                        'isActive' => true,
                     )
                 )
             ),
@@ -133,22 +132,23 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                 'id' => 'product',
             )
         ));
-        
+
         $realty = new \DtlRealty\Form\Fieldset\Realty($entityManager);
         $realty->setName('realty')
                 ->setLabel('Imóvel');
         $this->add($realty);
-        
+
+
         $dealers = new \Zend\Form\Element\Collection();
         $dealers->setAllowAdd(true)
-                ->setAllowRemove(true)
-                ->setCount(2)
+                ->setAllowRemove(false)
+                ->setCount(1)
                 ->setShouldCreateTemplate(true)
                 ->setTargetElement(new \DtlDealer\Form\Fieldset\Dealer($entityManager))
                 ->setLabel('Vendedores')
                 ->setName('dealers');
         $this->add($dealers);
-        
+
         $customers = new \Zend\Form\Element\Collection();
         $customers->setAllowAdd(true)
                 ->setAllowRemove(true)
@@ -158,7 +158,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                 ->setLabel('Compradores')
                 ->setName('customers');
         $this->add($customers);
-        
+
         $proposal = new Proposal($entityManager, $userId);
         $proposal->setName('proposal')
                 ->setLabel('Dados Gerais');

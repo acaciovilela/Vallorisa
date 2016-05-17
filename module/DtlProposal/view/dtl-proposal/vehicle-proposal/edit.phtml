@@ -89,7 +89,7 @@ $form->prepare();
             </div>
             <div class="panel-body">
                 <?php $customer = $proposal->get('customer'); ?>
-                <?php echo $this->customerForm($customer, $this->post, null, $this->vehicleProposal->getProposal()->getCustomer()); ?>
+                <?php echo $this->customerForm($customer, $this->post); ?>
             </div>
         </div>
 
@@ -143,12 +143,6 @@ $form->prepare();
             </div>
             <div class="panel-body">
                 <legend>Resumo da Proposta</legend>
-                <div class="row">
-                    <div class="col-md-2">
-                        <?php echo $this->formLabel($proposal->get('number')); ?>
-                        <?php echo $this->formText($proposal->get('number')); ?>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-2">
                         <?php echo $this->formLabel($vehicleProposal->get('value')); ?>

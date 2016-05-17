@@ -41,30 +41,30 @@ $this->headTitle($title);
             <div class="col-xs-7 hidden-print">
                 <div class="btn-group btn-group-sm pull-right">
                     <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
-                    echo $this->url('dtladmin/dtlproposal/loan/delete', array('action' => 'delete',
+                    echo $this->url('dtladmin/dtlproposal/loan-proposal/delete', array('action' => 'delete',
                         'id' => $loan->getId()));
                     ?>"><i class="glyphicon glyphicon-remove"></i> Apagar</a>
                     <a class="btn btn-default" data-toggle="tooltip" title="Editar" href="<?php
-                    echo $this->url('dtladmin/dtlproposal/loan/edit', array(
+                    echo $this->url('dtladmin/dtlproposal/loan-proposal/edit', array(
                         'id' => $loan->getId()));
                     ?>"><i class="glyphicon glyphicon-edit"></i> Editar</a>
                     <a class="btn btn-default app-tooltip" data-toggle="modal" title="Migração Bancária" data-target="#bankReport<?php echo $loan->getId(); ?>"
-                       href="<?php echo $this->url('dtladmin/dtlproposal/loan/bank', array('action' => 'bank', 'id' => $loan->getId())); ?>">
+                       href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/bank', array('action' => 'bank', 'id' => $loan->getId())); ?>">
                         <i class="glyphicon glyphicon-lock"></i> Migrar Banco</a>
                     <?php if (!$loan->getProposal()->getIsIntegrated()): ?>
                         <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $loan->getId(); ?>"
-                           href="<?php echo $this->url('dtladmin/dtlproposal/loan/status', array('action' => 'status', 'id' => $loan->getId())); ?>">
+                           href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/status', array('action' => 'status', 'id' => $loan->getId())); ?>">
                             <i class="glyphicon glyphicon-repeat"></i> Status</a>
                     <?php endif; ?>
                     <a class="btn btn-default app-tooltip" data-toggle="modal" title="Histórico" data-target="#proposalHistory<?php echo $loan->getId(); ?>"
-                       href="<?php echo $this->url('dtladmin/dtlproposal/loan/history', array('action' => 'history', 'id' => $loan->getId())); ?>">
+                       href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/history', array('action' => 'history', 'id' => $loan->getId())); ?>">
                         <i class="glyphicon glyphicon-time"></i> Histórico</a>
                     <a href="javascript: window.print();" class="btn btn-default">
                         <i class="glyphicon glyphicon-print"></i> 
                         <?php echo $this->translate('Imprimir'); ?>
                     </a>
                     <a class="btn btn-default" data-toggle="tooltip" title="Voltar" href="<?php
-                    echo $this->url('dtladmin/dtlproposal/loan', array('action' => 'print',
+                    echo $this->url('dtladmin/dtlproposal/loan-proposal', array('action' => 'print',
                         'id' => $loan->getId()));
                     ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
 

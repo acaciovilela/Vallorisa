@@ -7,15 +7,15 @@ use DtlVehicle\Form\Fieldset\Vehicle;
 
 class VehicleProposalForm extends AbstractHelper {
 
-    public function __invoke(Vehicle $vehicleProposal) {
+    public function __invoke(Vehicle $vehicle) {
 
-        if (!is_object($vehicleProposal) || !($vehicleProposal instanceof Vehicle)) {
+        if (!is_object($vehicle) || !($vehicle instanceof Vehicle)) {
             throw new \Zend\View\Exception\RuntimeException(
                     sprintf('%s is not valid instance of VehicleProposal fieldset.'));
         }
         
         return $this->view->render('dtl-proposal/vehicle-proposal/vehicle/vehicle', array(
-            'vehicleProposal' => $vehicleProposal
+            'vehicle' => $vehicle
         ));
     }
 }

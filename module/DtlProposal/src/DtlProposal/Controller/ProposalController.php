@@ -306,10 +306,10 @@ class ProposalController extends AbstractActionController {
         $vehicleType = $em->find('DtlVehicle\Entity\VehicleType', $customerVehicle['type']);
         $vehicleModel = $em->find('DtlVehicle\Entity\VehicleModel', $customerVehicle['model']);
         $vehicleVersion = $em->find('DtlVehicle\Entity\VehicleVersion', $customerVehicle['version']);
-        $customerVehicle['brandName'] = $vehicleBrand->getVehicleBrandName();
-        $customerVehicle['brandName'] = $vehicleType->getVehicleTypeName();
-        $customerVehicle['modelName'] = $vehicleModel->getVehicleModelName();
-        $customerVehicle['versionName'] = $vehicleVersion->getVehicleVersionName();
+        $customerVehicle['brandName'] = $vehicleBrand->getName();
+        $customerVehicle['brandName'] = $vehicleType->getName();
+        $customerVehicle['modelName'] = $vehicleModel->getName();
+        $customerVehicle['versionName'] = $vehicleVersion->getName();
         $customerVehicle['value'] = $currency->filter($customerVehicle['value']);
         $this->getProposalSession()->customerVehicles[] = $customerVehicle;
         return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
@@ -334,6 +334,13 @@ class ProposalController extends AbstractActionController {
             }
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
         }
+    }
+    
+    public function uploadAction() {
+        $id = $this->params()->fromQuery('id');
+        return array(
+            'id' => $id
+        );
     }
 
     public function getEntityManager() {

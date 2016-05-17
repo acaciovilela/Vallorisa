@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `employee_status` (
-  `employee_status_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `employee_status_id` integer(20) NOT NULL AUTO_INCREMENT,
   `employee_status_name` varchar(100) NOT NULL,
   PRIMARY KEY (`employee_status_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;

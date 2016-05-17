@@ -10,7 +10,7 @@ use DtlProduct\Entity\Product;
  * @ORM\Entity(repositoryClass="DtlProposal\Entity\Repository\CaixaProposal")
  * @ORM\Table(name="caixa_proposal")
  */
-class CaixaProposal {
+class CaixaProposal implements ProposalEntityInterface {
 
     /**
      * @ORM\Id

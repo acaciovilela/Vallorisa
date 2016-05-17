@@ -5,9 +5,9 @@ namespace DtlProposal\Form\Fieldset;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Fieldset as ZendFielset;
-use DtlProposal\Entity\Loan as LoanEntity;
+use DtlProposal\Entity\LoanProposal as LoanEntity;
 
-class Loan extends ZendFielset implements InputFilterProviderInterface {
+class LoanProposal extends ZendFielset implements InputFilterProviderInterface {
 
     public function __construct($entityManager, $userId) {
         

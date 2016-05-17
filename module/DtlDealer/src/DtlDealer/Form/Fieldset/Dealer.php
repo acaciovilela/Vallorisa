@@ -32,9 +32,6 @@ class Dealer extends ZendFielset implements InputFilterProviderInterface {
         return array(
             'person' => array(
                 'required' => false,
-                'name' => array(
-                    'required' => false,
-                ),
             ),
         );
     }

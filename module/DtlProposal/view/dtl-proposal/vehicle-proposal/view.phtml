@@ -125,7 +125,7 @@ $this->headTitle($title);
                             <dt>Telefone do Vendedor:</dt>
                             <dd><?php echo $this->phone($vehicleProposal->getSeller()->getPerson()->getContact()->getPhone()); ?></dd>
                             <dt>Empresa:</dt>
-                            <dd><?php // echo $vehicleProposal->getProposal()->getCompany()->getFancyName();  ?></dd>
+                            <dd><?php echo $vehicleProposal->getProposal()->getCompany()->getFancyName();  ?></dd>
                             <dt>Operador:</dt>
                             <dd><?php echo $vehicleProposal->getProposal()->getEmployee()->getPerson()->getName(); ?></dd>
                             <dt>Total da Compra:</dt>

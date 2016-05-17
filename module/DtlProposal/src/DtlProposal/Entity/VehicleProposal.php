@@ -5,12 +5,15 @@ namespace DtlProposal\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use DtlVehicle\Entity\Vehicle;
-
+use DtlShopman\Entity\Shopman;
+use DtlSeller\Entity\Seller;
+use DtlProduct\Entity\Product;
+use DtlProposal\Entity\ProposalEntityInterface;
 /**
  * @ORM\Entity(repositoryClass="DtlProposal\Entity\Repository\VehicleProposal")
  * @ORM\Table(name="vehicle_proposal")
  */
-class VehicleProposal {
+class VehicleProposal implements ProposalEntityInterface {
 
     /**
      * @ORM\Id
@@ -99,11 +102,11 @@ class VehicleProposal {
     }
 
     function setValue($value) {
-        $this->value = $value;
+        $this->value = (float) $value;
     }
 
     function setInValue($inValue) {
-        $this->inValue = $inValue;
+        $this->inValue = (float) $inValue;
     }
 
     function setShopman(Shopman $shopman) {

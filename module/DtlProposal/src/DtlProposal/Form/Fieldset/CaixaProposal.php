@@ -9,7 +9,7 @@ use DtlProposal\Entity\CaixaProposal as CaixaProposalEntity;
 
 class CaixaProposal extends ZendFielset implements InputFilterProviderInterface {
 
-    public function __construct($entityManager, $userId) {
+    public function __construct($entityManager, $user) {
         
         parent::__construct('caixaProposal');
 
@@ -21,7 +21,7 @@ class CaixaProposal extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Hidden',
         ));
 
-        $proposal = new Proposal($entityManager, $userId);
+        $proposal = new Proposal($entityManager, $user);
         $proposal->setName('proposal')
                 ->setLabel('Dados Gerais');
         $proposal->get('bank')->setAttribute('class', 'hide');

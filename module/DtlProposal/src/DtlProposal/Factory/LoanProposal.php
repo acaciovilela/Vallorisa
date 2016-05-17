@@ -6,7 +6,7 @@ use DtlProposal\Controller\LoanController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Loan implements FactoryInterface {
+class LoanProposal implements FactoryInterface {
 
     public function createService(ServiceLocatorInterface $controllers) {
         $services       = $controllers->getServiceLocator();
@@ -18,7 +18,7 @@ class Loan implements FactoryInterface {
         $controller->setProposalSession($session);
         $controller->setEntityManager($entitymanager);
         $controller->setSearchQuery($services->get('proposal_search_query'));
-        $controller->setRepository('DtlProposal\Entity\Loan');
+        $controller->setRepository('DtlProposal\Entity\LoanProposal');
         return $controller;
     }
 }

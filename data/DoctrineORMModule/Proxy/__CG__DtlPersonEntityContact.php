@@ -179,7 +179,7 @@ class Contact extends \DtlPerson\Entity\Contact implements \Doctrine\ORM\Proxy\P
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
-            return  parent::getId();
+            return (int)  parent::getId();
         }
 
 

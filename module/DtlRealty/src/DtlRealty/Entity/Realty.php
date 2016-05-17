@@ -113,7 +113,7 @@ class Realty {
     }
 
     public function setValue($value) {
-        $this->value = $value;
+        $this->value = (float) $value;
         return $this;
     }
 

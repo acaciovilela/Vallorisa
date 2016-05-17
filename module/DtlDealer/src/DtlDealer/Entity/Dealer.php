@@ -13,13 +13,13 @@ class Dealer {
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="DtlPerson\Entity\Person", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="\DtlPerson\Entity\Person", cascade={"all"})
      */
     protected $person;
 

@@ -90,7 +90,7 @@ class EmployeeCommission {
      * @return \DtlEmployee\Entity\EmployeeCommission
      */
     public function setFixed($fixed) {
-        $this->fixed = $fixed;
+        $this->fixed = (float) $fixed;
         return $this;
     }
 
@@ -100,7 +100,7 @@ class EmployeeCommission {
      * @return \DtlEmployee\Entity\EmployeeCommission
      */
     public function setVariant($variant) {
-        $this->variant = $variant;
+        $this->variant = (float) $variant;
         return $this;
     }
 

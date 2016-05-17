@@ -95,11 +95,12 @@ $form->prepare();
                 <legend><h3>Comprador</h3></legend>
                 <?php $customer = $proposal->get('customer'); ?>
                 <?php echo $this->customerForm($customer, $this->post, true); ?>
+                <br/>
                 <?php
                 echo $this->partial('dtl-proposal/proposal/customercollectionform', array(
                     'customers' => $realtyProposal->get('customers'),
                     'params' => $this->post['preProposal'],
-                    'isLoan' => true,
+                    'isLoan' => true
                 ));
                 ?>
             </div>
@@ -111,7 +112,7 @@ $form->prepare();
             </div>
             <div class="panel-body">
                 <?php $customerBankAccount = new DtlCustomer\Form\Fieldset\CustomerBankAccount($this->entityManager, 0); ?>
-                <?php $customerBankAccount->remove('customerId'); ?>
+                <?php $customerBankAccount->remove('customer'); ?>
                 <?php echo $this->customerBankAccountForm($customerBankAccount); ?>
             </div>
         </div>
@@ -154,7 +155,7 @@ $form->prepare();
                         <?php echo $this->formLabel($proposal->get('baseDate')); ?>
                         <?php echo $this->formText($proposal->get('baseDate')); ?>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
                         <?php echo $this->formLabel($realtyProposal->get('commission')); ?>
                         <?php echo $this->formSelect($realtyProposal->get('commission')); ?>
                     </div>
@@ -171,9 +172,8 @@ $form->prepare();
                 </div>
             </div>
         </div>
-        <br><input type="submit" class="btn btn-primary" value="Salvar Proposta" />
     </div>
-</div>
+    <br><input type="submit" class="btn btn-primary" value="Salvar Proposta" />
 </fieldset>
 <?php echo $this->form()->closeTag(); ?>
 <script type="text/javascript">

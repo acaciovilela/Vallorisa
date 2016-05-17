@@ -39,7 +39,6 @@ class RealtyProposalController extends AbstractActionController {
     protected $searchQuery;
 
     public function indexAction() {
-
         $query = $this->getEntityManager()
                 ->getRepository($this->getRepository())
                 ->createQueryBuilder('rp')
@@ -94,162 +93,75 @@ class RealtyProposalController extends AbstractActionController {
     public function addAction() {
         $user = $this->identity();
         $form = new RealtyProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
-        $realtyProposal = new \DtlProposal\Entity\RealtyProposal();
-        $em = $this->getEntityManager();
-        $digitsFilter = new \Zend\Filter\Digits();
-        /**
-         * Find Customer if exists
-         */
+        $realty = new \DtlProposal\Entity\RealtyProposal();
+
         $prePost = $this->getProposalSession()->prePost['preProposal'];
-        if (!empty($prePost['cpf'])) {
-            $personDocument = $prePost['cpf'];
+
+        if (isset($prePost['cpf'])) {
+            $document = $prePost['cpf'];
         } else {
-            $personDocument = $prePost['cnpj'];
+            $document = $prePost['cnpj'];
         }
-        $personDocument = $digitsFilter->filter($personDocument);
-        $personType = base64_decode($prePost['type']);
-        if ($prePost['type'] == base64_encode(0)) {
-            $result = $em->getRepository('DtlCustomer\Entity\Customer')
-                    ->createQueryBuilder('c')
-                    ->Join('c.person', 'p')
-                    ->leftJoin('p.individual', 'i')
-                    ->where('i.cpf = ' . $personDocument)
-                    ->andWhere('c.isActive = true')
-                    ->getQuery()
-                    ->getOneOrNullResult();
-        } else {
-            $result = $em->getRepository('DtlCustomer\Entity\Customer')
-                    ->createQueryBuilder('c')
-                    ->Join('c.person', 'p')
-                    ->leftJoin('p.legal', 'l')
-                    ->where('l.cnpj = ' . $personDocument)
-                    ->andWhere('c.isActive = true')
-                    ->getQuery()
-                    ->getOneOrNullResult();
-        }
-        if ($result && (!$this->request->isPost())) {
-            $realtyProposal->getProposal()->setCustomer($result);
+
+        $customer = $this->findCustomer($document);
+
+        if ($customer && (!$this->request->isPost())) {
+            $customer->setUser($user);
+            $realty->getProposal()->setCustomer($customer);
             $this->getProposalService()->resetSession();
-            $this->getProposalService()->populate($result);
+            $this->getProposalService()->populate($realty, $customer);
         }
-        $form->bind($realtyProposal);
-        $form->get('realtyProposal')
-                ->get('proposal')
-                ->get('customer')
-                ->get('person')->setValue($personType);
-        if ((int) $personType) {
-            $form->get('realtyProposal')
-                    ->get('proposal')
-                    ->get('customer')
-                    ->get('person')
-                    ->get('legal')
-                    ->get('cnpj')
-                    ->setValue($personDocument);
+
+        $form->bind($realty);
+        $form->get('realtyProposal')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
+        if ($prePost['type']) {
+            $form->get('realtyProposal')->get('proposal')->get('customer')->get('person')->get('legal')->get('cnpj')->setValue($document);
         } else {
-            $form->get('realtyProposal')
-                    ->get('proposal')
-                    ->get('customer')
-                    ->get('person')
-                    ->get('individual')
-                    ->get('cpf')
-                    ->setValue($personDocument);
+            $form->get('realtyProposal')->get('proposal')->get('customer')->get('person')->get('individual')->get('cpf')->setValue($document);
         }
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
             $form->setData($post);
             if ($form->isValid()) {
-
-                $customer = $realtyProposal->getProposal()->getCustomer();
-
-                $customer->setUser($userId);
-
-                $this->getProposalService()->addCustomerBankAccount($customer);
-
-                $this->getProposalService()->addCustomerReference($customer);
-
-                $realtyProposal->getProposal()->setCustomer($customer);
-                /**
-                 * Resume routines
-                 */
-                $bank = $em->find('DtlBank\Entity\Bank', $post->realtyProposal['proposal']['bank']);
-                $bankReport = new \DtlProposal\Entity\BankReport();
-                $bankReport->setIsActive(true);
-                $bankReport->setBank($bank);
-                $em->persist($bankReport);
-
-                $realtyProposal->getProposal()->addReport($bankReport);
-                $log = new \DtlProposal\Entity\Log();
-                $log->setBank($bank);
-                $log->setMessage('ABERTA: PROPOSTA EM ANÁLISE');
-                $em->persist($log);
-
-                $realtyProposal->getProposal()->addLog($log);
-                $realtyProposal->getProposal()->setUser($user);
-                $em->persist($realtyProposal);
-                $em->flush();
-
+                $realty->getProposal()->setUser($user);
+                $this->getProposalService()->save($realty);
                 $this->flashMessenger()->addSuccessMessage('Proposta cadastrada com sucesso!');
-
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/realty-proposal');
             }
         }
         return array(
             'form' => $form,
             'post' => $this->getProposalSession()->prePost,
-            'entityManager' => $this->getEntityManager(),
-            'userId' => $this->identity()->getId(),
+            'entityManager' => $this->getEntityManager()
         );
     }
 
     public function editAction() {
-
-        $proposalId = $this->params()->fromRoute('id');
-
-        $userId = $this->identity()->getId();
-
-        $form = new RealtyProposalForm($this->getEntityManager(), $userId);
-
+        $realtyId = $this->params()->fromRoute('id');
+        $form = new RealtyProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
         $em = $this->getEntityManager();
-
-        $realtyProposal = $em->find($this->getRepository(), $proposalId);
+        $realty = $em->find($this->getRepository(), $realtyId);
 
         if (!$this->request->isPost()) {
             $this->getProposalService()->resetSession();
-            $this->getProposalService()->populate($realtyProposal->getProposal()->getCustomer());
+            $this->getProposalService()->populate($realty, $realty->getProposal()->getCustomer());
         }
 
-        $form->bind($realtyProposal);
-
+        $form->bind($realty);
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
             $form->setData($post);
             if ($form->isValid()) {
-                $customer = $realtyProposal->getProposal()->getCustomer();
-                $this->getProposalService()->addCustomerBankAccount($customer);
-                $this->getProposalService()->addCustomerReference($customer);
-                $em->persist($customer);
-
-                $bank = $em->find('DtlBank\Entity\Bank', $post->realtyProposal['proposal']['bank']);
-                $log = new \DtlProposal\Entity\Log();
-                $log->setBank($bank);
-                $log->setMessage('ATUALIZAÇÃO: PROPOSATA ATUALIZADA!');
-                $em->persist($log);
-
-                $realtyProposal->getProposal()->addLog($log);
-                $em->persist($realtyProposal);
-                $em->flush();
-
-                $this->flashMessenger()->addSuccessMessage('Proposta cadastrada com sucesso!');
-
+                $this->getProposalService()->update($realty);
+                $this->flashMessenger()->addSuccessMessage('Proposta atualizada com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/realty-proposal');
             }
         }
 
         return array(
             'form' => $form,
-            'realtyProposal' => $realtyProposal,
-            'entityManager' => $this->getEntityManager(),
-            'companyId' => $userId,
+            'loan' => $realty,
+            'entityManager' => $this->getEntityManager()
         );
     }
 
@@ -279,13 +191,9 @@ class RealtyProposalController extends AbstractActionController {
     }
 
     public function viewAction() {
-
         $realtyProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $realtyProposal = $em->find('DtlProposal\Entity\RealtyProposal', $realtyProposalId);
-
         return array(
             'realtyProposal' => $realtyProposal,
         );
@@ -293,306 +201,33 @@ class RealtyProposalController extends AbstractActionController {
 
     public function historyAction() {
         $realtyProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $realtyProposal = $em->find('DtlProposal\Entity\RealtyProposal', $realtyProposalId);
-
         return array(
             'realtyProposal' => $realtyProposal,
         );
     }
 
     public function statusAction() {
-
         $realtyProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $realtyProposal = $em->find('DtlProposal\Entity\RealtyProposal', $realtyProposalId);
-
         if ($realtyProposal->getProposal()->getIsRefused()) {
             return array(
                 'refused' => true,
                 'realtyProposal' => $realtyProposal,
             );
         }
-
-        $form = new \DtlProposal\Form\ProposalStatus();
-
+        $form = new \DtlProposal\Form\ProposalStatus($em);
+        $form->bind($realtyProposal->getProposal());
         if ($this->request->isPost()) {
-
             $form->setData($this->request->getPost());
-
             if ($form->isValid()) {
-
-                $post = $this->request->getPost()->proposalStatus;
-
-                switch ($post['id']) {
-                    case 'APPROVED':
-                        $data = array(
-                            'isApproved' => true,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'APROVADA: ' . $post['notes'],
-                            'bank' => $realtyProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'ABORTED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => true,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABORTADA: ' . $post['notes'],
-                            'bank' => $realtyProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CHECKING':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => true,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA: ' . $post['notes'],
-                            'bank' => $realtyProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CHECKING_IN':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => true,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA (MOVIMENTAÇÃO): ' . $post['notes'],
-                            'bank' => $realtyProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CANCELED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => true,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'CANCELADA: ' . $post['notes'],
-                            'bank' => $realtyProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'REFUSED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => true,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'RECUSADA: ' . $post['notes'],
-                            'bank' => $realtyProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'INTEGRATED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => true,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'INTEGRADA: ' . $post['notes'],
-                            'bank' => $realtyProposal->getProposal()->getBank(),
-                        );
-
-                        /**
-                         * Generates commissions
-                         */
-                        $proposalValue = $realtyProposal->getProposal()->getValue();
-                        $product = $realtyProposal->getProduct();
-                        /**
-                         * Company commissions
-                         */
-                        $fixedCommission = $product->getFixedCommission();
-                        $variantCommission = $product->getVariantCommission();
-                        $commission = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
-                        $commission = number_format($commission, 2);
-                        $receivable = $this->getServiceLocator()->get('dtlfinancial_create_receivable');
-                        $receivable->setCompany($realtyProposal->getProposal()->getCompany());
-                        $receivable->setCustomer($realtyProposal->getProposal()->getCustomer());
-                        $receivable->setDescription("COM. REF. A PROPOSTA DE IMÓVEL Nº {$realtyProposal->getId()}");
-                        $receivable->setValue($commission);
-                        $receivable->create();
-
-                        /**
-                         * Employee Commissions
-                         */
-                        $companyCommission = $commission;
-                        $employee = $realtyProposal->getProposal()->getEmployee();
-                        if ($employee) {
-                            $commissions = $employee->getCommissions();
-                            if (count($commissions)) {
-                                foreach ($commissions as $commission) {
-                                    if ($commission->getProduct() === $product) {
-                                        $empFixCom = $commission->getEmployeeCommissionFixed();
-                                        $empVarCom = $commission->getEmployeeCommissionVariant();
-                                        $empCommission = (($companyCommission * $empVarCom) / 100) + $empFixCom;
-                                        $employeeCommission = number_format($empCommission, 2);
-                                        $supplier = $employee->getSupplier();
-                                        $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
-                                        $payable->setCompany($realtyProposal->getProposal()->getCompany());
-                                        $payable->setSupplier($supplier);
-                                        $payable->setDescription("COM. REF. A PROPOSTA DE IMÓVEL Nº {$realtyProposal->getId()}.");
-                                        $payable->setValue($employeeCommission);
-                                        $payable->create();
-                                    }
-                                }
-                            }
-                        }
-
-                        /**
-                         * Realtor Commissions
-                         */
-                        $realtor = $realtyProposal->getRealtor();
-                        if ($realtor) {
-                            $rltVarCom = $realtor->getCommission();
-                            $rltFixCom = $realtor->getFixedCommission();
-                            $bonus = $realtor->getBonus();
-                            $relatorCommission = ((($companyCommission * $rltVarCom) / 100) + $rltFixCom) + $bonus;
-                            $realtorCommission = number_format($relatorCommission, 2);
-                            $supplier = $realtor->getSupplier();
-                            $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
-                            $payable->setCompany($realtyProposal->getProposal()->getCompany());
-                            $payable->setSupplier($supplier);
-                            $payable->setDescription("COM. DE CORRETOR REF. A PROPOSTA DE IMÓVEL Nº {$realtyProposal->getId()}.");
-                            $payable->setValue($realtorCommission);
-                            $payable->create();
-                        }
-                        break;
-                    case 'PENDING':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => true,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'PENDENTE: ' . $post['notes'],
-                            'bank' => $realtyProposal->getProposal()->getBank(),
-                        );
-                        break;
-                }
-
-                $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
-
-                $proposal = $realtyProposal->getProposal();
-                $hydrator->hydrate($data, $proposal);
-
-                if ($post['id'] == "INTEGRATED") {
-                    if ($post['baseDate']) {
-                        $dateFilter = new \DtlBase\Filter\Date();
-                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
-                        $timestamp = $date->getTimestamp();
-
-                        $startDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + 1, date('d', $timestamp));
-
-                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
-
-                        $endDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + $proposal->getParcelAmount() + 1, date('d', $timestamp));
-
-                        $baseDate = date('Y-m-d', $timestamp);
-
-                        $data = array(
-                            'proposalBaseDate' => $baseDate,
-                            'proposalStartDate' => $startDate,
-                            'proposalEndDate' => $endDate
-                        );
-
-                        $hydrator->hydrate($data, $proposal);
-                    }
-                }
-
-                if ($post['id'] == 'APPROVED') {
-                    $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-                    $realtyProposalTotalValue = $realtyProposal->getTotalValue();
-                    $proposalParcelAmount = $post['parcelAmount'];
-                    $proposalParcelValue = $currencyFilter->filter($post['parcelValue']);
-                    $proposalValue = $currencyFilter->filter($post['value']);
-                    $realtyProposalInValue = $realtyProposalTotalValue - $proposal->getValue();
-
-                    if (!empty($proposalParcelAmount) && !empty($proposalParcelValue) && !empty($proposalValue)) {
-                        $data = array(
-                            'proposalParcelAmount' => $proposalParcelAmount,
-                            'proposalParcelValue' => $proposalParcelValue,
-                            'proposalValue' => $proposalValue,
-                        );
-
-                        $hydrator->hydrate($data, $proposal);
-                        $realtyProposal->setRealtyProposalInValue($realtyProposalInValue);
-                    }
-                }
-
-                $log = new \DtlProposal\Entity\Log();
-                $hydrator->hydrate($data_log, $log);
-                $proposal->addLog($log);
-
-                $em->persist($proposal);
-                $em->persist($realtyProposal);
-                $em->flush();
-
+                $this->getProposalService()->changeStatus($realtyProposal, $this->request->getPost()->proposalStatus);
                 $this->flashMessenger()->addSuccessMessage('Status da proposta alterado com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/realty-proposal');
             }
         }
-
         return array(
             'form' => $form,
             'realtyProposal' => $realtyProposal,
@@ -924,7 +559,7 @@ class RealtyProposalController extends AbstractActionController {
     public function uploadAction() {
         $id = $this->params()->fromPost('proposalId');
         $ds = '/';
-        $storeFolder = 'D:/server/www/vallorisa/public/uploads';
+        $storeFolder = 'C:/server/www/vallorisa/public/uploads';
         $form = new \DtlFile\Form\File($this->getEntityManager());
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -978,7 +613,7 @@ class RealtyProposalController extends AbstractActionController {
                 $proposal->removeFile($file);
                 $em->flush();
             }
-            return $this->redirect()->toUrl('/dtladmin/dtlproposal/realty-proposal/1/view/' . $realtyProposal->getId());
+            return $this->redirect()->toUrl('/admin/proposal/realty-proposal/1/view/' . $realtyProposal->getId());
         }
         return array(
             'fileId' => $id,

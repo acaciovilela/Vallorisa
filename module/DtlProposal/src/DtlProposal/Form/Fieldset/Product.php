@@ -8,7 +8,7 @@ use Zend\Form\Fieldset as ZendFielset;
 class Product extends ZendFielset implements InputFilterProviderInterface {
 
     public function __construct($entityManager) {
-        
+
         parent::__construct('product');
 
         $this->add(array(
@@ -22,9 +22,9 @@ class Product extends ZendFielset implements InputFilterProviderInterface {
                 'property' => 'name',
                 'is_method' => true,
                 'find_method' => array(
-                    'name' => 'productList',
+                    'name' => 'findByCategoryType',
                     'params' => array(
-                        'category' => 'CAIXA_CATEGORY'
+                        'category' => 'CAIXA_CATEGORY',
                     )
                 )
             ),
@@ -33,12 +33,10 @@ class Product extends ZendFielset implements InputFilterProviderInterface {
                 'id' => 'productId',
             )
         ));
-        
     }
 
     public function getInputFilterSpecification() {
         return array(
-            
         );
     }
 

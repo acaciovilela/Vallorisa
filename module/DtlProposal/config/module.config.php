@@ -10,7 +10,7 @@ return array(
         'factories' => array(
             'DtlProposal\Controller\Proposal' => 'DtlProposal\Factory\Proposal',
             'DtlProposal\Controller\VehicleProposal' => 'DtlProposal\Factory\VehicleProposal',
-            'DtlProposal\Controller\Loan' => 'DtlProposal\Factory\Loan',
+            'DtlProposal\Controller\LoanProposal' => 'DtlProposal\Factory\LoanProposal',
             'DtlProposal\Controller\RealtyProposal' => 'DtlProposal\Factory\RealtyProposal',
             'DtlProposal\Controller\RealtyProposalCommission' => 'DtlProposal\Factory\RealtyProposalCommissionFactory',
             'DtlProposal\Controller\CaixaProposal' => 'DtlProposal\Factory\CaixaProposal',
@@ -389,16 +389,16 @@ return array(
                                     ),
                                 ),
                             ),
-                            'loan' => array(
+                            'loan-proposal' => array(
                                 'type' => 'Segment',
                                 'options' => array(
-                                    'route' => '/loan[/:page]',
+                                    'route' => '/loan-proposal[/:page]',
                                     'constraints' => array(
                                         'page' => '[0-9]*'
                                     ),
                                     'defaults' => array(
                                         '__NAMESPACE__' => 'DtlProposal\Controller',
-                                        'controller' => 'Loan',
+                                        'controller' => 'LoanProposal',
                                         'action' => 'index',
                                         'page' => 1
                                     ),
@@ -1020,29 +1020,29 @@ return array(
                                     ),
                                 ),
                             ),
-                            'loan' => array(
+                            'loan-proposal' => array(
                                 'label' => 'Propostas de Empréstimo Consignado',
-                                'route' => 'dtladmin/dtlproposal/loan',
+                                'route' => 'dtladmin/dtlproposal/loan-proposal',
                                 'pages' => array(
                                     'pre' => array(
                                         'label' => 'Adicionar Nova Proposta',
-                                        'route' => 'dtladmin/dtlproposal/loan/pre',
+                                        'route' => 'dtladmin/dtlproposal/loan-proposal/pre',
                                     ),
                                     'add' => array(
                                         'label' => 'Adicionar Nova Proposta',
-                                        'route' => 'dtladmin/dtlproposal/loan/add',
+                                        'route' => 'dtladmin/dtlproposal/loan-proposal/add',
                                     ),
                                     'edit' => array(
                                         'label' => 'Editar Proposta',
-                                        'route' => 'dtladmin/dtlproposal/loan/edit',
+                                        'route' => 'dtladmin/dtlproposal/loan-proposal/edit',
                                     ),
                                     'delete' => array(
                                         'label' => 'Apagar Proposta',
-                                        'route' => 'dtladmin/dtlproposal/loan/delete',
+                                        'route' => 'dtladmin/dtlproposal/loan-proposal/delete',
                                     ),
                                     'view' => array(
                                         'label' => 'Detalhes da Proposta',
-                                        'route' => 'dtladmin/dtlproposal/loan/view',
+                                        'route' => 'dtladmin/dtlproposal/loan-proposal/view',
                                     ),
                                 ),
                             ),

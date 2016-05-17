@@ -6,8 +6,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Zend\Paginator\Paginator;
-use DtlProposal\Form\Loan as LoanForm;
 use Zend\View\Model\ViewModel;
+use Doctrine\ORM\EntityManager;
+use DtlProposal\Service\ProposalSearchQuery;
+use DtlProposal\Form\LoanProposal as LoanForm;
 
 class LoanController extends AbstractActionController {
 
@@ -29,7 +31,7 @@ class LoanController extends AbstractActionController {
     protected $entityManager;
 
     /**
-     * @var \DtlProposal\Entity\Loan
+     * @var \DtlProposal\Entity\LoanProposal
      */
     protected $repository;
 
@@ -81,7 +83,7 @@ class LoanController extends AbstractActionController {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
                 $this->getProposalSession()->prePost = $this->request->getPost();
-                $this->redirect()->toRoute('dtladmin/dtlproposal/loan/add');
+                $this->redirect()->toRoute('dtladmin/dtlproposal/loan-proposal/add');
             } else {
                 $form->get('preProposal')->get('type')->setValue('');
             }
@@ -94,7 +96,7 @@ class LoanController extends AbstractActionController {
     public function addAction() {
         $user = $this->identity();
         $form = new LoanForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
-        $loan = new \DtlProposal\Entity\Loan();
+        $loan = new \DtlProposal\Entity\LoanProposal();
 
         $prePost = $this->getProposalSession()->prePost['preProposal'];
 
@@ -127,7 +129,7 @@ class LoanController extends AbstractActionController {
                 $loan->getProposal()->setUser($user);
                 $this->getProposalService()->save($loan);
                 $this->flashMessenger()->addSuccessMessage('Proposta cadastrada com sucesso!');
-                return $this->redirect()->toRoute('dtladmin/dtlproposal/loan');
+                return $this->redirect()->toRoute('dtladmin/dtlproposal/loan-proposal');
             }
         }
 
@@ -156,7 +158,7 @@ class LoanController extends AbstractActionController {
             if ($form->isValid()) {
                 $this->getProposalService()->update($loan);
                 $this->flashMessenger()->addSuccessMessage('Proposta atualizada com sucesso!');
-                return $this->redirect()->toRoute('dtladmin/dtlproposal/loan');
+                return $this->redirect()->toRoute('dtladmin/dtlproposal/loan-proposal');
             }
         }
 
@@ -170,7 +172,7 @@ class LoanController extends AbstractActionController {
     public function deleteAction() {
         $loanId = $this->params()->fromRoute('id');
         if (!$loanId) {
-            return $this->redirect()->toRoute('dtladmin/dtlproposal/loan');
+            return $this->redirect()->toRoute('dtladmin/dtlproposal/loan-proposal');
         }
         $em = $this->getEntityManager();
         $loan = $em->find($this->getRepository(), $loanId);
@@ -184,7 +186,7 @@ class LoanController extends AbstractActionController {
             } else {
                 $this->flashMessenger()->addInfoMessage('Nenhuma alteração foi gravada.!');
             }
-            return $this->redirect()->toRoute('dtladmin/dtlproposal/loan');
+            return $this->redirect()->toRoute('dtladmin/dtlproposal/loan-proposal');
         }
         return array(
             'id' => $loanId,
@@ -195,7 +197,7 @@ class LoanController extends AbstractActionController {
     public function viewAction() {
         $loanId = $this->params()->fromRoute('id');
         $em = $this->getEntityManager();
-        $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
+        $loan = $em->find('DtlProposal\Entity\LoanProposal', $loanId);
         return array(
             'loan' => $loan,
         );
@@ -204,7 +206,7 @@ class LoanController extends AbstractActionController {
     public function historyAction() {
         $loanId = $this->params()->fromRoute('id');
         $em = $this->getEntityManager();
-        $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
+        $loan = $em->find('DtlProposal\Entity\LoanProposal', $loanId);
         return array(
             'loan' => $loan,
         );
@@ -213,7 +215,7 @@ class LoanController extends AbstractActionController {
     public function statusAction() {
         $loanId = $this->params()->fromRoute('id');
         $em = $this->getEntityManager();
-        $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
+        $loan = $em->find('DtlProposal\Entity\LoanProposal', $loanId);
 
         if ($loan->getProposal()->getIsRefused()) {
             return array(
@@ -229,7 +231,7 @@ class LoanController extends AbstractActionController {
             if ($form->isValid()) {
                 $this->getProposalService()->changeStatus($loan, $this->request->getPost()->proposalStatus);
                 $this->flashMessenger()->addSuccessMessage('Status da proposta alterado com sucesso!');
-                return $this->redirect()->toRoute('dtladmin/dtlproposal/loan');
+                return $this->redirect()->toRoute('dtladmin/dtlproposal/loan-proposal');
             }
         }
 
@@ -242,7 +244,7 @@ class LoanController extends AbstractActionController {
     public function bankAction() {
         $loanId = $this->params()->fromRoute('id');
         $em = $this->getEntityManager();
-        $loan = $em->find('DtlProposal\Entity\Loan', $loanId);
+        $loan = $em->find('DtlProposal\Entity\LoanProposal', $loanId);
 
         if ($loan->getProposal()->getIsChecking()) {
             return array(
@@ -260,7 +262,7 @@ class LoanController extends AbstractActionController {
             if ($form->isValid()) {
                 $this->getProposalService()->changeBank($loan, $this->request->getPost()->bankReport);
                 $this->flashMessenger()->addSuccessMessage('Migração bancária efetuada com sucesso na proposta nº ' . $loan->getId() . ' com sucesso!');
-                return $this->redirect()->toRoute("dtladmin/dtlproposal/loan");
+                return $this->redirect()->toRoute("dtladmin/dtlproposal/loan-proposal");
             }
         }
 
@@ -368,7 +370,7 @@ class LoanController extends AbstractActionController {
         return $this->entityManager;
     }
 
-    public function setEntityManager(\Doctrine\ORM\EntityManager $entityManager) {
+    public function setEntityManager(EntityManager $entityManager) {
         $this->entityManager = $entityManager;
         return $this;
     }
@@ -404,7 +406,7 @@ class LoanController extends AbstractActionController {
         return $this->searchQuery;
     }
 
-    public function setSearchQuery(\DtlProposal\Service\ProposalSearchQuery $searchQuery) {
+    public function setSearchQuery(ProposalSearchQuery $searchQuery) {
         $this->searchQuery = $searchQuery;
         return $this;
     }

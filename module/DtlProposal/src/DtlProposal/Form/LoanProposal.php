@@ -5,9 +5,9 @@ namespace DtlProposal\Form;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use DtlProposal\Entity\Loan as LoanEntity;
+use DtlProposal\Entity\LoanProposal as LoanEntity;
 
-class Loan extends Form {
+class LoanProposal extends Form {
 
     public function __construct($entityManager, $user) {
 
@@ -18,7 +18,7 @@ class Loan extends Form {
                 ->setObject(new LoanEntity())
                 ->setInputFilter(new InputFilter());
 
-        $loan = new Fieldset\Loan($entityManager, $user);
+        $loan = new Fieldset\LoanProposal($entityManager, $user);
         $loan->setUseAsBaseFieldset(true);
         $this->add($loan);
         

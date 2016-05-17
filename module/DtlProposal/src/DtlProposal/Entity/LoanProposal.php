@@ -9,10 +9,10 @@ use DtlProduct\Entity\Product;
 use DtlProposal\Entity\ProposalEntityInterface;
 
 /**
- * @ORM\Entity(repositoryClass="DtlProposal\Entity\Repository\Loan")
+ * @ORM\Entity(repositoryClass="DtlProposal\Entity\Repository\LoanProposal")
  * @ORM\Table(name="loan")
  */
-class Loan implements ProposalEntityInterface {
+class LoanProposal implements ProposalEntityInterface {
 
     /**
      * @ORM\Id
@@ -104,7 +104,7 @@ class Loan implements ProposalEntityInterface {
     }
 
     function setMargin($margin) {
-        $this->margin = $margin;
+        $this->margin = (float) $margin;
     }
 
     function setProposal(Proposal $proposal) {

@@ -1,7 +1,7 @@
 <?php $dealers = $this->dealers; ?>
-<?php $array = array(2 => 1, 1 => 2); ?>
 <?php foreach ($dealers as $key => $dealer): ?>
-<legend><h3>Vendedor <?php // echo $array[$key + 1]; ?></h3></legend>
+    <legend><h3>Vendedor <?php echo $key + 1;  ?></h3></legend>
+    
     <?php $person = $dealer->get('person'); ?>
     <?php echo $this->personForm($person); ?>
 
@@ -12,4 +12,4 @@
         <?php $individual = $person->get('individual'); ?>
         <?php echo $this->individualForm($individual); ?>
     <?php endif; ?>
-<?php endforeach; ?>
+<?php endforeach; 

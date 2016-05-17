@@ -23,9 +23,9 @@
             </tr>
             <?php foreach ($this->customerVehicles as $key => $vehicle) : ?>
                 <tr>
-                    <td><?php echo $this->escapeHtml($vehicle['brand']); ?></td>
-                    <td><?php echo $this->escapeHtml($vehicle['vehilce']); ?></td>
-                    <td><?php echo $this->escapeHtml($vehicle['version']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['brandName']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['modelName']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['versionName']); ?></td>
                     <td>
                         <?php echo $vehicle['year']; ?>
                         <?php echo ($vehicle['yearModel']) ? " / " . $vehicle['yearModel'] : ""; ?>

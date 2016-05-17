@@ -38,10 +38,8 @@ class VehicleProposalController extends AbstractActionController {
      * @var \DtlProposal\Service\ProposalSearchQuery 
      */
     protected $searchQuery;
-    protected $response;
 
     public function indexAction() {
-
         $query = $this->getEntityManager()
                 ->getRepository($this->getRepository())
                 ->createQueryBuilder('vp')
@@ -65,7 +63,6 @@ class VehicleProposalController extends AbstractActionController {
         }
 
         $page = $this->params()->fromRoute('page');
-
         if ($page) {
             $paginator->setCurrentPageNumber($page);
         }
@@ -94,102 +91,42 @@ class VehicleProposalController extends AbstractActionController {
     }
 
     public function addAction() {
-
         $user = $this->identity();
-
         $form = new VehicleProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
-
         $vehicleProposal = new \DtlProposal\Entity\VehicleProposal();
-
         $em = $this->getEntityManager();
 
-        $digitsFilter = new \Zend\Filter\Digits();
-
-        /**
-         * Find Customer if exists
-         */
         $prePost = $this->getProposalSession()->prePost['preProposal'];
 
-        if (!empty($prePost['cpf'])) {
-            $personDocument = $prePost['cpf'];
+        if (isset($prePost['cpf'])) {
+            $document = $prePost['cpf'];
         } else {
-            $personDocument = $prePost['cnpj'];
+            $document = $prePost['cnpj'];
         }
 
-        $personDocument = $digitsFilter->filter($personDocument);
+        $customer = $this->findCustomer($document);
 
-        $personType = base64_decode($prePost['type']);
-
-        if ($prePost['type'] == base64_encode(0)) {
-
-            $result = $em->getRepository('DtlCustomer\Entity\Customer')
-                    ->createQueryBuilder('c')
-                    ->Join('c.person', 'p')
-                    ->leftJoin('p.individual', 'i')
-                    ->where('i.cpf = ' . $personDocument)
-                    ->andWhere('c.isActive = true')
-                    ->getQuery()
-                    ->getOneOrNullResult();
-        } else {
-            $result = $em->getRepository('DtlCustomer\Entity\Customer')
-                    ->createQueryBuilder('c')
-                    ->Join('c.person', 'p')
-                    ->leftJoin('p.legal', 'l')
-                    ->where('l.cnpj = ' . $personDocument)
-                    ->andWhere('c.isActive = true')
-                    ->getQuery()
-                    ->getOneOrNullResult();
-        }
-
-        if ($result && (!$this->request->isPost())) {
-
-            $vehicleProposal->getProposal()->setCustomer($result);
-
+        if ($customer && (!$this->request->isPost())) {
+            $customer->setUser($user);
+            $vehicleProposal->getProposal()->setCustomer($customer);
             $this->getProposalService()->resetSession();
-
-            $this->getProposalService()->populate($result);
+            $this->getProposalService()->populate($vehicleProposal, $customer);
         }
 
         $form->bind($vehicleProposal);
-
-        $form->get('vehicleProposal')
-                ->get('proposal')
-                ->get('customer')
-                ->get('person')->setValue($personType);
-
-        if ($personType) {
-            $form->get('vehicleProposal')
-                    ->get('proposal')
-                    ->get('customer')
-                    ->get('person')
-                    ->get('legal')
-                    ->get('cnpj')
-                    ->setValue($personDocument);
+        $form->get('vehicleProposal')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
+        if ($prePost['type']) {
+            $form->get('vehicleProposal')->get('proposal')->get('customer')->get('person')->get('legal')->get('cnpj')->setValue($document);
         } else {
-            $form->get('vehicleProposal')
-                    ->get('proposal')
-                    ->get('customer')
-                    ->get('person')
-                    ->get('individual')
-                    ->get('cpf')
-                    ->setValue($personDocument);
+            $form->get('vehicleProposal')->get('proposal')->get('customer')->get('person')->get('individual')->get('cpf')->setValue($document);
         }
-
         if ($this->request->isPost()) {
-
             $post = $this->request->getPost();
-
             $form->setData($post);
-
             if ($form->isValid()) {
-
                 $sessionContainer = $this->getProposalSession();
-
                 $doctrineHydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
 
-                /**
-                 * Add Vehicles
-                 */
                 $vehicles = $sessionContainer->vehicles;
                 if (count($vehicles) > 0) {
                     foreach ($vehicles as $vehicleData) {
@@ -198,78 +135,32 @@ class VehicleProposalController extends AbstractActionController {
                         $vehicleProposal->addVehicle($vehicle);
                     }
                 }
-
-                $customer = $vehicleProposal->getProposal()->getCustomer();
-
-                $customer->setUser($user);
-
-                $this->getProposalService()->addCustomerBankAccount($customer);
-
-                $this->getProposalService()->addCustomerReference($customer);
-
-                $this->getProposalService()->addCustomerPatrimony($customer);
-
-                $this->getProposalService()->addCustomerVehicle($customer);
-
-                $em->persist($customer);
-
-                $vehicleProposal->getProposal()->setCustomer($customer);
-
-                /**
-                 * Resume routines
-                 */
-                $bank = $em->find('DtlBank\Entity\Bank', $post->vehicleProposal['proposal']['bank']);
-
-                $bankReport = new \DtlProposal\Entity\BankReport();
-                $bankReport->setIsActive(true);
-                $bankReport->setBank($bank);
-                $em->persist($bankReport);
-                $vehicleProposal->getProposal()->addReport($bankReport);
-
-                $log = new \DtlProposal\Entity\Log();
-                $log->setBank($bank);
-                $log->setMessage('ABERTA: PROPOSTA EM ANÁLISE');
-                $em->persist($log);
-                $vehicleProposal->getProposal()->addLog($log);
-
                 $vehicleProposal->getProposal()->setUser($user);
-                $em->persist($vehicleProposal);
-
-                $em->flush();
-
+                $this->getProposalService()->save($vehicleProposal);
                 $this->flashMessenger()->addSuccessMessage('Proposta cadastrada com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/vehicle-proposal');
             }
         }
-
         return array(
             'form' => $form,
             'post' => $this->getProposalSession()->prePost,
-            'entityManager' => $this->getEntityManager(),
-            'userId' => $user,
+            'entityManager' => $this->getEntityManager()
         );
     }
 
     public function editAction() {
-
-        $proposalId = $this->params()->fromRoute('id');
-
-        $userId = $this->identity()->getId();
-
-        $form = new VehicleProposalForm($this->getEntityManager(), $userId);
-
+        $vehicleProposalId = $this->params()->fromRoute('id');
+        $form = new VehicleProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
         $em = $this->getEntityManager();
-
-        $vehicleProposal = $em->find($this->getRepository(), $proposalId);
+        $vehicleProposal = $em->find($this->getRepository(), $vehicleProposalId);
 
         if (!$this->request->isPost()) {
             $this->getProposalService()->resetSession();
-            $this->getProposalService()->populate($vehicleProposal->getProposal()->getCustomer());
+            $this->getProposalService()->populate($vehicleProposal, $vehicleProposal->getProposal()->getCustomer());
             $this->getProposalService()->addProposalVehicles($vehicleProposal);
         }
 
         $form->bind($vehicleProposal);
-
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
             $form->setData($post);
@@ -277,13 +168,10 @@ class VehicleProposalController extends AbstractActionController {
                 $sessionContainer = $this->getProposalSession();
                 $doctrineHydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
 
-                /**
-                 * Add Vehicles
-                 */
                 $vehicles = $sessionContainer->vehicles;
                 if (count($vehicles) > 0) {
                     foreach ($vehicles as $vehicleData) {
-                        if (!$vehicleData['vehicleId']) {
+                        if (!$vehicleData['id']) {
                             $vehicle = new \DtlVehicle\Entity\Vehicle();
                             $doctrineHydrator->hydrate($vehicleData, $vehicle);
                             $vehicleProposal->addVehicle($vehicle);
@@ -291,28 +179,7 @@ class VehicleProposalController extends AbstractActionController {
                     }
                 }
 
-                $customer = $vehicleProposal->getProposal()->getCustomer();
-                $this->getProposalService()->addCustomerBankAccount($customer);
-                $this->getProposalService()->addCustomerReference($customer);
-                $this->getProposalService()->addCustomerPatrimony($customer);
-                $this->getProposalService()->addCustomerVehicle($customer);
-                $em->persist($customer);
-
-                /**
-                 * Resume routines
-                 */
-                $bank = $em->find('DtlBank\Entity\Bank', $post->vehicleProposal['proposal']['bank']);
-
-                $log = new \DtlProposal\Entity\Log();
-                $log->setBank($bank);
-                $log->setMessage('ATUALIZAÇÃO: PROPOSTA ATUALIZADA!');
-                $em->persist($log);
-                $vehicleProposal->getProposal()->addLog($log);
-
-                $em->persist($vehicleProposal);
-
-                $em->flush();
-
+                $this->getProposalService()->update($vehicleProposal);
                 $this->flashMessenger()->addSuccessMessage('Proposta atualizada com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/vehicle-proposal');
             }
@@ -321,8 +188,7 @@ class VehicleProposalController extends AbstractActionController {
         return array(
             'form' => $form,
             'vehicleProposal' => $vehicleProposal,
-            'entityManager' => $this->getEntityManager(),
-            'companyId' => $userId,
+            'entityManager' => $this->getEntityManager()
         );
     }
 
@@ -340,8 +206,6 @@ class VehicleProposalController extends AbstractActionController {
                 $em->remove($vehicleProposal);
                 $em->flush();
                 $this->flashMessenger()->addSuccessMessage('Proposta apagada com sucesso!');
-            } else {
-                $this->flashMessenger()->addInfoMessage('Nenhuma alteração foi gravada!');
             }
             return $this->redirect()->toRoute('dtladmin/dtlproposal/vehicle-proposal');
         }
@@ -353,11 +217,8 @@ class VehicleProposalController extends AbstractActionController {
 
     public function viewAction() {
         $vehicleProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $vehicleProposal = $em->find('DtlProposal\Entity\VehicleProposal', $vehicleProposalId);
-
         return array(
             'vehicleProposal' => $vehicleProposal,
         );
@@ -365,22 +226,16 @@ class VehicleProposalController extends AbstractActionController {
 
     public function historyAction() {
         $vehicleProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $vehicleProposal = $em->find('DtlProposal\Entity\VehicleProposal', $vehicleProposalId);
-
         return array(
             'vehicleProposal' => $vehicleProposal,
         );
     }
 
     public function statusAction() {
-
         $vehicleProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $vehicleProposal = $em->find('DtlProposal\Entity\VehicleProposal', $vehicleProposalId);
 
         if ($vehicleProposal->getProposal()->getIsRefused()) {
@@ -390,254 +245,12 @@ class VehicleProposalController extends AbstractActionController {
             );
         }
 
-        $form = new \DtlProposal\Form\ProposalStatus();
-
+        $form = new \DtlProposal\Form\ProposalStatus($em);
+        $form->bind($vehicleProposal->getProposal());
         if ($this->request->isPost()) {
-
             $form->setData($this->request->getPost());
-
             if ($form->isValid()) {
-
-                $post = $this->request->getPost()->proposalStatus;
-
-                switch ($post['id']) {
-                    case 'APPROVED':
-                        $data = array(
-                            'isApproved' => true,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'APROVADA: ' . $post['notes'],
-                            'bank' => $vehicleProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'ABORTED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => true,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABORTADA: ' . $post['notes'],
-                            'bank' => $vehicleProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CHECKING':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => true,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA: ' . $post['notes'],
-                            'bank' => $vehicleProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CHECKING_IN':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => true,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA (MOVIMENTAÇÃO): ' . $post['notes'],
-                            'bank' => $vehicleProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CANCELED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => true,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'CANCELADA: ' . $post['notes'],
-                            'bank' => $vehicleProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'REFUSED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => true,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'RECUSADA: ' . $post['notes'],
-                            'bank' => $vehicleProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'INTEGRATED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => true,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'INTEGRADA: ' . $post['notes'],
-                            'bank' => $vehicleProposal->getProposal()->getBank(),
-                        );
-
-                        /**
-                         * Generates commissions
-                         */
-                        $proposalValue = $vehicleProposal->getProposal()->getValue();
-                        $product = $vehicleProposal->getProduct();
-                        /**
-                         * Company commissions
-                         */
-                        $fixedCommission = $product->getFixedCommission();
-                        $variantCommission = $product->getVariantCommission();
-                        $commission = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
-                        $commission = number_format($commission, 2);
-                        $receivable = $this->getServiceLocator()->get('dtlfinancial_create_receivable');
-                        $receivable->setUser($vehicleProposal->getProposal()->getUser());
-                        $receivable->setCustomer($vehicleProposal->getProposal()->getCustomer());
-                        $receivable->setDescription("COM. REF. A PROPOSTA DE VEÍCULOS Nº {$vehicleProposal->getId()}");
-                        $receivable->setValue($commission);
-                        $receivable->create();
-
-                        /**
-                         * Employee Commissions
-                         */
-                        $companyCommission = $commission;
-                        $employee = $vehicleProposal->getProposal()->getEmployee();
-                        if ($employee) {
-                            $commissions = $employee->getCommissions();
-                            if (count($commissions)) {
-                                foreach ($commissions as $commission) {
-                                    if ($commission->getProduct() === $product) {
-                                        $empFixCom = $commission->getCommissionFixed();
-                                        $empVarCom = $commission->getCommissionVariant();
-                                        $empCommission = (($companyCommission * $empVarCom) / 100) + $empFixCom;
-                                        $employeeCommission = number_format($empCommission, 2);
-                                        $supplier = $employee->getSupplier();
-                                        $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
-                                        $payable->setUser($vehicleProposal->getProposal()->getUser());
-                                        $payable->setSupplier($supplier);
-                                        $payable->setDescription("COM. REF. A PROPOSTA DE VEÍCULOS Nº {$vehicleProposal->getId()}.");
-                                        $payable->setValue($employeeCommission);
-                                        $payable->create();
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case 'PENDING':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => true,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'PENDENTE: ' . $post['notes'],
-                            'bank' => $vehicleProposal->getProposal()->getBank(),
-                        );
-                }
-
-                $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
-                $proposal = $vehicleProposal->getProposal();
-                $hydrator->hydrate($data, $proposal);
-
-                if ($post['id'] == "INTEGRATED") {
-                    if ($post['baseDate']) {
-                        $dateFilter = new \DtlBase\Filter\Date();
-                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
-                        $timestamp = $date->getTimestamp();
-
-                        $startDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + 1, date('d', $timestamp));
-
-                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
-
-                        $endDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + $proposal->getParcelAmount() + 1, date('d', $timestamp));
-
-                        $baseDate = date('Y-m-d', $timestamp);
-
-                        $data = array(
-                            'baseDate' => $baseDate,
-                            'startDate' => $startDate,
-                            'endDate' => $endDate
-                        );
-
-                        $hydrator->hydrate($data, $proposal);
-                    }
-                }
-
-                if ($post['id'] == 'APPROVED') {
-                    $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-                    $vehicleProposalTotalValue = $vehicleProposal->getValue();
-                    $proposalParcelAmount = $post['parcelAmount'];
-                    $proposalParcelValue = $currencyFilter->filter($post['parcelValue']);
-                    $proposalValue = $currencyFilter->filter($post['value']);
-                    $vehicleProposalInValue = $vehicleProposalTotalValue - $proposal->getValue();
-
-                    if (!empty($proposalParcelAmount) && !empty($proposalParcelValue) && !empty($proposalValue)) {
-                        $data_vp = array(
-                            'parcelAmount' => $proposalParcelAmount,
-                            'parcelValue' => $proposalParcelValue,
-                            'value' => $proposalValue,
-                        );
-
-                        $hydrator->hydrate($data_vp, $proposal);
-                    }
-                }
-                
-                $log = new \DtlProposal\Entity\Log();
-                $hydrator->hydrate($data_log, $log);
-                $proposal->addLog($log);
-
-                $em->persist($proposal);
-                $em->persist($vehicleProposal);
-                $em->flush();
-
+                $this->getProposalService()->changeStatus($vehicleProposal, $this->request->getPost()->proposalStatus);
                 $this->flashMessenger()->addSuccessMessage('Status da proposta alterado com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/vehicle-proposal');
             }
@@ -651,9 +264,7 @@ class VehicleProposalController extends AbstractActionController {
 
     public function bankAction() {
         $vehicleProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $vehicleProposal = $em->find('DtlProposal\Entity\VehicleProposal', $vehicleProposalId);
 
         if ($vehicleProposal->getProposal()->getIsChecking()) {
@@ -668,82 +279,17 @@ class VehicleProposalController extends AbstractActionController {
         $form->get('bankReport')->get('parcelValue')->setValue($vehicleProposal->getProposal()->getParcelValue());
 
         if ($this->request->isPost()) {
-
             $form->setData($this->request->getPost());
-
             if ($form->isValid()) {
-
-                $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
-
-                $post = $this->request->getPost()->bankReport;
-
-                $bank = $em->find('DtlBank\Entity\Bank', $post['bank']);
-
-                $dateFilter = new \DtlBase\Filter\Date();
-                $currencyFilter = new \DtlBase\Filter\Currency();
-
-                $baseDate = new \DateTime($dateFilter->filter($vehicleProposal->getProposal()->getBaseDate()));
-
-                $timestamp = $baseDate->getTimestamp();
-
-                $endDate = $baseDate->setDate(date('Y', $timestamp), date('m', $timestamp) + $post['parcelAmount'] + 1, date('d', $timestamp));
-
-                $dataProposal = array(
-                    'bank' => $bank,
-                    'parcelAmount' => $post['parcelAmount'],
-                    'parcelValue' => $currencyFilter->filter($post['parcelValue']),
-                    'lastExpiration' => date('Y-m-d', $endDate->getTimestamp()),
-                    'isChecking' => true,
-                    'isApproved' => false,
-                    'isCanceled' => false,
-                    'isIntegrated' => false,
-                    'isRefused' => false,
-                    'isAborted' => false,
-                    'lastChange' => date('Y-m-d H:i:s'),
-                );
-
-                $proposal = $vehicleProposal->getProposal();
-                $hydrator->hydrate($dataProposal, $proposal);
-
-                $dataLog = array(
-                    'bank' => $bank,
-                    'timestamp' => date('Y-m-d H:i:s'),
-                    'message' => 'ABERTA: PROPOSTA SENDO ANALISADA PELO BANCO.'
-                );
-                $log = new \DtlProposal\Entity\Log();
-                $hydrator->hydrate($dataLog, $log);
-                $em->persist($log);
-                $proposal->addLog($log);
-
-                $activeBankReport = $vehicleProposal->getProposal()->getReports();
-                if (count($activeBankReport) > 0) {
-                    foreach ($activeBankReport as $bankReportData) {
-                        $bankReportData->setIsActive(false);
-                        $em->persist($bankReportData);
-                    }
-                }
-
-                $dataBankReport = array(
-                    'bank' => $bank,
-                    'isActive' => true
-                );
-                $bankReport = new \DtlProposal\Entity\BankReport();
-                $hydrator->hydrate($dataBankReport, $bankReport);
-                $proposal->addReport($bankReport);
-
-                $em->persist($proposal);
-                $em->persist($vehicleProposal);
-
-                $em->flush();
-
-                $this->flashMessenger()->addSuccessMessage('Migração bancária efetuada com sucesso!');
+                $this->getProposalService()->changeBank($vehicleProposal, $this->request->getPost()->bankReport);
+                $this->flashMessenger()->addSuccessMessage('Migração bancária efetuada com sucesso na proposta nº ' . $vehicleProposal->getId() . ' com sucesso!');
                 return $this->redirect()->toRoute("dtladmin/dtlproposal/vehicle-proposal");
             }
         }
 
         return array(
             'form' => $form,
-            'vehicleProposal' => $vehicleProposal,
+            'vehicleProposal' => $vehicleProposal
         );
     }
 
@@ -764,23 +310,23 @@ class VehicleProposalController extends AbstractActionController {
             $this->getProposalSession()->vehicles = array();
         }
         $vehicle = $this->params()->fromQuery();
-        if (empty($vehicle['vehicleBrandId']) ||
-                empty($vehicle['vehicleTypeId']) ||
-                empty($vehicle['vehicleModelId']) ||
-                empty($vehicle['vehicleVersionId'])) {
+        if (empty($vehicle['brand']) ||
+                empty($vehicle['type']) ||
+                empty($vehicle['model']) ||
+                empty($vehicle['version'])) {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         } else {
             $em = $this->getEntityManager();
             $currency = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-            $vehicleBrand = $em->find('DtlVehicle\Entity\VehicleBrand', $vehicle['vehicleBrandId']);
-            $vehicleType = $em->find('DtlVehicle\Entity\VehicleType', $vehicle['vehicleTypeId']);
-            $vehicleModel = $em->find('DtlVehicle\Entity\VehicleModel', $vehicle['vehicleModelId']);
-            $vehicleVersion = $em->find('DtlVehicle\Entity\VehicleVersion', $vehicle['vehicleVersionId']);
-            $vehicle['vehicleBrandName'] = $vehicleBrand->getName();
-            $vehicle['vehicleTypeName'] = $vehicleType->getName();
-            $vehicle['vehicleModelName'] = $vehicleModel->getName();
-            $vehicle['vehicleVersionName'] = $vehicleVersion->getName();
-            $vehicle['vehicleValue'] = $currency->filter($vehicle['vehicleValue']);
+            $brand = $em->find('DtlVehicle\Entity\VehicleBrand', $vehicle['brand']);
+            $type = $em->find('DtlVehicle\Entity\VehicleType', $vehicle['type']);
+            $model = $em->find('DtlVehicle\Entity\VehicleModel', $vehicle['model']);
+            $version = $em->find('DtlVehicle\Entity\VehicleVersion', $vehicle['version']);
+            $vehicle['brandName'] = $brand->getName();
+            $vehicle['typeName'] = $type->getName();
+            $vehicle['modelName'] = $model->getName();
+            $vehicle['versionName'] = $version->getName();
+            $vehicle['value'] = $currency->filter($vehicle['value']);
             $this->getProposalSession()->vehicles[] = $vehicle;
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => $vehicle)));
         }
@@ -788,13 +334,19 @@ class VehicleProposalController extends AbstractActionController {
 
     public function deletevehicleAction() {
         $item = (int) $this->params()->fromQuery('itemId');
+        $dataId = (int) $this->params()->fromQuery('dataId');
         $vehicles = $this->getProposalSession()->vehicles;
         if ($item >= 0) {
             unset($vehicles[$item]);
             $this->getProposalSession()->vehicles = $vehicles;
+            if (!empty($dataId)) {
+                $em = $this->getEntityManager();
+                $vehicle = $em->find('DtlVehicle\Entity\Vehicle', $dataId);
+                $em->remove($vehicle);
+                $em->flush();
+            }
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));
         }
-        return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
     }
 
     public function searchAction() {
@@ -804,77 +356,11 @@ class VehicleProposalController extends AbstractActionController {
         ));
     }
 
-    private function getAdvancedSearchResult($query, $post) {
-        $params = $post->search;
-
-        if (!empty($params['proposalId'])) {
-            $query->andWhere('vp.vehicleProposalId = ' . $params['proposalId']);
-        }
-
-        if (!empty($params['proposalStatus'])) {
-            $proposalStatus = $params['proposalStatus'];
-            switch ($proposalStatus) {
-                case 'CHECKING':
-                    $query->andWhere('p.isChecking = TRUE');
-                    break;
-                case 'APPROVED':
-                    $query->andWhere('p.isApproved = TRUE');
-                    break;
-                case 'CANCELED':
-                    $query->andWhere('p.isCanceled = TRUE');
-                    break;
-                case 'ABORTED':
-                    $query->andWhere('p.isAborted = TRUE');
-                    break;
-                case 'INTEGRATED':
-                    $query->andWhere('p.isIntegrated = TRUE');
-                    break;
-                case 'PENDING':
-                    $query->andWhere('p.isPending = TRUE');
-                    break;
-                case 'REFUSED':
-                    $query->andWhere('p.isRefused = TRUE');
-                    break;
-            }
-        }
-
-        if (!empty($params['customerName'])) {
-            $query->join('p.customer', 'c');
-            $query->join('c.person', 'ps');
-            $query->andWhere('ps.name LIKE :name');
-            $query->setParameter('name', $params['customerName'] . '%');
-        }
-
-        if (!empty($params['shopman'])) {
-            $query->andWhere('vp.shopman = ' . $params['shopman']);
-        }
-
-        if (!empty($params['bank'])) {
-            $query->andWhere('p.bank = ' . $params['bank']);
-        }
-
-        if (!empty($params['proposalDateFrom']) && !empty($params['proposalDateTo'])) {
-            $filter = new \DtlBase\Filter\Date();
-            $query->andWhere('p.baseDate BETWEEN :datefrom AND :dateto');
-            $query->setParameter('datefrom', $filter->filter($params['proposalDateFrom']));
-            $query->setParameter('dateto', $filter->filter($params['proposalDateTo']));
-        }
-
-        if (!empty($params['company'])) {
-            $query->andWhere('p.company = ' . $params['company']);
-        }
-
-        return $query;
-    }
-
     public function calculateValueAction() {
         $filter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-
         $inValue = $this->params()->fromPost('inValue');
         $totalValue = $this->params()->fromPost('totalValue');
-
         $value = number_format($filter->filter($totalValue) - $filter->filter($inValue), 2, ',', '.');
-
         return $this->response->setContent(Json::encode(array('value' => $value)));
     }
 

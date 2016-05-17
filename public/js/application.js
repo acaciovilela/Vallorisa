@@ -108,7 +108,7 @@ function calculateProposalValue(inValue) {
             type: 'post',
             data: {
                 inValue: inValue,
-                totalValue: $('#vehicleProposalTotalValue').val()
+                totalValue: $('#value').val()
             },
             success: function (data) {
                 $('#proposalValue').val(data.value);
@@ -437,18 +437,16 @@ function vehicleProposalList() {
 }
 function vehicleProposalAdd() {
     var e = BASE_PATH + "/admin/proposal/vehicle-proposal/1/addvehicle";
-    $.ajax({url: e, dataType: "JSON", data: {vehicleId: null, vehicleBrandId: $("#vehicleBrandId").val(), vehicleTypeId: $("#vehicleTypeId").val(), vehicleModelId: $("#vehicleModelId").val(), vehicleVersionId: $("#vehicleVersionId").val(), vehicleYear: $("#vehicleYear").val(), vehicleYearModel: $("#vehicleYearModel").val(), vehiclePlate: $("#vehiclePlate").val(), vehiclePlateUf: $("#vehiclePlateUf").val(), vehicleColor: $("#vehicleColor").val(), vehicleStatus: $("#vehicleStatus").val(), vehicleValue: $("#vehicleValue").val(), vehicleFuel: $("#vehicleFuel").val(), vehicleOwnerType: $("#vehicleOwnerType").val(), vehicleFrame: $("#vehicleFrame").val(), vehicleRenavam: $("#vehicleRenavam").val(), vehicleLicenceUf: $("#vehicleLicenceUf").val(), vehicleNotes: $("#vehicleNotes").val()}, success: function () {
+    $.ajax({url: e, dataType: "JSON", data: {id: null, brand: $("#vehicleBrandId").val(), type: $("#vehicleTypeId").val(), model: $("#vehicleModelId").val(), version: $("#vehicleVersionId").val(), year: $("#vehicleYear").val(), yearModel: $("#vehicleYearModel").val(), plate: $("#vehiclePlate").val(), plateUf: $("#vehiclePlateUf").val(), color: $("#vehicleColor").val(), status: $("#vehicleStatus").val(), value: $("#vehicleValue").val(), fuel: $("#vehicleFuel").val(), ownerType: $("#vehicleOwnerType").val(), frame: $("#vehicleFrame").val(), renavam: $("#vehicleRenavam").val(), licenceUf: $("#vehicleLicenceUf").val(), notes: $("#vehicleNotes").val()}, success: function () {
             vehicleProposalList();
         }});
 }
-function vehicleProposalDelete(e) {
+function vehicleProposalDelete(e,d) {
     var t = BASE_PATH + "/admin/proposal/vehicle-proposal/1/deletevehicle";
     var n = window.confirm("Deseja realmente apagar este item? Esta ação é irreversível.");
     if (n) {
-        $.ajax({url: t, dataType: "JSON", data: {itemId: e}, success: function (t) {
-                if (t.result === true) {
-                    vehicleProposalList(e);
-                }
+        $.ajax({url: t, dataType: "JSON", data: {itemId: e, dataId: d}, success: function (t) {
+                vehicleProposalList(e);
             }});
     } else {
         return void 0;

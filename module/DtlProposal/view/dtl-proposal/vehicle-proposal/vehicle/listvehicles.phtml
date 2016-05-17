@@ -25,22 +25,22 @@
             
             <?php foreach ($this->vehicles as $key => $vehicle) : ?>
                 <tr>
-                    <td><?php echo $this->escapeHtml($vehicle['vehicleBrandName']); ?></td>
-                    <td><?php echo $this->escapeHtml($vehicle['vehicleModelName']); ?></td>
-                    <td><?php echo $this->escapeHtml($vehicle['vehicleVersionName']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['brandName']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['modelName']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['versionName']); ?></td>
                     <td>
-                        <?php echo $vehicle['vehicleYear']; ?>
-                        <?php echo ($vehicle['vehicleYearModel']) ? " / " . $vehicle['vehicleYearModel'] : ""; ?>
+                        <?php echo $vehicle['year']; ?>
+                        <?php echo ($vehicle['yearModel']) ? " / " . $vehicle['yearModel'] : ""; ?>
                     </td>
-                    <td><?php echo $this->escapeHtml($vehicle['vehiclePlate']); ?></td>
-                    <td><?php echo $this->currency($vehicle['vehicleValue']); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle['plate']); ?></td>
+                    <td><?php echo $this->currency($vehicle['value']); ?></td>
                     <td>
                         <div class="btn-group btn-group-xs pull-right">
-                            <a class="btn btn-default btn-xs" href="javascript: vehicleProposalDelete('<?php echo $key ?>')"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a class="btn btn-default btn-xs" href="javascript: vehicleProposalDelete('<?php echo $key ?>', '<?php echo $vehicle['id']?>')"><i class="glyphicon glyphicon-remove"></i></a>
                         </div>
                     </td>
                 </tr>
-                <?php $total += $vehicle['vehicleValue']; ?>
+                <?php $total += $vehicle['value']; ?>
             <?php endforeach; ?>
             <tr class="text-success">
                 <td colspan="5" class="text-right"><b>TOTAL:</b></td>
@@ -52,7 +52,7 @@
 <script type="text/javascript">
     !function($) {
         $(function() {
-            $('#vehicleProposalTotalValue').val('<?php echo $this->currency($total, false); ?>');
+            $('#value').val('<?php echo $this->currency($total, false); ?>');
         });
     }(window.jQuery);
 </script>

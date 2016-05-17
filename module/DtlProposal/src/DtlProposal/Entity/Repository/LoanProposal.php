@@ -4,7 +4,7 @@ namespace DtlProposal\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class Loan extends EntityRepository {
+class LoanProposal extends EntityRepository {
 
     /**
      * Returns count of rows in table

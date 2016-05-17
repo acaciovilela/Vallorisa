@@ -179,7 +179,7 @@ class Customer extends \DtlCustomer\Entity\Customer implements \Doctrine\ORM\Pro
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
-            return  parent::getId();
+            return (int)  parent::getId();
         }
 
 

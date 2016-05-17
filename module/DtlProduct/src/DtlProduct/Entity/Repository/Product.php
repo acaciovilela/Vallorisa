@@ -11,11 +11,12 @@ class Product extends EntityRepository {
      * 
      * @return entity
      */
-    public function productList($categoryType = 'VEHICLE_CATEGORY') {
+    public function findByCategoryType(string $category = '') {
         return $result = $this->_em->getRepository($this->_entityName)
                 ->createQueryBuilder('p')
                 ->join('p.category', 'c')
-                ->where("c.type = '{$categoryType}'")
+                ->where("c.type = '{$category}'")
+                ->andWhere('p.isActive = ' . true)
                 ->orderBy('p.name', 'ASC')
                 ->getQuery()
                 ->getResult();

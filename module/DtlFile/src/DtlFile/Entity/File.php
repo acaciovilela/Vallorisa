@@ -25,7 +25,7 @@ class File {
     protected $name;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="integer")
      */
     protected $size;
 

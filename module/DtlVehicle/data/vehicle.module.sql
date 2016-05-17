@@ -1,7 +1,7 @@
 START TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS `vehicle_brand` (
-  `vehicle_brand_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `vehicle_brand_id` integer(20) NOT NULL AUTO_INCREMENT,
   `vehicle_brand_name` varchar(255) NOT NULL,
   PRIMARY KEY (`vehicle_brand_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=172 ;
@@ -191,9 +191,9 @@ INSERT INTO `vehicle_brand` (`vehicle_brand_id`, `vehicle_brand_name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `vehicle_type` (
-  `vehicle_type_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `vehicle_type_id` integer(20) NOT NULL AUTO_INCREMENT,
   `vehicle_type_name` varchar(255) DEFAULT NULL,
-  `vehicle_brand_id` bigint(20) DEFAULT NULL,
+  `vehicle_brand_id` integer(20) DEFAULT NULL,
   PRIMARY KEY (`vehicle_type_id`),
   KEY `Ref_23` (`vehicle_brand_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=229 ;

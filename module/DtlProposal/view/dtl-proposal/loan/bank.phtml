@@ -19,7 +19,7 @@
 <?php else: ?>
     <?php
     $form = $this->form;
-    $form->setAttribute('action', $this->url('dtladmin/dtlproposal/loan/bank', array('action' => 'bank',
+    $form->setAttribute('action', $this->url('dtladmin/dtlproposal/loan-proposal/bank', array('action' => 'bank',
                 'id' => $this->loan->getId())));
     $form->prepare();
     $bankReport = $form->get('bankReport');

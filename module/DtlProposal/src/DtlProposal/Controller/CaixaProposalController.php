@@ -8,6 +8,8 @@ use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Zend\Paginator\Paginator;
 use DtlProposal\Form\CaixaProposal as CaixaProposalForm;
 use Zend\View\Model\ViewModel;
+use DtlProposal\Service\ProposalService;
+use DtlProposal\Service\ProposalSearchQuery;
 
 class CaixaProposalController extends AbstractActionController {
 
@@ -92,97 +94,40 @@ class CaixaProposalController extends AbstractActionController {
     }
 
     public function addAction() {
-
         $user = $this->identity();
-
         $form = new CaixaProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
-
-        $caixaProposal = new \DtlProposal\Entity\CaixaProposal();
-
+        $caixa = new \DtlProposal\Entity\CaixaProposal();
         $em = $this->getEntityManager();
 
-        $digitsFilter = new \Zend\Filter\Digits();
-
-        /**
-         * Find Customer if exists
-         */
         $prePost = $this->getProposalSession()->prePost['preProposal'];
 
-        if (!empty($prePost['cpf'])) {
-            $personDocument = $prePost['cpf'];
+        if (isset($prePost['cpf'])) {
+            $document = $prePost['cpf'];
         } else {
-            $personDocument = $prePost['cnpj'];
+            $document = $prePost['cnpj'];
         }
 
-        $personDocument = $digitsFilter->filter($personDocument);
+        $customer = $this->findCustomer($document);
 
-        $personType = base64_decode($prePost['type']);
-
-        if ($prePost['type'] == base64_encode(0)) {
-
-            $result = $em->getRepository('DtlCustomer\Entity\Customer')
-                    ->createQueryBuilder('c')
-                    ->Join('c.person', 'p')
-                    ->leftJoin('p.individual', 'i')
-                    ->where('i.cpf = ' . $personDocument)
-                    ->andWhere('c.isActive = true')
-                    ->getQuery()
-                    ->getOneOrNullResult();
-        } else {
-            $result = $em->getRepository('DtlCustomer\Entity\Customer')
-                    ->createQueryBuilder('c')
-                    ->Join('c.person', 'p')
-                    ->leftJoin('p.legal', 'l')
-                    ->where('l.cnpj = ' . $personDocument)
-                    ->andWhere('c.isActive = true')
-                    ->getQuery()
-                    ->getOneOrNullResult();
-        }
-
-        if ($result && (!$this->request->isPost())) {
-
-            $caixaProposal->getProposal()->setCustomer($result);
-
+        if ($customer && (!$this->request->isPost())) {
+            $customer->setUser($user);
+            $caixa->getProposal()->setCustomer($customer);
             $this->getProposalService()->resetSession();
-
-            $this->getProposalService()->populate($result);
+            $this->getProposalService()->populate($caixa, $customer);
         }
 
-        $form->bind($caixaProposal);
-
-        $form->get('caixaProposal')
-                ->get('proposal')
-                ->get('customer')
-                ->get('person')->setValue($personType);
-
-        if ($personType) {
-            $form->get('caixaProposal')
-                    ->get('proposal')
-                    ->get('customer')
-                    ->get('person')
-                    ->get('legal')
-                    ->get('cnpj')
-                    ->setValue($personDocument);
+        $form->bind($caixa);
+        $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
+        if ($prePost['type']) {
+            $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->get('legal')->get('cnpj')->setValue($document);
         } else {
-            $form->get('caixaProposal')
-                    ->get('proposal')
-                    ->get('customer')
-                    ->get('person')
-                    ->get('individual')
-                    ->get('cpf')
-                    ->setValue($personDocument);
+            $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->get('individual')->get('cpf')->setValue($document);
         }
-
         if ($this->request->isPost()) {
-
             $post = $this->request->getPost();
-
             $form->setData($post);
-
             if ($form->isValid()) {
-
                 $sessionContainer = $this->getProposalSession();
-
                 /**
                  * Add Vehicles
                  */
@@ -191,41 +136,11 @@ class CaixaProposalController extends AbstractActionController {
                 if (count($products) > 0) {
                     foreach ($products as $productData) {
                         $product = $em->find('DtlProduct\Entity\Product', $productData['product']);
-                        $caixaProposal->addProduct($product);
+                        $caixa->addProduct($product);
                     }
                 }
-
-                $customer = $caixaProposal->getProposal()->getCustomer();
-
-                $customer->setUser($this->dtlUserMasterIdentity());
-
-                $this->getProposalService()->addCustomerBankAccount($customer);
-
-                $this->getProposalService()->addCustomerReference($customer);
-
-                $this->getProposalService()->addCustomerPatrimony($customer);
-
-                $this->getProposalService()->addCustomerVehicle($customer);
-
-                $em->persist($customer);
-
-                $caixaProposal->getProposal()->setCustomer($customer);
-
-                /**
-                 * Resume routines
-                 */
-                $bank = $em->find('DtlBank\Entity\Bank', $post->caixaProposal['proposal']['bank']);
-
-                $log = new \DtlProposal\Entity\Log();
-                $log->setBank($bank);
-                $log->setMessage('ABERTA: PROPOSTA EM ANÁLISE');
-                $em->persist($log);
-                $caixaProposal->getProposal()->addLog($log);
-
-                $caixaProposal->getProposal()->setUser($user);
-                $em->persist($caixaProposal);
-                $em->flush();
-
+                $caixa->getProposal()->setUser($user);
+                $this->getProposalService()->save($caixa);
                 $this->flashMessenger()->addSuccessMessage('Proposta cadastrada com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/caixa-proposal');
             }
@@ -234,68 +149,39 @@ class CaixaProposalController extends AbstractActionController {
         return array(
             'form' => $form,
             'post' => $this->getProposalSession()->prePost,
-            'entityManager' => $this->getEntityManager(),
-            'userId' => $this->dtlUserMasterIdentity()->getId(),
+            'entityManager' => $this->getEntityManager()
         );
     }
 
     public function editAction() {
-        $proposalId = $this->params()->fromRoute('id');
-        $userId = $this->identity()->getId();
-
-        $form = new CaixaProposalForm($this->getEntityManager(), $userId);
-
+        $caixaId = $this->params()->fromRoute('id');
+        $form = new CaixaProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
         $em = $this->getEntityManager();
-        $caixaProposal = $em->find($this->getRepository(), $proposalId);
+        $caixa = $em->find($this->getRepository(), $caixaId);
 
         if (!$this->request->isPost()) {
             $this->getProposalService()->resetSession();
-            $this->getProposalService()->populate($caixaProposal->getProposal()->getCustomer());
+            $this->getProposalService()->populate($caixa, $caixa->getProposal()->getCustomer());
         }
 
-        $this->getProposalService()->addProposalProducts($caixaProposal);
+        $this->getProposalService()->addProposalProducts($caixa);
 
-        $form->bind($caixaProposal);
-
+        $form->bind($caixa);
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
             $form->setData($post);
             if ($form->isValid()) {
                 $sessionContainer = $this->getProposalSession();
-
                 $products = $sessionContainer->products;
-
                 if (count($products) > 0) {
                     foreach ($products as $productData) {
                         if (!$productData['productId']) {
                             $product = $em->find('DtlProduct\Entity\Product', $productData['productName']);
-                            $caixaProposal->addProduct($product);
+                            $caixa->addProduct($product);
                         }
                     }
                 }
-
-                $customer = $caixaProposal->getProposal()->getCustomer();
-                $this->getProposalService()->addCustomerBankAccount($customer);
-                $this->getProposalService()->addCustomerReference($customer);
-                $this->getProposalService()->addCustomerPatrimony($customer);
-                $this->getProposalService()->addCustomerVehicle($customer);
-                $em->persist($customer);
-                $caixaProposal->getProposal()->setCustomer($customer);
-
-                /**
-                 * Resume routines
-                 */
-                $bank = $em->find('DtlBank\Entity\Bank', $post->caixaProposal['proposal']['bank']);
-
-                $log = new \DtlProposal\Entity\Log();
-                $log->setBank($bank);
-                $log->setMessage('ATUALIZAÇÃO: PROPOSATA ATUALIZADA.');
-                $em->persist($log);
-                $caixaProposal->getProposal()->addLog($log);
-
-                $em->persist($caixaProposal);
-                $em->flush();
-
+                $this->getProposalService()->update($caixa);
                 $this->flashMessenger()->addSuccessMessage('Proposta atualizada com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/caixa-proposal');
             }
@@ -303,24 +189,23 @@ class CaixaProposalController extends AbstractActionController {
 
         return array(
             'form' => $form,
-            'caixaProposal' => $caixaProposal,
-            'entityManager' => $this->getEntityManager(),
-            'companyId' => $userId,
+            'caixaProposal' => $caixa,
+            'entityManager' => $this->getEntityManager()
         );
     }
 
     public function deleteAction() {
-        $caixaProposalId = $this->params()->fromRoute('id');
-        if (!$caixaProposalId) {
+        $caixaId = $this->params()->fromRoute('id');
+        if (!$caixaId) {
             return $this->redirect()->toRoute('dtladmin/dtlproposal/caixa-proposal');
         }
         $em = $this->getEntityManager();
-        $caixaProposal = $em->find($this->getRepository(), $caixaProposalId);
+        $caixa = $em->find($this->getRepository(), $caixaId);
         $request = $this->getRequest();
         if ($request->isPost()) {
             $del = $request->getPost('del', 'Não');
             if ($del == 'Sim') {
-                $em->remove($caixaProposal);
+                $em->remove($caixa);
                 $em->flush();
                 $this->flashMessenger()->addSuccessMessage('Proposta apagada com sucesso!');
             } else {
@@ -329,310 +214,47 @@ class CaixaProposalController extends AbstractActionController {
             return $this->redirect()->toRoute('dtladmin/dtlproposal/caixa-proposal');
         }
         return array(
-            'id' => $caixaProposalId,
-            'customer' => $caixaProposal->getProposal()->getCustomer()
+            'id' => $caixaId,
+            'customer' => $caixa->getProposal()->getCustomer()
         );
     }
 
     public function viewAction() {
-        $caixaProposalId = $this->params()->fromRoute('id');
-
+        $caixaId = $this->params()->fromRoute('id');
         $em = $this->getEntityManager();
-
-        $caixaProposal = $em->find('DtlProposal\Entity\CaixaProposal', $caixaProposalId);
-
+        $caixa = $em->find('DtlProposal\Entity\CaixaProposal', $caixaId);
         return array(
-            'caixaProposal' => $caixaProposal,
+            'caixaProposal' => $caixa,
         );
     }
 
     public function historyAction() {
-        $caixaProposalId = $this->params()->fromRoute('id');
-
+        $caixaId = $this->params()->fromRoute('id');
         $em = $this->getEntityManager();
-
-        $caixaProposal = $em->find('DtlProposal\Entity\CaixaProposal', $caixaProposalId);
-
+        $caixa = $em->find('DtlProposal\Entity\CaixaProposal', $caixaId);
         return array(
-            'caixaProposal' => $caixaProposal,
+            'caixaProposal' => $caixa,
         );
     }
 
     public function statusAction() {
-
-        $caixaProposalId = $this->params()->fromRoute('id');
-
+        $caixaId = $this->params()->fromRoute('id');
         $em = $this->getEntityManager();
+        $caixa = $em->find('DtlProposal\Entity\CaixaProposal', $caixaId);
 
-        $caixaProposal = $em->find('DtlProposal\Entity\CaixaProposal', $caixaProposalId);
-
-        if ($caixaProposal->getProposal()->getIsRefused()) {
+        if ($caixa->getProposal()->getIsRefused()) {
             return array(
                 'refused' => true,
-                'caixaProposal' => $caixaProposal,
+                'caixaProposal' => $caixa,
             );
         }
 
-        $form = new \DtlProposal\Form\ProposalStatus();
-
+        $form = new \DtlProposal\Form\ProposalStatus($em);
+        $form->bind($caixa->getProposal());
         if ($this->request->isPost()) {
-
             $form->setData($this->request->getPost());
-
             if ($form->isValid()) {
-
-                $post = $this->request->getPost()->proposalStatus;
-
-                switch ($post['id']) {
-                    case 'APPROVED':
-                        $data = array(
-                            'isApproved' => true,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'APROVADA: ' . $post['notes'],
-                            'bank' => $caixaProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'ABORTED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => true,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABORTADA: ' . $post['notes'],
-                            'bank' => $caixaProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CHECKING':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => true,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA: ' . $post['notes'],
-                            'bank' => $caixaProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CHECKING_IN':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => true,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'ABERTA (MOVIMENTAÇÃO): ' . $post['notes'],
-                            'bank' => $caixaProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'CANCELED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => true,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'CANCELADA: ' . $post['notes'],
-                            'bank' => $caixaProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'REFUSED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => true,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'RECUSADA: ' . $post['notes'],
-                            'bank' => $caixaProposal->getProposal()->getBank(),
-                        );
-                        break;
-                    case 'INTEGRATED':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => true,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => false,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'INTEGRADA: ' . $post['notes'],
-                            'bank' => $caixaProposal->getProposal()->getBank(),
-                        );
-
-                        /**
-                         * Generates commissions
-                         */
-                        $proposalValue = $caixaProposal->getProposal()->getValue();
-                        $products = $caixaProposal->getProducts();
-                        $employee = $caixaProposal->getProposal()->getEmployee();
-
-                        $comm = 0;
-                        $empCommission = 0;
-
-                        if (count($products)) {
-                            foreach ($products as $product) {
-                                $fixCom = $product->getFixedCommission();
-                                $varCom = $product->getVariantCommission();
-                                $commissionCalc = (($proposalValue * $varCom) / 100) + $fixCom;
-                                $comm += $commissionCalc;
-                                if ($employee) {
-                                    $empCommissions = $employee->getCommissions();
-                                    if (count($empCommissions)) {
-                                        foreach ($empCommissions as $empComm) {
-                                            if ($empComm->getProduct() === $product) {
-                                                $empFixCom = $empComm->getEmployeeCommissionFixed();
-                                                $empVarCom = $empComm->getEmployeeCommissionVariant();
-                                                $empCommission += (($commissionCalc * $empVarCom) / 100) + $empFixCom;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        /**
-                         * Company commissions
-                         */
-                        $commission = number_format($comm, 2);
-                        $receivable = $this->getServiceLocator()->get('dtlfinancial_create_receivable');
-                        $receivable->setCompany($caixaProposal->getProposal()->getCompany());
-                        $receivable->setCustomer($caixaProposal->getProposal()->getCustomer());
-                        $receivable->setDescription("COM. REF. A PROPOSTA CAIXA Nº {$caixaProposal->getId()}");
-                        $receivable->setValue($commission);
-                        $receivable->create();
-
-                        /**
-                         * Employee commissions
-                         */
-                        $employeeCommission = number_format($empCommission, 2);
-                        $supplier = $employee->getSupplier();
-                        $payable = $this->getServiceLocator()->get('dtlfinancial_create_payable');
-                        $payable->setCompany($caixaProposal->getProposal()->getCompany());
-                        $payable->setSupplier($supplier);
-                        $payable->setDescription("COM. REF. A PROPOSTA CAIXA Nº {$caixaProposal->getId()}.");
-                        $payable->setValue($employeeCommission);
-                        $payable->create();
-
-                        break;
-                    case 'PENDING':
-                        $data = array(
-                            'isApproved' => false,
-                            'isChecking' => false,
-                            'isCanceled' => false,
-                            'isIntegrated' => false,
-                            'isRefused' => false,
-                            'isAborted' => false,
-                            'isPending' => true,
-                            'lastChange' => date('Y-m-d H:i:s'),
-                        );
-                        $data_log = array(
-                            'timestamp' => date('Y-m-d H:i:s'),
-                            'message' => 'PENDENTE: ' . $post['notes'],
-                            'bank' => $caixaProposal->getProposal()->getBank(),
-                        );
-                        break;
-                }
-
-                $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
-
-                $proposal = $caixaProposal->getProposal();
-                $hydrator->hydrate($data, $proposal);
-
-                if ($post['id'] == "INTEGRATED") {
-                    if ($post['baseDate']) {
-                        $dateFilter = new \DtlBase\Filter\Date();
-                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
-                        $timestamp = $date->getTimestamp();
-
-                        $startDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + 1, date('d', $timestamp));
-
-                        $date = new \DateTime($dateFilter->filter($post['baseDate']));
-
-                        $endDate = $date->setDate(date('Y', $timestamp), date('m', $timestamp) + $proposal->getParcelAmount() + 1, date('d', $timestamp));
-
-                        $baseDate = date('Y-m-d', $timestamp);
-
-                        $data = array(
-                            'proposalBaseDate' => $baseDate,
-                            'proposalStartDate' => $startDate,
-                            'proposalEndDate' => $endDate
-                        );
-
-                        $hydrator->hydrate($data, $proposal);
-                    }
-                }
-
-                if ($post['id'] == 'APPROVED') {
-                    $currencyFilter = new \Zend\I18n\Filter\NumberFormat(array('locale' => 'pt_BR'));
-                    $caixaProposalTotalValue = $caixaProposal->getCaixaProposalTotalValue();
-                    $proposalParcelAmount = $post['parcelAmount'];
-                    $proposalParcelValue = $currencyFilter->filter($post['parcelValue']);
-                    $proposalValue = $currencyFilter->filter($post['value']);
-                    $caixaProposalInValue = $caixaProposalTotalValue - $proposal->getValue();
-
-                    if (!empty($proposalParcelAmount) && !empty($proposalParcelValue) && !empty($proposalValue)) {
-                        $data = array(
-                            'proposalParcelAmount' => $proposalParcelAmount,
-                            'proposalParcelValue' => $proposalParcelValue,
-                            'proposalValue' => $proposalValue,
-                        );
-
-                        $hydrator->hydrate($data, $proposal);
-                        $caixaProposal->setCaixaProposalInValue($caixaProposalInValue);
-                    }
-                }
-
-                $log = new \DtlProposal\Entity\Log();
-                $hydrator->hydrate($data_log, $log);
-                $proposal->addLog($log);
-
-                $em->persist($proposal);
-                $em->persist($caixaProposal);
-                $em->flush();
-
+                $this->getProposalService()->changeStatus($caixa, $this->request->getPost()->proposalStatus);
                 $this->flashMessenger()->addSuccessMessage('Status da proposta alterado com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/caixa-proposal');
             }
@@ -640,7 +262,7 @@ class CaixaProposalController extends AbstractActionController {
 
         return array(
             'form' => $form,
-            'caixaProposal' => $caixaProposal,
+            'caixaProposal' => $caixa,
         );
     }
 
@@ -700,7 +322,7 @@ class CaixaProposalController extends AbstractActionController {
             'VALOR FINANCIADO',
             'PARCELAS',
             'BANCO',
-            utf8_decode('ENDEREÇO'),
+            'ENDEREÇO',
             'NUMERO',
             'BAIRRO',
             'CIDADE',
@@ -761,7 +383,7 @@ class CaixaProposalController extends AbstractActionController {
             );
         }
 
-        return $this->csvExport('propostas_caixa_' . date('dmYHis'), $header, $data);
+        return $this->csvExport('propostas_caixa_' . date('dmYHis'), $header, $data, null, ';');
     }
 
     public function getEntityManager() {
@@ -795,7 +417,7 @@ class CaixaProposalController extends AbstractActionController {
         return $this->proposalService;
     }
 
-    public function setProposalService(\DtlProposal\Service\ProposalService $proposalService) {
+    public function setProposalService(ProposalService $proposalService) {
         $this->proposalService = $proposalService;
         return $this;
     }
@@ -804,7 +426,7 @@ class CaixaProposalController extends AbstractActionController {
         return $this->searchQuery;
     }
 
-    public function setSearchQuery(\DtlProposal\Service\ProposalSearchQuery $searchQuery) {
+    public function setSearchQuery(ProposalSearchQuery $searchQuery) {
         $this->searchQuery = $searchQuery;
         return $this;
     }

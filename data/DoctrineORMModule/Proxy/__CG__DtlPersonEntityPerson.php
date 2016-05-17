@@ -179,7 +179,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
-            return  parent::getId();
+            return (int)  parent::getId();
         }
 
 
@@ -334,7 +334,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setAddress($address)
+    public function setAddress(\DtlPerson\Entity\Address $address)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', [$address]);
@@ -345,7 +345,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setContact($contact)
+    public function setContact(\DtlPerson\Entity\Contact $contact)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setContact', [$contact]);
@@ -356,7 +356,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setIndividual($individual)
+    public function setIndividual(\DtlPerson\Entity\Individual $individual)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIndividual', [$individual]);
@@ -367,7 +367,7 @@ class Person extends \DtlPerson\Entity\Person implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setLegal($legal)
+    public function setLegal(\DtlPerson\Entity\Legal $legal)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLegal', [$legal]);

@@ -4,7 +4,7 @@ namespace DtlProposal\Service;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use DtlProposal\Entity\ProposalEntityInterface;
-use DtlProposal\Entity\Loan as LoanEntity;
+use DtlProposal\Entity\LoanProposal as LoanEntity;
 use DtlProposal\Entity\CaixaProposal as CaixaEntity;
 use DtlProposal\Entity\VehicleProposal as VehicleEntity;
 use DtlProposal\Entity\RealtyProposal as RealtyEntity;
@@ -155,7 +155,6 @@ class ProposalService implements ProposalServiceInterface {
     public function save(ProposalEntityInterface $entity) {
 
         $em = $this->getEntityManager();
-
         $customer = $entity->getProposal()->getCustomer();
 
         $this->addCustomerBankAccount($customer);
@@ -180,7 +179,7 @@ class ProposalService implements ProposalServiceInterface {
         $entity->getProposal()->addLog($log);
 
         $em->persist($entity);
-
+        
         try {
             $em->flush();
         } catch (Exception $ex) {
@@ -569,7 +568,7 @@ class ProposalService implements ProposalServiceInterface {
         if (!empty($inValue)) {
             $result['inValue'] = $currencyFilter->filter($inValue);
         }
-        
+
         if (!empty($parcelValue)) {
             $result['parcelValue'] = $currencyFilter->filter($parcelValue);
         }
@@ -584,7 +583,6 @@ class ProposalService implements ProposalServiceInterface {
         $customerBankAccounts = $this->getProposalSession()->customerBankAccounts;
         if (count($customerBankAccounts) > 0) {
             foreach ($customerBankAccounts as $bankAccountsData) {
-//                \Zend\Debug\Debug::dump($bankAccountsData);exit;
                 if (!$bankAccountsData['id']) {
                     $bankAccount = new \DtlBankAccount\Entity\BankAccount();
                     $doctrineHydrator = new DoctrineHydrator($this->getEntityManager());
@@ -656,10 +654,14 @@ class ProposalService implements ProposalServiceInterface {
             $proposalVehicle = array();
             foreach ($vehicles as $vehicle) {
                 $proposalVehicle['id'] = $vehicle->getId();
-                $proposalVehicle['brand'] = $vehicle->getBrand()->getName();
-                $proposalVehicle['type'] = $vehicle->getType()->getName();
-                $proposalVehicle['model'] = $vehicle->getModel()->getName();
-                $proposalVehicle['version'] = $vehicle->getVersion()->getName();
+                $proposalVehicle['brand'] = $vehicle->getBrand();
+                $proposalVehicle['brandName'] = $vehicle->getBrand()->getName();
+                $proposalVehicle['type'] = $vehicle->getType();
+                $proposalVehicle['typeName'] = $vehicle->getType()->getName();
+                $proposalVehicle['model'] = $vehicle->getModel();
+                $proposalVehicle['modelName'] = $vehicle->getModel()->getName();
+                $proposalVehicle['version'] = $vehicle->getVersion();
+                $proposalVehicle['versionName'] = $vehicle->getVersion()->getName();
                 $proposalVehicle['year'] = $vehicle->getYear();
                 $proposalVehicle['yearModel'] = $vehicle->getYearModel();
                 $proposalVehicle['plate'] = $vehicle->getPlate();
