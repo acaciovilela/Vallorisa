@@ -3,10 +3,10 @@
 namespace DtlPerson\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DtlPerson\Entity\Address as AddressEntity;
-use DtlPerson\Entity\Contact as ContactEntity;
-use DtlPerson\Entity\Individual as IndividualEntity;
-use DtlPerson\Entity\Legal as LegalEntity;
+use DtlPerson\Entity\Address;
+use DtlPerson\Entity\Contact;
+use DtlPerson\Entity\Individual;
+use DtlPerson\Entity\Legal;
 
 /**
  * @ORM\Entity
@@ -16,7 +16,7 @@ class Person {
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="bigint", name="id")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      */
@@ -29,7 +29,7 @@ class Person {
     protected $name;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      * @var bool
      */
     protected $type;
@@ -48,25 +48,25 @@ class Person {
 
     /**
      * @ORM\OneToOne(targetEntity="DtlPerson\Entity\Address", cascade={"all"})
-     * @var \DtlPerson\Entity\Address
+     * @var Address
      */
     protected $address;
 
     /**
      * @ORM\OneToOne(targetEntity="DtlPerson\Entity\Contact", cascade={"all"})
-     * @var \DtlPerson\Entity\Contact
+     * @var Contact
      */
     protected $contact;
 
     /**
      * @ORM\OneToOne(targetEntity="DtlPerson\Entity\Individual", cascade={"all"})
-     * @var \DtlPerson\Entity\Individual
+     * @var Individual
      */
     protected $individual;
 
     /**
      * @ORM\OneToOne(targetEntity="DtlPerson\Entity\Legal", cascade={"all"})
-     * @var \DtlPerson\Entity\Legal
+     * @var Legal
      */
     protected $legal;
 
@@ -74,12 +74,12 @@ class Person {
         $this->type = false;
         $this->isActive = true;
         $this->date = new \DateTime('now');
-        $this->address = new AddressEntity();
-        $this->contact = new ContactEntity();
-        $this->individual = new IndividualEntity();
-        $this->legal = new LegalEntity();
+        $this->address = new Address();
+        $this->contact = new Contact();
+        $this->individual = new Individual();
+        $this->legal = new Legal();
     }
-    
+
     public function getId() {
         return $this->id;
     }
@@ -141,23 +141,24 @@ class Person {
         return $this;
     }
 
-    public function setAddress($address) {
+    public function setAddress(Address $address) {
         $this->address = $address;
         return $this;
     }
 
-    public function setContact($contact) {
+    public function setContact(Contact $contact) {
         $this->contact = $contact;
         return $this;
     }
 
-    public function setIndividual($individual) {
+    public function setIndividual(Individual $individual) {
         $this->individual = $individual;
         return $this;
     }
 
-    public function setLegal($legal) {
+    public function setLegal(Legal $legal) {
         $this->legal = $legal;
         return $this;
     }
+
 }

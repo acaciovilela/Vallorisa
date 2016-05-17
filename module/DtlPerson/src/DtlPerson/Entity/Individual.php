@@ -4,6 +4,7 @@ namespace DtlPerson\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use DtlOccupation\Entity\Occupation;
+use DtlPerson\Entity\Professional;
 
 /**
  * @ORM\Entity
@@ -30,25 +31,25 @@ class Individual {
      * @var string
      */
     protected $rg;
-    
+
     /**
      * @ORM\Column(name="rg_date", type="string", nullable=true)
      * @var string
      */
     protected $rgDate;
-    
+
     /**
      * @ORM\Column(name="rg_organ", type="string", nullable=true)
      * @var string
      */
     protected $rgOrgan;
-    
+
     /**
      * @ORM\Column(name="rg_uf", type="string", nullable=true)
      * @var string
      */
     protected $rgUf;
-    
+
     /**
      * @ORM\Column(name="birth_day", type="string", nullable=true)
      * @var string
@@ -111,7 +112,7 @@ class Individual {
 
     /**
      * @ORM\OneToOne(targetEntity="DtlPerson\Entity\Professional", cascade={"all"})
-     * @var \DtlPerson\Entity\Professional
+     * @var Professional
      */
     protected $professional;
 
@@ -286,6 +287,5 @@ class Individual {
         $this->rgUf = $rgUf;
         return $this;
     }
-
 
 }
