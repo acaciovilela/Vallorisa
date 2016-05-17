@@ -5,10 +5,6 @@ namespace DtlCustomer\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use DtlPerson\Entity\Person;
 use DtlUser\Entity\User;
-use DtlReference\Entity\Reference;
-use DtlPatrimony\Entity\Patrimony;
-use DtlBankAccount\Entity\BankAccount;
-use DtlVehicle\Entity\Vehicle;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass="DtlCustomer\Entity\Repository\Customer")
@@ -18,7 +14,7 @@ class Customer {
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @var integer 
      */
@@ -99,10 +95,10 @@ class Customer {
         $this->timestamp = new \DateTime("now");
         $this->residenceRentValue = "0.00";
         $this->person = new Person();
-        $this->references = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->patrimonies = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->accounts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->references = new ArrayCollection();
+        $this->patrimonies = new ArrayCollection();
+        $this->accounts = new ArrayCollection();
+        $this->vehicles = new ArrayCollection();
         $this->isActive = true;
     }
 
