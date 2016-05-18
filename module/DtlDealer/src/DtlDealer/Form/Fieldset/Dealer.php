@@ -10,7 +10,7 @@ use DtlDealer\Entity\Dealer as DealerEntity;
 class Dealer extends ZendFielset implements InputFilterProviderInterface {
 
     public function __construct($entityManager) {
-        
+
         parent::__construct('dealer');
 
         $this->setHydrator(new DoctrineHydrator($entityManager))
@@ -20,19 +20,15 @@ class Dealer extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'id',
             'type' => 'Zend\Form\Element\Hidden',
         ));
-        
+
         $person = new \DtlPerson\Form\Fieldset\Person($entityManager);
         $person->setName('person')
                 ->setLabel('Dados Gerais');
-        $person->get('name')->removeAttribute('required');
         $this->add($person);
     }
-    
+
     public function getInputFilterSpecification() {
-        return array(
-            'person' => array(
-                'required' => false,
-            ),
-        );
+        return array();
     }
+
 }

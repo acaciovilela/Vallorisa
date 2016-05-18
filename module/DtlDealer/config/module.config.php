@@ -13,6 +13,11 @@ return array(
             'dealerForm' => 'DtlDealer\Form\Helper\Dealer',
         ),
     ),
+    'form_elements' => array(
+        'factories' => array(
+            'DealerFieldset' => 'DtlDealer\Factory\DealerFieldsetFactory'
+        ),
+    ),
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(

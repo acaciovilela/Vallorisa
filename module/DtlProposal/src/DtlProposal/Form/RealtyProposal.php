@@ -9,19 +9,26 @@ use DtlProposal\Entity\RealtyProposal as RealtyProposalEntity;
 
 class RealtyProposal extends Form {
 
-    public function __construct($entityManager, $user) {
+    protected $entityManager;
 
+    public function __construct() {
         parent::__construct('realtyProposal');
+    }
+
+    public function init() {
 
         $this->setAttribute('method', 'post')
-                ->setHydrator(new DoctrineHydrator($entityManager))
+                ->setHydrator(new DoctrineHydrator($this->getEntityManager()))
                 ->setObject(new RealtyProposalEntity())
                 ->setInputFilter(new InputFilter());
 
-        $realtyProposal = new Fieldset\RealtyProposal($entityManager, $user);
-        $realtyProposal->setUseAsBaseFieldset(true);
-        $this->add($realtyProposal);
-        
+        $this->add(array(
+            'type' => 'realty_proposal_fieldset',
+            'options' => array(
+                'use_as_base_fieldset' => true
+            )
+        ));
+
         $this->add(array(
             'type' => 'Zend\Form\Element\Submit',
             'name' => 'submit',
@@ -37,8 +44,18 @@ class RealtyProposal extends Form {
                 'type' => 'button',
                 'value' => 'Cancel',
                 'class' => 'btn btn-default',
-                'onclick' => 'javascript: window.location.href = "/admin/proposal/realty-proposal";'
+                'onclick' => "javascript: window.location.href = '/admin/proposal/realty-proposal'",
             )
         ));
     }
+
+    public function getEntityManager() {
+        return $this->entityManager;
+    }
+
+    public function setEntityManager($entityManager) {
+        $this->entityManager = $entityManager;
+        return $this;
+    }
+
 }

@@ -14,7 +14,7 @@ $realtyEvaluation = $form->get('realtyEvaluation');
 <br/>
 
 <?php echo $this->form()->openTag($form); ?>
-<?php echo $this->formHidden($realtyEvaluation->get('realtyEvaluationId'));   ?>
+<?php echo $this->formHidden($realtyEvaluation->get('id'));   ?>
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
@@ -26,52 +26,52 @@ $realtyEvaluation = $form->get('realtyEvaluation');
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationRequestDate')); ?>
-            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationRequestDate'));   ?>
+            <?php echo $this->formLabel($realtyEvaluation->get('requestDate')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('requestDate'));   ?>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationCompletionDate')); ?>
-            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationCompletionDate'));   ?>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationEngineering')); ?>
-            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationEngineering')); ?>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationEngineeringPhone')); ?>
-            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationEngineeringPhone')); ?>
+            <?php echo $this->formLabel($realtyEvaluation->get('completionDate')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('completionDate'));   ?>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationEngineer')); ?>
-            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationEngineer')); ?>
+            <?php echo $this->formLabel($realtyEvaluation->get('engineering')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('engineering')); ?>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationEngineerPhone')); ?>
-            <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationEngineerPhone')); ?>
+            <?php echo $this->formLabel($realtyEvaluation->get('engineeringPhone')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('engineeringPhone')); ?>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->formLabel($realtyEvaluation->get('realtyEvaluationValue')); ?>
+            <?php echo $this->formLabel($realtyEvaluation->get('engineer')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('engineer')); ?>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('engineerPhone')); ?>
+            <?php echo $this->formText($realtyEvaluation->get('engineerPhone')); ?>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->formLabel($realtyEvaluation->get('value')); ?>
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <?php echo $this->formText($realtyEvaluation->get('realtyEvaluationValue')); ?>
+                <?php echo $this->formText($realtyEvaluation->get('value')); ?>
             </div>
         </div>
     </div>

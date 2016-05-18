@@ -2,10 +2,10 @@
 
 namespace DtlEmployee\Form;
 
-use DtlEmployee\Entity\Employee as EmployeeEntity;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use Zend\InputFilter\InputFilter;
 use Zend\Form\Form;
+use Zend\InputFilter\InputFilter;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use DtlEmployee\Entity\Employee as EmployeeEntity;
 
 class Employee extends Form {
 

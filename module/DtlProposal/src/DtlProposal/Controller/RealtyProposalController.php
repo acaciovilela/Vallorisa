@@ -6,8 +6,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\Tools\Pagination\Paginator as DoctrinePaginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use Zend\Paginator\Paginator;
-use DtlProposal\Form\RealtyProposal as RealtyProposalForm;
 use Zend\Json\Json;
+use DtlProposal\Form\RealtyProposal as RealtyProposalForm;
 
 class RealtyProposalController extends AbstractActionController {
 
@@ -37,6 +37,12 @@ class RealtyProposalController extends AbstractActionController {
      * @var \DtlProposal\Service\ProposalSearchQuery
      */
     protected $searchQuery;
+
+    /**
+     *
+     * @var RealtyProposalForm
+     */
+    protected $form;
 
     public function indexAction() {
         $query = $this->getEntityManager()
@@ -92,7 +98,7 @@ class RealtyProposalController extends AbstractActionController {
 
     public function addAction() {
         $user = $this->identity();
-        $form = new RealtyProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
+        $form = $this->getForm();
         $realty = new \DtlProposal\Entity\RealtyProposal();
 
         $prePost = $this->getProposalSession()->prePost['preProposal'];
@@ -138,7 +144,7 @@ class RealtyProposalController extends AbstractActionController {
 
     public function editAction() {
         $realtyId = $this->params()->fromRoute('id');
-        $form = new RealtyProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
+        $form = $this->getForm();
         $em = $this->getEntityManager();
         $realty = $em->find($this->getRepository(), $realtyId);
 
@@ -160,7 +166,7 @@ class RealtyProposalController extends AbstractActionController {
 
         return array(
             'form' => $form,
-            'loan' => $realty,
+            'realtyProposal' => $realty,
             'entityManager' => $this->getEntityManager()
         );
     }
@@ -234,9 +240,7 @@ class RealtyProposalController extends AbstractActionController {
 
     public function bankAction() {
         $realtyProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $realtyProposal = $em->find('DtlProposal\Entity\RealtyProposal', $realtyProposalId);
 
         if ($realtyProposal->getProposal()->getIsChecking()) {
@@ -248,78 +252,13 @@ class RealtyProposalController extends AbstractActionController {
 
         $form = new \DtlProposal\Form\BankReport($em);
         $form->get('bankReport')->get('parcelAmount')->setValue($realtyProposal->getProposal()->getParcelAmount());
-        $form->get('bankReport')->get('parcelValue')->setValue($vehicleProposal->getProposal()->getParcelValue());
+        $form->get('bankReport')->get('parcelValue')->setValue($realtyProposal->getProposal()->getParcelValue());
 
         if ($this->request->isPost()) {
-
             $form->setData($this->request->getPost());
-
             if ($form->isValid()) {
-
-                $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
-
-                $post = $this->request->getPost()->bankReport;
-
-                $bank = $em->find('DtlBank\Entity\Bank', $post['bank']);
-
-                $dateFilter = new \DtlBase\Filter\Date();
-
-                $baseDate = new \DateTime($dateFilter->filter($realtyProposal->getProposal()->getBaseDate()));
-
-                $timestamp = $baseDate->getTimestamp();
-
-                $endDate = $baseDate->setDate(date('Y', $timestamp), date('m', $timestamp) + $post['parcelAmount'] + 1, date('d', $timestamp));
-
-                $dataProposal = array(
-                    'bank' => $bank,
-                    'proposalParcelAmount' => $post['parcelAmount'],
-                    'proposalParcelValue' => $post['parcelValue'],
-                    'proposalLastExpiration' => date('Y-m-d', $endDate->getTimestamp()),
-                    'isChecking' => true,
-                    'isApproved' => false,
-                    'isCanceled' => false,
-                    'isIntegrated' => false,
-                    'isRefused' => false,
-                    'isAborted' => false,
-                    'lastChange' => date('Y-m-d H:i:s'),
-                );
-
-                $proposal = $realtyProposal->getProposal();
-                $hydrator->hydrate($dataProposal, $proposal);
-
-                $dataLog = array(
-                    'bank' => $bank,
-                    'timestamp' => date('Y-m-d H:i:s'),
-                    'message' => 'ABERTA: PROPOSTA SENDO ANALISADA PELO BANCO.'
-                );
-                $log = new \DtlProposal\Entity\Log();
-                $hydrator->hydrate($dataLog, $log);
-                $em->persist($log);
-                $proposal->addLog($log);
-
-
-                $activeBankReport = $realtyProposal->getProposal()->getReports();
-                if (count($activeBankReport) > 0) {
-                    foreach ($activeBankReport as $bankReportData) {
-                        $bankReportData->setIsActive(false);
-                        $em->persist($bankReportData);
-                    }
-                }
-
-                $dataBankReport = array(
-                    'bank' => $bank,
-                    'bankReportIsActive' => true
-                );
-                $bankReport = new \DtlProposal\Entity\BankReport();
-                $hydrator->hydrate($dataBankReport, $bankReport);
-                $proposal->addReport($bankReport);
-
-                $em->persist($proposal);
-                $em->persist($realtyProposal);
-
-                $em->flush();
-
-                $this->flashMessenger()->addSuccessMessage('Migração bancária efetuada com sucesso!');
+                $this->getProposalService()->changeBank($realtyProposal, $this->request->getPost()->bankReport);
+                $this->flashMessenger()->addSuccessMessage('Migração bancária efetuada com sucesso na proposta nº ' . $realtyProposal->getId() . ' com sucesso!');
                 return $this->redirect()->toRoute("dtladmin/dtlproposal/realty-proposal");
             }
         }
@@ -331,13 +270,9 @@ class RealtyProposalController extends AbstractActionController {
     }
 
     public function evaluationAction() {
-
         $realtyProposalId = $this->params()->fromRoute('id');
-
         $em = $this->getEntityManager();
-
         $realtyProposal = $em->find('DtlProposal\Entity\RealtyProposal', $realtyProposalId);
-
         $form = new \DtlProposal\Form\RealtyEvaluation($em);
 
         if ($this->request->isPost()) {
@@ -346,7 +281,7 @@ class RealtyProposalController extends AbstractActionController {
                 $hydrator = new \DoctrineModule\Stdlib\Hydrator\DoctrineObject($em);
                 $post = $this->request->getPost()->realtyEvaluation;
                 $bank = $em->find('DtlBank\Entity\Bank', $post['bank']);
-
+                
                 $dataLog = array(
                     'bank' => $bank,
                     'timestamp' => date('Y-m-d H:i:s'),
@@ -356,7 +291,6 @@ class RealtyProposalController extends AbstractActionController {
                 $proposal = $realtyProposal->getProposal();
                 $log = new \DtlProposal\Entity\Log();
                 $hydrator->hydrate($dataLog, $log);
-                $em->persist($log);
                 $proposal->addLog($log);
 
                 $activeBankReport = $realtyProposal->getProposal()->getReports();
@@ -369,7 +303,7 @@ class RealtyProposalController extends AbstractActionController {
 
                 $dataBankReport = array(
                     'bank' => $bank,
-                    'bankReportIsActive' => true
+                    'isActive' => true
                 );
                 $bankReport = new \DtlProposal\Entity\BankReport();
                 $hydrator->hydrate($dataBankReport, $bankReport);
@@ -377,14 +311,11 @@ class RealtyProposalController extends AbstractActionController {
 
                 $em->persist($proposal);
 
-                $realtyProposal->addEvaluations($form->getData());
-//                $realtyProposal->setRealtyProposalTotalValue($form->getData()->getRealtyEvaluationValue());
-//                $realtyProposal->getRealty()->setRealtyValue($form->getData()->getRealtyEvaluationValue());
-                $inValue = $realtyProposal->getTotalValue() - $realtyProposal->getProposal()->getValue();
-                $realtyProposal->setRealtyProposalInValue($inValue);
+                $realtyProposal->addEvaluation($form->getData());
+                $inValue = $realtyProposal->getValue() - $realtyProposal->getProposal()->getValue();
+                $realtyProposal->setInValue($inValue);
 
                 $em->persist($realtyProposal);
-
                 $em->flush();
 
                 $this->flashMessenger()->addSuccessMessage('Avaliação do imóvel efetuada com sucesso!');
@@ -444,12 +375,10 @@ class RealtyProposalController extends AbstractActionController {
                 $em->persist($proposal);
                 $em->persist($evaluation);
 
-//                $realtyProposal->addEvaluations($form->getData());
-                $inValue = $realtyProposal->getTotalValue() - $realtyProposal->getProposal()->getValue();
-                $realtyProposal->setRealtyProposalInValue($inValue);
+                $inValue = $realtyProposal->getValue() - $realtyProposal->getProposal()->getValue();
+                $realtyProposal->setInValue($inValue);
 
                 $em->persist($realtyProposal);
-
                 $em->flush();
 
                 $this->flashMessenger()->addSuccessMessage('Avaliação do imóvel atualizada com sucesso!');
@@ -662,6 +591,15 @@ class RealtyProposalController extends AbstractActionController {
 
     public function setSearchQuery(\DtlProposal\Service\ProposalSearchQuery $searchQuery) {
         $this->searchQuery = $searchQuery;
+        return $this;
+    }
+
+    public function getForm() {
+        return $this->form;
+    }
+
+    public function setForm($form) {
+        $this->form = $form;
         return $this;
     }
 

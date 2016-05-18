@@ -9,9 +9,8 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.5",
-        "zendframework/zendframework": "2.4",
+        "zendframework/zendframework": "2.*",
         "zendframework/zend-mvc": "<2.7",
-        "zendframework/zend-developer-tools": "dev-master",
         "doctrine/doctrine-module": "0.*",
         "doctrine/doctrine-orm-module": "^0.9.2",
         "webino/zf2nette-debug": "1.*",
@@ -23,7 +22,6 @@
         "zf-commons/zfc-user": "1.4.2",
         "zf-commons/zfc-user-doctrine-orm": "dev-master",
         "zf-commons/zfc-rbac": "~2.4",
-        "zf-commons/zfc-admin": "dev-master",
-        "snapshotpl/zf-snap-event-debugger": "1.*"
+        "zf-commons/zfc-admin": "dev-master"
     }
 }

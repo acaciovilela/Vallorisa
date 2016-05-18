@@ -29,6 +29,12 @@ return array(
             'caixaProposalForm' => 'DtlProposal\View\Helper\CaixaProposalForm',
         ),
     ),
+    'form_elements' => array(
+        'factories' => array(
+            'realty_proposal_form' => 'DtlProposal\Factory\RealtyProposalFormFactory',
+            'realty_proposal_fieldset' => 'DtlProposal\Factory\RealtyProposalFieldsetFactory',
+        ),
+    ),
     'service_manager' => array(
         'invokables' => array(
             'proposal_session_service' => 'DtlProposal\Service\ProposalSession',

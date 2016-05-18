@@ -87,7 +87,7 @@ class Realty extends ZendFielset implements InputFilterProviderInterface {
         ));
         
         $realtyFeature = new RealtyFeature($entityManager);
-        $realtyFeature->setName('realtyFeature');
+        $realtyFeature->setName('feature');
         $this->add($realtyFeature);
         
         $address = new \DtlPerson\Form\Fieldset\Address($entityManager);

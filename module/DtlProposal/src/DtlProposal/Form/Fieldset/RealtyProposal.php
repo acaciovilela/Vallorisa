@@ -9,11 +9,16 @@ use DtlProposal\Entity\RealtyProposal as RealtyProposalEntity;
 
 class RealtyProposal extends ZendFielset implements InputFilterProviderInterface {
 
-    public function __construct($entityManager, $userId) {
+    protected $entityManager;
+    protected $user;
 
+    public function __construct() {
         parent::__construct('realtyProposal');
+    }
 
-        $this->setHydrator(new DoctrineHydrator($entityManager))
+    public function init() {
+
+        $this->setHydrator(new DoctrineHydrator($this->getEntityManager()))
                 ->setObject(new RealtyProposalEntity());
 
         $this->add(array(
@@ -67,7 +72,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
             'options' => array(
                 'label' => 'Comissão Valoriza',
                 'empty_option' => 'Selecione a Comissão',
-                'object_manager' => $entityManager,
+                'object_manager' => $this->getEntityManager(),
                 'target_class' => 'DtlProposal\Entity\RealtyProposalCommission',
                 'property' => 'value',
                 'is_method' => true,
@@ -92,14 +97,14 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
             'options' => array(
                 'label' => 'Corretor de Imóveis',
                 'empty_option' => 'Selecione o Corretor',
-                'object_manager' => $entityManager,
+                'object_manager' => $this->getEntityManager(),
                 'target_class' => 'DtlRealtor\Entity\Realtor',
                 'property' => 'name',
                 'is_method' => true,
                 'find_method' => array(
                     'name' => 'realtyProposalRealtorList',
                     'params' => array(
-                        'user' => $userId,
+                        'user' => $this->getUser()->getId(),
                     ),
                 ),
             ),
@@ -115,7 +120,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
             'options' => array(
                 'label' => 'Produto',
                 'empty_option' => 'Selecione o Produto',
-                'object_manager' => $entityManager,
+                'object_manager' => $this->getEntityManager(),
                 'target_class' => 'DtlProduct\Entity\Product',
                 'property' => 'name',
                 'is_method' => true,
@@ -133,33 +138,37 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
             )
         ));
 
-        $realty = new \DtlRealty\Form\Fieldset\Realty($entityManager);
+        $realty = new \DtlRealty\Form\Fieldset\Realty($this->getEntityManager());
         $realty->setName('realty')
                 ->setLabel('Imóvel');
         $this->add($realty);
 
-
-        $dealers = new \Zend\Form\Element\Collection();
-        $dealers->setAllowAdd(true)
-                ->setAllowRemove(false)
-                ->setCount(1)
-                ->setShouldCreateTemplate(true)
-                ->setTargetElement(new \DtlDealer\Form\Fieldset\Dealer($entityManager))
-                ->setLabel('Vendedores')
-                ->setName('dealers');
-        $this->add($dealers);
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'dealers',
+            'options' => array(
+                'label' => 'Vendedores',
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'allow_remove' => true,
+                'target_element' => array(
+                    'type' => 'DealerFieldset',
+                ),
+            ),
+        ));
 
         $customers = new \Zend\Form\Element\Collection();
         $customers->setAllowAdd(true)
                 ->setAllowRemove(true)
                 ->setCount(1)
                 ->setShouldCreateTemplate(true)
-                ->setTargetElement(new \DtlCustomer\Form\Fieldset\Customer($entityManager))
+                ->setTargetElement(new \DtlCustomer\Form\Fieldset\Customer($this->getEntityManager()))
                 ->setLabel('Compradores')
                 ->setName('customers');
         $this->add($customers);
 
-        $proposal = new Proposal($entityManager, $userId);
+        $proposal = new Proposal($this->getEntityManager(), $this->getUser());
         $proposal->setName('proposal')
                 ->setLabel('Dados Gerais');
         $this->add($proposal);
@@ -169,7 +178,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
         return array(
             'realtor' => array('required' => true),
             'product' => array('required' => true),
-            'totalValue' => array(
+            'value' => array(
                 'required' => false,
                 'filters' => array(
                     new \DtlBase\Filter\Currency(),
@@ -187,7 +196,32 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                     new \DtlBase\Filter\Porcent()
                 )
             ),
+            'dealers' => array(
+                'person' => array(
+                    'name' => array(
+                        'required' => true,
+                    ),
+                )
+            )
         );
+    }
+
+    public function getEntityManager() {
+        return $this->entityManager;
+    }
+
+    public function setEntityManager($entityManager) {
+        $this->entityManager = $entityManager;
+        return $this;
+    }
+
+    public function getUser() {
+        return $this->user;
+    }
+
+    public function setUser($user) {
+        $this->user = $user;
+        return $this;
     }
 
 }

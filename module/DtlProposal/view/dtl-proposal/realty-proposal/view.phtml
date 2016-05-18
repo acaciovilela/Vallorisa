@@ -156,7 +156,7 @@ $this->headTitle($title);
                             <dt>Telefone do Corretor:</dt>
                             <dd><?php echo $this->phone($realtyProposal->getRealtor()->getPerson()->getContact()->getPhone()); ?></dd>
                             <dt>Total da Venda:</dt>
-                            <dd><?php echo $this->currency($realtyProposal->getTotalValue()); ?></dd>
+                            <dd><?php echo $this->currency($realtyProposal->getValue()); ?></dd>
                             <dt>Entrada:</dt>
                             <dd><?php echo $this->currency($realtyProposal->getInValue()); ?></dd>
                             <dt>Valor Financiado:</dt>

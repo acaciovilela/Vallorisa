@@ -25,10 +25,10 @@ class RealtyProposal implements ProposalEntityInterface {
     protected $id;
 
     /**
-     * @ORM\Column(name="total_value", type="decimal", precision=11, scale=2)
+     * @ORM\Column(name="value", type="decimal", precision=11, scale=2)
      * @var float
      */
-    protected $totalValue;
+    protected $value;
 
     /**
      * @ORM\Column(name="in_value", type="decimal", precision=11, scale=2)
@@ -92,7 +92,7 @@ class RealtyProposal implements ProposalEntityInterface {
 
     public function __construct() {
         $this->inValue = 0.00;
-        $this->totalValue = 0.00;
+        $this->value = 0.00;
         $this->proposal = new Proposal();
         $this->realty = new Realty();
         $this->fgts = false;
@@ -105,8 +105,8 @@ class RealtyProposal implements ProposalEntityInterface {
         return $this->id;
     }
 
-    public function getTotalValue() {
-        return $this->totalValue;
+    public function getValue() {
+        return $this->value;
     }
 
     public function getInValue() {
@@ -154,8 +154,8 @@ class RealtyProposal implements ProposalEntityInterface {
         return $this;
     }
 
-    public function setTotalValue($totalValue) {
-        $this->totalValue = (float) $totalValue;
+    public function setValue($value) {
+        $this->value = (float) $value;
         return $this;
     }
 
@@ -206,6 +206,11 @@ class RealtyProposal implements ProposalEntityInterface {
         return $this;
     }
     
+    public function addEvaluation($evaluation) {
+        $this->evaluations->add($evaluation);
+        return $this;
+    }
+    
     public function removeEvaluations(Collection $evaluations) {
         foreach ($evaluations as $evaluation) {
             $this->evaluations->removeElement($evaluation);
@@ -214,7 +219,7 @@ class RealtyProposal implements ProposalEntityInterface {
     }
 
     public function setDealers(Collection $dealers) {
-        $this->dealers = $dealers;
+        $this->dealers[] = $dealers;
         return $this;
     }
 
