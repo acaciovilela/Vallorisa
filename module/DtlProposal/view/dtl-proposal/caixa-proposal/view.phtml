@@ -96,12 +96,6 @@ $this->headTitle($title);
                             <dd><?php echo $caixaProposal->getProposal()->getCompany()->getAddress()->getCity()->getName(); ?></dd>
                             <dt>Data de Cadastro:</dt>
                             <dd><?php echo $this->date($caixaProposal->getProposal()->getTimestamp()); ?></dd>
-                            <dt>Data Base:</dt>
-                            <dd><?php echo $caixaProposal->getProposal()->getBaseDate(); ?></dd>
-                            <dt>Primeira Parc.:</dt>
-                            <dd><?php echo $caixaProposal->getProposal()->getStartDate(); ?></dd>
-                            <dt>Última Parc.:</dt>
-                            <dd><?php echo $caixaProposal->getProposal()->getEndDate(); ?></dd>
                             <dt>Observações:</dt>
                             <dd><?php echo $caixaProposal->getProposal()->getNotes(); ?></dd>
                         </div>
@@ -112,12 +106,6 @@ $this->headTitle($title);
                             <dd><?php echo $caixaProposal->getProposal()->getCompany()->getFancyName(); ?></dd>
                             <dt>Operador:</dt>
                             <dd><?php echo $caixaProposal->getProposal()->getEmployee()->getName(); ?></dd>
-                            <dt>Total Financiado:</dt>
-                            <dd><?php echo $this->currency($caixaProposal->getProposal()->getValue()); ?></dd>
-                            <dt>Parcelas:</dt>
-                            <dd><?php echo $caixaProposal->getProposal()->getParcelAmount(); ?></dd>
-                            <dt>Valor da Parcela:</dt>
-                            <dd><?php echo $this->currency($caixaProposal->getProposal()->getParcelValue()); ?></dd>
                         </div>
                     </div>
                 </dl>

@@ -330,6 +330,9 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'birthUf' => array(
                 'required' => false,
             ),
+            'status' => array(
+                'required' => false,
+            )
         );
     }
 

@@ -21,7 +21,7 @@ class CaixaProposal extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Hidden',
         ));
 
-        $proposal = new Proposal($entityManager, $user);
+        $proposal = new Proposal($entityManager);
         $proposal->setName('proposal')
                 ->setLabel('Dados Gerais');
         $proposal->get('bank')->setAttribute('class', 'hide');

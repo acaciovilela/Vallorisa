@@ -9,7 +9,7 @@ use DtlProposal\Entity\Proposal as ProposalEntity;
 
 class Proposal extends ZendFielset implements InputFilterProviderInterface {
 
-    public function __construct($entityManager, $userId) {
+    public function __construct($entityManager) {
 
         parent::__construct('proposal');
 
@@ -203,8 +203,8 @@ class Proposal extends ZendFielset implements InputFilterProviderInterface {
                         'criteria' => array(
                             'isActive' => true,
                         ),
-                    )
-                )
+                    ),
+                ),
             ),
             'attributes' => array(
                 'readonly' => 'readonly',

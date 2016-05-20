@@ -37,8 +37,6 @@ $this->headTitle($title);
             <th class=""><?php echo $this->translate('CÓD'); ?></th>
             <th class=""><?php echo $this->translate('CLIENTE'); ?></th>
             <th class=""><?php echo $this->translate('DATA'); ?></th>
-            <th class=""><?php echo $this->translate('VALOR DO IMÓVEL'); ?></th>
-            <th class=""><?php echo $this->translate('VALOR FINANC.'); ?></th>
             <th class=""><?php echo $this->translate('BANCO'); ?></th>
             <th class=""><?php echo $this->translate('STATUS'); ?></th>
             <th colspan="2"><?php echo $this->translate('INTEGRADA'); ?></th>
@@ -77,8 +75,6 @@ $this->headTitle($title);
                     <td><?php echo str_pad($realtyProposal->getId(), 8, '0', STR_PAD_LEFT); ?></td>
                     <td><?php echo $this->escapeHtml($realtyProposal->getProposal()->getCustomer()->getPerson()->getName()); ?></td>
                     <td><?php echo $this->date($realtyProposal->getProposal()->getTimestamp()); ?></td>
-                    <td><?php echo $this->currency($realtyProposal->getValue()); ?></td>
-                    <td><?php echo $this->currency($realtyProposal->getProposal()->getValue()); ?></td>
                     <td><?php echo $this->escapeHtml($realtyProposal->getProposal()->getBank()->getName()); ?></td>
                     <td><?php echo $this->escapeHtml($status); ?></td>
                     <?php if ($realtyProposal->getProposal()->getIsIntegrated()): ?>

@@ -139,8 +139,6 @@ $this->headTitle($title);
                             <dd><?php echo $realtyProposal->getProduct()->getName(); ?></dd>
                             <dt>Data de Cadastro:</dt>
                             <dd><?php echo $this->date($realtyProposal->getProposal()->getTimestamp()); ?></dd>
-                            <dt>Data Base:</dt>
-                            <dd><?php echo $realtyProposal->getProposal()->getBaseDate(); ?></dd>
                             <dt>Matrícula do Imóvel:</dt>
                             <dd><?php echo $realtyProposal->getRealty()->getCode(); ?></dd>
                             <dt>Observações:</dt>
@@ -155,12 +153,6 @@ $this->headTitle($title);
                             <dd><?php echo $realtyProposal->getProposal()->getEmployee()->getPerson()->getName(); ?></dd>
                             <dt>Telefone do Corretor:</dt>
                             <dd><?php echo $this->phone($realtyProposal->getRealtor()->getPerson()->getContact()->getPhone()); ?></dd>
-                            <dt>Total da Venda:</dt>
-                            <dd><?php echo $this->currency($realtyProposal->getValue()); ?></dd>
-                            <dt>Entrada:</dt>
-                            <dd><?php echo $this->currency($realtyProposal->getInValue()); ?></dd>
-                            <dt>Valor Financiado:</dt>
-                            <dd><?php echo $this->currency($proposal->getValue()); ?></dd>
                             <dt>Usar FGTS:</dt>
                             <dd><?php echo ($proposal->getValue()) ? "SIM" : "NÃO"; ?></dd>
                         </div>

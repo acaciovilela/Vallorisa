@@ -87,7 +87,6 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
             ),
             'attributes' => array(
                 'class' => 'form-control input-sm',
-                'required' => 'required',
             )
         ));
 
@@ -200,7 +199,13 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                         'required' => true,
                     ),
                 )
-            )
+            ),
+            'commission' => array(
+                'required' => false,
+            ),
+            'fgts' => array(
+                'required' => false,
+            ),
         );
     }
 

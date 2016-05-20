@@ -37,9 +37,6 @@ $this->headTitle($title);
             <th class=""><?php echo $this->translate('CÓD'); ?></th>
             <th class=""><?php echo $this->translate('CLIENTE'); ?></th>
             <th class=""><?php echo $this->translate('DT. CAD.'); ?></th>
-            <th class=""><?php echo $this->translate('VALOR FIN.'); ?></th>
-            <th class=""><?php echo $this->translate('PARC.'); ?></th>
-            <th class=""><?php echo $this->translate('VALOR PARC.'); ?></th>
             <th class=""><?php echo $this->translate('STATUS'); ?></th>
             <th colspan="2"><?php echo $this->translate('INTEGRADA'); ?></th>
         </tr>
@@ -77,9 +74,6 @@ $this->headTitle($title);
                     <td><?php echo str_pad($caixaProposal->getId(), 8, '0', STR_PAD_LEFT); ?></td>
                     <td><?php echo $this->escapeHtml($caixaProposal->getProposal()->getCustomer()->getPerson()->getName()); ?></td>
                     <td><?php echo $this->date($caixaProposal->getProposal()->getTimestamp()); ?></td>
-                    <td><?php echo $this->currency($caixaProposal->getProposal()->getValue()); ?></td>
-                    <td><?php echo $this->escapeHtml($caixaProposal->getProposal()->getParcelAmount()); ?></td>
-                    <td><?php echo $this->currency($caixaProposal->getProposal()->getParcelValue()); ?></td>
                     <td><?php echo $this->escapeHtml($status); ?></td>
                     <?php if ($caixaProposal->getProposal()->getIsIntegrated()): ?>
                         <td><?php echo $caixaProposal->getProposal()->getBaseDate(); ?></td>

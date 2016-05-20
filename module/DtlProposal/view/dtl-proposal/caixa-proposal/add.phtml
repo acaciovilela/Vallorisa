@@ -84,16 +84,8 @@ $form->prepare();
                 <?php echo $this->customerBankAccountForm($customerBankAccount); ?>
             </div>
         </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Resumo da Proposta'); ?></h3>
-            </div>
-            <div class="panel-body">
-                <?php echo $this->proposalForm($proposal); ?>
-            </div>
-        </div>
         <br><input type="submit" class="btn btn-primary" value="Salvar Proposta" />
     </div>
 </fieldset>
 <?php echo $this->form()->closeTag(); ?>
+<?php var_dump($form->getMessages()); 
