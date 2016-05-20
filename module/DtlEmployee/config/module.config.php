@@ -20,11 +20,6 @@ return array(
             'EmployeeCommissionFieldset' => 'DtlEmployee\Factory\EmployeeCommissionFieldsetFactory',
         ),
     ),
-    'service_manager' => array(
-        'invokables' => array(
-            'zfcuser_user_service' => 'ZfcUser\Service\User',
-        ),
-    ),
     'view_helpers' => array(
         'factories' => array(
             'employee' => 'DtlEmployee\Factory\EmployeeViewHelperFactory',

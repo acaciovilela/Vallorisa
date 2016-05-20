@@ -78,7 +78,7 @@ class LoanController extends AbstractActionController {
     public function preAction() {
         $this->getProposalService()->resetSession();
         $form = new \DtlProposal\Form\PreProposal();
-        $form->get('cancel')->setAttribute('onclick', "javascript: window.location.href = '/admin/proposal/loan';");
+        $form->get('cancel')->setAttribute('onclick', "javascript: window.location.href = '/admin/proposal/loan-proposal';");
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {

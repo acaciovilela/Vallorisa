@@ -19,8 +19,6 @@ $form->prepare();
         <?php $individual = $person->get('individual'); ?>
         <?php echo $this->individualForm($individual); ?>
     <?php endif; ?>
-
-    <legend><?php echo $this->translate('Comissionamento'); ?></legend>
     <div class="row">
         <div class="col-md-2">
             <?php echo $this->formLabel($realtor->get('commission')); ?>

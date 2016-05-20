@@ -37,7 +37,7 @@ class LoanProposal extends Form {
                 'type' => 'button',
                 'value' => 'Cancel',
                 'class' => 'btn btn-default',
-                'onclick' => 'javascript: window.location.href = "/admin/proposal/loan";'
+                'onclick' => 'javascript: window.location.href = "/admin/proposal/loan-proposal";'
             )
         ));
     }

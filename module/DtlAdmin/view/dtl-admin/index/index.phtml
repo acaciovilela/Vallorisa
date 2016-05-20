@@ -38,23 +38,23 @@
             <div class="panel-heading">
                 <h1 class="panel-title">
                     <i class="glyphicon glyphicon-share"></i> 
-                    Meus Atalhos
-                    <a href="#"><i class="glyphicon glyphicon-cog pull-right"></i></a>
+                    <?php echo $this->translate('Meus Atalhos'); ?>
+                    <i class="glyphicon glyphicon-chevron-down pull-right"></i>
                 </h1>
             </div>
             <div class="panel-body">
                 <div class="text-center">
-                    <a href="<?php echo $this->basePath() ?>/admin/proposal/vehicle-proposal/1/pre" class="btn btn-shortcut">
-                        <span><i class="fa fa-truck"></i></span> Nova Proposta
-                    </a>
-                    <a href="<?php echo $this->basePath() ?>/admin/proposal/loan/1/pre" class="btn btn-shortcut">
-                        <span><i class="fa fa-money"></i></span>Nova Proposta
-                    </a>
-                    <a href="<?php echo $this->basePath() ?>/admin/proposal/realty-proposal/1/pre" class="btn btn-shortcut">
-                        <span><i class="fa fa-building-o"></i></span>Nova Proposta
+                    <a href="<?php echo $this->basePath() ?>/admin/proposal/loan-proposal/1/pre" class="btn btn-shortcut">
+                        <span><i class="fa fa-money"></i></span>Nova - Consig.
                     </a>
                     <a href="<?php echo $this->basePath() ?>/admin/proposal/caixa-proposal/1/pre" class="btn btn-shortcut">
-                        <span><i class="glyphicon glyphicon-usd"></i></span>Nova Proposta
+                        <span><i class="glyphicon glyphicon-usd"></i></span>Nova - Caixa
+                    </a>
+                    <a href="<?php echo $this->basePath() ?>/admin/proposal/realty-proposal/1/pre" class="btn btn-shortcut">
+                        <span><i class="fa fa-building-o"></i></span>Nova - Veículo
+                    </a>
+                    <a href="<?php echo $this->basePath() ?>/admin/proposal/vehicle-proposal/1/pre" class="btn btn-shortcut">
+                        <span><i class="fa fa-truck"></i></span>Nova - Imóvel
                     </a>
                     <a href="<?php echo $this->basePath() ?>/admin/customer" class="btn btn-shortcut">
                         <span><i class="glyphicon glyphicon-user"></i></span>Clientes
