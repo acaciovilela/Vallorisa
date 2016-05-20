@@ -24,7 +24,7 @@ class Launch extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'date',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control datepicker',
+                'class' => 'form-control input-sm datepicker',
                 'value' => date('d/m/Y')
             ),
             'options' => array(
@@ -36,7 +36,7 @@ class Launch extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'number',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Número',
@@ -47,7 +47,7 @@ class Launch extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'value',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control currency',
+                'class' => 'form-control input-sm currency',
                 'placeholder' => '0,00'
             ),
             'options' => array(
@@ -59,7 +59,7 @@ class Launch extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'description',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Descrição',
@@ -85,7 +85,7 @@ class Launch extends ZendFielset implements InputFilterProviderInterface {
                 ),
             ),
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             )
         ));
 
@@ -110,7 +110,7 @@ class Launch extends ZendFielset implements InputFilterProviderInterface {
                 ),
             ),
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
                 'required' => 'required',
             )
         ));

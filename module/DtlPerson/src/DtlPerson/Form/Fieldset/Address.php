@@ -26,7 +26,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Endereço',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Endereço'
@@ -38,7 +38,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Nº',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Nº'
@@ -50,7 +50,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Complemento',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Complemento'
@@ -62,7 +62,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Bairro',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Bairro'
@@ -74,7 +74,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'CEP',
-                'class' => 'form-control  cep',
+                'class' => 'form-control input-sm  cep',
                 'onblur' => 'javascript: fetchAddressByCep(this.value);'
             ),
             'options' => array(
@@ -87,7 +87,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Cidade',
-                'class' => 'form-control  city',
+                'class' => 'form-control input-sm  city',
                 'id' => 'cityName',
             ),
             'options' => array(
@@ -100,7 +100,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Estado',
-                'class' => 'form-control  state',
+                'class' => 'form-control input-sm  state',
                 'id' => 'stateName',
             ),
             'options' => array(
@@ -113,7 +113,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'País',
-                'class' => 'form-control  country',
+                'class' => 'form-control input-sm  country',
                 'id' => 'countryName',
             ),
             'options' => array(

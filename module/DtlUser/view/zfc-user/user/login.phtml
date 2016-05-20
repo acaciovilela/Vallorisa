@@ -27,11 +27,11 @@ $form->setAttribute('method', 'post');
         </div>
         <?php echo $this->form()->openTag($form) ?>
         <div class="loginbox-textbox">
-            <?php echo $this->formInput($form->get('identity')->setAttributes(array('class' => 'form-control', 'placeholder' => 'Email'))) ?>
+            <?php echo $this->formInput($form->get('identity')->setAttributes(array('class' => 'form-control input-sm', 'placeholder' => 'Email'))) ?>
         </div>
 
         <div class="loginbox-textbox">
-            <?php echo $this->formInput($form->get('credential')->setAttributes(array('class' => 'form-control', 'placeholder' => 'Senha'))) ?>
+            <?php echo $this->formInput($form->get('credential')->setAttributes(array('class' => 'form-control input-sm', 'placeholder' => 'Senha'))) ?>
         </div>
         <?php if ($this->redirect): ?>
             <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />

@@ -18,7 +18,7 @@ class Search extends Form {
             'type' => 'Zend\Form\Element\Text',
             'name' => 'date',
             'attributes' => array(
-                'class' => 'form-control col-md-8 datepicker',
+                'class' => 'form-control input-sm col-md-8 datepicker',
             ),
             'options' => array(
                 'value' => date('d/m/Y'),

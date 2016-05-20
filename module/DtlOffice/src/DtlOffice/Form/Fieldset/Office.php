@@ -25,7 +25,7 @@ class Office extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder'   => 'Cargo',
-                'class'         => 'form-control',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
             ),
             'options' => array(

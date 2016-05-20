@@ -19,7 +19,7 @@ class ProductsByDate extends Form {
             'type' => 'Zend\Form\Element\Text',
             'name' => 'reportDateFrom',
             'attributes' => array(
-                'class' => 'form-control datepicker',
+                'class' => 'form-control input-sm datepicker',
                 'placeholder' => 'Data Início'
             ),
             'options' => array(
@@ -34,7 +34,7 @@ class ProductsByDate extends Form {
             'type' => 'Zend\Form\Element\Text',
             'name' => 'reportDateTo',
             'attributes' => array(
-                'class' => 'form-control datepicker',
+                'class' => 'form-control input-sm datepicker',
                 'placeholder' => 'Data Fim'
             ),
             'options' => array(

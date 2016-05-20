@@ -27,7 +27,7 @@ class Legal extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'CNPJ',
-                'class' => 'form-control  cnpj',
+                'class' => 'form-control input-sm  cnpj',
             ),
             'options' => array(
                 'label' => 'CNPJ'
@@ -39,7 +39,7 @@ class Legal extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Inscrição Estadual',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Inscrição Estadual'
@@ -51,7 +51,7 @@ class Legal extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Nome do Representante',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Nome do Repres.'
@@ -63,7 +63,7 @@ class Legal extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Telefone',
-                'class' => 'form-control  phone',
+                'class' => 'form-control input-sm  phone',
             ),
             'options' => array(
                 'label' => 'Tel. do Repres.'

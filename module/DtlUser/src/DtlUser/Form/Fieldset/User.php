@@ -25,7 +25,7 @@ class User extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Email',
             'attributes' => array(
                 'placeholder'   => 'Email',
-                'class'         => 'form-control',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
             ),
             'options' => array(
@@ -38,7 +38,7 @@ class User extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder'   => 'Usuário',
-                'class'         => 'form-control',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
             ),
             'options' => array(
@@ -51,7 +51,7 @@ class User extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder'   => 'Nome',
-                'class'         => 'form-control',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
             ),
             'options' => array(
@@ -64,7 +64,7 @@ class User extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Password',
             'attributes' => array(
                 'placeholder'   => 'Senha',
-                'class'         => 'form-control',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
                 'autocomplete'  => 'off',
             ),
@@ -78,7 +78,7 @@ class User extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Password',
             'attributes' => array(
                 'placeholder'   => 'Confirmação de Senha',
-                'class'         => 'form-control',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
                 'autocomplete'  => 'off',
             ),

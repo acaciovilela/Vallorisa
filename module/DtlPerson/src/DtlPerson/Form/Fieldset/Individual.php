@@ -57,7 +57,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'CPF',
-                'class' => 'form-control  cpf',
+                'class' => 'form-control input-sm  cpf',
             ),
             'options' => array(
                 'label' => 'CPF'
@@ -69,7 +69,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'RG',
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'RG'
@@ -118,7 +118,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Dia',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
                 'maxlength' => 2,
             ),
             'options' => array(
@@ -130,7 +130,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'name' => 'birthMonth',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'empty_option' => 'Mês',
@@ -157,7 +157,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Ano',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
                 'maxlength' => 4,
             ),
             'options' => array(
@@ -170,7 +170,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Naturalidade',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Naturalidade'
@@ -182,7 +182,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'placeholder' => 'UF',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'UF',
@@ -196,7 +196,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Nome da Mãe',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Nome da Mãe'
@@ -208,7 +208,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Nome do Pai',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Nome do Pai'
@@ -220,7 +220,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Nacionalidade',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Nacionalidade'
@@ -231,7 +231,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             'name' => 'gender',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
-                'class' => 'form-control '
+                'class' => 'form-control input-sm'
             ),
             'options' => array(
                 'empty_option' => 'Sexo',
@@ -240,6 +240,25 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                     '1' => 'MASCULINO'
                 ),
                 'label' => 'Sexo'
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'status',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'class' => 'form-control input-sm'
+            ),
+            'options' => array(
+                'empty_option' => 'Selecione',
+                'value_options' => array(
+                    'AMAZIADO(A)' => 'AMAZIADO(A)',
+                    'CASADO(A)' => 'CASADO(A)',
+                    'DIVORCIADO(A)' => 'DIVORCIADO(A)',
+                    'SOLTEIRO(A)' => 'SOLTEIRO(A)',
+                    'VIÚVO(A)' => 'VIÚVO(A)',
+                ),
+                'label' => 'Estado Civil'
             ),
         ));
 

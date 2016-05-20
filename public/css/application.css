@@ -17,11 +17,10 @@ body {
     padding-top: 10px;
 }
 .table {
-    font-family: Verdana;
     font-size: 11px;
 }
 .table th {
-    font-size: 12px;
+    font-size: 11px;
     border: #670000;
 }
 .pagination {
@@ -40,9 +39,9 @@ body {
     color: #777;
 }
 .btn-shortcut {
-    width: 110px;
+    width: 100px;
     padding: 10px 5px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #fff;
     background-color: #670000;

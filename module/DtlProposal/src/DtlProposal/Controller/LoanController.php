@@ -99,7 +99,6 @@ class LoanController extends AbstractActionController {
         $loan = new \DtlProposal\Entity\LoanProposal();
 
         $prePost = $this->getProposalSession()->prePost['preProposal'];
-
         if (isset($prePost['cpf'])) {
             $document = $prePost['cpf'];
         } else {
@@ -108,20 +107,23 @@ class LoanController extends AbstractActionController {
 
         $customer = $this->findCustomer($document);
 
-        if ($customer && (!$this->request->isPost())) {
-            $customer->setUser($user);
+        if (null !== $customer && (!$this->request->isPost())) {
             $loan->getProposal()->setCustomer($customer);
             $this->getProposalService()->resetSession();
             $this->getProposalService()->populate($loan, $customer);
         }
-
+        
         $form->bind($loan);
-        $form->get('loan')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
-        if ($prePost['type']) {
-            $form->get('loan')->get('proposal')->get('customer')->get('person')->get('legal')->get('cnpj')->setValue($document);
-        } else {
-            $form->get('loan')->get('proposal')->get('customer')->get('person')->get('individual')->get('cpf')->setValue($document);
+        
+        if (null === $customer) {
+            $form->get('loan')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
+            if (1 === (int) base64_decode($prePost['type'])) {
+                $form->get('loan')->get('proposal')->get('customer')->get('person')->get('legal')->get('cnpj')->setValue($document);
+            } else {
+                $form->get('loan')->get('proposal')->get('customer')->get('person')->get('individual')->get('cpf')->setValue($document);
+            }
         }
+
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
             $form->setData($post);

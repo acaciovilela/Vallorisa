@@ -30,7 +30,6 @@ class FindCustomer extends AbstractPlugin {
         $filter = new \Zend\Filter\Digits();
         $document = $filter->filter($docNumber);
         $em = $this->getEntityManager();
-
         if (strlen($document) === 11) {
             $customer = $em->getRepository('DtlCustomer\Entity\Customer')
                     ->createQueryBuilder('c')
@@ -52,7 +51,6 @@ class FindCustomer extends AbstractPlugin {
         } else {
             return null;
         }
-
         return $customer;
     }
 

@@ -34,22 +34,28 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             <label>Data de Nascimento</label>
             <?php echo $this->formText($individual->get('birthDay')); ?>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="form-group">
             <label>&nbsp;</label>
             <?php echo $this->formSelect($individual->get('birthMonth')); ?>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             <label>&nbsp;</label>
             <?php echo $this->formText($individual->get('birthYear')); ?>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <?php echo $this->formLabel($individual->get('status')); ?>
+            <?php echo $this->formSelect($individual->get('status')); ?>
         </div>
     </div>
 </div>

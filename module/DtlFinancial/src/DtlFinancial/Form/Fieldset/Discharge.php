@@ -29,7 +29,7 @@ class Discharge extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'date',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control  datepicker',
+                'class' => 'form-control input-sm  datepicker',
             ),
             'options' => array(
                 'label' => 'Data da Baixa',
@@ -40,7 +40,7 @@ class Discharge extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'name' => 'value',
             'attributes' => array(
-                'class' => 'form-control  currency',
+                'class' => 'form-control input-sm  currency',
             ),
             'options' => array(
                 'label' => 'Valor a Baixar'

@@ -24,7 +24,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'description',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
                 'required' => 'required',
             ),
             'options' => array(
@@ -36,7 +36,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'number',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Número'
@@ -47,7 +47,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'emissionDate',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control  datepicker',
+                'class' => 'form-control input-sm  datepicker',
             ),
             'options' => array(
                 'label' => 'Dt. de Emissão'
@@ -58,7 +58,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'expirationDate',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control  datepicker',
+                'class' => 'form-control input-sm  datepicker',
                 'id' => 'firstExpiration',
                 'onblur' => 'javascript: $("#ParcelExpiration").val(this.value);'
             ),
@@ -71,7 +71,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'value',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control  currency',
+                'class' => 'form-control input-sm  currency',
                 'id' => 'Value',
                 'onblur' => 'javascript: $("#ParcelValue").val(this.value);'
             ),
@@ -84,7 +84,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'parcels',
             'type' => 'Zend\Form\Element\Number',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
                 'maxlength' => 3,
                 'id' => 'parcelValue',
                 'min' => '1',
@@ -100,7 +100,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'currentParcel',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Parcela'
@@ -111,7 +111,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'barcode',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Código de Barras'
@@ -129,7 +129,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
                 'label' => 'Tipo de Lançamento'
             ),
             'attributes' => array(
-                'class' => 'form-control '
+                'class' => 'form-control input-sm'
             )
         ));
 
@@ -137,7 +137,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'fine',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control porcent'
+                'class' => 'form-control input-sm porcent'
             ),
             'options' => array(
                 'value' => '0',
@@ -149,7 +149,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'interest',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control porcent'
+                'class' => 'form-control input-sm porcent'
             ),
             'options' => array(
                 'label' => 'Juros'
@@ -160,7 +160,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'interestInterval',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'value_options' => array(
@@ -182,7 +182,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
                 'label' => 'É recorrente?'
             ),
             'attributes' => array(
-                'class' => 'form-control '
+                'class' => 'form-control input-sm'
             )
         ));
 
@@ -190,7 +190,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'recurrenceInterval',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'value_options' => array(
@@ -210,7 +210,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'notes',
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
                 'rows' => 4,
             ),
             'options' => array(
@@ -239,7 +239,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
                 ),
             ),
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             )
         ));
 
@@ -264,7 +264,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
                 )
             ),
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             )
         ));
 
@@ -291,7 +291,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
                 )
             ),
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             )
         ));
 
@@ -320,7 +320,7 @@ class Account extends ZendFielset implements InputFilterProviderInterface {
                 )
             ),
             'attributes' => array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
             ),
         ));
     }

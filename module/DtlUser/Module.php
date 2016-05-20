@@ -60,7 +60,7 @@ class Module {
             $form = $e->getTarget();
             if ($form) {
                 foreach ($form as $element) {
-                    $element->setAttribute('class', 'form-control');
+                    $element->setAttribute('class', 'form-control input-sm');
                     $element->setAttribute('autocomplete', 'off');
                 }
             }

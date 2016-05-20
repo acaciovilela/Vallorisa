@@ -25,7 +25,7 @@ class Professional extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Data de Admissão',
-                'class' => 'form-control  datepicker',
+                'class' => 'form-control input-sm  datepicker',
             ),
             'options' => array(
                 'label' => 'Data de Admissão'
@@ -37,7 +37,7 @@ class Professional extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Nome da Empresa',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Nome da Empresa'
@@ -49,7 +49,7 @@ class Professional extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'CNPJ',
-                'class' => 'form-control  cnpj',
+                'class' => 'form-control input-sm  cnpj',
             ),
             'options' => array(
                 'label' => 'CNPJ'
@@ -61,7 +61,7 @@ class Professional extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Salário',
-                'class' => 'form-control currency',
+                'class' => 'form-control input-sm currency',
             ),
             'options' => array(
                 'label' => 'Salário'
@@ -73,7 +73,7 @@ class Professional extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Outra Receita',
-                'class' => 'form-control  currency',
+                'class' => 'form-control input-sm  currency',
             ),
             'options' => array(
                 'label' => 'Outra Receita'
@@ -85,7 +85,7 @@ class Professional extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
                 'placeholder' => 'Observações',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Observações'
@@ -111,7 +111,7 @@ class Professional extends Fieldset implements InputFilterProviderInterface {
                 ),
             ),
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             )
         ));
 

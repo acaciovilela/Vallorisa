@@ -26,7 +26,7 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Email',
             'attributes' => array(
                 'placeholder' => 'E-mail',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'E-mail'
@@ -38,7 +38,7 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Website',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Website'
@@ -50,7 +50,7 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Telefone',
-                'class' => 'form-control  phone',
+                'class' => 'form-control input-sm  phone',
             ),
             'options' => array(
                 'label' => 'Telefone'
@@ -62,7 +62,7 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Celular',
-                'class' => 'form-control  phone',
+                'class' => 'form-control input-sm  phone',
             ),
             'options' => array(
                 'label' => 'Celular'
@@ -74,7 +74,7 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'FAX',
-                'class' => 'form-control  phone',
+                'class' => 'form-control input-sm  phone',
             ),
             'options' => array(
                 'label' => 'Fax'

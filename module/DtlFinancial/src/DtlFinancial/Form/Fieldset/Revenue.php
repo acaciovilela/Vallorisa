@@ -38,7 +38,7 @@ class Revenue extends ZendFielset implements InputFilterProviderInterface {
                 ),
             ),
             'attributes' => array(
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             )
         ));
 

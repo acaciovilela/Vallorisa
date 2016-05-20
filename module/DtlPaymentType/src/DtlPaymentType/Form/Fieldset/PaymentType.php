@@ -25,7 +25,7 @@ class PaymentType extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder'   => 'Forma de Pagamento',
-                'class'         => 'form-control',
+                'class'         => 'form-control input-sm',
                 'data-bv-notempty' => 'true'
             ),
             'options' => array(

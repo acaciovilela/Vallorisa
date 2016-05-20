@@ -103,9 +103,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                 'is_method' => true,
                 'find_method' => array(
                     'name' => 'realtyProposalRealtorList',
-                    'params' => array(
-                        'user' => $this->getUser()->getId(),
-                    ),
+                    'params' => array(),
                 ),
             ),
             'attributes' => array(

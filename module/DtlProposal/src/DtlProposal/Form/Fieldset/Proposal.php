@@ -239,8 +239,6 @@ class Proposal extends ZendFielset implements InputFilterProviderInterface {
         $customer = new \DtlCustomer\Form\Fieldset\Customer($entityManager);
         $customer->setName('customer')
                 ->setLabel('Cliente');
-        $customer->get('person')->get('individual')->get('cpf')->setAttribute('readonly', 'readonly');
-        $customer->get('person')->get('legal')->get('cnpj')->setAttribute('readonly', 'readonly');
         $this->add($customer);
     }
 

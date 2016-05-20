@@ -32,7 +32,7 @@ class Person extends Fieldset implements InputFilterProviderInterface {
             'attributes' => array(
                 'required' => 'required',
                 'placeholder' => 'Nome',
-                'class' => 'form-control ',
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                'label' => 'Nome'

@@ -26,7 +26,7 @@ class AccountingItem extends ZendFielset implements InputFilterProviderInterface
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder'   => 'Item Contábil',
-                'class'         => 'form-control ',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
             ),
             'options' => array(

@@ -17,7 +17,7 @@ $discharge = $form->get('discharge');
                 <div class="form-group">
                     <div class='row'>
                         <label class='col-sm-6 control-label'>Data de Venc.:</label>
-                        <p class='form-control-static col-md-6'>
+                        <p class='form-control input-sm-static col-md-6'>
                             <?php echo $account->getAccount()->getExpirationDate(); ?>
                         </p>
                     </div>
@@ -25,7 +25,7 @@ $discharge = $form->get('discharge');
                 <div class="form-group">
                     <div class='row'>
                         <label class='col-sm-6 control-label'>Valor da Conta</label>
-                        <p class='form-control-static col-sm-6'>
+                        <p class='form-control input-sm-static col-sm-6'>
                             <?php echo $this->currency($account->getAccount()->getValue()); ?>
                         </p>
                     </div>

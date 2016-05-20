@@ -74,7 +74,7 @@ class Pretender extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'notes',
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'placeholder' => 'Observações',
             ),
             'options' => array(

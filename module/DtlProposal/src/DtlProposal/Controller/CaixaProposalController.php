@@ -109,19 +109,21 @@ class CaixaProposalController extends AbstractActionController {
 
         $customer = $this->findCustomer($document);
 
-        if ($customer && (!$this->request->isPost())) {
-            $customer->setUser($user);
+        if (null !== $customer && (!$this->request->isPost())) {
             $caixa->getProposal()->setCustomer($customer);
             $this->getProposalService()->resetSession();
             $this->getProposalService()->populate($caixa, $customer);
         }
 
         $form->bind($caixa);
-        $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
-        if ($prePost['type']) {
-            $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->get('legal')->get('cnpj')->setValue($document);
-        } else {
-            $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->get('individual')->get('cpf')->setValue($document);
+
+        if (null === $customer) {
+            $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
+            if (1 === (int) base64_decode($prePost['type'])) {
+                $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->get('legal')->get('cnpj')->setValue($document);
+            } else {
+                $form->get('caixaProposal')->get('proposal')->get('customer')->get('person')->get('individual')->get('cpf')->setValue($document);
+            }
         }
         if ($this->request->isPost()) {
             $post = $this->request->getPost();

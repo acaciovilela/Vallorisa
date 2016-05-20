@@ -25,7 +25,7 @@ class Bank extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder'   => 'Número',
-                'class'         => 'form-control ',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
                 'maxlength'     => 4
             ),
@@ -39,7 +39,7 @@ class Bank extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder'   => 'Nome do Banco',
-                'class'         => 'form-control ',
+                'class'         => 'form-control input-sm',
                 'required'      => 'required',
             ),
             'options' => array(
@@ -52,7 +52,7 @@ class Bank extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder'   => 'Site do Banco',
-                'class'         => 'form-control ',
+                'class'         => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Site do Banco'

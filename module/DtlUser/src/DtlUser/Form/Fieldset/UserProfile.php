@@ -25,7 +25,7 @@ class UserProfile extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'lastName',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'placeholder' => 'Sobrenome',
             ),
             'options' => array(
@@ -37,7 +37,7 @@ class UserProfile extends ZendFielset implements InputFilterProviderInterface {
             'name' => 'about',
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'placeholder' => 'Fale sobre você',
             ),
             'options' => array(

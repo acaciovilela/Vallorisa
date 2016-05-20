@@ -61,7 +61,7 @@ class ProductController extends AbstractActionController {
     }
 
     public function addAction() {
-        $form = new ProductForm($this->getEntityManager(), $this->identity());
+        $form = new ProductForm($this->getEntityManager(), $this->dtlUserMasterIdentity());
         $product = new ProductEntity();
         $form->bind($product);
         if ($this->request->isPost()) {
@@ -84,7 +84,7 @@ class ProductController extends AbstractActionController {
         $id = $this->params()->fromRoute('id', 0);
         $em = $this->getEntityManager();
         $product = $em->find($this->getRepository(), $id);
-        $form = new ProductForm($this->getEntityManager(), $this->identity());
+        $form = new ProductForm($this->getEntityManager(), $this->dtlUserMasterIdentity());
         $form->bind($product);
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
@@ -129,8 +129,8 @@ class ProductController extends AbstractActionController {
     public function listAction() {
         $id = $this->params()->fromQuery('id');
         $em = $this->getEntityManager();
-        $products = $em->getRepository('DtlProduct\Entity\Product')->findBy(array(
-            'id' => $id,
+        $products = $em->getRepository($this->getRepository())->findBy(array(
+            'category' => $id,
             'isActive' => '1'
         ));
         return array(

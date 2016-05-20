@@ -2,7 +2,7 @@
 $company = $this->company;
 $address = $company->getAddress();
 $contact = $company->getContact();
-$title = 'Detalhes de ' . $company->getCompanyName();
+$title = 'Detalhes de ' . $company->getName();
 $this->headTitle($title);
 ?>
 <div>
@@ -11,7 +11,7 @@ $this->headTitle($title);
         <div class="col-md-6">
             <blockquote>
                 <p class="text-danger">
-                    <?php echo $company->getCompanyName(); ?>
+                    <?php echo $company->getName(); ?>
                 </p>
             </blockquote>
         </div>
@@ -28,17 +28,17 @@ $this->headTitle($title);
 <dl class="dl-horizontal">
     <legend>Dados da Empresa</legend>
     <dt>Razão Social:</dt>
-    <dd><?php echo $company->getCompanyName(); ?>&nbsp;</dd>
+    <dd><?php echo $company->getName(); ?>&nbsp;</dd>
     <dt>Nome Fantasia:</dt>
     <dd><?php echo $company->getFancyName(); ?>&nbsp;</dd>
     <dt>CNPJ:</dt>
-    <dd><?php echo $this->cnpj($company->getCompanyCnpj()); ?>&nbsp;</dd>
+    <dd><?php echo $this->cnpj($company->getCnpj()); ?>&nbsp;</dd>
     <dt>Inscrição Estadual:</dt>
-    <dd><?php echo $company->getCompanySubscription(); ?>&nbsp;</dd>
+    <dd><?php echo $company->getSubscription(); ?>&nbsp;</dd>
     <dt>Representante:</dt>
-    <dd><?php echo $company->getCompanyRepresentativeName(); ?>&nbsp;</dd>
+    <dd><?php echo $company->getRepresentativeName(); ?>&nbsp;</dd>
     <dt>Telefone do Rep.:</dt>
-    <dd><?php echo $this->phone($company->getCompanyRepresentativePhone()); ?>&nbsp;</dd>
+    <dd><?php echo $this->phone($company->getRepresentativePhone()); ?>&nbsp;</dd>
 
     <legend>Endereço</legend>
     <dt>Endereço:</dt>
