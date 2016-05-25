@@ -129,6 +129,9 @@ class RealtyProposalController extends AbstractActionController {
         }
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
+            if (!($post->realtyProposal['customers'][0]['person']['name'])) {
+                unset($post->realtyProposal['customers'][0]);
+            }
             $form->setData($post);
             if ($form->isValid()) {
                 $realty->getProposal()->setUser($user);

@@ -94,13 +94,14 @@ $form->prepare();
             <div class="panel-body">
                 <legend><h3>Comprador</h3></legend>
                 <?php $customer = $proposal->get('customer'); ?>
-                <?php echo $this->customerForm($customer, $this->post, true); ?>
+                <?php echo $this->customerForm($customer, $this->post, true, $this->realtyProposal->getProposal()->getCustomer()); ?>
                 <br/>
                 <?php
                 echo $this->partial('dtl-proposal/proposal/customercollectionform', array(
                     'customers' => $realtyProposal->get('customers'),
                     'params' => $this->post['preProposal'],
-                    'isLoan' => true
+                    'isLoan' => true,
+                    'entity' => $this->realtyProposal->getProposal()->getCustomer()
                 ));
                 ?>
             </div>

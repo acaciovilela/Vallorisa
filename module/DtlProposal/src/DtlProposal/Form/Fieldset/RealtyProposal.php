@@ -163,6 +163,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
                 ->setTargetElement(new \DtlCustomer\Form\Fieldset\Customer($this->getEntityManager()))
                 ->setLabel('Compradores')
                 ->setName('customers');
+        $customers->getTargetElement()->get('person')->get('name')->setAttribute('required', '');
         $this->add($customers);
 
         $proposal = new Proposal($this->getEntityManager(), $this->getUser());

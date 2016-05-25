@@ -356,9 +356,10 @@ $this->headTitle($title);
                             <dt>Estado:</dt>
                             <dd><?php echo ($customer->getPerson()->getAddress()->getState()) ? $customer->getPerson()->getAddress()->getState()->getName() : ''; ?>&nbsp;</dd>
                             <dt>País:</dt>
-                            <dd><?php echo ($customer->getPerson()->getAddress()->getCountry()) ? $customer->getPerson()->getAddress()->getCountry()->getName() : '';
-                    ;
-                    ?>&nbsp;</dd>
+                            <dd><?php
+                                echo ($customer->getPerson()->getAddress()->getCountry()) ? $customer->getPerson()->getAddress()->getCountry()->getName() : '';
+                                ;
+                                ?>&nbsp;</dd>
                         </div>
                         <div class="col-md-6">
                             <dt>Email:</dt>
@@ -379,7 +380,7 @@ $this->headTitle($title);
                     </div>
                     <br/>
 
-<?php if (!$customer->getPerson()->getType()): ?>
+                    <?php if (!$customer->getPerson()->getType()): ?>
                         <div class="panel <?php echo $class; ?>">
                             <div class="panel-heading">
                                 <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados Profissionais</div>
@@ -437,24 +438,24 @@ $this->headTitle($title);
                                 </dl>
                             </div>
                         </div>
-<?php endif; ?>
+                    <?php endif; ?>
                 </dl>
             </div>
         </div>
 
         <?php $proposalCustomers = $realtyProposal->getCustomers(); ?>
-<?php if (count($proposalCustomers) > 0): ?>
+        <?php if (count($proposalCustomers) > 0): ?>
             <div class="panel <?php echo $class; ?>">
                 <div class="panel-heading">
                     <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados do Comprador</div>
                 </div>
                 <div class="panel-body">
-    <?php foreach ($proposalCustomers as $proposalCustomer): ?>
+                    <?php foreach ($proposalCustomers as $proposalCustomer): ?>
                         <legend>Comprador</legend>
                         <dl class="dl-horizontal">
                             <dt>Nome:</dt>
                             <dd><?php echo $proposalCustomer->getPerson()->getName(); ?>&nbsp;</dd>
-        <?php if ($proposalCustomer->getPerson()->getType()): ?>
+                            <?php if ($proposalCustomer->getPerson()->getType()): ?>
                                 <dt>CNPJ:</dt>
                                 <dd><?php echo $this->cnpj($proposalCustomer->getPerson()->getlegal()->getCnpj()); ?>&nbsp;</dd>
                                 <dt>Inscrição Estadual:</dt>
@@ -463,7 +464,7 @@ $this->headTitle($title);
                                 <dd><?php echo $proposalCustomer->getPerson()->getlegal()->getRepresentativeName(); ?>&nbsp;</dd>
                                 <dt>Telefone do Rep.:</dt>
                                 <dd><?php echo $this->phone($proposalCustomer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
-        <?php else: ?>
+                            <?php else: ?>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <dt>CPF:</dt>
@@ -490,7 +491,7 @@ $this->headTitle($title);
                                         <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getFather(); ?>&nbsp;</dd>
                                     </div>
                                 </div>
-        <?php endif; ?>
+                            <?php endif; ?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <dt>Endereço:</dt>
@@ -502,11 +503,11 @@ $this->headTitle($title);
                                     <dt>CEP:</dt>
                                     <dd><?php echo $this->cep($proposalCustomer->getPerson()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
                                     <dt>Cidade:</dt>
-                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getCity()->getName();    ?>&nbsp;</dd>
+                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getCity()->getName();      ?>&nbsp;</dd>
                                     <dt>Estado:</dt>
-                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getState()->getName();    ?>&nbsp;</dd>
+                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getState()->getName();      ?>&nbsp;</dd>
                                     <dt>País:</dt>
-                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getCountry()->getName();    ?>&nbsp;</dd>
+                                    <dd><?php // echo $proposalCustomer->getPerson()->getAddress()->getCountry()->getName();      ?>&nbsp;</dd>
                                 </div>
                                 <div class="col-md-6">
                                     <dt>Email:</dt>
@@ -523,7 +524,7 @@ $this->headTitle($title);
                             </div>
                         </dl>
                         <br/>
-        <?php if (!$proposalCustomer->getPerson()->getType()): ?>
+                        <?php if (!$proposalCustomer->getPerson()->getType()): ?>
                             <div class="panel <?php echo $class; ?>">
                                 <div class="panel-heading">
                                     <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados Profissionais</div>
@@ -543,11 +544,11 @@ $this->headTitle($title);
                                                 <dt>CEP:</dt>
                                                 <dd><?php echo $this->cep($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
                                                 <dt>Cidade:</dt>
-                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()->getName();    ?>&nbsp;</dd>
+                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()->getName();      ?>&nbsp;</dd>
                                                 <dt>Estado:</dt>
-                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()->getName();    ?>&nbsp;</dd>
+                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()->getName();      ?>&nbsp;</dd>
                                                 <dt>País:</dt>
-                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()->getName();    ?>&nbsp;</dd>
+                                                <dd><?php // echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()->getName();      ?>&nbsp;</dd>
                                                 <dt>Data de Admissão:</dt>
                                                 <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getInDate(); ?></dd>
                                                 <dt>Cargo:</dt>
@@ -582,12 +583,12 @@ $this->headTitle($title);
                                 </div>
                             </div>
                         <?php endif; ?>
-    <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         <?php endif; ?>
 
-<?php if (count($customer->getAccounts()) > 0): ?>
+        <?php if (count($customer->getAccounts()) > 0): ?>
             <div class="panel <?php echo $class; ?>">
                 <div class="panel-heading">
                     <div class="panel-title"><i class="glyphicon glyphicon-usd"></i> Contas Bancárias do Cliente</div>
@@ -600,7 +601,7 @@ $this->headTitle($title);
                         <th class=""><?php echo $this->translate('CONTA'); ?></th>
                         <th class=""><?php echo $this->translate('CLIENTE DESDE'); ?></th>
                     </tr>
-    <?php foreach ($customer->getAccounts() as $customerBankAccount) : ?>
+                    <?php foreach ($customer->getAccounts() as $customerBankAccount) : ?>
                         <tr>
                             <td><?php echo $this->escapeHtml($customerBankAccount->getType()); ?></td>
                             <td><?php echo $customerBankAccount->getBank()->getName(); ?></td>
@@ -608,60 +609,57 @@ $this->headTitle($title);
                             <td><?php echo $this->escapeHtml($customerBankAccount->getAccount()); ?></td>
                             <td><?php echo $this->escapeHtml($customerBankAccount->getSince()); ?></td>
                         </tr>
-    <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </table>
             </div>'
         <?php endif; ?>
 
         <?php $dealers = $realtyProposal->getDealers(); ?>
-<?php if (count($dealers) > 0): ?>
+        <?php if (count($dealers) > 0): ?>
             <div class="panel <?php echo $class; ?>">
                 <div class="panel-heading">
                     <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados dos Vendedores</div>
                 </div>
                 <div class="panel-body">
-    <?php foreach ($dealers as $dealer): ?>
+                    <?php foreach ($dealers as $dealer): ?>
                         <legend>Vendedor</legend>
                         <dl class="dl-horizontal">
                             <dt>Nome:</dt>
                             <dd><?php echo $dealer->getPerson()->getName(); ?>&nbsp;</dd>
-        <?php if ($dealer->getPerson()->getType()): ?>
-                                <dt>CNPJ:</dt>
-                                <dd><?php echo $this->cnpj($dealer->getPerson()->getlegal()->getCnpj()); ?>&nbsp;</dd>
-                                <dt>Inscrição Estadual:</dt>
-                                <dd><?php echo $dealer->getPerson()->getlegal()->getSubscription(); ?>&nbsp;</dd>
-                                <dt>Representante:</dt>
-                                <dd><?php echo $dealer->getPerson()->getlegal()->getRepresentativeName(); ?>&nbsp;</dd>
-                                <dt>Telefone do Rep.:</dt>
-                                <dd><?php echo $this->phone($dealer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
-        <?php else: ?>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <dt>CPF:</dt>
-                                        <dd><?php echo ($dealer->getPerson()->getIndividual()->getCpf()); ?>&nbsp;</dd>
-                                        <dt>RG:</dt>
-                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getRg(); ?>&nbsp;</dd>
-                                        <dt>Sexo:</dt>
-                                        <dd><?php echo $this->gender($dealer->getPerson()->getIndividual()->getGender()); ?>&nbsp;</dd>
-                                        <dt>Natural de:</dt>
-                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getBirthPlace(); ?>/<?php echo $dealer->getPerson()->getIndividual()->getBirthUf(); ?>&nbsp;</dd>
-                                        <dt>Nome da Mãe:</dt>
-                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getMother(); ?>&nbsp;</dd>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <dt>Data de Nascimento:</dt>
-                                        <dd><?php echo $this->birthday($dealer->getPerson()->getIndividual()->getBirthDay(), $dealer->getPerson()->getIndividual()->getBirthMonth(), $dealer->getPerson()->getIndividual()->getBirthYear()); ?></dd>
-                                        <dt>Órgão Expedidor:</dt>
-                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getRgOrgan(); ?> / <?php echo $dealer->getPerson()->getIndividual()->getRgUf(); ?></dd>
-                                        <dt>Data de Expedição:</dt>
-                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getRgDate(); ?>&nbsp;</dd>
-                                        <dt>Nacionalidade:</dt>
-                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getNationality(); ?>&nbsp;</dd>
-                                        <dt>Nome do Pai:</dt>
-                                        <dd><?php echo $dealer->getPerson()->getIndividual()->getFather(); ?>&nbsp;</dd>
-                                    </div>
+                            <dt>CNPJ:</dt>
+                            <dd><?php echo $this->cnpj($dealer->getPerson()->getlegal()->getCnpj()); ?>&nbsp;</dd>
+                            <dt>Inscrição Estadual:</dt>
+                            <dd><?php echo $dealer->getPerson()->getlegal()->getSubscription(); ?>&nbsp;</dd>
+                            <dt>Representante:</dt>
+                            <dd><?php echo $dealer->getPerson()->getlegal()->getRepresentativeName(); ?>&nbsp;</dd>
+                            <dt>Telefone do Rep.:</dt>
+                            <dd><?php echo $this->phone($dealer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <dt>CPF:</dt>
+                                    <dd><?php echo ($dealer->getPerson()->getIndividual()->getCpf()); ?>&nbsp;</dd>
+                                    <dt>RG:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getIndividual()->getRg(); ?>&nbsp;</dd>
+                                    <dt>Sexo:</dt>
+                                    <dd><?php echo $this->gender($dealer->getPerson()->getIndividual()->getGender()); ?>&nbsp;</dd>
+                                    <dt>Natural de:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getIndividual()->getBirthPlace(); ?>/<?php echo $dealer->getPerson()->getIndividual()->getBirthUf(); ?>&nbsp;</dd>
+                                    <dt>Nome da Mãe:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getIndividual()->getMother(); ?>&nbsp;</dd>
                                 </div>
-        <?php endif; ?>
+                                <div class="col-md-6">
+                                    <dt>Data de Nascimento:</dt>
+                                    <dd><?php echo $this->birthday($dealer->getPerson()->getIndividual()->getBirthDay(), $dealer->getPerson()->getIndividual()->getBirthMonth(), $dealer->getPerson()->getIndividual()->getBirthYear()); ?></dd>
+                                    <dt>Órgão Expedidor:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getIndividual()->getRgOrgan(); ?> / <?php echo $dealer->getPerson()->getIndividual()->getRgUf(); ?></dd>
+                                    <dt>Data de Expedição:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getIndividual()->getRgDate(); ?>&nbsp;</dd>
+                                    <dt>Nacionalidade:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getIndividual()->getNationality(); ?>&nbsp;</dd>
+                                    <dt>Nome do Pai:</dt>
+                                    <dd><?php echo $dealer->getPerson()->getIndividual()->getFather(); ?>&nbsp;</dd>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <dt>Endereço:</dt>
@@ -673,11 +671,11 @@ $this->headTitle($title);
                                     <dt>CEP:</dt>
                                     <dd><?php echo $this->cep($dealer->getPerson()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
                                     <dt>Cidade:</dt>
-                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getCity()->getName();    ?>&nbsp;</dd>
+                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getCity()->getName();      ?>&nbsp;</dd>
                                     <dt>Estado:</dt>
-                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getState()->getName();    ?>&nbsp;</dd>
+                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getState()->getName();      ?>&nbsp;</dd>
                                     <dt>País:</dt>
-                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getCountry()->getName();    ?>&nbsp;</dd>
+                                    <dd><?php // echo $dealer->getPerson()->getAddress()->getCountry()->getName();      ?>&nbsp;</dd>
                                 </div>
                                 <div class="col-md-6">
                                     <dt>Email:</dt>
@@ -693,18 +691,18 @@ $this->headTitle($title);
                                 </div>
                             </div>
                         </dl>
-    <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         <?php endif; ?>
 
-<?php if ($realtyProposal->getEvaluations()): ?>
+        <?php if ($realtyProposal->getEvaluations()): ?>
             <div class="panel <?php echo $class; ?>">
                 <div class="panel-heading">
                     <div class="panel-title"><i class=""></i> Avaliações do Imóvel</div>
                 </div>
                 <div class="panel-body">
-    <?php foreach ($realtyProposal->getEvaluations() as $key => $evaluation): ?>
+                    <?php foreach ($realtyProposal->getEvaluations() as $key => $evaluation): ?>
                         <legend>Avaliação <?php echo $key + 1; ?></legend>
                         <dl class="dl-horizontal">
                             <div class="row">
@@ -730,10 +728,10 @@ $this->headTitle($title);
                                 </div>
                             </div>
                         </dl>
-    <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
-<?php endif; ?>
+        <?php endif; ?>
     </div>
 </div>
 <div class="modal fade" id="modalUploader" role="modal" tabindex="-1" aria-hidden="true">

@@ -6,12 +6,11 @@
         <?php $person = $dealer->get('person'); ?>
         <?php echo $this->personForm($person); ?>
 
-        <?php if ($this->params['type'] == base64_encode(1)): ?>
-            <?php $legal = $person->get('legal'); ?>
-            <?php echo $this->legalForm($legal); ?>
-        <?php elseif ($this->params['type'] == base64_encode(0)): ?>
-            <?php $individual = $person->get('individual'); ?>
-            <?php echo $this->individualForm($individual); ?>
-        <?php endif; ?>
+        <?php $legal = $person->get('legal'); ?>
+        <?php echo $this->legalForm($legal); ?>
+
+        <?php $individual = $person->get('individual'); ?>
+        <?php echo $this->individualForm($individual); ?>
+
     </fieldset>
-<?php endforeach;
+<?php endforeach; ?>

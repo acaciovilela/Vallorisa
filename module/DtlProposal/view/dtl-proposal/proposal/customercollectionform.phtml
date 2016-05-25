@@ -1,3 +1,10 @@
+<?php
+if ($this->entity) {
+    $personType = base64_encode((int) $this->entity->getPerson()->getType());
+} else {
+    $personType = $this->params['type'];
+}
+?>
 <?php $customer = $this->customers; ?>
 <div id="customer-set">
     <?php foreach ($customers as $key => $customer): ?>
@@ -7,10 +14,10 @@
         <?php echo $this->formHidden($customer->get('id')); ?>
         <?php $person = $customer->get('person'); ?>
         <?php echo $this->personForm($person); ?>
-        <?php if ($this->params['type'] == base64_encode(1)): ?>
+        <?php if ($personType == base64_encode(1)): ?>
             <?php $legal = $person->get('legal'); ?>
             <?php echo $this->legalForm($legal); ?>
-        <?php elseif ($this->params['type'] == base64_encode(0)): ?>
+        <?php elseif ($personType == base64_encode(0)): ?>
             <?php $individual = $person->get('individual'); ?>
             <?php echo $this->individualForm($individual); ?>
             <?php $professional = $individual->get('professional'); ?>

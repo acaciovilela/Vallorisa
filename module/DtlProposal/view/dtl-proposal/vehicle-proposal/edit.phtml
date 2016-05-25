@@ -89,7 +89,7 @@ $form->prepare();
             </div>
             <div class="panel-body">
                 <?php $customer = $proposal->get('customer'); ?>
-                <?php echo $this->customerForm($customer, $this->post); ?>
+                <?php echo $this->customerForm($customer, $this->post, $this->vehicleProposal->getProposal()->getCustomer()); ?>
             </div>
         </div>
 
