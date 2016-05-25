@@ -51,15 +51,15 @@
                     <div class="row">
                         <div class="col-md-4">
                             <?php echo $this->formLabel($address->get('city')); ?>
-                            <?php echo $this->formText($address->get('city')); ?>
+                            <?php echo $this->formSelect($address->get('city')); ?>
                         </div>
                         <div class="col-md-4">
                             <?php echo $this->formLabel($address->get('state')); ?>
-                            <?php echo $this->formText($address->get('state')); ?>
+                            <?php echo $this->formSelect($address->get('state')); ?>
                         </div>
                         <div class="col-md-2">
                             <?php echo $this->formLabel($address->get('country')); ?>
-                            <?php echo $this->formText($address->get('country')); ?>
+                            <?php echo $this->formSelect($address->get('country')); ?>
                         </div>
                     </div>
                     <?php $realtyFeature = $realty->get('feature'); ?>
