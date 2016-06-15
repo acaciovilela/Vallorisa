@@ -1,0 +1,25 @@
+[16-May-2016 12:52:58 America/Sao_Paulo] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to DtlProposal\Service\ProposalService::populate() must be an instance of DtlProposal\Entity\ProposalEntityInterface, instance of DtlCustomer\Entity\Customer given, called in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Controller/RealtyProposalController.php on line 133 and defined in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Service/ProposalService.php:76
+Stack trace:
+#0 /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Controller/RealtyProposalController.php(133): DtlProposal\Service\ProposalService->populate(Object(DtlCustomer\Entity\Customer))
+#1 /home/vallorisa/www/vendor/zendframework/zend-mvc/src/Controller/AbstractActionController.php(82): DtlProposal\Controller\RealtyProposalController->addAction()
+#2 [internal function]: Zend\Mvc\Controller\AbstractActionController->onDispatch(Object(Zend\Mvc\MvcEvent))
+#3 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(490): call_user_func(Array, Object(Zend\Mvc\MvcEv in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Service/ProposalService.php on line 76
+[18-May-2016 02:16:22 America/Sao_Paulo] PHP Warning:  move_uploaded_file(C:/server/www/vallorisa/public/uploads/974728f41a6f7d577f6c3a8628063e6c.png): failed to open stream: No such file or directory in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Controller/RealtyProposalController.php on line 504
+[18-May-2016 02:16:22 America/Sao_Paulo] PHP Warning:  move_uploaded_file(): Unable to move '/tmp/phpjz4vtL' to 'C:/server/www/vallorisa/public/uploads/974728f41a6f7d577f6c3a8628063e6c.png' in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Controller/RealtyProposalController.php on line 504
+[25-May-2016 13:47:03 America/Sao_Paulo] PHP Parse error:  syntax error, unexpected end of file, expecting ')' in /home/vallorisa/www/module/DtlProposal/config/module.config.php on line 301
+[27-May-2016 14:25:24 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined method DtlProposal\Entity\CaixaProposal::getProduct() in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Service/ProposalService.php:385
+Stack trace:
+#0 /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Controller/CaixaProposalController.php(259): DtlProposal\Service\ProposalService->changeStatus(Object(DtlProposal\Entity\CaixaProposal), Array)
+#1 /home/vallorisa/www/vendor/zendframework/zend-mvc/src/Controller/AbstractActionController.php(82): DtlProposal\Controller\CaixaProposalController->statusAction()
+#2 [internal function]: Zend\Mvc\Controller\AbstractActionController->onDispatch(Object(Zend\Mvc\MvcEvent))
+#3 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(490): call_user_func(Array, Object(Zend\Mvc\MvcEvent))
+#4 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(214): Zend\EventManager\EventManager->triggerListeners('dispatch', Object(Zend\Mvc\MvcEvent), Object(Closure))
+#5 /home/vallorisa/www/ven in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Service/ProposalService.php on line 385
+[27-May-2016 14:27:05 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined method DtlProposal\Entity\CaixaProposal::getProduct() in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Service/ProposalService.php:385
+Stack trace:
+#0 /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Controller/CaixaProposalController.php(259): DtlProposal\Service\ProposalService->changeStatus(Object(DtlProposal\Entity\CaixaProposal), Array)
+#1 /home/vallorisa/www/vendor/zendframework/zend-mvc/src/Controller/AbstractActionController.php(82): DtlProposal\Controller\CaixaProposalController->statusAction()
+#2 [internal function]: Zend\Mvc\Controller\AbstractActionController->onDispatch(Object(Zend\Mvc\MvcEvent))
+#3 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(490): call_user_func(Array, Object(Zend\Mvc\MvcEvent))
+#4 /home/vallorisa/www/vendor/zendframework/zend-eventmanager/src/EventManager.php(214): Zend\EventManager\EventManager->triggerListeners('dispatch', Object(Zend\Mvc\MvcEvent), Object(Closure))
+#5 /home/vallorisa/www/ven in /home/vallorisa/www/module/DtlProposal/src/DtlProposal/Service/ProposalService.php on line 385

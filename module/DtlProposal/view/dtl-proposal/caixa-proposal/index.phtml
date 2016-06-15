@@ -24,7 +24,7 @@ $this->headTitle($title);
                             </div>
                             <div class="btn-group btn-group-sm">
                                 <a href="javascript: window.print();" class="btn btn-default" data-toggle="tooltip" title="Imprir lista"><i class="glyphicon glyphicon-print"></i></a>
-                                <a href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/exportCsv');?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
+                                <a href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/exportCsv'); ?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
                             </div>
                         </div>
                     </form>
@@ -90,14 +90,14 @@ $this->headTitle($title);
                             echo $this->url('dtladmin/dtlproposal/caixa-proposal/edit', array(
                                 'id' => $caixaProposal->getId()));
                             ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                            <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
-                                <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
-                                echo $this->url('dtladmin/dtlproposal/caixa-proposal/delete', array('action' => 'delete',
-                                    'id' => $caixaProposal->getId()));
-                                ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $caixaProposal->getId(); ?>"
-                                   href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/status', array('action' => 'status', 'id' => $caixaProposal->getId())); ?>">
-                                    <i class="glyphicon glyphicon-repeat"></i></a>
+                               <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
+                            <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
+                            echo $this->url('dtladmin/dtlproposal/caixa-proposal/delete', array('action' => 'delete',
+                                'id' => $caixaProposal->getId()));
+                            ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $caixaProposal->getId(); ?>"
+                               href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/status', array('action' => 'status', 'id' => $caixaProposal->getId())); ?>">
+                                <i class="glyphicon glyphicon-repeat"></i></a>
                             <?php // endif; ?>
                             <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Histórico" data-target="#proposalHistory<?php echo $caixaProposal->getId(); ?>"
                                href="<?php echo $this->url('dtladmin/dtlproposal/caixa-proposal/history', array('action' => 'history', 'id' => $caixaProposal->getId())); ?>">

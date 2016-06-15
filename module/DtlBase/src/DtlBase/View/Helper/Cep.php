@@ -10,10 +10,12 @@ class Cep extends AbstractHelper {
     public function __invoke($cep = null) {
         
         $output = null;
+        $filter = new \Zend\Filter\Digits();
         
         if ($cep) {
+            $cep = $filter->filter($cep);
             if (strlen($cep) !== 8 || (!is_numeric($cep))) {
-                throw new Exception\RuntimeException('CEP inválido.');
+                return htmlspecialchars('CEP inválido.', ENT_QUOTES, 'UTF-8');
             }
 
             $prefix         = substr($cep, 0, 2);

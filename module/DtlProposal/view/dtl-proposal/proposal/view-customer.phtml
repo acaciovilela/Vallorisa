@@ -1,0 +1,239 @@
+<div class="panel <?php echo $this->class; ?>">
+    <div class="panel-heading">
+        <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados do Cliente</div>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>Nome:</dt>
+            <dd><?php echo $this->customer->getPerson()->getName(); ?>&nbsp;</dd>
+            <?php if ($this->customer->getPerson()->getType()): ?>
+                <dt>CNPJ:</dt>
+                <dd><?php echo $this->cnpj($this->customer->getPerson()->getlegal()->getCnpj()); ?>&nbsp;</dd>
+                <dt>Inscrição Estadual:</dt>
+                <dd><?php echo $this->customer->getPerson()->getlegal()->getSubscription(); ?>&nbsp;</dd>
+                <dt>Representante:</dt>
+                <dd><?php echo $this->customer->getPerson()->getlegal()->getRepresentativeName(); ?>&nbsp;</dd>
+                <dt>Telefone do Rep.:</dt>
+                <dd><?php echo $this->phone($this->customer->getPerson()->getlegal()->getRepresentativePhone()); ?>&nbsp;</dd>
+            <?php else: ?>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <dt>CPF:</dt>
+                        <dd><?php echo $this->cpf($this->customer->getPerson()->getIndividual()->getCpf()); ?>&nbsp;</dd>
+                        <dt>RG:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getRg(); ?>&nbsp;</dd>
+                        <dt>Sexo:</dt>
+                        <dd><?php echo $this->gender($this->customer->getPerson()->getIndividual()->getGender()); ?>&nbsp;</dd>
+                        <dt>Natural de:</dt>
+                        <dd><?php echo ($this->customer->getPerson()->getIndividual()->getBirthPlace()) ? $this->customer->getPerson()->getIndividual()->getBirthPlace() . "/" : ''; ?><?php echo $this->customer->getPerson()->getIndividual()->getBirthUf(); ?>&nbsp;</dd>
+                        <dt>Nome da Mãe:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getMother(); ?>&nbsp;</dd>
+                    </div>
+                    <div class="col-xs-6">
+                        <dt>Data de Nascimento:</dt>
+                        <dd><?php echo $this->birthday($this->customer->getPerson()->getIndividual()->getBirthDay(), $this->customer->getPerson()->getIndividual()->getBirthMonth(), $this->customer->getPerson()->getIndividual()->getBirthYear()); ?></dd>
+                        <dt>Órgão Expedidor:</dt>
+                        <dd><?php echo ($this->customer->getPerson()->getIndividual()->getRgOrgan()) ? $this->customer->getPerson()->getIndividual()->getRgOrgan() . '/' : ""; ?> <?php echo $this->customer->getPerson()->getIndividual()->getRgUf(); ?></dd>
+                        <dt>Data de Expedição:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getRgDate(); ?>&nbsp;</dd>
+                        <dt>Nacionalidade:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getNationality(); ?>&nbsp;</dd>
+                        <dt>Nome do Pai:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getFather(); ?>&nbsp;</dd>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div class="row">
+                <div class="col-xs-6">
+                    <dt>Endereço:</dt>
+                    <dd><?php echo $this->customer->getPerson()->getAddress()->getName(); ?><?php echo ($this->customer->getPerson()->getAddress()->getNumber()) ? ", nº " . $this->customer->getPerson()->getAddress()->getNumber() : ""; ?></dd>
+                    <dt>Complemento:</dt>
+                    <dd><?php echo $this->customer->getPerson()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                    <dt>Bairro:</dt>
+                    <dd><?php echo $this->customer->getPerson()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                    <dt>CEP:</dt>
+                    <dd><?php echo $this->cep($this->customer->getPerson()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                    <dt>Cidade:</dt>
+                    <dd><?php echo ($this->customer->getPerson()->getAddress()->getCity()) ? $this->customer->getPerson()->getAddress()->getCity()->getName() : ''; ?>&nbsp;</dd>
+                    <dt>Estado:</dt>
+                    <dd><?php echo ($this->customer->getPerson()->getAddress()->getState()) ? $this->customer->getPerson()->getAddress()->getState()->getName() : ''; ?>&nbsp;</dd>
+                    <dt>País:</dt>
+                    <dd><?php echo ($this->customer->getPerson()->getAddress()->getCountry()) ? $this->customer->getPerson()->getAddress()->getCountry()->getName() : ''; ?>&nbsp;</dd>
+                </div>
+                <div class="col-xs-6">
+                    <dt>Email:</dt>
+                    <dd><?php echo $this->customer->getPerson()->getContact()->getEmail(); ?>&nbsp;</dd>
+                    <dt>Website:</dt>
+                    <dd><?php echo $this->customer->getPerson()->getContact()->getUrl(); ?>&nbsp;</dd>
+                    <dt>Telefone:</dt>
+                    <dd><?php echo $this->phone($this->customer->getPerson()->getContact()->getPhone()); ?>&nbsp;</dd>
+                    <dt>Celular:</dt>
+                    <dd><?php echo $this->phone($this->customer->getPerson()->getContact()->getCell()); ?>&nbsp;</dd>
+                    <dt>FAX:</dt>
+                    <dd><?php echo $this->phone($this->customer->getPerson()->getContact()->getFax()); ?>&nbsp;</dd>
+                </div>
+            </div>
+        </dl>
+    </div>
+</div>
+
+<?php if (!$this->customer->getPerson()->getType() && ($this->customer->getPerson()->getIndividual()->getProfessional())): ?>
+    <div class="panel <?php echo $this->class; ?>">
+        <div class="panel-heading">
+            <div class="panel-title"><i class="glyphicon glyphicon-user"></i> Dados Profissionais do Cliente</div>
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <dt>Nome da Empresa:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getProfessional()->getCompanyName(); ?></dd>
+                        <dt>Endereço:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getName(); ?><?php echo ($this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getNumber()) ? ", nº " . $this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getNumber() : ""; ?></dd>
+                        <dt>Complemento:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getComplement(); ?>&nbsp;</dd>
+                        <dt>Bairro:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getQuarter(); ?>&nbsp;</dd>
+                        <dt>CEP:</dt>
+                        <dd><?php echo $this->cep($this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getPostalCode()); ?>&nbsp;</dd>
+                        <dt>Cidade:</dt>
+                        <dd><?php echo ($this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()) ? $this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCity()->getName() : ''; ?>&nbsp;</dd>
+                        <dt>Estado:</dt>
+                        <dd><?php echo ($this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()) ? $this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getState()->getName() : ''; ?>&nbsp;</dd>
+                        <dt>País:</dt>
+                        <dd><?php echo ($this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()) ? $this->customer->getPerson()->getIndividual()->getProfessional()->getAddress()->getCountry()->getName() : ''; ?>&nbsp;</dd>
+                        <dt>Data de Admissão:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getProfessional()->getInDate(); ?></dd>
+                        <dt>Cargo:</dt>
+                        <dd><?php echo ($this->customer->getPerson()->getIndividual()->getProfessional()->getOffice()) ? $this->customer->getPerson()->getIndividual()->getProfessional()->getOffice()->getName() : ''; ?></dd>
+                        <dt>Salário:</dt>
+                        <dd><?php echo ((float) $this->customer->getPerson()->getIndividual()->getProfessional()->getSalary()) ? $this->currency((float) $this->customer->getPerson()->getIndividual()->getProfessional()->getSalary()) : ""; ?></dd>
+                    </div>
+                    <div class="col-xs-6">
+                        <dt>CNPJ:</dt>
+                        <dd><?php echo $this->cnpj($this->customer->getPerson()->getIndividual()->getProfessional()->getCompanyCnpj()); ?>&nbsp;</dd>
+                        <dt>Email:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getProfessional()->getContact()->getEmail(); ?>&nbsp;</dd>
+                        <dt>Website:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getProfessional()->getContact()->getUrl(); ?>&nbsp;</dd>
+                        <dt>Telefone:</dt>
+                        <dd><?php echo $this->phone($this->customer->getPerson()->getIndividual()->getProfessional()->getContact()->getPhone()); ?>&nbsp;</dd>
+                        <dt>Celular:</dt>
+                        <dd><?php echo $this->phone($this->customer->getPerson()->getIndividual()->getProfessional()->getContact()->getCell()); ?>&nbsp;</dd>
+                        <dt>FAX:</dt>
+                        <dd><?php echo $this->phone($this->customer->getPerson()->getIndividual()->getProfessional()->getContact()->getFax()); ?>&nbsp;</dd>
+                        <dt>Outra Renda:</dt>
+                        <dd><?php echo ((float) $this->customer->getPerson()->getIndividual()->getProfessional()->getOtherRevenue()) ? $this->currency($this->customer->getPerson()->getIndividual()->getProfessional()->getOtherRevenue()) : ""; ?>&nbsp;</dd>
+                        <dt>Tipo de Residência:</dt>
+                        <dd><?php echo $this->customer->getResidenceType(); ?></dd>
+                        <dt>Tempo na Residência:</dt>
+                        <dd><?php echo $this->customer->getResidenceTime(); ?></dd>
+                        <dt>Observações:</dt>
+                        <dd><?php echo $this->customer->getPerson()->getIndividual()->getProfessional()->getNotes(); ?>&nbsp;</dd>
+                    </div>
+                </div>
+            </dl>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if (count($this->customer->getAccounts()) > 0): ?>
+    <div class="panel <?php echo $this->class; ?>">
+        <div class="panel-heading">
+            <div class="panel-title"><i class="glyphicon glyphicon-usd"></i> Contas Bancárias do Cliente</div>
+        </div>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th class=""><?php echo $this->translate('TIPO DA CONTA'); ?></th>
+                <th class=""><?php echo $this->translate('BANCO'); ?></th>
+                <th class=""><?php echo $this->translate('AGÊNCIA'); ?></th>
+                <th class=""><?php echo $this->translate('CONTA'); ?></th>
+                <th class=""><?php echo $this->translate('CLIENTE DESDE'); ?></th>
+            </tr>
+            <?php foreach ($this->customer->getAccounts() as $account) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($account->getType()); ?></td>
+                    <td><?php echo $account->getBank()->getName(); ?></td>
+                    <td><?php echo $this->escapeHtml($account->getAgency()); ?></td>
+                    <td><?php echo $this->escapeHtml($account->getAccount()); ?></td>
+                    <td><?php echo $this->escapeHtml($account->getSince()); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>
+
+<?php if (count($this->customer->getPatrimonies()) > 0): ?>
+    <div class="panel <?php echo $this->class; ?>">
+        <div class="panel-heading">
+            <h1 class="panel-title"><i class="fa fa-building-o"></i> Patrimônio do Cliente</h1>
+        </div>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th class=""><?php echo $this->translate('PATRIMÔNIO'); ?></th>
+                <th class=""><?php echo $this->translate('VALOR'); ?></th>
+            </tr>
+            <?php foreach ($this->customer->getPatrimonies() as $patrimony) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($patrimony->getName()); ?></td>
+                    <td><?php echo $this->currency($patrimony->getValue()); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>
+
+<?php if (count($this->customer->getReferences()) > 0): ?>
+    <div class="panel <?php echo $this->class; ?>">
+        <div class="panel-heading">
+            <h1 class="panel-title"><i class="glyphicon glyphicon-thumbs-up"></i> Referências do Cliente</h1>
+        </div>
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th class=""><?php echo $this->translate('TIPO'); ?></th>
+                <th class=""><?php echo $this->translate('REFERÊNCIA'); ?></th>
+                <th class=""><?php echo $this->translate('TELEFONE'); ?></th>
+            </tr>
+            <?php foreach ($this->customer->getReferences() as $reference) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($reference->getType()); ?></td>
+                    <td><?php echo $this->escapeHtml($reference->getName()); ?></td>
+                    <td><?php echo $this->phone($reference->getPhone()); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>
+
+<?php if (count($this->customer->getVehicles()) > 0): ?>
+    <div class='panel <?php echo $class; ?>'>
+        <div class="panel-heading">
+            <h1 class="panel-title"><i class="fa fa-truck"></i> Veículos do Cliente</h1>
+        </div>
+        <table class="table">
+            <tr>
+                <th class=""><?php echo $this->translate('MARCA'); ?></th>
+                <th class=""><?php echo $this->translate('MODELO'); ?></th>
+                <th class=""><?php echo $this->translate('VERSÃO'); ?></th>
+                <th class=""><?php echo $this->translate('ANO/MODELO'); ?></th>
+                <th class=""><?php echo $this->translate('PLACA'); ?></th>
+                <th class=""><?php echo $this->translate('COR'); ?></th>
+                <th class=""><?php echo $this->translate('VALOR'); ?></th>
+            </tr>
+            <?php foreach ($this->customer->getVehicles() as $vehicle) : ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($vehicle->getBrand()->getName()); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle->getModel()->getName()); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle->getVersion()->getName()); ?></td>
+                    <td>
+                        <?php echo $vehicle->getYear(); ?>
+                        <?php echo ($vehicle->getYearModel()) ? " / " . $vehicle->getYearModel() : ""; ?>
+                    </td>
+                    <td><?php echo $this->escapeHtml($vehicle->getPlate()); ?></td>
+                    <td><?php echo $this->escapeHtml($vehicle->getColor()); ?></td>
+                    <td><?php echo $this->currency($vehicle->getValue()); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php endif; ?>

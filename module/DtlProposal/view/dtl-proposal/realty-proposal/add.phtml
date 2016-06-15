@@ -34,8 +34,6 @@ $form->prepare();
                             <?php echo $this->formLabel($proposal->get('company')); ?>
                             <?php echo $this->formSelect($proposal->get('company')); ?>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <?php if ($this->employee()): ?>
                                 <?php echo $this->formSelect($proposal->get('employee')->setValue($this->employee()->getId())->setAttribute('class', 'hide')); ?>
@@ -44,20 +42,14 @@ $form->prepare();
                                 <?php echo $this->formSelect($proposal->get('employee')); ?>
                             <?php endif; ?>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <?php echo $this->formLabel($proposal->get('bank')); ?>
                             <?php echo $this->formSelect($proposal->get('bank')); ?>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <?php echo $this->formLabel($realtyProposal->get('realtor')); ?>
                             <?php echo $this->formSelect($realtyProposal->get('realtor')); ?>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <?php echo $this->formLabel($realtyProposal->get('product')); ?>
                             <?php echo $this->formSelect($realtyProposal->get('product')); ?>

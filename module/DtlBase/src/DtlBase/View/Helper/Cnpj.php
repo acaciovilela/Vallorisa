@@ -10,10 +10,13 @@ class Cnpj extends AbstractHelper {
     public function __invoke($cnpj = null) {
 
         $output = null;
+        
+        $filter = new \Zend\Filter\Digits();
 
         if ($cnpj) {
+            $cnpj = $filter->filter($cnpj);
             if (strlen($cnpj) !== 14 || (!is_numeric($cnpj))) {
-                throw new Exception\RuntimeException('O CNPJ fornecido é inválido.');
+                return htmlspecialchars('O CNPJ fornecido é inválido.', ENT_QUOTES, 'UTF-8');
             }
 
             $val_1 = substr($cnpj, 0, 2);

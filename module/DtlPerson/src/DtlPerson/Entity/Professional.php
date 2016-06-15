@@ -156,12 +156,12 @@ class Professional {
     }
 
     public function setSalary($salary) {
-        $this->salary = $salary;
+        $this->salary = (float) $salary;
         return $this;
     }
 
     public function setOtherRevenue($otherRevenue) {
-        $this->otherRevenue = $otherRevenue;
+        $this->otherRevenue = (float) $otherRevenue;
         return $this;
     }
 

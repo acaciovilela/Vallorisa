@@ -53,7 +53,6 @@ return array(
         'DtlLocation',
         'DtlFile',
         'DtlExport',
-        'DtlCollections'
         ),
     'module_listener_options' => array(
         'module_paths' => array(

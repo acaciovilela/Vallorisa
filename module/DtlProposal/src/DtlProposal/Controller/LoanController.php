@@ -112,9 +112,9 @@ class LoanController extends AbstractActionController {
             $this->getProposalService()->resetSession();
             $this->getProposalService()->populate($loan, $customer);
         }
-        
+
         $form->bind($loan);
-        
+
         if (null === $customer) {
             $form->get('loan')->get('proposal')->get('customer')->get('person')->setValue($prePost['type']);
             if (1 === (int) base64_decode($prePost['type'])) {
@@ -300,6 +300,7 @@ class LoanController extends AbstractActionController {
             'CLIENTE',
             'CPF/CNPJ',
             'DATA DE CADASTRO',
+            'INTEGRADA EM',
             'VALOR FINANCIADO',
             'PARCELAS',
             'BANCO',
@@ -317,7 +318,7 @@ class LoanController extends AbstractActionController {
         $query = $em->getRepository($this->getRepository())
                 ->createQueryBuilder('lp')
                 ->select('(lp.id) as id, p.name, p.type, l.cnpj, '
-                        . 'pr.date, pr.value, pr.parcelAmount, '
+                        . 'pr.date, pr.value, pr.parcelAmount, pr.baseDate, '
                         . 'b.name as bankName, '
                         . 'i.cpf, a.name addressName, a.number, '
                         . 'a.quarter, ci.name as city, st.name as state, '
@@ -351,6 +352,7 @@ class LoanController extends AbstractActionController {
                 $proposal['name'],
                 $person_doc,
                 $proposal['date'],
+                $proposal['baseDate'],
                 $proposal['value'],
                 $proposal['parcelAmount'],
                 $proposal['bankName'],

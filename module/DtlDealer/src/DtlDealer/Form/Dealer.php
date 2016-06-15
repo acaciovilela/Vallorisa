@@ -14,11 +14,10 @@ class Dealer extends Form {
         parent::__construct('dealer');
         
         $this->setAttribute('method', 'post')
-                ->setHydrator(new DoctrineHydrator($entityManager))
                 ->setObject(new DealerEntity())
                 ->setInputFilter(new InputFilter());
 
-        $dealer = new Fieldset\DtlDealer($entityManager);
+        $dealer = new Fieldset\Dealer($entityManager);
         $dealer->setUseAsBaseFieldset(true)
                 ->setName('dealer');
         $this->add($dealer);

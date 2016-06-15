@@ -342,6 +342,14 @@ class ProposalController extends AbstractActionController {
             'id' => $id
         );
     }
+    
+    public function printHistoryAction() {
+        $id = $this->params()->fromRoute('id');
+        $em = $this->getEntityManager();
+        $proposal = $em->find('DtlProposal\Entity\Proposal', $id);
+        $this->layout()->setTemplate('layout/blank');
+        return array('proposal' => $proposal);
+    }
 
     public function getEntityManager() {
         return $this->entityManager;

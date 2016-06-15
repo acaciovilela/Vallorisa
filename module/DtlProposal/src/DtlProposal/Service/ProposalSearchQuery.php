@@ -25,6 +25,10 @@ class ProposalSearchQuery {
         if (!empty($params['bank'])) {
             $query->andWhere('p.bank = ' . $params['bank']);
         }
+        
+        if (!empty($params['user'])) {
+            $query->andWhere('p.user = ' . $params['user']);
+        }
 
         return $this->search($query, $post);
     }
@@ -39,6 +43,10 @@ class ProposalSearchQuery {
 
         if (!empty($params['bank'])) {
             $query->andWhere('p.bank = ' . $params['bank']);
+        }
+        
+        if (!empty($params['user'])) {
+            $query->andWhere('p.user = ' . $params['user']);
         }
 
         return $this->search($query, $post);
@@ -59,6 +67,10 @@ class ProposalSearchQuery {
         if (!empty($params['bank'])) {
             $query->andWhere('p.bank = ' . $params['bank']);
         }
+        
+        if (!empty($params['user'])) {
+            $query->andWhere('p.user = ' . $params['user']);
+        }
 
         return $this->search($query, $post);
     }
@@ -69,6 +81,10 @@ class ProposalSearchQuery {
 
         if (!empty($params['proposalId'])) {
             $query->andWhere('cx.id = ' . $params['proposalId']);
+        }
+        
+        if (!empty($params['user'])) {
+            $query->andWhere('p.user = ' . $params['user']);
         }
 
         return $this->search($query, $post);

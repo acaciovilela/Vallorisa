@@ -1,6 +1,7 @@
 <?php
 $title = $this->translate('Propostas de Veículos');
 $this->headTitle($title);
+$totalFin = 0;
 ?>
 <div id="print-report">
 
@@ -26,7 +27,7 @@ $this->headTitle($title);
                                 </div>
                                 <div class="btn-group btn-group-sm">
                                     <a href="javascript: window.print();" class="btn btn-default" data-toggle="tooltip" title="Imprir lista"><i class="glyphicon glyphicon-print"></i></a>
-                                    <a href="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal/exportCsv');?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
+                                    <a href="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal/exportCsv'); ?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
                                 </div>
                             </div>
                         </form>
@@ -101,16 +102,16 @@ $this->headTitle($title);
                                     'id' => $vehicleProposal->getId()));
                                 ?>"><i class="glyphicon glyphicon-edit"></i></a>
                                    <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
-                                    <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
-                                    echo $this->url('dtladmin/dtlproposal/vehicle-proposal/delete', array('action' => 'delete',
-                                        'id' => $vehicleProposal->getId()));
-                                    ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="top" title="Migração Bancária" data-target="#bankReport<?php echo $vehicleProposal->getId(); ?>"
-                                       href="#" data-remote="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal/bank', array('action' => 'bank', 'id' => $vehicleProposal->getId())); ?>" role="button">
-                                        <i class="glyphicon glyphicon-lock"></i></a>
-                                    <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="top" title="Status da Proposta" data-target="#proposalStatus<?php echo $vehicleProposal->getId(); ?>"
-                                       href="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal/status', array('action' => 'status', 'id' => $vehicleProposal->getId())); ?>">
-                                        <i class="glyphicon glyphicon-repeat"></i></a>
+                                <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
+                                echo $this->url('dtladmin/dtlproposal/vehicle-proposal/delete', array('action' => 'delete',
+                                    'id' => $vehicleProposal->getId()));
+                                ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="top" title="Migração Bancária" data-target="#bankReport<?php echo $vehicleProposal->getId(); ?>"
+                                   href="#" data-remote="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal/bank', array('action' => 'bank', 'id' => $vehicleProposal->getId())); ?>" role="button">
+                                    <i class="glyphicon glyphicon-lock"></i></a>
+                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="top" title="Status da Proposta" data-target="#proposalStatus<?php echo $vehicleProposal->getId(); ?>"
+                                   href="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal/status', array('action' => 'status', 'id' => $vehicleProposal->getId())); ?>">
+                                    <i class="glyphicon glyphicon-repeat"></i></a>
                                 <?php // endif; ?>
                                 <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="top" title="Histórico" data-target="#proposalHistory<?php echo $vehicleProposal->getId(); ?>"
                                    href="<?php echo $this->url('dtladmin/dtlproposal/vehicle-proposal/history', array('action' => 'history', 'id' => $vehicleProposal->getId())); ?>">
@@ -134,8 +135,14 @@ $this->headTitle($title);
                             <div class="modal-content"></div>
                         </div>
                     </div>
+                    <?php $totalFin += $vehicleProposal->getProposal()->getValue(); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
+            <tr style="font-weight: bold;">
+                <td colspan="3" class="text-right">TOTAL FINANCIADO:</td>
+                <td><?php echo $this->currency($totalFin); ?></td>
+                <td></td>
+            </tr>
         </table>
         <div class="panel-footer hidden-print">
             <?php

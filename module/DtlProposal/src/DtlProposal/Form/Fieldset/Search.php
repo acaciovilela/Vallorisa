@@ -152,6 +152,29 @@ class Search extends ZendFielset implements InputFilterProviderInterface {
                 'class' => 'form-control input-sm',
             )
         ));
+        
+        $this->add(array(
+            'name' => 'user',
+            'type' => 'DoctrineORMModule\Form\Element\EntitySelect',
+            'options' => array(
+                'label' => 'Usuário',
+                'empty_option' => 'Selecione o Usuário',
+                'object_manager' => $entityManager,
+                'target_class' => 'DtlUser\Entity\User',
+                'property' => 'username',
+                'is_method' => true,
+                'find_method' => array(
+                    'name' => 'findBy',
+                    'params' => array(
+                        'criteria' => array(),
+                        'orderBy' => array('username' => 'ASC')
+                    ),
+                ),
+            ),
+            'attributes' => array(
+                'class' => 'form-control input-sm',
+            )
+        ));
     }
 
     public function getInputFilterSpecification() {

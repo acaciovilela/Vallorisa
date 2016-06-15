@@ -179,7 +179,7 @@ class ProposalService implements ProposalServiceInterface {
         $entity->getProposal()->addLog($log);
 
         $em->persist($entity);
-        
+
         try {
             $em->flush();
         } catch (Exception $ex) {
@@ -382,16 +382,19 @@ class ProposalService implements ProposalServiceInterface {
                 );
 
                 $proposalValue = $entity->getProposal()->getValue();
-                $product = $entity->getProduct();
 
                 if ($entity instanceof LoanEntity) {
                     $module = 'MÓDULO CONSIGNADO';
+                    $products[] = $entity->getProduct();
                 } elseif ($entity instanceof CaixaEntity) {
                     $module = 'MÓDULO CAIXA';
+                    $products = $entity->getProducts();
                 } elseif ($entity instanceof RealtyEntity) {
                     $module = 'MÓDULO IMÓVEIS';
+                    $products[] = $entity->getProduct();
                 } else {
                     $module = 'MÓDULO VEÍCULOS';
+                    $products[] = $entity->getProduct();
                 }
 
                 /**
@@ -399,16 +402,18 @@ class ProposalService implements ProposalServiceInterface {
                  * 
                  * Company and Employee commissions
                  */
-                $fixedCommission = $product->getFixedCommission();
-                $variantCommission = $product->getVariantCommission();
-                $commisionCalc = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
-                $commission = number_format($commisionCalc, 2);
-                $receivable = $this->getReceivableService();
-                $receivable->setUser($entity->getProposal()->getUser());
-                $receivable->setCustomer($entity->getProposal()->getCustomer());
-                $receivable->setDescription("COM. REF. AO {$module}, Nº {$entity->getId()}");
-                $receivable->setValue($commission);
-                $receivable->create();
+                foreach ($products as $product) {
+                    $fixedCommission = $product->getFixedCommission();
+                    $variantCommission = $product->getVariantCommission();
+                    $commisionCalc = (($proposalValue * $variantCommission) / 100) + $fixedCommission;
+                    $commission = number_format($commisionCalc, 2);
+                    $receivable = $this->getReceivableService();
+                    $receivable->setUser($entity->getProposal()->getUser());
+                    $receivable->setCustomer($entity->getProposal()->getCustomer());
+                    $receivable->setDescription("COM. REF. AO {$module}, Nº {$entity->getId()}");
+                    $receivable->setValue($commission);
+                    $receivable->create();
+                }
 
                 /**
                  * Employee Commissions

@@ -219,7 +219,7 @@ class RealtyProposal implements ProposalEntityInterface {
     }
 
     public function setDealers(Collection $dealers) {
-        $this->dealers[] = $dealers;
+        $this->dealers = $dealers;
         return $this;
     }
 

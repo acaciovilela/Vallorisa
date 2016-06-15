@@ -321,6 +321,7 @@ class CaixaProposalController extends AbstractActionController {
             'CLIENTE',
             'CPF/CNPJ',
             'DATA DE CADASTRO',
+            'INTEGRADA EM',
             'VALOR FINANCIADO',
             'PARCELAS',
             'BANCO',
@@ -338,7 +339,7 @@ class CaixaProposalController extends AbstractActionController {
         $query = $em->getRepository($this->getRepository())
                 ->createQueryBuilder('cp')
                 ->select('cp.id, p.name, p.type, l.cnpj, '
-                        . 'pr.date, pr.value, pr.parcelAmount, '
+                        . 'pr.date, pr.value, pr.parcelAmount, pr.baseDate, '
                         . 'b.name as bankName, '
                         . 'i.cpf, a.name as addressName, a.number, '
                         . 'a.quarter, cy.name as city, st.name as state, '
@@ -371,6 +372,7 @@ class CaixaProposalController extends AbstractActionController {
                 $proposal['name'],
                 $person_doc,
                 $proposal['date'],
+                $proposal['baseDate'],
                 $proposal['value'],
                 $proposal['parcelAmount'],
                 $proposal['bankName'],

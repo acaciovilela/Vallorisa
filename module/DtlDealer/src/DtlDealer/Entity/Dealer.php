@@ -19,7 +19,7 @@ class Dealer {
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\DtlPerson\Entity\Person", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="DtlPerson\Entity\Person", cascade={"all"}, orphanRemoval=true)
      */
     protected $person;
 

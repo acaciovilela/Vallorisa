@@ -145,7 +145,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
             'name' => 'dealers',
             'options' => array(
                 'label' => 'Vendedores',
-                'count' => 1,
+                'count' => 2,
                 'should_create_template' => true,
                 'allow_add' => true,
                 'allow_remove' => true,

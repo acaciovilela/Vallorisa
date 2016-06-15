@@ -1,6 +1,7 @@
 <?php
 $title = $this->translate('Propostas de Empréstimo Consignado');
 $this->headTitle($title);
+$totalFin = 0;
 ?>
 <div class="modal" id="proposalSearch" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="AdvancedSearch">
     <div class="modal-dialog modal-lg">
@@ -24,7 +25,7 @@ $this->headTitle($title);
                             </div>
                             <div class="btn-group btn-group-sm">
                                 <a href="javascript: window.print();" class="btn btn-default" data-toggle="tooltip" title="Imprir lista"><i class="glyphicon glyphicon-print"></i></a>
-                                <a href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/exportCsv');?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
+                                <a href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/exportCsv'); ?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
                             </div>
                         </div>
                     </form>
@@ -98,7 +99,7 @@ $this->headTitle($title);
                             echo $this->url('dtladmin/dtlproposal/loan-proposal/edit', array(
                                 'id' => $loan->getId()));
                             ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                            <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
+                               <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
                             <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
                             echo $this->url('dtladmin/dtlproposal/loan-proposal/delete', array('action' => 'delete',
                                 'id' => $loan->getId()));
@@ -106,9 +107,9 @@ $this->headTitle($title);
                             <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Migração Bancária" data-target="#bankReport<?php echo $loan->getId(); ?>"
                                href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/bank', array('action' => 'bank', 'id' => $loan->getId())); ?>">
                                 <i class="glyphicon glyphicon-lock"></i></a>
-                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $loan->getId(); ?>"
-                                   href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/status', array('action' => 'status', 'id' => $loan->getId())); ?>">
-                                    <i class="glyphicon glyphicon-repeat"></i></a>
+                            <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $loan->getId(); ?>"
+                               href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/status', array('action' => 'status', 'id' => $loan->getId())); ?>">
+                                <i class="glyphicon glyphicon-repeat"></i></a>
                             <?php // endif; ?>
                             <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Histórico" data-target="#proposalHistory<?php echo $loan->getId(); ?>"
                                href="<?php echo $this->url('dtladmin/dtlproposal/loan-proposal/history', array('action' => 'history', 'id' => $loan->getId())); ?>">
@@ -117,6 +118,7 @@ $this->headTitle($title);
                         </div>
                     </td>
                 </tr>
+
                 <div class="modal" id="proposalHistory<?php echo $loan->getId(); ?>" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content"></div>
@@ -132,9 +134,14 @@ $this->headTitle($title);
                         <div class="modal-content"></div>
                     </div>
                 </div>
-
+                <?php $totalFin += $loan->getProposal()->getValue(); ?>
             <?php endforeach; ?>
         <?php endif; ?>
+        <tr style="font-weight: bold;">
+            <td colspan="3" class="text-right">TOTAL FINANCIADO:</td>
+            <td><?php echo $this->currency($totalFin); ?></td>
+            <td></td>
+        </tr>
     </table>
     <div class="panel-footer hidden-print">
         <?php

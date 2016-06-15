@@ -62,7 +62,7 @@ class RealtyEvaluation {
     protected $value;
 
     /**
-     * @ORM\OneToOne(targetEntity="DtlBank\Entity\Bank", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="DtlBank\Entity\Bank", cascade={"persist"})
      * @var Bank 
      */
     protected $bank;

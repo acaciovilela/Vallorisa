@@ -24,7 +24,7 @@ $this->headTitle($title);
                             </div>
                             <div class="btn-group btn-group-sm">
                                 <a href="javascript: window.print();" class="btn btn-default" data-toggle="tooltip" title="Imprir lista"><i class="glyphicon glyphicon-print"></i></a>
-                                <a href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/exportCsv');?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
+                                <a href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/exportCsv'); ?>" class="btn btn-default" data-toggle="tooltip" title="Exportar para Excel"><i class="fa fa-download"></i></a>
                             </div>
                         </div>
                     </form>
@@ -93,19 +93,19 @@ $this->headTitle($title);
                                 'id' => $realtyProposal->getId()));
                             ?>"><i class="glyphicon glyphicon-edit"></i></a>
                                <?php // if ($this->isAllowed('proposal_actions', 'all')): ?>
-                                <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
-                                echo $this->url('dtladmin/dtlproposal/realty-proposal/delete', array('action' => 'delete',
-                                    'id' => $realtyProposal->getId()));
-                                ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Avaliação do Imóvel" data-target="#realtyEvaluation<?php echo $realtyProposal->getId(); ?>"
-                                   href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/evaluation', array('action' => 'evaluation', 'id' => $realtyProposal->getId())); ?>">
-                                    <i class="glyphicon glyphicon-search"></i></a>
-                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Migração Bancária" data-target="#bankReport<?php echo $realtyProposal->getId(); ?>"
-                                   href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/bank', array('action' => 'bank', 'id' => $realtyProposal->getId())); ?>">
-                                    <i class="glyphicon glyphicon-lock"></i></a>
-                                <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $realtyProposal->getId(); ?>"
-                                   href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/status', array('action' => 'status', 'id' => $realtyProposal->getId())); ?>">
-                                    <i class="glyphicon glyphicon-repeat"></i></a>
+                            <a class="btn btn-default" data-toggle="tooltip" title="Apagar" href="<?php
+                            echo $this->url('dtladmin/dtlproposal/realty-proposal/delete', array('action' => 'delete',
+                                'id' => $realtyProposal->getId()));
+                            ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Avaliação do Imóvel" data-target="#realtyEvaluation<?php echo $realtyProposal->getId(); ?>"
+                               href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/evaluation', array('action' => 'evaluation', 'id' => $realtyProposal->getId())); ?>">
+                                <i class="glyphicon glyphicon-search"></i></a>
+                            <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Migração Bancária" data-target="#bankReport<?php echo $realtyProposal->getId(); ?>"
+                               href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/bank', array('action' => 'bank', 'id' => $realtyProposal->getId())); ?>">
+                                <i class="glyphicon glyphicon-lock"></i></a>
+                            <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Status da Proposta" data-target="#proposalStatus<?php echo $realtyProposal->getId(); ?>"
+                               href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/status', array('action' => 'status', 'id' => $realtyProposal->getId())); ?>">
+                                <i class="glyphicon glyphicon-repeat"></i></a>
                             <?php // endif; ?>
                             <a class="btn btn-default app-tooltip" data-toggle="modal" data-placement="left" title="Histórico" data-target="#proposalHistory<?php echo $realtyProposal->getId(); ?>"
                                href="<?php echo $this->url('dtladmin/dtlproposal/realty-proposal/history', array('action' => 'history', 'id' => $realtyProposal->getId())); ?>">

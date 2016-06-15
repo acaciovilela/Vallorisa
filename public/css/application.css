@@ -1,4 +1,8 @@
 /** Bootstrap Expansions */
+html, body {
+    font-size: 13px;
+}
+
 .text-canceled {
     color: #777;
 }

@@ -372,6 +372,7 @@ class VehicleProposalController extends AbstractActionController {
             'CLIENTE',
             'CPF/CNPJ',
             'DATA DE CADASTRO',
+            'INTEGRADA EM',
             'VALOR FINANCIADO',
             'PARCELAS',
             'BANCO',
@@ -389,7 +390,7 @@ class VehicleProposalController extends AbstractActionController {
         $query = $em->getRepository($this->getRepository())
                 ->createQueryBuilder('vp')
                 ->select('(vp.proposal) as proposal, p.name AS personName, p.type, l.cnpj, '
-                        . 'pr.date, pr.value, pr.parcelAmount, '
+                        . 'pr.date, pr.value, pr.parcelAmount, pr.baseDate, '
                         . 'b.name AS bankName, '
                         . 'i.cpf, a.name as addressName, a.number, '
                         . 'a.quarter, ci.name as city, st.name as state, '
@@ -423,6 +424,7 @@ class VehicleProposalController extends AbstractActionController {
                 $proposal['personName'],
                 $person_doc,
                 $proposal['date'],
+                $proposal['baseDate'],
                 $proposal['value'],
                 $proposal['parcelAmount'],
                 $proposal['bankName'],

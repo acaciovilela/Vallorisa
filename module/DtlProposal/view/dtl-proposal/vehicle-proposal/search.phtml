@@ -48,6 +48,12 @@ $search = $form->get('search');
                 <?php echo $this->formSelect($search->get('company')); ?>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?php echo $this->formLabel($search->get('user')); ?>
+                <?php echo $this->formSelect($search->get('user')); ?>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal-footer">

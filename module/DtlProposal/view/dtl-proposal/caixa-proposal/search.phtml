@@ -39,6 +39,10 @@ $search = $form->get('search');
                 <?php echo $this->formLabel($search->get('proposalDateTo')); ?>
                 <?php echo $this->formText($search->get('proposalDateTo')); ?>
             </div>
+            <div class="col-md-6">
+                <?php echo $this->formLabel($search->get('user')); ?>
+                <?php echo $this->formSelect($search->get('user')); ?>
+            </div>
         </div>
     </div>
 </div>
