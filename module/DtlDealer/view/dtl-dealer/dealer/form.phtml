@@ -3,6 +3,7 @@
     <fieldset>
         <legend><h3>Vendedor <?php echo $key + 1; ?></h3></legend>
         <?php echo $this->formHidden($dealer->get('id')); ?>
+
         <?php $person = $dealer->get('person'); ?>
         <?php echo $this->personForm($person); ?>
 
@@ -11,6 +12,5 @@
 
         <?php $individual = $person->get('individual'); ?>
         <?php echo $this->individualForm($individual); ?>
-
     </fieldset>
 <?php endforeach; ?>

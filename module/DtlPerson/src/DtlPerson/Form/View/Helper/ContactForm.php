@@ -7,16 +7,14 @@ use DtlPerson\Form\Fieldset\Contact;
 
 class ContactForm extends AbstractHelper {
 
-    public function __invoke(Contact $contact) {
+    public function __invoke(Contact $fieldset) {
 
-        if (!is_object($contact) || !($contact instanceof Contact)) {
+        if (!is_object($fieldset) || !($fieldset instanceof Contact)) {
             throw new \Zend\View\Exception\RuntimeException(
             sprintf('%s is not valid instance of Contact fieldset.'));
         }
 
-        return $this->view->render('dtl-person/contact', array(
-                    'contact' => $contact
-        ));
+        return $this->view->render('dtl-person/contact', array('contact' => $fieldset));
     }
 
 }

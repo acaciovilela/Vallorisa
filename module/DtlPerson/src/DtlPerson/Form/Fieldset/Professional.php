@@ -2,15 +2,18 @@
 
 namespace DtlPerson\Form\Fieldset;
 
+use Zend\Form\Fieldset;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Form\Fieldset;
 use DtlPerson\Entity\Professional as ProfessionalEntity;
 
 class Professional extends Fieldset implements InputFilterProviderInterface {
 
     public function __construct($entityManager) {
+        
         parent::__construct('professional');
+        
+        $this->setLabel('Dados Professionais');
 
         $this->setHydrator(new DoctrineHydrator($entityManager))
                 ->setObject(new ProfessionalEntity());
@@ -115,15 +118,9 @@ class Professional extends Fieldset implements InputFilterProviderInterface {
             )
         ));
 
-        $address = new Address($entityManager);
-        $address->setLabel('Dados de Endereço')
-                ->setName('address');
-        $this->add($address);
+        $this->add(new Address($entityManager));
 
-        $contact = new Contact($entityManager);
-        $contact->setName('contact')
-                ->setLabel('Dados de Contato');
-        $this->add($contact);
+        $this->add(new Contact($entityManager));
     }
 
     public function getInputFilterSpecification() {

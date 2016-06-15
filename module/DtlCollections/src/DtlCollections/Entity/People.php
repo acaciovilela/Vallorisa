@@ -6,33 +6,30 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="slave")
+ * @ORM\Table(name="people")
  */
-class Slave {
+class People {
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="People", cascade={"all"})
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
      */
-    protected $people;
-
-    public function __construct() {
-        $this->people = new People();
-    }
+    protected $name;
 
     public function getId() {
         return $this->id;
     }
 
-    public function getPeople() {
-        return $this->people;
+    public function getName() {
+        return $this->name;
     }
 
     public function setId($id) {
@@ -40,8 +37,8 @@ class Slave {
         return $this;
     }
 
-    public function setPeople($people) {
-        $this->people = $people;
+    public function setName($name) {
+        $this->name = $name;
         return $this;
     }
 

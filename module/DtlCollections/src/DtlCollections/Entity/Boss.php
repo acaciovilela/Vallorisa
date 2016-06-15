@@ -28,6 +28,10 @@ class Boss {
 
     /**
      * @ORM\ManyToMany(targetEntity="Slave", cascade={"all"})
+     * @ORM\JoinTable(name="boss_slave",
+     *      joinColumns={@ORM\JoinColumn(name="boss_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="slave_id", referencedColumnName="id")}
+     *      )
      * @var ArrayCollection
      */
     protected $slaves;
@@ -69,7 +73,12 @@ class Boss {
             $this->slaves->add($slave);
         }
     }
-    
+
+    public function addSlave($slave) {
+        $this->slaves->add($slave);
+        return $this;
+    }
+
     public function removeSlaves(Collection $slaves) {
         foreach ($slaves as $slave) {
             $this->slaves->removeElement($slave);

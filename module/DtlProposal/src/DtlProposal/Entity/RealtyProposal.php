@@ -79,7 +79,7 @@ class RealtyProposal implements ProposalEntityInterface {
     protected $evaluations;
 
     /**
-     * @ORM\ManyToMany(targetEntity="DtlDealer\Entity\Dealer", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="DtlDealer\Entity\Dealer", cascade={"all"})
      * @var Collection 
      */
     protected $dealers;
@@ -93,9 +93,9 @@ class RealtyProposal implements ProposalEntityInterface {
     public function __construct() {
         $this->inValue = 0.00;
         $this->value = 0.00;
+        $this->fgts = false;
         $this->proposal = new Proposal();
         $this->realty = new Realty();
-        $this->fgts = false;
         $this->dealers = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->evaluations = new ArrayCollection();

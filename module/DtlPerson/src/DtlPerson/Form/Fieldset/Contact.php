@@ -2,9 +2,9 @@
 
 namespace DtlPerson\Form\Fieldset;
 
+use Zend\Form\Fieldset;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Form\Fieldset;
 use DtlPerson\Entity\Contact as ContactEntity;
 
 class Contact extends Fieldset implements InputFilterProviderInterface {
@@ -13,17 +13,19 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
         
         parent::__construct('contact');
 
+        $this->setLabel('Dados de Contato');
+        
         $this->setHydrator(new DoctrineHydrator($entityManager))
                 ->setObject(new ContactEntity());
 
         $this->add(array(
             'name' => 'id',
-            'type' => 'Zend\Form\Element\Hidden',
+            'type' => 'Hidden',
         ));
 
         $this->add(array(
             'name' => 'email',
-            'type' => 'Zend\Form\Element\Email',
+            'type' => 'Email',
             'attributes' => array(
                 'placeholder' => 'E-mail',
                 'class' => 'form-control input-sm',
@@ -35,7 +37,7 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'url',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Website',
                 'class' => 'form-control input-sm',
@@ -47,10 +49,10 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'phone',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Telefone',
-                'class' => 'form-control input-sm  phone',
+                'class' => 'form-control input-sm phone',
             ),
             'options' => array(
                 'label' => 'Telefone'
@@ -59,10 +61,10 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'cell',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Celular',
-                'class' => 'form-control input-sm  phone',
+                'class' => 'form-control input-sm phone',
             ),
             'options' => array(
                 'label' => 'Celular'
@@ -71,10 +73,10 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'fax',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'FAX',
-                'class' => 'form-control input-sm  phone',
+                'class' => 'form-control input-sm phone',
             ),
             'options' => array(
                 'label' => 'Fax'
@@ -115,7 +117,7 @@ class Contact extends Fieldset implements InputFilterProviderInterface {
                 'required' => false,
                 'filters' => array(
                     array('name' => 'Digits'),
-                )
+                ),
             ),
         );
     }

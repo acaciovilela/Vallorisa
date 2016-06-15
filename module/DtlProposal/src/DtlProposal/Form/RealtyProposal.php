@@ -18,6 +18,8 @@ class RealtyProposal extends Form {
     public function init() {
 
         $this->setAttribute('method', 'post')
+                ->setHydrator(new DoctrineHydrator($this->getEntityManager()))
+                ->setObject(new RealtyProposalEntity())
                 ->setInputFilter(new InputFilter());
 
         $this->add(array(

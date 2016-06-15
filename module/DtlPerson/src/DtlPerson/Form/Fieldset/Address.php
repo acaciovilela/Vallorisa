@@ -4,26 +4,28 @@ namespace DtlPerson\Form\Fieldset;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Form\Fieldset;
 use DtlPerson\Entity\Address as AddressEntity;
+use Zend\Form\Fieldset;
 
 class Address extends Fieldset implements InputFilterProviderInterface {
 
     public function __construct($entityManager) {
         
         parent::__construct('address');
+        
+        $this->setLabel('Dados de Endereço');
 
         $this->setHydrator(new DoctrineHydrator($entityManager))
                 ->setObject(new AddressEntity());
 
         $this->add(array(
             'name' => 'id',
-            'type' => 'Zend\Form\Element\Hidden',
+            'type' => 'Hidden',
         ));
 
         $this->add(array(
             'name' => 'name',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Endereço',
                 'class' => 'form-control input-sm',
@@ -35,7 +37,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'number',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Nº',
                 'class' => 'form-control input-sm',
@@ -47,7 +49,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'complement',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Complemento',
                 'class' => 'form-control input-sm',
@@ -59,7 +61,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'quarter',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Bairro',
                 'class' => 'form-control input-sm',
@@ -71,7 +73,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'postalCode',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'CEP',
                 'class' => 'form-control input-sm  cep',
@@ -84,7 +86,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'cityName',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Cidade',
                 'class' => 'form-control input-sm  city',
@@ -97,7 +99,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
         
         $this->add(array(
             'name' => 'stateName',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Estado',
                 'class' => 'form-control input-sm  state',
@@ -110,7 +112,7 @@ class Address extends Fieldset implements InputFilterProviderInterface {
         
         $this->add(array(
             'name' => 'countryName',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'País',
                 'class' => 'form-control input-sm  country',
@@ -193,9 +195,6 @@ class Address extends Fieldset implements InputFilterProviderInterface {
 
     public function getInputFilterSpecification() {
         return array(
-            'id' => array(
-                'required' => false,
-            ),
             'postalCode' => array(
                 'required' => false,
                 'filters' => array(

@@ -6,6 +6,7 @@ use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Fieldset as ZendFielset;
 use DtlDealer\Entity\Dealer as DealerEntity;
+use DtlPerson\Form\Fieldset\Person;
 
 class Dealer extends ZendFielset implements InputFilterProviderInterface {
 
@@ -21,10 +22,7 @@ class Dealer extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Hidden',
         ));
 
-        $person = new \DtlPerson\Form\Fieldset\Person($entityManager);
-        $person->setName('person')
-                ->setLabel('Dados Gerais');
-        $this->add($person);
+        $this->add(new Person($entityManager));
     }
 
     public function getInputFilterSpecification() {

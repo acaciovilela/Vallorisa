@@ -1,33 +1,28 @@
 <?php
 
-namespace DtlPerson\Form\Fieldset;
+namespace DtlCollections\Form\Fieldset;
 
 use Zend\Form\Fieldset;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use DtlPerson\Entity\Person as PersonEntity;
+use DtlCollections\Entity\People as PeopleEntity;
 
-class Person extends Fieldset implements InputFilterProviderInterface {
+class People extends Fieldset implements InputFilterProviderInterface {
 
     public function __construct($entityManager) {
         
-        parent::__construct('person');
+        parent::__construct('people');
         
         $this->setLabel('Dados Pessoais');
 
         $this->setHydrator(new DoctrineHydrator($entityManager))
-                ->setObject(new PersonEntity());
+                ->setObject(new PeopleEntity());
 
         $this->add(array(
             'name' => 'id',
             'type' => 'Hidden',
         ));
         
-        $this->add(array(
-            'name' => 'type',
-            'type' => 'Hidden',
-        ));
-
         $this->add(array(
             'name' => 'name',
             'type' => 'Text',
@@ -40,14 +35,6 @@ class Person extends Fieldset implements InputFilterProviderInterface {
                'label' => 'Nome'
             ),
         ));
-        
-        $this->add(new Address($entityManager));
-
-        $this->add(new Contact($entityManager));
-        
-        $this->add(new Individual($entityManager));
-        
-        $this->add(new Legal($entityManager));
     }
 
     public function getInputFilterSpecification() {

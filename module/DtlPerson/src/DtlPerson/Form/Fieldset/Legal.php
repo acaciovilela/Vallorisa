@@ -2,9 +2,9 @@
 
 namespace DtlPerson\Form\Fieldset;
 
+use Zend\Form\Fieldset;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Form\Fieldset;
 use DtlPerson\Entity\Legal as LegalEntity;
 use DtlBase\Validator\Cnpj;
 
@@ -13,6 +13,8 @@ class Legal extends Fieldset implements InputFilterProviderInterface {
     public function __construct($entityManager) {
         
         parent::__construct('legal');
+        
+        $this->setLabel('Dados de Pessoa Jurídica');
 
         $this->setHydrator(new DoctrineHydrator($entityManager))
                 ->setObject(new LegalEntity());

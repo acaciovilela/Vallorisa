@@ -2,9 +2,9 @@
 
 namespace DtlPerson\Form\Fieldset;
 
+use Zend\Form\Fieldset;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Form\Fieldset;
 use DtlPerson\Entity\Individual as IndividualEntity;
 use DtlBase\Validator\Cpf;
 
@@ -43,21 +43,23 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
     public function __construct($entityManager) {
 
         parent::__construct('individual');
+        
+        $this->setLabel('Dados de Pessoa Física');
 
         $this->setHydrator(new DoctrineHydrator($entityManager))
                 ->setObject(new IndividualEntity());
 
         $this->add(array(
             'name' => 'id',
-            'type' => 'Zend\Form\Element\Hidden',
+            'type' => 'Hidden',
         ));
 
         $this->add(array(
             'name' => 'cpf',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'CPF',
-                'class' => 'form-control input-sm  cpf',
+                'class' => 'form-control input-sm cpf',
             ),
             'options' => array(
                 'label' => 'CPF'
@@ -66,7 +68,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'rg',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'RG',
                 'class' => 'form-control input-sm',
@@ -78,7 +80,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'rgOrgan',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Text',
             'attributes' => array(
                 'placeholder' => 'Org. Expedidor',
                 'class' => 'form-control input-sm',
@@ -89,7 +91,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
         ));
         $this->add(array(
             'name' => 'rgUf',
-            'type' => 'Zend\Form\Element\Select',
+            'type' => 'Select',
             'attributes' => array(
                 'placeholder' => 'UF',
                 'class' => 'form-control input-sm',
@@ -262,10 +264,7 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
             ),
         ));
 
-        $professional = new \DtlPerson\Form\Fieldset\Professional($entityManager);
-        $professional->setName('professional')
-                ->setLabel('Dados Profissionais');
-        $this->add($professional);
+        $this->add(new Professional($entityManager));
     }
 
     public function getInputFilterSpecification() {

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use DtlPerson\Entity\Person;
 
 /**
- * @ORM\Entity(repositoryClass="DtlDealer\Entity\Repository\Dealer")
+ * @ORM\Entity
  * @ORM\Table(name="dealer")
  */
 class Dealer {
@@ -15,11 +15,13 @@ class Dealer {
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     protected $id;
 
     /**
      * @ORM\OneToOne(targetEntity="DtlPerson\Entity\Person", cascade={"all"}, orphanRemoval=true)
+     * @var Person
      */
     protected $person;
 
@@ -40,7 +42,7 @@ class Dealer {
         return $this;
     }
 
-    public function setPerson($person) {
+    public function setPerson(Person $person) {
         $this->person = $person;
         return $this;
     }

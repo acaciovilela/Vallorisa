@@ -3,10 +3,6 @@
 namespace DtlPerson\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use DtlPerson\Entity\Address;
-use DtlPerson\Entity\Contact;
-use DtlPerson\Entity\Individual;
-use DtlPerson\Entity\Legal;
 
 /**
  * @ORM\Entity
@@ -76,8 +72,8 @@ class Person {
         $this->date = new \DateTime('now');
         $this->address = new Address();
         $this->contact = new Contact();
-        $this->individual = new Individual();
         $this->legal = new Legal();
+        $this->individual = new Individual();
     }
 
     public function getId() {

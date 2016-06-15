@@ -20,27 +20,7 @@ class Slave extends Fieldset implements InputFilterProviderInterface {
             'name' => 'id'
         ));
         
-        $this->add(array(
-            'type' => 'Text',
-            'name' => 'name', 
-            'attributes' => array(
-                'class' => 'form-control input-sm',
-            ),
-            'options' => array(
-                'label' => 'Nome do Escravo',
-            )
-        ));
-        
-        $this->add(array(
-            'type' => 'Text',
-            'name' => 'color', 
-            'attributes' => array(
-                'class' => 'form-control input-sm',
-            ),
-            'options' => array(
-                'label' => 'Cor',
-            )
-        ));
+        $this->add(new People($entityManager));
     }
 
     /**
@@ -50,14 +30,7 @@ class Slave extends Fieldset implements InputFilterProviderInterface {
      * @return array
      */
     public function getInputFilterSpecification() {
-        return array(
-            'name' => array(
-                'required' => false,
-            ),
-            'color' => array(
-                'required' => false,
-            ),
-        );
+        return array();
     }
 
 }
