@@ -246,9 +246,11 @@ input[type="text"] {
     text-transform: uppercase;
 }
 
-ul.alert, 
-ul.alert li {
-    list-style: none; padding-left: 10px;
+ul li {
+    list-style: none;
+}
+.alert > ul {
+    padding-left: 0;
 }
 
 .container {

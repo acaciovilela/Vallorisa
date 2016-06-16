@@ -7,6 +7,7 @@ $form->prepare();
 ?>
 <h2 class="container-header"><i class="glyphicon glyphicon-briefcase"></i> <?php echo $this->escapeHtml($title); ?></h2>
 <?php echo $this->form()->openTag($form); ?>
+<?php echo $this->dtlFormErrors($form->getMessages()); ?>
 <?php $employee = $form->get('employee'); ?>
 <fieldset>
     <?php $person = $employee->get('person'); ?>
@@ -86,6 +87,7 @@ $form->prepare();
     <div class="help-block"><?php echo $this->translate('Clique no botão <i class="glyphicon glyphicon-plus-sign"></i> abaixo para acrescentar uma nova comissão ao funcionário.'); ?></div>
     <button  type="button" class="btn btn-default btn-sm" onclick="javascript: return addCommission();"><i class="glyphicon glyphicon-plus-sign"></i></button>
     <br/><br/>
+
     <?php echo $this->formRow($form->get('security')); ?>
     <div class="btn-group">
         <?php echo $this->formSubmit($form->get('submit')); ?>
