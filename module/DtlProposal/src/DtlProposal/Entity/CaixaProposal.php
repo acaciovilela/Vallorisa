@@ -4,7 +4,7 @@ namespace DtlProposal\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use DtlProduct\Entity\Product;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="DtlProposal\Entity\Repository\CaixaProposal")
@@ -27,7 +27,8 @@ class CaixaProposal implements ProposalEntityInterface {
     protected $proposal;
 
     /**
-     * @ORM\ManyToMany(targetEntity="DtlProduct\Entity\Product", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="\DtlProposal\Entity\CaixaProposalProducts", cascade={"all"})
+     * @var Collection
      */
     protected $products;
 
@@ -79,23 +80,26 @@ class CaixaProposal implements ProposalEntityInterface {
 
     /**
      * 
-     * @param \DtlProduct\Entity\Product $product
+     * @param Collection $products
      * @return \DtlProposal\Entity\CaixaProposal
      */
-    public function addProduct(Product $product) {
-        $this->products->add($product);
+    public function addProducts(Collection $products) {
+        foreach ($products as $product) {
+            $this->products->add($product);
+        }
         return $this;
     }
 
     /**
      * 
-     * @param ArrayCollection $products
+     * @param Collection $products
      * @return \DtlProposal\Entity\CaixaProposal
      */
-    public function setProducts($products) {
+    public function removeProducts(Collection $products) {
         foreach ($products as $product) {
-            $this->addProduct($product);
+            $this->products->removeElement($product);
         }
         return $this;
     }
+
 }

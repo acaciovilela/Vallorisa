@@ -407,7 +407,7 @@ $this->headTitle($title);
                                                 <dt>Data de Admissão:</dt>
                                                 <dd><?php echo $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getInDate(); ?></dd>
                                                 <dt>Cargo:</dt>
-                                                <dd><?php echo ($this->customer->getPerson()->getIndividual()->getProfessional()->getOffice()) ? $this->customer->getPerson()->getIndividual()->getProfessional()->getOffice()->getName() : ''; ?></dd>
+                                                <dd><?php echo ($proposalCustomer->getPerson()->getIndividual()->getProfessional()->getOffice()) ? $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getOffice()->getName() : ''; ?></dd>
                                                 <dt>Salário:</dt>
                                                 <dd><?php echo ((float) $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getSalary()) ? $this->currency((float) $proposalCustomer->getPerson()->getIndividual()->getProfessional()->getSalary()) : ""; ?></dd>
                                             </div>

@@ -97,7 +97,6 @@ class CaixaProposalController extends AbstractActionController {
         $user = $this->identity();
         $form = new CaixaProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
         $caixa = new \DtlProposal\Entity\CaixaProposal();
-        $em = $this->getEntityManager();
 
         $prePost = $this->getProposalSession()->prePost['preProposal'];
 
@@ -129,18 +128,6 @@ class CaixaProposalController extends AbstractActionController {
             $post = $this->request->getPost();
             $form->setData($post);
             if ($form->isValid()) {
-                $sessionContainer = $this->getProposalSession();
-                /**
-                 * Add Vehicles
-                 */
-                $products = $sessionContainer->products;
-
-                if (count($products) > 0) {
-                    foreach ($products as $productData) {
-                        $product = $em->find('DtlProduct\Entity\Product', $productData['product']);
-                        $caixa->addProduct($product);
-                    }
-                }
                 $caixa->getProposal()->setUser($user);
                 $this->getProposalService()->save($caixa);
                 $this->flashMessenger()->addSuccessMessage('Proposta cadastrada com sucesso!');
@@ -160,29 +147,17 @@ class CaixaProposalController extends AbstractActionController {
         $form = new CaixaProposalForm($this->getEntityManager(), $this->dtlUserMasterIdentity()->getId());
         $em = $this->getEntityManager();
         $caixa = $em->find($this->getRepository(), $caixaId);
-
         if (!$this->request->isPost()) {
             $this->getProposalService()->resetSession();
             $this->getProposalService()->populate($caixa, $caixa->getProposal()->getCustomer());
         }
 
-        $this->getProposalService()->addProposalProducts($caixa);
-
         $form->bind($caixa);
+        
         if ($this->request->isPost()) {
             $post = $this->request->getPost();
             $form->setData($post);
             if ($form->isValid()) {
-                $sessionContainer = $this->getProposalSession();
-                $products = $sessionContainer->products;
-                if (count($products) > 0) {
-                    foreach ($products as $productData) {
-                        if (!$productData['productId']) {
-                            $product = $em->find('DtlProduct\Entity\Product', $productData['productName']);
-                            $caixa->addProduct($product);
-                        }
-                    }
-                }
                 $this->getProposalService()->update($caixa);
                 $this->flashMessenger()->addSuccessMessage('Proposta atualizada com sucesso!');
                 return $this->redirect()->toRoute('dtladmin/dtlproposal/caixa-proposal');
@@ -286,11 +261,11 @@ class CaixaProposalController extends AbstractActionController {
         }
         $product = $this->params()->fromQuery();
 
-        if (empty($product['product'])) {
+        if (empty($product['productId'])) {
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => false)));
         } else {
             $em = $this->getEntityManager();
-            $item = $em->find('DtlProduct\Entity\Product', $product['product']);
+            $item = $em->find('DtlProduct\Entity\Product', $product['productId']);
             $product['productName'] = $item->getName();
             $this->getProposalSession()->products[] = $product;
             return $this->getResponse()->setContent(\Zend\Json\Json::encode(array('result' => true)));

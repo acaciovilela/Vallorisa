@@ -632,7 +632,7 @@ function caixaProposalList() {
 }
 function caixaProposalAdd() {
     var e = BASE_PATH + "/admin/proposal/caixa-proposal/1/addproduct";
-    $.ajax({type: "GET", url: e, dataType: "JSON", data: {product: $("#productId").val()}, success: function () {
+    $.ajax({type: "GET", url: e, dataType: "JSON", data: {productId: $("#productId").val()}, success: function () {
             caixaProposalList();
         }});
 }
@@ -693,6 +693,23 @@ function addCommission() {
 }
 function removeCommission() {
     var e = $(".add-commissions > fieldset > fieldset").last();
+    e.remove();
+    return false;
+}
+
+/**
+ * Caixa Proposal Products functions
+ */
+function addCaixaProduct() {
+    var e = $(".add-products > fieldset > fieldset").length;
+    var t = $(".add-products > fieldset > span").data("template");
+    t = t.replace(/__index__/g, e);
+    $(".add-products > fieldset").append(t);
+    setMasks();
+    return false;
+}
+function removeCaixaProduct() {
+    var e = $(".add-products > fieldset > fieldset").last();
     e.remove();
     return false;
 }

@@ -59,8 +59,13 @@ $form->prepare();
                 <h3 class="panel-title"><?php echo $this->translate('Produtos Caixa'); ?></h3>
             </div>
             <div class="panel-body">
-                <?php $product = new DtlProposal\Form\Fieldset\Product($this->entityManager); ?>
-                <?php echo $this->caixaProposalForm($product); ?>
+                <?php $products = $caixaProposal->get('products'); ?>
+                <div class="add-products">
+                    <?php echo $this->formCollection($products); ?>
+                </div>
+                <div class="help-block"><?php echo $this->translate('Clique no botão <i class="glyphicon glyphicon-plus-sign"></i> abaixo para acrescentar um novo produto.'); ?></div>
+                <button  type="button" class="btn btn-default btn-sm" onclick="javascript: return addCaixaProduct();"><i class="glyphicon glyphicon-plus-sign"></i></button>
+                <br/><br/>
             </div>
         </div>
 

@@ -1,8 +1,4 @@
 /** Bootstrap Expansions */
-html, body {
-    font-size: 13px;
-}
-
 .text-canceled {
     color: #777;
 }
@@ -21,10 +17,10 @@ body {
     padding-top: 10px;
 }
 .table {
-    font-size: 11px;
+    font-size: 12px;
 }
 .table th {
-    font-size: 11px;
+    font-size: 12px;
     border: #670000;
 }
 .pagination {
@@ -301,6 +297,16 @@ dd {
 }
 
 .add-commissions .remove-commission {
+    margin-top: 20px;
+}
+
+.add-products label {
+    float: left;
+    margin-right: 20px;
+    padding: 5px 0 5x 0;
+}
+
+.add-products .remove-product {
     margin-top: 20px;
 }
 
