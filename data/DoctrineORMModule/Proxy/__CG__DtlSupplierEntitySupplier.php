@@ -287,4 +287,15 @@ class Supplier extends \DtlSupplier\Entity\Supplier implements \Doctrine\ORM\Pro
         return parent::setPerson($person);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
+
+        return parent::getName();
+    }
+
 }

@@ -7,13 +7,13 @@ use Doctrine\ORM\EntityRepository;
 class Customer extends EntityRepository {
 
     public function customerList($user) {
-        $result = $this->_em->createQuery(
-                        "SELECT c,p 
-                            FROM {$this->_entityName} c 
-                                JOIN c.person p 
-                            WHERE c.user = {$user}
-                                ORDER BY p.name"
-                )
+        $result = $this->_em->getRepository($this->_entityName)
+                ->createQueryBuilder('c')
+                ->join('c.person', 'p')
+                ->where('c.isActive = true')
+                ->andWhere('c.user = ' . $user)
+                ->orderBy('p.name', 'ASC')
+                ->getQuery()
                 ->getResult();
         return $result;
     }

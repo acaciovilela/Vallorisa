@@ -91,5 +91,9 @@ class Supplier {
         $this->person = $person;
         return $this;
     }
+    
+    public function getName() {
+        return $this->person->getName();
+    }
 
 }
