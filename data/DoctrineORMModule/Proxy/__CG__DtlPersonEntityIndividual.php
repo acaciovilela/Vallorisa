@@ -64,10 +64,10 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'cpf', 'rg', 'rgDate', 'rgOrgan', 'rgUf', 'birthDay', 'birthMonth', 'birthYear', 'gender', 'father', 'mother', 'birthPlace', 'birthUf', 'nationality', 'status', 'professional', 'occupation'];
+            return ['__isInitialized__', 'id', 'cpf', 'rg', 'rgDate', 'rgOrgan', 'rgUf', 'birthday', 'birthDate', 'birthMonth', 'birthYear', 'gender', 'father', 'mother', 'birthPlace', 'birthUf', 'nationality', 'status', 'professional', 'occupation'];
         }
 
-        return ['__isInitialized__', 'id', 'cpf', 'rg', 'rgDate', 'rgOrgan', 'rgUf', 'birthDay', 'birthMonth', 'birthYear', 'gender', 'father', 'mother', 'birthPlace', 'birthUf', 'nationality', 'status', 'professional', 'occupation'];
+        return ['__isInitialized__', 'id', 'cpf', 'rg', 'rgDate', 'rgOrgan', 'rgUf', 'birthday', 'birthDate', 'birthMonth', 'birthYear', 'gender', 'father', 'mother', 'birthPlace', 'birthUf', 'nationality', 'status', 'professional', 'occupation'];
     }
 
     /**
@@ -213,12 +213,56 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     /**
      * {@inheritDoc}
      */
-    public function getBirthDay()
+    public function getRgDate()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthDay', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgDate', []);
 
-        return parent::getBirthDay();
+        return parent::getRgDate();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRgOrgan()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgOrgan', []);
+
+        return parent::getRgOrgan();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRgUf()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgUf', []);
+
+        return parent::getRgUf();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBirthday()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthday', []);
+
+        return parent::getBirthday();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBirthDate()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBirthDate', []);
+
+        return parent::getBirthDate();
     }
 
     /**
@@ -334,6 +378,17 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     /**
      * {@inheritDoc}
      */
+    public function getOccupation()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOccupation', []);
+
+        return parent::getOccupation();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setId($id)
     {
 
@@ -367,12 +422,56 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     /**
      * {@inheritDoc}
      */
-    public function setBirthDay($birthDay)
+    public function setRgDate($rgDate)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthDay', [$birthDay]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgDate', [$rgDate]);
 
-        return parent::setBirthDay($birthDay);
+        return parent::setRgDate($rgDate);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setRgOrgan($rgOrgan)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgOrgan', [$rgOrgan]);
+
+        return parent::setRgOrgan($rgOrgan);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setRgUf($rgUf)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgUf', [$rgUf]);
+
+        return parent::setRgUf($rgUf);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setBirthday($birthday)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthday', [$birthday]);
+
+        return parent::setBirthday($birthday);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setBirthDate($birthDate)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBirthDate', [$birthDate]);
+
+        return parent::setBirthDate($birthDate);
     }
 
     /**
@@ -477,23 +576,12 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
     /**
      * {@inheritDoc}
      */
-    public function setProfessional($professional)
+    public function setProfessional(\DtlPerson\Entity\Professional $professional)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setProfessional', [$professional]);
 
         return parent::setProfessional($professional);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getOccupation()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOccupation', []);
-
-        return parent::getOccupation();
     }
 
     /**
@@ -505,72 +593,6 @@ class Individual extends \DtlPerson\Entity\Individual implements \Doctrine\ORM\P
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOccupation', [$occupation]);
 
         return parent::setOccupation($occupation);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRgDate()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgDate', []);
-
-        return parent::getRgDate();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRgOrgan()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgOrgan', []);
-
-        return parent::getRgOrgan();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRgUf()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRgUf', []);
-
-        return parent::getRgUf();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setRgDate($rgDate)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgDate', [$rgDate]);
-
-        return parent::setRgDate($rgDate);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setRgOrgan($rgOrgan)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgOrgan', [$rgOrgan]);
-
-        return parent::setRgOrgan($rgOrgan);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setRgUf($rgUf)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setRgUf', [$rgUf]);
-
-        return parent::setRgUf($rgUf);
     }
 
 }

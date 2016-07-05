@@ -12,19 +12,19 @@
  */
 
 return array(
-    'doctrine' => array(
-        'connection' => array(
-            'orm_default' => array(
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => array(
-                    'host' => 'mysql.vallorisa.com.br',
-                    'port' => '3306',
-                    'user' => 'vallorisa',
-                    'password' => 'r2d2x3po',
-                    'dbname' => 'vallorisa',
-                    'charset' => 'utf8',
-                ),
-            ),
-        ),
-    ),
+//    'doctrine' => array(
+//        'connection' => array(
+//            'orm_default' => array(
+//                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+//                'params' => array(
+//                    'host' => 'mysql.vallorisa.com.br',
+//                    'port' => '3306',
+//                    'user' => 'vallorisa',
+//                    'password' => 'r2d2x3po',
+//                    'dbname' => 'vallorisa',
+//                    'charset' => 'utf8',
+//                ),
+//            ),
+//        ),
+//    ),
 );

@@ -114,9 +114,21 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                 'label' => 'Data de Expedição'
             ),
         ));
+        
+        $this->add(array(
+            'name' => 'birthday',
+            'type' => 'Zend\Form\Element\Date',
+            'attributes' => array(
+                'placeholder' => 'Data de Nasc.:',
+                'class' => 'form-control input-sm datepicker',
+            ),
+            'options' => array(
+                'label' => 'Data de Nasc.:'
+            ),
+        ));
 
         $this->add(array(
-            'name' => 'birthDay',
+            'name' => 'birthDate',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Dia',
@@ -219,12 +231,14 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
 
         $this->add(array(
             'name' => 'nationality',
-            'type' => 'Zend\Form\Element\Text',
+            'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
-                'placeholder' => 'Nacionalidade',
                 'class' => 'form-control input-sm',
             ),
             'options' => array(
+                'value_options' => array(
+                    'BRASILEIRA' => 'BRASILEIRA',
+                ),
                 'label' => 'Nacionalidade'
             ),
         ));
@@ -281,19 +295,11 @@ class Individual extends Fieldset implements InputFilterProviderInterface {
                     new \DtlBase\Filter\Date()
                 )
             ),
-            'birthDay' => array(
+            'birthday' => array(
                 'required' => false,
                 'filters' => array(
-                    array('name' => 'Digits'),
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array('name' => 'Between', 'options' => array(
-                            'min' => 1,
-                            'max' => 31,
-                        )),
-                ),
+                    new \DtlBase\Filter\Date()
+                )
             ),
             'birthMonth' => array(
                 'required' => false,

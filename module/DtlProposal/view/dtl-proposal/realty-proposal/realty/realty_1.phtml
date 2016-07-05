@@ -1,0 +1,310 @@
+<div class="row">
+    <div class="col-md-12">
+        <?php $realtyProposal = $this->realtyProposal; ?>
+        <?php $realty = $realtyProposal; ?>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realty->get('type')); ?>
+                            <?php echo $this->formSelect($realty->get('type')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realty->get('code')); ?>
+                            <?php echo $this->formText($realty->get('code')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realty->get('value')); ?>
+                            <div class="input-group">
+                                <span class="input-group-addon">R$</span>
+                                <?php echo $this->formText($realty->get('value')); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $address = $realty->get('address'); ?>
+                    <?php echo $this->formHidden($address->get('id')); ?>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <?php echo $this->formLabel($address->get('name')); ?>
+                            <?php echo $this->formText($address->get('name')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($address->get('number')); ?>
+                            <?php echo $this->formText($address->get('number')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($address->get('complement')); ?>
+                            <?php echo $this->formText($address->get('complement')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($address->get('quarter')); ?>
+                            <?php echo $this->formText($address->get('quarter')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($address->get('postalCode')); ?>
+                            <?php echo $this->formText($address->get('postalCode')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($address->get('city')); ?>
+                            <?php echo $this->formSelect($address->get('city')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($address->get('state')); ?>
+                            <?php echo $this->formSelect($address->get('state')); ?>
+                        </div>
+                        <div class="col-md-2">
+                            <?php echo $this->formLabel($address->get('country')); ?>
+                            <?php echo $this->formSelect($address->get('country')); ?>
+                        </div>
+                    </div>
+                    <?php $realtyFeature = $realty->get('feature'); ?>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('builtArea')); ?>
+                            <div class="input-group">
+                                <?php echo $this->formText($realtyFeature->get('builtArea')); ?>
+                                <span class="input-group-addon">m²</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('balconyArea')); ?>
+                            <div class="input-group">
+                                <?php echo $this->formText($realtyFeature->get('balconyArea')); ?>
+                                <span class="input-group-addon">m²</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('totalArea')); ?>
+                            <div class="input-group">
+                                <?php echo $this->formText($realtyFeature->get('totalArea')); ?>
+                                <span class="input-group-addon">m²</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('groundLength')); ?>
+                            <div class="input-group">
+                                <?php echo $this->formText($realtyFeature->get('groundLength')); ?>
+                                <span class="input-group-addon">m²</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('groundWidth')); ?>
+                            <div class="input-group">
+                                <?php echo $this->formText($realtyFeature->get('groundWidth')); ?>
+                                <span class="input-group-addon">m²</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('groundArea')); ?>
+                            <div class="input-group">
+                                <?php echo $this->formText($realtyFeature->get('groundArea')); ?>
+                                <span class="input-group-addon">m²</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php echo $this->formLabel($realty->get('notes')); ?>
+                            <?php echo $this->formTextarea($realty->get('notes')); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('roomAmount')); ?>
+                            <?php echo $this->formText($realtyFeature->get('roomAmount')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('suiteAmount')); ?>
+                            <?php echo $this->formText($realtyFeature->get('suiteAmount')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('bathtubAmount')); ?>
+                            <?php echo $this->formText($realtyFeature->get('bathtubAmount')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('bathroomAmount')); ?>
+                            <?php echo $this->formText($realtyFeature->get('bathroomAmount')); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php echo $this->formLabel($realtyFeature->get('hallAmount')); ?>
+                            <?php echo $this->formText($realtyFeature->get('hallAmount')); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('bathroomStall')); ?>
+                                    <?php echo $realtyFeature->get('bathroomStall')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('bathroomCabinet')); ?>
+                                    <?php echo $realtyFeature->get('bathroomCabinet')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('roomCabinet')); ?>
+                                    <?php echo $realtyFeature->get('roomCabinet')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('restroom')); ?>
+                                    <?php echo $realtyFeature->get('restroom')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('livingRoom')); ?>
+                                    <?php echo $realtyFeature->get('livingRoom')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('doubleLiving')); ?>
+                                    <?php echo $realtyFeature->get('doubleLiving')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('diningRoom')); ?>
+                                    <?php echo $realtyFeature->get('diningRoom')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('tvRoom')); ?>
+                                    <?php echo $realtyFeature->get('tvRoom')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('office')); ?>
+                                    <?php echo $realtyFeature->get('office')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('kitchen')); ?>
+                                    <?php echo $realtyFeature->get('kitchen')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('plannedKitchen')); ?>
+                                    <?php echo $realtyFeature->get('plannedKitchen')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('storeRoom')); ?>
+                                    <?php echo $realtyFeature->get('storeRoom')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('serviceArea')); ?>
+                                    <?php echo $realtyFeature->get('serviceArea')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('storeHouse')); ?>
+                                    <?php echo $realtyFeature->get('storeHouse')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('liningSlab')); ?>
+                                    <?php echo $realtyFeature->get('liningSlab')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('pvcLiner')); ?>
+                                    <?php echo $realtyFeature->get('pvcLiner')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('planking')); ?>
+                                    <?php echo $realtyFeature->get('planking')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('finishPlaster')); ?>
+                                    <?php echo $realtyFeature->get('finishPlaster')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('gasHeater')); ?>
+                                    <?php echo $realtyFeature->get('gasHeater')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <?php echo $this->formCheckbox($realtyFeature->get('solarHeater')); ?>
+                                    <?php echo $realtyFeature->get('solarHeater')->getLabel(); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

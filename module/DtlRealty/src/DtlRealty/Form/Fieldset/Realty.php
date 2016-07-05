@@ -78,11 +78,11 @@ class Realty extends ZendFielset implements InputFilterProviderInterface {
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
                 'class' => 'form-control input-sm',
-                'placeholder' => 'Observações',
+                'placeholder' => 'Descrição do Imóvel',
                 'id' => 'realtyNotes',
             ),
             'options' => array(
-                'label' => 'Observações'
+                'label' => 'Descrição do Imóvel'
             ),
         ));
         

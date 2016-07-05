@@ -8,50 +8,58 @@ if ($this->entity) {
 <?php $customer = $this->customers; ?>
 <div id="customer-set">
     <?php foreach ($customers as $key => $customer): ?>
-        <?php $number = $key + 2; ?>
-        <br/>
-        <legend><h3><?php echo "Comprador"; ?></h3></legend>
-        <?php echo $this->formHidden($customer->get('id')); ?>
-        <?php $person = $customer->get('person'); ?>
-        <?php echo $this->personForm($person); ?>
-        <?php if ($personType == base64_encode(1)): ?>
-            <?php $legal = $person->get('legal'); ?>
-            <?php echo $this->legalForm($legal); ?>
-        <?php elseif ($personType == base64_encode(0)): ?>
-            <?php $individual = $person->get('individual'); ?>
-            <?php echo $this->individualForm($individual); ?>
-            <?php $professional = $individual->get('professional'); ?>
-            <?php echo $this->professionalForm($professional); ?>
-            <?php if (!$this->isLoan): ?>
-                <legend>Dados Adicionais</legend>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <?php echo $this->formLabel($customer->get('residenceType')); ?>
-                            <?php echo $this->formSelect($customer->get('residenceType')); ?>
+        <legend class="">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" 
+                    data-target="#customers-collapse" aria-expanded="false" 
+                    aria-controls="customers-collapse">
+                <i class="glyphicon glyphicon-plus"></i> Adicionar Comprador</button>
+        </legend>
+        <div class="collapse" id="customers-collapse">
+            <?php $number = $key + 2; ?>
+            <br/>
+            <legend><h3><?php echo "Comprador " . $number; ?></h3></legend>
+            <?php echo $this->formHidden($customer->get('id')); ?>
+            <?php $person = $customer->get('person'); ?>
+            <?php echo $this->personForm($person); ?>
+            <?php if ($personType == base64_encode(1)): ?>
+                <?php $legal = $person->get('legal'); ?>
+                <?php echo $this->legalForm($legal); ?>
+            <?php elseif ($personType == base64_encode(0)): ?>
+                <?php $individual = $person->get('individual'); ?>
+                <?php echo $this->individualForm($individual); ?>
+                <?php $professional = $individual->get('professional'); ?>
+                <?php echo $this->professionalForm($professional); ?>
+                <?php if (!$this->isLoan): ?>
+                    <legend>Dados Adicionais</legend>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <?php echo $this->formLabel($customer->get('residenceType')); ?>
+                                <?php echo $this->formSelect($customer->get('residenceType')); ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <?php echo $this->formLabel($customer->get('residenceTime')); ?>
-                            <?php echo $this->formText($customer->get('residenceTime')); ?>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <?php echo $this->formLabel($customer->get('residenceTime')); ?>
+                                <?php echo $this->formText($customer->get('residenceTime')); ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?php echo $this->formLabel($customer->get('residenceRentValue')); ?>
+                                <div class="input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <?php echo $this->formText($customer->get('residenceRentValue')); ?>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <?php echo $this->formLabel($customer->get('residenceRentValue')); ?>
-                            <div class="input-group">
-                                <span class="input-group-addon">R$</span>
-                                <?php echo $this->formText($customer->get('residenceRentValue')); ?>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php echo $this->formLabel($customer->get('notes')); ?>
+                                <?php echo $this->formTextarea($customer->get('notes')); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <?php echo $this->formLabel($customer->get('notes')); ?>
-                            <?php echo $this->formTextarea($customer->get('notes')); ?>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
             <?php endif; ?>
-        <?php endif; ?>
+        </div>
     <?php endforeach; ?>
 </div>

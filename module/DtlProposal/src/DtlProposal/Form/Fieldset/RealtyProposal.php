@@ -195,7 +195,7 @@ class RealtyProposal extends ZendFielset implements InputFilterProviderInterface
             'dealers' => array(
                 'person' => array(
                     'name' => array(
-                        'required' => true,
+                        'required' => false,
                     ),
                 )
             ),

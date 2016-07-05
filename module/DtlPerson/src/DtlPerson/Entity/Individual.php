@@ -51,10 +51,15 @@ class Individual {
     protected $rgUf;
 
     /**
+     * @ORM\Column(type="datebr", nullable=true)
+     */
+    protected $birthday;
+
+    /**
      * @ORM\Column(name="birth_day", type="string", nullable=true)
      * @var string
      */
-    protected $birthDay;
+    protected $birthDate;
 
     /**
      * @ORM\Column(name="birth_month", type="string", nullable=true)
@@ -138,8 +143,24 @@ class Individual {
         return $this->rg;
     }
 
-    public function getBirthDay() {
-        return $this->birthDay;
+    public function getRgDate() {
+        return $this->rgDate;
+    }
+
+    public function getRgOrgan() {
+        return $this->rgOrgan;
+    }
+
+    public function getRgUf() {
+        return $this->rgUf;
+    }
+
+    public function getBirthday() {
+        return $this->birthday;
+    }
+
+    public function getBirthDate() {
+        return $this->birthDate;
     }
 
     public function getBirthMonth() {
@@ -182,6 +203,10 @@ class Individual {
         return $this->professional;
     }
 
+    public function getOccupation() {
+        return $this->occupation;
+    }
+
     public function setId($id) {
         $this->id = $id;
         return $this;
@@ -197,8 +222,28 @@ class Individual {
         return $this;
     }
 
-    public function setBirthDay($birthDay) {
-        $this->birthDay = $birthDay;
+    public function setRgDate($rgDate) {
+        $this->rgDate = $rgDate;
+        return $this;
+    }
+
+    public function setRgOrgan($rgOrgan) {
+        $this->rgOrgan = $rgOrgan;
+        return $this;
+    }
+
+    public function setRgUf($rgUf) {
+        $this->rgUf = $rgUf;
+        return $this;
+    }
+
+    public function setBirthday($birthday) {
+        $this->birthday = $birthday;
+        return $this;
+    }
+
+    public function setBirthDate($birthDate) {
+        $this->birthDate = $birthDate;
         return $this;
     }
 
@@ -247,44 +292,13 @@ class Individual {
         return $this;
     }
 
-    public function setProfessional($professional) {
+    public function setProfessional(Professional $professional) {
         $this->professional = $professional;
         return $this;
     }
 
-    public function getOccupation() {
-        return $this->occupation;
-    }
-
     public function setOccupation(Occupation $occupation) {
         $this->occupation = $occupation;
-        return $this;
-    }
-
-    public function getRgDate() {
-        return $this->rgDate;
-    }
-
-    public function getRgOrgan() {
-        return $this->rgOrgan;
-    }
-
-    public function getRgUf() {
-        return $this->rgUf;
-    }
-
-    public function setRgDate($rgDate) {
-        $this->rgDate = $rgDate;
-        return $this;
-    }
-
-    public function setRgOrgan($rgOrgan) {
-        $this->rgOrgan = $rgOrgan;
-        return $this;
-    }
-
-    public function setRgUf($rgUf) {
-        $this->rgUf = $rgUf;
         return $this;
     }
 

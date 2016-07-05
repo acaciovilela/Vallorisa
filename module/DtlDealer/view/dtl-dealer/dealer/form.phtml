@@ -1,16 +1,40 @@
 <?php $dealers = $this->dealers; ?>
 <?php foreach ($dealers as $key => $dealer): ?>
-    <fieldset>
-        <legend><h3>Vendedor <?php echo $key + 1; ?></h3></legend>
-        <?php echo $this->formHidden($dealer->get('id')); ?>
+    <?php if ($key > 0): ?>
+        <legend class="">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" 
+                    data-target="#dealers-collapse" aria-expanded="false" 
+                    aria-controls="dealers-collapse">
+                <i class="glyphicon glyphicon-plus"></i> Adicionar Vendedor</button>
+        </legend>
+        <div class="collapse" id="dealers-collapse">
+            <fieldset>
+                <legend><h3>Vendedor <?php echo $key + 1; ?></h3></legend>
+                <?php echo $this->formHidden($dealer->get('id')); ?>
 
-        <?php $person = $dealer->get('person'); ?>
-        <?php echo $this->personForm($person); ?>
+                <?php $person = $dealer->get('person'); ?>
+                <?php echo $this->personForm($person); ?>
 
-        <?php $legal = $person->get('legal'); ?>
-        <?php echo $this->legalForm($legal); ?>
+                <?php $legal = $person->get('legal'); ?>
+                <?php echo $this->legalForm($legal); ?>
 
-        <?php $individual = $person->get('individual'); ?>
-        <?php echo $this->individualForm($individual); ?>
-    </fieldset>
+                <?php $individual = $person->get('individual'); ?>
+                <?php echo $this->individualForm($individual); ?>
+            </fieldset>
+        </div>
+    <?php else: ?>
+        <fieldset>
+            <legend><h3>Vendedor <?php echo $key + 1; ?></h3></legend>
+            <?php echo $this->formHidden($dealer->get('id')); ?>
+
+            <?php $person = $dealer->get('person'); ?>
+            <?php echo $this->personForm($person); ?>
+
+            <?php $legal = $person->get('legal'); ?>
+            <?php echo $this->legalForm($legal); ?>
+
+            <?php $individual = $person->get('individual'); ?>
+            <?php echo $this->individualForm($individual); ?>
+        </fieldset>
+    <?php endif; ?>
 <?php endforeach; ?>

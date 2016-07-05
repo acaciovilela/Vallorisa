@@ -127,9 +127,11 @@ $this->headTitle($title);
                         <th><?php echo $this->translate('PRODUTO'); ?></th>
                     </tr>
                     <?php foreach ($caixaProposal->getProducts() as $product) : ?>
-                        <tr>
-                            <td><?php echo $product->getProduct()->getName(); ?></td>
-                        </tr>
+                        <?php if ($product->getProduct()): ?>
+                            <tr>
+                                <td><?php echo $product->getProduct()->getName(); ?></td>
+                            </tr>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </table>
             <?php endif; ?>

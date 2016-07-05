@@ -26,9 +26,8 @@ class RealtyFeature extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Área Construída',
-                'class' => 'form-control input-sm decimals',
+                'class' => 'form-control input-sm ',
                 'id' => 'realtyFeatureBuiltArea',
-                'value' => 0.00,
                 'onblur' => 'javascript: calculateArea();'
             ),
             'options' => array(
@@ -41,9 +40,8 @@ class RealtyFeature extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Edícula',
-                'class' => 'form-control input-sm decimals',
+                'class' => 'form-control input-sm',
                 'id' => 'realtyFeatureBalconyArea',
-                'value' => 0.00,
                 'onblur' => 'javascript: calculateArea();'
             ),
             'options' => array(
@@ -56,7 +54,7 @@ class RealtyFeature extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Total',
-                'class' => 'form-control input-sm decimals',
+                'class' => 'form-control input-sm',
                 'id' => 'realtyFeatureTotalArea',
                 'value' => 0.00,
                 'readonly' => 'readonly'
@@ -71,8 +69,7 @@ class RealtyFeature extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Área Útil',
-                'class' => 'form-control input-sm decimals',
-                'value' => 0.00,
+                'class' => 'form-control input-sm',
             ),
             'options' => array(
                 'label' => 'Área Útil',
@@ -84,9 +81,8 @@ class RealtyFeature extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Terreno Total',
-                'class' => 'form-control input-sm decimals',
+                'class' => 'form-control input-sm',
                 'id' => 'realtyFeatureGroundArea',
-                'value' => 0.00,
                 'readonly' => 'readonly'
             ),
             'options' => array(
@@ -99,9 +95,8 @@ class RealtyFeature extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Larg. do Terreno',
-                'class' => 'form-control input-sm decimals',
+                'class' => 'form-control input-sm',
                 'id' => 'realtyFeatureGroundWidth',
-                'value' => 0.00,
                 'onblur' => 'javascript: calculateGround();'
             ),
             'options' => array(
@@ -114,10 +109,9 @@ class RealtyFeature extends ZendFielset implements InputFilterProviderInterface 
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Comp. do Terreno',
-                'class' => 'form-control input-sm decimals',
+                'class' => 'form-control input-sm',
                 'id' => 'realtyFeatureGroundLength',
                 'onblur' => 'javascript: calculateGround();',
-                'value' => 0.00,
             ),
             'options' => array(
                 'label' => 'Comp. do Terreno',
@@ -131,7 +125,6 @@ class RealtyFeature extends ZendFielset implements InputFilterProviderInterface 
                 'placeholder' => 'Dormitórios',
                 'class' => 'form-control input-sm',
                 'id' => 'realtyFeatureBedroomAmount',
-                'value' => 0.00,
             ),
             'options' => array(
                 'label' => 'Dormitórios',

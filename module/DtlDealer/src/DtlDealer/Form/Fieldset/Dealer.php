@@ -23,10 +23,17 @@ class Dealer extends ZendFielset implements InputFilterProviderInterface {
         ));
 
         $this->add(new Person($entityManager));
+        $this->get('person')->get('name')->setAttribute('required', '');
     }
 
     public function getInputFilterSpecification() {
-        return array();
+        return array(
+            'person' => array(
+                'name' => array(
+                    'required' => false,
+                ),
+            ),
+        );
     }
 
 }
